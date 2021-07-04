@@ -1,2 +1,3 @@
 XmlSave/build/
-test/Id_Manager/test1/build
+Id_Manager/test/build
+*.txt.user
