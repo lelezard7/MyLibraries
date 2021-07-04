@@ -1,5 +1,6 @@
 #include "../include/Id_Manager.h"
 #include <cmath>
+#include <cstdlib>
 
 
 template<class __T>
@@ -10,7 +11,8 @@ IdManager()
 template<class __T>
 IdManager<__T>::
 IdManager(const IdManager<__T>& other)
-    : freeId_(other.freeId_),
+    : freeIds_(other.freeIds_),
+      reservedIds_(other.reservedIds_),
       maxId_(other.maxId_),
       minId_(other.minId_),
       startId_(other.startId_),
@@ -32,32 +34,196 @@ template<class __T>
 IdManager<__T>::
 ~IdManager() {}
 
+//template<class __T>
+//__T
+//IdManager<__T>::
+//getFreeId()
+//{
+//    __T _freeId = (__T)0;
+
+
+//}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 template<class __T>
 __T
 IdManager<__T>::
 getFreeId()
 {
-    __T _freeId;
+    __T _freeId = (__T)0;
 
-    if (freeId_.size() != 0) {
-        auto _it = freeId_.begin();
+    if (maxId_ < startId_) {
+        _freeId = maxId_;
+        maxId_ += std::abs(step_);
+
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == maxId_) {
+                reservedIds_.erase(it);
+                maxId_ += std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+            ++it;
+        }
+
+        return _freeId;
+    }
+    else if (minId_ > startId_) {
+        _freeId = minId_;
+        minId_ -= std::abs(step_);
+
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == minId_) {
+                reservedIds_.erase(it);
+                minId_ -= std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+            ++it;
+        }
+
+        return _freeId;
+    }
+
+
+    if (freeIds_.size() != 0) {
+        auto _it = freeIds_.begin();
         _freeId = *_it;
-        freeId_.erase(_it);
+        freeIds_.erase(_it);
+
+        if (_freeId == maxId_) {
+            maxId_ += std::abs(step_);
+
+            for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+                if (*it == maxId_) {
+                    reservedIds_.erase(it);
+                    maxId_ += std::abs(step_);
+                    it = reservedIds_.begin();
+                    continue;
+                }
+
+                ++it;
+            }
+        }
+
+        if (_freeId == minId_) {
+            minId_ -= std::abs(step_);
+
+            for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+                if (*it == minId_) {
+                    reservedIds_.erase(it);
+                    minId_ -= std::abs(step_);
+                    it = reservedIds_.begin();
+                    continue;
+                }
+
+                ++it;
+            }
+        }
+
+
         return _freeId;
     }
 
     if (maxId_ == startId_ && minId_ == startId_) {
-        _freeId = startId_;
         maxId_ += std::abs(step_);
         minId_ -= std::abs(step_);
+
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == maxId_) {
+                reservedIds_.erase(it);
+                maxId_ += std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+            if (*it == minId_) {
+                reservedIds_.erase(it);
+                minId_ -= std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+            ++it;
+        }
+
+        return startId_;
     }
-    else if (step_ < (__T)0) {
+
+    if (step_ < (__T)0) {
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == minId_) {
+                reservedIds_.erase(it);
+                minId_ += step_;
+                it = reservedIds_.begin();
+                continue;
+            }
+            ++it;
+        }
+
         _freeId = minId_;
         minId_ += step_;
     }
     else {
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == maxId_) {
+                reservedIds_.erase(it);
+                maxId_ += step_;
+                it = reservedIds_.begin();
+                continue;
+            }
+            ++it;
+        }
+
         _freeId = maxId_;
         maxId_ += step_;
+    }
+
+    for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+        if (*it == maxId_) {
+            reservedIds_.erase(it);
+            maxId_ += std::abs(step_);
+            it = reservedIds_.begin();
+            continue;
+        }
+
+        if (*it == minId_) {
+            reservedIds_.erase(it);
+            minId_ -= std::abs(step_);
+            it = reservedIds_.begin();
+            continue;
+        }
+
+        ++it;
     }
 
     return _freeId;
@@ -66,50 +232,291 @@ getFreeId()
 template<class __T>
 bool
 IdManager<__T>::
-reserveId(__T id)
+reserveId(__T id, ReservationMethod reservationMethod)
 {
-    if (isHardStep_) {
-        if (std::fmod(id, step_) != (__T)0) {
+    if (!isStandardId(id)) {
+        if (isHardStep_) {
             return false;
         }
+
+        for (size_t i = 0; i < reservedIds_.size(); ++i) {
+            if (reservedIds_[i] == id)
+                return false;
+        }
+
+        if (reservationMethod == Interpolate) {
+            if (id > maxId_) {
+                for (__T i = maxId_; i < id; i += std::abs(step_)) {
+
+                    bool _isBreak = false;
+
+                    for (size_t j = 0; j < freeIds_.size(); ++j) {
+                        if (freeIds_[j] == i) {
+                            maxId_ += std::abs(step_);
+                            _isBreak = true;
+                            break;
+                        }
+                    }
+
+                    if (_isBreak == true)
+                        continue;
+
+                    if (reservedIds_.size() != 0) {
+                        for (size_t j = 0; j < reservedIds_.size(); ++j) {
+                            if (reservedIds_[j] == i) {
+                                auto _it = reservedIds_.begin();
+                                std::advance(_it, j);
+                                reservedIds_.erase(_it);
+                                break;
+                            }
+
+                            if (reservedIds_.size() - 1 == j)
+                                freeIds_.push_back(i);
+                        }
+                    }
+                    else {
+                        freeIds_.push_back(i);
+                    }
+
+                    maxId_ += std::abs(step_);
+                }
+            }
+
+            if (id < minId_) {
+                for (__T i = minId_; i > id; i -= std::abs(step_)) {
+
+                    bool _isBreak = false;
+
+                    for (size_t j = 0; j < freeIds_.size(); ++j) {
+                        if (freeIds_[j] == i) {
+                            minId_ -= std::abs(step_);
+                            _isBreak = true;
+                            break;
+                        }
+                    }
+
+                    if (_isBreak == true)
+                        continue;
+
+                    if (reservedIds_.size() != 0) {
+                        for (size_t j = 0; j < reservedIds_.size(); ++j) {
+                            if (reservedIds_[j] == i) {
+                                auto _it = reservedIds_.begin();
+                                std::advance(_it, j);
+                                reservedIds_.erase(_it);
+                                break;
+                            }
+
+                            if (reservedIds_.size() - 1 == j)
+                                freeIds_.push_back(i);
+                        }
+                    }
+                    else {
+                        freeIds_.push_back(i);
+                    }
+
+                    minId_ -= std::abs(step_);
+                }
+            }
+        }
+
+        reservedIds_.push_back(id);
+        return true;
     }
 
-    for (auto it = freeId_.begin(); it != freeId_.end(); ++it) {
-        if (*it == id) {
-            freeId_.erase(it);
+    if (id == startId_) {
+        if (maxId_ == startId_ && minId_ == startId_) {
+            maxId_ += std::abs(step_);
+            minId_ -= std::abs(step_);
+
+            for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+                if (*it == maxId_) {
+                    reservedIds_.erase(it);
+                    maxId_ += std::abs(step_);
+                    it = reservedIds_.begin();
+                    continue;
+                }
+
+                if (*it == minId_) {
+                    reservedIds_.erase(it);
+                    minId_ -= std::abs(step_);
+                    it = reservedIds_.begin();
+                    continue;
+                }
+
+                ++it;
+            }
+
             return true;
         }
     }
 
+    for (auto it = freeIds_.begin(); it != freeIds_.end(); ++it) {
+        if (*it == id) {
+            freeIds_.erase(it);
 
+            if (id == startId_) {
+                if (maxId_ == startId_)
+                    maxId_ += std::abs(step_);
 
-    if (id >= maxId_) { //TODO: Добавить во всех функциях
-//        if (std::fmod(id, step_) != (__T)0) {
-//            return false;
-//        }
+                if (minId_ == startId_)
+                    minId_ -= std::abs(step_);
 
-        for (__T i = maxId_; i < id; i += std::abs(step_)) {
-            freeId_.push_back(i);
+                for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+                    if (*it == maxId_) {
+                        reservedIds_.erase(it);
+                        maxId_ += std::abs(step_);
+                        it = reservedIds_.begin();
+                        continue;
+                    }
+
+                    if (*it == minId_) {
+                        reservedIds_.erase(it);
+                        minId_ -= std::abs(step_);
+                        it = reservedIds_.begin();
+                        continue;
+                    }
+
+                    ++it;
+                }
+            }
+
+            return true;
+        }
+    }
+
+    for (size_t i = 0; i < reservedIds_.size(); ++i) {
+        if (reservedIds_[i] == id)
+            return false;
+    }
+
+    if (id < maxId_ && id > minId_)
+        return false;
+
+    if (id == maxId_) {
+        maxId_ += std::abs(step_);
+
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == maxId_) {
+                reservedIds_.erase(it);
+                maxId_ += std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+            ++it;
         }
 
-        maxId_ = id + std::abs(step_);
         return true;
     }
 
-    if (id <= minId_) {
-        //        if (std::fmod(id, step_) != (__T)0) {
-        //            return false;
-        //        }
+    if (id == minId_) {
+        minId_ -= std::abs(step_);
 
-        for (__T i = minId_; i > id; i -= std::abs(step_)) {
-            freeId_.push_back(i);
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end();) {
+            if (*it == minId_) {
+                reservedIds_.erase(it);
+                minId_ -= std::abs(step_);
+                it = reservedIds_.begin();
+                continue;
+            }
+
+//            bool _isBreak = false;
+
+//            for (size_t j = 0; j < freeIds_.size(); ++j) {
+//                if (freeIds_[j] == i) {
+//                    _isBreak = true;
+//                    break;
+//                }
+//            }
+
+//            if (_isBreak == true)
+//                continue;
+
+            ++it;
         }
 
-        minId_ = id - std::abs(step_);
         return true;
     }
 
-    return false;
+    if (reservationMethod == AutoSelect || reservationMethod == Interpolate) {
+        if (id > maxId_) {
+            for (__T i = maxId_; i < id; i += std::abs(step_)) {
+
+                bool _isBreak = false;
+
+                for (size_t j = 0; j < freeIds_.size(); ++j) {
+                    if (freeIds_[j] == i) {
+                        _isBreak = true;
+                        break;
+                    }
+                }
+
+                if (_isBreak == true)
+                    continue;
+
+                if (reservedIds_.size() != 0) {
+                    for (size_t j = 0; j < reservedIds_.size(); ++j) {
+                        if (reservedIds_[j] == i) {
+                            auto _it = reservedIds_.begin();
+                            std::advance(_it, j);
+                            reservedIds_.erase(_it);
+                            break;
+                        }
+
+                        if (reservedIds_.size() - 1 == j)
+                            freeIds_.push_back(i);
+                    }
+                }
+                else {
+                    freeIds_.push_back(i);
+                }
+            }
+
+            maxId_ = id + std::abs(step_);
+            return true;
+        }
+
+        if (id < minId_) {
+            for (__T i = minId_; i > id; i -= std::abs(step_)) {
+
+                bool _isBreak = false;
+
+                for (size_t j = 0; j < freeIds_.size(); ++j) {
+                    if (freeIds_[j] == i) {
+                        _isBreak = true;
+                        break;
+                    }
+                }
+
+                if (_isBreak == true)
+                    continue;
+
+                if (reservedIds_.size() != 0) {
+                    for (size_t j = 0; j < reservedIds_.size(); ++j) {
+                        if (reservedIds_[j] == i) {
+                            auto _it = reservedIds_.begin();
+                            std::advance(_it, j);
+                            reservedIds_.erase(_it);
+                            break;
+                        }
+
+                        if (reservedIds_.size() - 1 == j)
+                            freeIds_.push_back(i);
+                    }
+                }
+                else {
+                    freeIds_.push_back(i);
+                }
+            }
+
+            minId_ = id - std::abs(step_);
+            return true;
+        }
+    }
+
+    reservedIds_.push_back(id);
+    return true;
 }
 
 template<class __T>
@@ -117,8 +524,24 @@ void
 IdManager<__T>::
 freeId(__T id)
 {
-    if (isHardStep_) {
-        if (std::fmod(id, step_) != (__T)0) {
+    if (!isStandardId(id)) {
+        if (isHardStep_) {
+            return;
+        }
+
+        for (auto it = reservedIds_.begin(); it != reservedIds_.end(); ++it) {
+            if (*it == id) {
+                reservedIds_.erase(it);
+                return;
+            }
+        }
+
+        return;
+    }
+
+    for (auto it = reservedIds_.begin(); it != reservedIds_.end(); ++it) {
+        if (*it == id) {
+            reservedIds_.erase(it);
             return;
         }
     }
@@ -126,8 +549,8 @@ freeId(__T id)
     if (id >= maxId_ || id <= minId_)
         return;
 
-    for (size_t i = 0; i < freeId_.size(); ++i) {
-        if (freeId_[i] == id)
+    for (size_t i = 0; i < freeIds_.size(); ++i) {
+        if (freeIds_[i] == id)
             return;
     }
 
@@ -141,7 +564,7 @@ freeId(__T id)
         return;
     }
 
-    freeId_.push_back(id);
+    freeIds_.push_back(id);
 }
 
 template<class __T>
@@ -149,7 +572,8 @@ void
 IdManager<__T>::
 freeAll()
 {
-    freeId_.clear();
+    freeIds_.clear();
+    reservedIds_.clear();
     maxId_ = startId_;
     minId_ = startId_;
 }
@@ -159,17 +583,29 @@ bool
 IdManager<__T>::
 findId(__T id) const
 {
-    if (isHardStep_) {
-        if (std::fmod(id, step_) != (__T)0) {
+    if (!isStandardId(id)) {
+        if (isHardStep_) {
             return false;
         }
+
+        for (size_t i = 0; i < reservedIds_.size(); ++i) {
+            if (reservedIds_[i] == id)
+                return true;
+        }
+
+        return false;
+    }
+
+    for (size_t i = 0; i < reservedIds_.size(); ++i) {
+        if (reservedIds_[i] == id)
+            return true;
     }
 
     if (id >= maxId_ || id <= minId_)
         return false;
 
-    for (size_t i = 0; i < freeId_.size(); ++i) {
-        if (freeId_[i] == id)
+    for (size_t i = 0; i < freeIds_.size(); ++i) {
+        if (freeIds_[i] == id)
             return false;
     }
 
@@ -217,11 +653,21 @@ isHardStep() const
 }
 
 template<class __T>
+bool
+IdManager<__T>::
+isStandardId(__T id) const
+{
+    float n = std::abs((float)(id - startId_ + step_) / (float)step_);
+    return (float)n - (size_t)n == (float)0.0;
+}
+
+template<class __T>
 IdManager<__T>&
 IdManager<__T>::
 operator=(const IdManager<__T>& other)
 {
-    freeId_ = other.freeId_;
+    freeIds_ = other.freeIds_;
+    reservedIds_ = other.reservedIds_;
     maxId_ = other.maxId_;
     minId_ = other.minId_;
     startId_ = other.startId_;

@@ -3,11 +3,30 @@
 
 #include <vector>
 
+#define ID_MANAGER_VER_MAJOR   0
+#define ID_MANAGER_VER_MINOR   0
+#define ID_MANAGER_VER_PATCH   0
+
+
+//TODO: Добавить поддержку unsigned
+//TODO: Добавить возможность резервировать диапазон
+
 
 template<class __T>
 class IdManager
 {
-    std::vector<__T> freeId_;
+public:
+    enum ReservationMethod
+    {
+        Interpolate,
+        NonInterpolate,
+        AutoSelect
+        //InterpolateWithReserving  TODO: Добавить в следующей версии
+    };
+
+private:
+    std::vector<__T> freeIds_;
+    std::vector<__T> reservedIds_;
     __T maxId_;
     __T minId_;
 
@@ -22,7 +41,7 @@ public:
     ~IdManager();
 
     __T getFreeId();
-    bool reserveId(__T id);
+    bool reserveId(__T id, ReservationMethod reservationMethod = AutoSelect);
 
     void freeId(__T id);
     void freeAll();
@@ -34,6 +53,7 @@ public:
     __T getMaxId() const;
     __T getMinId() const;
     bool isHardStep() const;
+    bool isStandardId(__T id) const;
 
     IdManager<__T>& operator=(const IdManager<__T>& other);
 
