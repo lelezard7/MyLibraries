@@ -4,53 +4,53 @@
 
 //TODO: Добавить тест с дробным StartId.
 
-struct IdManagerTests : public ::testing::Test
-{
-    IdManagerTests()
-        : idManager_int_Start_2_Step_2(2, 2),
-          idManager_float_Start_2_Step_1p5(2.0, 1.5),
-//          idManager_uInt_Start_2_Step_2(2, 2),
+//struct IdManagerTests : public ::testing::Test
+//{
+//    IdManagerTests()
+//        : idManager_int_Start_2_Step_2(2, 2),
+//          idManager_float_Start_2_Step_1p5(2.0, 1.5),
+////          idManager_uInt_Start_2_Step_2(2, 2),
 
-          idManager_int_Start_n2_Step_2(-2, 2),
-          idManager_float_Start_n2_Step_1p5(-2.0, 1.5),
-//          idManager_uInt_Start_n2_Step_2(-2, 2),
+//          idManager_int_Start_n2_Step_2(-2, 2),
+//          idManager_float_Start_n2_Step_1p5(-2.0, 1.5),
+////          idManager_uInt_Start_n2_Step_2(-2, 2),
 
-          idManager_int_Start_2_Step_n2(2, -2),
-          idManager_float_Start_2_Step_n1p5(2.0, -1.5),
-//          idManager_uInt_Start_2_Step_n2(2, -2),
+//          idManager_int_Start_2_Step_n2(2, -2),
+//          idManager_float_Start_2_Step_n1p5(2.0, -1.5),
+////          idManager_uInt_Start_2_Step_n2(2, -2),
 
-          idManager_int_Start_n2_Step_n2(-2, -2),
-          idManager_float_Start_n2_Step_n1p5(-2.0, -1.5) {};
-//          idManager_uInt_Start_n2_Step_n2(-2, -2) {};
+//          idManager_int_Start_n2_Step_n2(-2, -2),
+//          idManager_float_Start_n2_Step_n1p5(-2.0, -1.5) {};
+////          idManager_uInt_Start_n2_Step_n2(-2, -2) {};
 
-    IdManager<int> idManager_int;
-    IdManager<float> idManager_float;
-//    IdManager<unsigned int> idManager_uInt;
+//    IdManager<int> idManager_int;
+//    IdManager<float> idManager_float;
+////    IdManager<unsigned int> idManager_uInt;
 
-    IdManager<int> idManager_int_Start_2_Step_2;
-    IdManager<float> idManager_float_Start_2_Step_1p5;
-//    IdManager<unsigned int> idManager_uInt_Start_2_Step_2;
+//    IdManager<int> idManager_int_Start_2_Step_2;
+//    IdManager<float> idManager_float_Start_2_Step_1p5;
+////    IdManager<unsigned int> idManager_uInt_Start_2_Step_2;
 
-    IdManager<int> idManager_int_Start_n2_Step_2;
-    IdManager<float> idManager_float_Start_n2_Step_1p5;
-//    IdManager<unsigned int> idManager_uInt_Start_n2_Step_2;
+//    IdManager<int> idManager_int_Start_n2_Step_2;
+//    IdManager<float> idManager_float_Start_n2_Step_1p5;
+////    IdManager<unsigned int> idManager_uInt_Start_n2_Step_2;
 
-    IdManager<int> idManager_int_Start_2_Step_n2;
-    IdManager<float> idManager_float_Start_2_Step_n1p5;
-//    IdManager<unsigned int> idManager_uInt_Start_2_Step_n2;
+//    IdManager<int> idManager_int_Start_2_Step_n2;
+//    IdManager<float> idManager_float_Start_2_Step_n1p5;
+////    IdManager<unsigned int> idManager_uInt_Start_2_Step_n2;
 
-    IdManager<int> idManager_int_Start_n2_Step_n2;
-    IdManager<float> idManager_float_Start_n2_Step_n1p5;
-//    IdManager<unsigned int> idManager_uInt_Start_n2_Step_n2;
+//    IdManager<int> idManager_int_Start_n2_Step_n2;
+//    IdManager<float> idManager_float_Start_n2_Step_n1p5;
+////    IdManager<unsigned int> idManager_uInt_Start_n2_Step_n2;
 
-};
+//};
 
 int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
-
+/*
 TEST_F(IdManagerTests, Test_Getters)
 {
     EXPECT_FALSE(idManager_int.isHardStep());
@@ -1974,6 +1974,7 @@ TEST_F(IdManagerTests, Solo_test_ReserveId_function)
 
 }
 
+*/
 
 
 
