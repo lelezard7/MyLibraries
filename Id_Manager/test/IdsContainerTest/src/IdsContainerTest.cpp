@@ -25,7 +25,7 @@ public:
 };
 
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
@@ -51,20 +51,11 @@ protected:
           idContainer_char_ascending(IdIssuingMethod::Ascending),
           idContainer_char_descending(IdIssuingMethod::Descending),
 
-          id_int(new int),
-          id_float(new float),
-          id_unsigned(new unsigned),
-          id_bool(new bool),
-          id_char(new char) {};
-
-    ~IdContainerTests()
-    {
-        delete id_int;
-        delete id_float;
-        delete id_unsigned;
-        delete id_bool;
-        delete id_char;
-    }
+          id_int(0),
+          id_float(0.0),
+          id_unsigned(0),
+          id_bool(0),
+          id_char(0) {};
 
     OpenIdContainer<int> idContainer_int;
     OpenIdContainer<int> idContainer_int_ascending;
@@ -86,11 +77,11 @@ protected:
     OpenIdContainer<char> idContainer_char_ascending;
     OpenIdContainer<char> idContainer_char_descending;
 
-    int* id_int;
-    float* id_float;
-    unsigned* id_unsigned;
-    bool* id_bool;
-    char* id_char;
+    int id_int;
+    float id_float;
+    unsigned id_unsigned;
+    bool id_bool;
+    char id_char;
 };
 
 TEST_F(IdContainerTests, Test1)
@@ -284,13 +275,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_int.getUnorderedFreeIdsSizeT(), 4);
 
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 3);
+    EXPECT_EQ(id_int, 3);
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 1);
+    EXPECT_EQ(id_int, 1);
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, -2);
+    EXPECT_EQ(id_int, -2);
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
     EXPECT_FALSE(idContainer_int.getNextId(id_int));
 
     EXPECT_EQ(idContainer_int.size(), 0);
@@ -310,13 +301,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_int_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, -2);
+    EXPECT_EQ(id_int, -2);
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 1);
+    EXPECT_EQ(id_int, 1);
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 3);
+    EXPECT_EQ(id_int, 3);
     EXPECT_FALSE(idContainer_int_ascending.getNextId(id_int));
 
     EXPECT_EQ(idContainer_int_ascending.size(), 0);
@@ -336,13 +327,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_int_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 3);
+    EXPECT_EQ(id_int, 3);
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 1);
+    EXPECT_EQ(id_int, 1);
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, -2);
+    EXPECT_EQ(id_int, -2);
     EXPECT_FALSE(idContainer_int_descending.getNextId(id_int));
 
     EXPECT_EQ(idContainer_int_descending.size(), 0);
@@ -362,13 +353,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_float.getUnorderedFreeIdsSizeT(), 4);
 
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 1.0);
+    EXPECT_FLOAT_EQ(id_float, 1.0);
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, -2.0);
+    EXPECT_FLOAT_EQ(id_float, -2.0);
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
     EXPECT_FALSE(idContainer_float.getNextId(id_float));
 
     EXPECT_EQ(idContainer_float.size(), 0);
@@ -388,13 +379,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_float_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, -2.0);
+    EXPECT_FLOAT_EQ(id_float, -2.0);
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 1.0);
+    EXPECT_FLOAT_EQ(id_float, 1.0);
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
     EXPECT_FALSE(idContainer_float_ascending.getNextId(id_float));
 
     EXPECT_EQ(idContainer_float_ascending.size(), 0);
@@ -414,13 +405,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_float_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 1.0);
+    EXPECT_FLOAT_EQ(id_float, 1.0);
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, -2.0);
+    EXPECT_FLOAT_EQ(id_float, -2.0);
     EXPECT_FALSE(idContainer_float_descending.getNextId(id_float));
 
     EXPECT_EQ(idContainer_float_descending.size(), 0);
@@ -441,13 +432,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_unsigned.getUnorderedFreeIdsSizeT(), 4);
 
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 0);
+    EXPECT_EQ(id_unsigned, 0);
     EXPECT_FALSE(idContainer_unsigned.getNextId(id_unsigned));
 
     EXPECT_EQ(idContainer_unsigned.size(), 0);
@@ -467,13 +458,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_unsigned_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 0);
+    EXPECT_EQ(id_unsigned, 0);
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
     EXPECT_FALSE(idContainer_unsigned_ascending.getNextId(id_unsigned));
 
     EXPECT_EQ(idContainer_unsigned_ascending.size(), 0);
@@ -493,13 +484,13 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_unsigned_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 0);
+    EXPECT_EQ(id_unsigned, 0);
     EXPECT_FALSE(idContainer_unsigned_descending.getNextId(id_unsigned));
 
     EXPECT_EQ(idContainer_unsigned_descending.size(), 0);
@@ -520,9 +511,9 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_bool.getUnorderedFreeIdsSizeT(), 2);
 
     EXPECT_TRUE(idContainer_bool.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
     EXPECT_TRUE(idContainer_bool.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
     EXPECT_FALSE(idContainer_bool.getNextId(id_bool));
 
     EXPECT_EQ(idContainer_bool.size(), 0);
@@ -543,9 +534,9 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_bool_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_bool_ascending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
     EXPECT_TRUE(idContainer_bool_ascending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
     EXPECT_FALSE(idContainer_bool_ascending.getNextId(id_bool));
 
     EXPECT_EQ(idContainer_bool_ascending.size(), 0);
@@ -566,9 +557,9 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_bool_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_bool_descending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
     EXPECT_TRUE(idContainer_bool_descending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
     EXPECT_FALSE(idContainer_bool_descending.getNextId(id_bool));
 
     EXPECT_EQ(idContainer_bool_descending.size(), 0);
@@ -589,15 +580,15 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_char.getUnorderedFreeIdsSizeT(), 5);
 
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 0);
+    EXPECT_EQ(id_char, 0);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
     EXPECT_FALSE(idContainer_char.getNextId(id_char));
 
     EXPECT_EQ(idContainer_char.size(), 0);
@@ -618,15 +609,15 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_char_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 0);
+    EXPECT_EQ(id_char, 0);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
     EXPECT_FALSE(idContainer_char_ascending.getNextId(id_char));
 
     EXPECT_EQ(idContainer_char_ascending.size(), 0);
@@ -648,15 +639,15 @@ TEST_F(IdContainerTests, Test3)
     EXPECT_EQ(idContainer_char_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 0);
+    EXPECT_EQ(id_char, 0);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
     EXPECT_FALSE(idContainer_char_descending.getNextId(id_char));
 
     EXPECT_EQ(idContainer_char_descending.size(), 0);
@@ -670,7 +661,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_int.add( 0));
 
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 3);
+    EXPECT_EQ(id_int, 3);
 
     idContainer_int.freeId(-2);
     EXPECT_EQ(idContainer_int.size(), 2);
@@ -680,9 +671,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_int.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
     EXPECT_TRUE(idContainer_int.getNextId(id_int));
-    EXPECT_EQ(*id_int, 1);
+    EXPECT_EQ(id_int, 1);
 
 
     EXPECT_TRUE(idContainer_int_ascending.add( 3));
@@ -691,7 +682,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_int_ascending.add( 0));
 
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, -2);
+    EXPECT_EQ(id_int, -2);
 
     idContainer_int_ascending.freeId(3);
     EXPECT_EQ(idContainer_int_ascending.size(), 2);
@@ -701,9 +692,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_int_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 1);
+    EXPECT_EQ(id_int, 1);
     EXPECT_TRUE(idContainer_int_ascending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
 
 
     EXPECT_TRUE(idContainer_int_descending.add( 3));
@@ -712,7 +703,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_int_descending.add( 0));
 
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 3);
+    EXPECT_EQ(id_int, 3);
 
     idContainer_int_descending.freeId(1);
     EXPECT_EQ(idContainer_int_descending.size(), 2);
@@ -722,9 +713,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_int_descending.getUnorderedFreeIdsSizeT(), 2);
 
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, -2);
+    EXPECT_EQ(id_int, -2);
     EXPECT_TRUE(idContainer_int_descending.getNextId(id_int));
-    EXPECT_EQ(*id_int, 0);
+    EXPECT_EQ(id_int, 0);
 
 
     EXPECT_TRUE(idContainer_float.add( 3.0));
@@ -733,7 +724,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_float.add( 0.0));
 
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
 
     idContainer_float.freeId(1.0);
     EXPECT_EQ(idContainer_float.size(), 2);
@@ -743,9 +734,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_float.getUnorderedFreeIdsSizeT(), 2);
 
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, -2.0);
+    EXPECT_FLOAT_EQ(id_float, -2.0);
     EXPECT_TRUE(idContainer_float.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
 
 
     EXPECT_TRUE(idContainer_float_ascending.add( 3.0));
@@ -754,7 +745,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_float_ascending.add( 0.0));
 
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, -2.0);
+    EXPECT_FLOAT_EQ(id_float, -2.0);
 
     idContainer_float_ascending.freeId(1.0);
     EXPECT_EQ(idContainer_float_ascending.size(), 2);
@@ -764,9 +755,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_float_ascending.getUnorderedFreeIdsSizeT(), 2);
 
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
     EXPECT_TRUE(idContainer_float_ascending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
 
 
     EXPECT_TRUE(idContainer_float_descending.add( 3.0));
@@ -775,7 +766,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_float_descending.add( 0.0));
 
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 3.0);
+    EXPECT_FLOAT_EQ(id_float, 3.0);
 
     idContainer_float_descending.freeId(-2.0);
     EXPECT_EQ(idContainer_float_descending.size(), 2);
@@ -785,9 +776,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_float_descending.getUnorderedFreeIdsSizeT(), 2);
 
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 0.0);
+    EXPECT_FLOAT_EQ(id_float, 0.0);
     EXPECT_TRUE(idContainer_float_descending.getNextId(id_float));
-    EXPECT_FLOAT_EQ(*id_float, 1.0);
+    EXPECT_FLOAT_EQ(id_float, 1.0);
 
 
     EXPECT_TRUE(idContainer_unsigned.add( 3));
@@ -796,7 +787,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_unsigned.add( 0));
 
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
 
     idContainer_unsigned.freeId(0);
     EXPECT_EQ(idContainer_unsigned.size(), 2);
@@ -806,9 +797,9 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_unsigned.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
 
 
     EXPECT_TRUE(idContainer_unsigned_ascending.add(-2));
@@ -817,7 +808,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_unsigned_ascending.add( 0));
 
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 0);
+    EXPECT_EQ(id_unsigned, 0);
 
     idContainer_unsigned_ascending.freeId(0);
     EXPECT_EQ(idContainer_unsigned_ascending.size(), 3);
@@ -827,11 +818,11 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_unsigned_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
     EXPECT_TRUE(idContainer_unsigned_ascending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
 
 
     EXPECT_TRUE(idContainer_unsigned_descending.add( 3));
@@ -840,7 +831,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_unsigned_descending.add( 0));
 
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, -2);
+    EXPECT_EQ(id_unsigned, -2);
 
     idContainer_unsigned_descending.freeId(5);
     EXPECT_EQ(idContainer_unsigned_descending.size(), 3);
@@ -850,11 +841,11 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_unsigned_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 0);
+    EXPECT_EQ(id_unsigned, 0);
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 1);
+    EXPECT_EQ(id_unsigned, 1);
     EXPECT_TRUE(idContainer_unsigned_descending.getNextId(id_unsigned));
-    EXPECT_EQ(*id_unsigned, 3);
+    EXPECT_EQ(id_unsigned, 3);
 
 
     EXPECT_TRUE (idContainer_bool.add( 3));
@@ -863,14 +854,14 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE (idContainer_bool.add( 0));
 
     EXPECT_TRUE(idContainer_bool.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
 
     idContainer_bool.setIdIssuingMethod(IdIssuingMethod::Ascending);
     EXPECT_EQ(idContainer_bool.getOrderedFreeIdsSizeT(), 1);
     EXPECT_EQ(idContainer_bool.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_bool.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
 
 
     EXPECT_TRUE (idContainer_bool_ascending.add( 3));
@@ -879,14 +870,14 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE (idContainer_bool_ascending.add( 0));
 
     EXPECT_TRUE(idContainer_bool_ascending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
 
     idContainer_bool_ascending.setIdIssuingMethod(IdIssuingMethod::Ascending);
     EXPECT_EQ(idContainer_bool_ascending.getOrderedFreeIdsSizeT(), 1);
     EXPECT_EQ(idContainer_bool_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_bool_ascending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
 
 
     EXPECT_TRUE (idContainer_bool_descending.add( 3));
@@ -895,14 +886,14 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE (idContainer_bool_descending.add( 0));
 
     EXPECT_TRUE(idContainer_bool_descending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 1);
+    EXPECT_EQ(id_bool, 1);
 
     idContainer_bool_descending.setIdIssuingMethod(IdIssuingMethod::Ascending);
     EXPECT_EQ(idContainer_bool_descending.getOrderedFreeIdsSizeT(), 1);
     EXPECT_EQ(idContainer_bool_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_bool_descending.getNextId(id_bool));
-    EXPECT_EQ(*id_bool, 0);
+    EXPECT_EQ(id_bool, 0);
 
 
     EXPECT_TRUE(idContainer_char.add(-2));
@@ -912,7 +903,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_char.add( 125));
 
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
 
     idContainer_char.freeId(0);
     EXPECT_EQ(idContainer_char.size(), 3);
@@ -922,11 +913,11 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_char.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
 
 
     EXPECT_TRUE(idContainer_char_ascending.add(-2));
@@ -936,7 +927,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_char_ascending.add( 125));
 
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
 
     idContainer_char_ascending.freeId(0);
     EXPECT_EQ(idContainer_char_ascending.size(), 3);
@@ -946,11 +937,11 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_char_ascending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char_ascending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
 
 
     EXPECT_TRUE(idContainer_char_descending.add(-2));
@@ -960,7 +951,7 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_TRUE(idContainer_char_descending.add( 125));
 
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 125);
+    EXPECT_EQ(id_char, 125);
 
     idContainer_char_descending.freeId(125);
     EXPECT_EQ(idContainer_char_descending.size(), 4);
@@ -970,13 +961,13 @@ TEST_F(IdContainerTests, Test4)
     EXPECT_EQ(idContainer_char_descending.getUnorderedFreeIdsSizeT(), 0);
 
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 3);
+    EXPECT_EQ(id_char, 3);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 1);
+    EXPECT_EQ(id_char, 1);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, 0);
+    EXPECT_EQ(id_char, 0);
     EXPECT_TRUE(idContainer_char_descending.getNextId(id_char));
-    EXPECT_EQ(*id_char, -2);
+    EXPECT_EQ(id_char, -2);
 }
 
 TEST_F(IdContainerTests, Test5)

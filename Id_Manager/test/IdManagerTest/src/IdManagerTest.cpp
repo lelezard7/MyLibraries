@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+using namespace Id_M;
+
 //TODO: Добавить тест с дробным StartId.
 
 //struct IdManagerTests : public ::testing::Test
@@ -45,11 +47,43 @@
 
 //};
 
+//#define IdManager_Int(start, step) \
+//    if (step < 0) \
+//        IdManager<int> f(start, step, typpe::rr); \
+//    else \
+//        IdManager<int> f(start, step, typpe::Dynamic);
+
 int main(int argc, char **argv)
 {
+    int f = 0;
+    IdContainer<int> dd;
+    dd.add(2);
+    dd.getNextId(f);
+
+    IdManager<int> d(0, 1);
+    std::cout << d.isStandardId(2) << std::endl;
+
+    int _id;
+    d.getFreeId(_id);
+    d.getFreeId(_id);
+    d.getFreeId(_id);
+
+    float hh = static_cast<float>(333);
+
+//    IdManager_Int(3, -2);
+
+
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+
+
+
+
+
+
+
+
 /*
 TEST_F(IdManagerTests, Test_Getters)
 {
