@@ -61,6 +61,8 @@ namespace Id_M
         void freeId(__T id);
         void clear();
 
+        __T findIdByIndex(long long i) const;  //long long -> __T
+
         void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
         IdIssuingMethod getIdIssuingMethod() const;
 
@@ -134,6 +136,8 @@ namespace Id_M
         Result<__T> getIdInfo(BorderRange borderRange, long long n) const;
         Result<__T> getIdInfo(__T id) const;
 
+        void reset();
+
         bool setBorderValue(BorderRange borderRange, __T value);
         inline __T getBorderValue(BorderRange borderRange) const;
 
@@ -158,11 +162,11 @@ namespace Id_M
     };
 
 
-    template<class __T, class __Step = __T>
+    template<class __T, class __Step = __T>  //Проверить все функции на unsigned и на наличие проверок возвращаемых err кодов (IDM_ERR_IDS_RUN_OUT и т.д.).
     class IdManager
     {
         IdContainer<__T> freeIds_;
-        IdContainer<__T> reservedIds_;
+        IdContainer<__T> reservedIds_;  //Не учитывает maxId в idArea_.
 
         IdArea<__T> idArea_;
 
@@ -181,11 +185,14 @@ namespace Id_M
         int getFreeId(__T& id);
         bool reserveId(__T id, ReservationMethod reservationMethod = ReservationMethod::AutoSelect);
 
-        void freeId(__T id);
+        bool freeId(__T id);
         void freeAll();
 
-        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
-        IdIssuingMethod getIdIssuingMethod();
+        void setHardStep(bool value);
+        bool isHardStep() const;
+
+        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);  //Нормализовывать диапазон.
+        inline IdIssuingMethod getIdIssuingMethod() const;
 
         bool findId(__T id) const;
 
@@ -195,11 +202,23 @@ namespace Id_M
         __Step getStep() const;
 //        __T getMaxId() const;
 //        __T getMinId() const;
-        bool isHardStep() const;
 
         IdManager<__T, __Step>& operator=(const IdManager<__T, __Step>& other);
 
     private:
+        bool interpolateIds(BorderRange border, __T id);
+
+        int expandRange(BorderRange border);
+        int reduceRange(BorderRange border);
+        int normalizeRange(BorderRange border);
+        int getNextId(BorderRange border, __T& id);
+
+        template<class __TF>
+        inline __TF idm_abs(__TF value) const;
+
+
+
+
         int expandRangeToTop(BorderRange border, __T* id);
         int expandRangeToTopWithowtReserv(BorderRange border, __T* id);
 
@@ -209,8 +228,7 @@ namespace Id_M
         int expandRange(__T* id);
         bool checkRangeBorder(__T value, BorderRange border) const;
 
-        template<class __TF>
-        inline __TF idm_abs(__TF value) const;
+
 
     };
 

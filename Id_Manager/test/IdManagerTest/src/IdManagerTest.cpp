@@ -70,6 +70,15 @@ int main(int argc, char **argv)
 
     float hh = static_cast<float>(333);
 
+    std::set<int> ddfdf;
+    ddfdf.insert(3);
+    ddfdf.insert(4);
+    ddfdf.insert(2);
+    std::set<int>::const_iterator itset = ddfdf.begin();
+    std::advance(itset, 3);
+
+//    ddfdf.
+
 //    IdManager_Int(3, -2);
 
 
@@ -77,6 +86,10 @@ int main(int argc, char **argv)
     return RUN_ALL_TESTS();
 }
 
+TEST(yyy, yyy)
+{
+
+}
 
 
 
