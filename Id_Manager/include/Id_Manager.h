@@ -27,8 +27,8 @@ namespace Id_M
         NonInterpolate,
         AutoSelect,
 
-        ReserveRange,
-        ExpandRange
+        ReserveRange
+//        ExpandRange
     };
 
     enum class IdIssuingMethod
@@ -207,6 +207,7 @@ namespace Id_M
 
     private:
         bool interpolateIds(BorderRange border, __T id);
+        bool reserveIds(BorderRange border, __T id);
 
         int expandRange(BorderRange border);
         int reduceRange(BorderRange border);
