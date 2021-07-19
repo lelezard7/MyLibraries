@@ -6,89 +6,85 @@ using namespace Id_M;
 
 //TODO: Добавить тест с дробным StartId.
 
-//struct IdManagerTests : public ::testing::Test
-//{
-//    IdManagerTests()
-//        : idManager_int_Start_2_Step_2(2, 2),
-//          idManager_float_Start_2_Step_1p5(2.0, 1.5),
-////          idManager_uInt_Start_2_Step_2(2, 2),
+struct IdManagerTests : public ::testing::Test
+{
+    IdManager<int, int> idManager_int;
+    IdManager<float, float> idManager_float;
+    IdManager<unsigned, unsigned> idManager_uInt;
+    IdManager<unsigned, int> idManager_uInt_2Int;
+    IdManager<float, int> idManager_float_2Int;
 
-//          idManager_int_Start_n2_Step_2(-2, 2),
-//          idManager_float_Start_n2_Step_1p5(-2.0, 1.5),
-////          idManager_uInt_Start_n2_Step_2(-2, 2),
+    IdManager<int, int> idManager_int_Ascending;
+    IdManager<float, float> idManager_float_Descending;
+    IdManager<unsigned, unsigned> idManager_uInt_Ascending;
+    IdManager<unsigned, int> idManager_uInt_2Int_Descending;
+    IdManager<float, int> idManager_float_2Int_Ascending;
 
-//          idManager_int_Start_2_Step_n2(2, -2),
-//          idManager_float_Start_2_Step_n1p5(2.0, -1.5),
-////          idManager_uInt_Start_2_Step_n2(2, -2),
 
-//          idManager_int_Start_n2_Step_n2(-2, -2),
-//          idManager_float_Start_n2_Step_n1p5(-2.0, -1.5) {};
-////          idManager_uInt_Start_n2_Step_n2(-2, -2) {};
+    IdManager<int, int> idManager_int_Start_2_Step_2;
+    IdManager<float, float> idManager_float_Start_2_Step_1p5;
+    IdManager<unsigned, unsigned> idManager_uInt_Start_2_Step_2;
+    IdManager<unsigned, int> idManager_uInt_2Int_Start_2_Step_2;
+    IdManager<float, int> idManager_float_2Int_Start_1p5_Step_2;
 
-//    IdManager<int> idManager_int;
-//    IdManager<float> idManager_float;
-////    IdManager<unsigned int> idManager_uInt;
+    IdManager<int, int> idManager_int_Start_n2_Step_2;
+    IdManager<float, float> idManager_float_Start_n2_Step_1p5;
+    IdManager<unsigned, unsigned> idManager_uInt_Start_n2_Step_2;
+    IdManager<unsigned, int> idManager_uInt_2Int_Start_n2_Step_2;
+    IdManager<float, int> idManager_float_2Int_Start_n1p5_Step_2;
 
-//    IdManager<int> idManager_int_Start_2_Step_2;
-//    IdManager<float> idManager_float_Start_2_Step_1p5;
-////    IdManager<unsigned int> idManager_uInt_Start_2_Step_2;
+    IdManager<int, int> idManager_int_Start_2_Step_n2;
+    IdManager<float, float> idManager_float_Start_2_Step_n1p5;
+    IdManager<unsigned, unsigned> idManager_uInt_Start_2_Step_n2;
+    IdManager<unsigned, int> idManager_uInt_2Int_Start_2_Step_n2;
+    IdManager<float, int> idManager_float_2Int_Start_1p5_Step_n2;
 
-//    IdManager<int> idManager_int_Start_n2_Step_2;
-//    IdManager<float> idManager_float_Start_n2_Step_1p5;
-////    IdManager<unsigned int> idManager_uInt_Start_n2_Step_2;
+    IdManager<int, int> idManager_int_Start_n2_Step_n2;
+    IdManager<float, float> idManager_float_Start_n2_Step_n1p5;
+    IdManager<unsigned, unsigned> idManager_uInt_Start_n2_Step_n2;
+    IdManager<unsigned, int> idManager_uInt_2Int_Start_n2_Step_n2;
+    IdManager<float, int> idManager_float_2Int_Start_n1p5_Step_n2;
 
-//    IdManager<int> idManager_int_Start_2_Step_n2;
-//    IdManager<float> idManager_float_Start_2_Step_n1p5;
-////    IdManager<unsigned int> idManager_uInt_Start_2_Step_n2;
+    IdManagerTests()
+        : idManager_int_Ascending(0, 1, IdIssuingMethod::Ascending),
+          idManager_float_Descending(0.0, 1.0, IdIssuingMethod::Descending),
+          idManager_uInt_Ascending(0, 1, IdIssuingMethod::Ascending),
+          idManager_uInt_2Int_Descending(0, 1, IdIssuingMethod::Descending),
+          idManager_float_2Int_Ascending(0.0, 1, IdIssuingMethod::Ascending),
 
-//    IdManager<int> idManager_int_Start_n2_Step_n2;
-//    IdManager<float> idManager_float_Start_n2_Step_n1p5;
-////    IdManager<unsigned int> idManager_uInt_Start_n2_Step_n2;
+          idManager_int_Start_2_Step_2(2, 2),
+          idManager_float_Start_2_Step_1p5(2.0, 1.5),
+          idManager_uInt_Start_2_Step_2(2, 2),
+          idManager_uInt_2Int_Start_2_Step_2(2, 2),
+          idManager_float_2Int_Start_1p5_Step_2(1.5, 2),
 
-//};
+          idManager_int_Start_n2_Step_2(-2, 2),
+          idManager_float_Start_n2_Step_1p5(-2.0, 1.5),
+          idManager_uInt_Start_n2_Step_2(-2, 2),
+          idManager_uInt_2Int_Start_n2_Step_2(-2, 2),
+          idManager_float_2Int_Start_n1p5_Step_2(-1.5, 2),
 
-//#define IdManager_Int(start, step) \
-//    if (step < 0) \
-//        IdManager<int> f(start, step, typpe::rr); \
-//    else \
-//        IdManager<int> f(start, step, typpe::Dynamic);
+          idManager_int_Start_2_Step_n2(2, -2),
+          idManager_float_Start_2_Step_n1p5(2.0, -1.5),
+          idManager_uInt_Start_2_Step_n2(2, -2),
+          idManager_uInt_2Int_Start_2_Step_n2(2, -2),
+          idManager_float_2Int_Start_1p5_Step_n2(1.5, -2),
+
+          idManager_int_Start_n2_Step_n2(-2, -2),
+          idManager_float_Start_n2_Step_n1p5(-2.0, -1.5),
+          idManager_uInt_Start_n2_Step_n2(-2, -2),
+          idManager_uInt_2Int_Start_n2_Step_n2(-2, -2),
+          idManager_float_2Int_Start_n1p5_Step_n2(-1.5, -2) {}
+};
 
 int main(int argc, char **argv)
 {
-    int f = 0;
-    IdContainer<int> dd;
-    dd.add(2);
-    dd.getNextId(f);
-
-    IdManager<int> d(0, 1);
-    std::cout << d.isStandardId(2) << std::endl;
-
-    int _id;
-    d.getFreeId(_id);
-    d.getFreeId(_id);
-    d.getFreeId(_id);
-
-    float hh = static_cast<float>(333);
-
-    std::set<int> ddfdf;
-    ddfdf.insert(3);
-    ddfdf.insert(4);
-    ddfdf.insert(2);
-    std::set<int>::const_iterator itset = ddfdf.begin();
-    std::advance(itset, 3);
-
-//    ddfdf.
-
-//    IdManager_Int(3, -2);
-
-
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
 
 TEST(yyy, yyy)
 {
-
 }
 
 

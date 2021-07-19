@@ -6,157 +6,122 @@
 #include <limits>
 #include <exception>
 #include <string>
+#include <utility>
 
 
-template<class __T>
-Id_M::IdContainer<__T>::
+template<class T>
+IdM::IdContainer<T>::
 IdContainer(IdIssuingMethod idIssuingMethod)
     : idIssuingMethod_(idIssuingMethod) {}
 
-template<class __T>
-Id_M::IdContainer<__T>::
-IdContainer(const IdContainer<__T>& other)
-    : unorderedFreeIds_(other.unorderedFreeIds_),
-      orderedFreeIds_  (other.orderedFreeIds_),
-      idIssuingMethod_ (other.idIssuingMethod_) {}
+template<class T>
+IdM::IdContainer<T>::
+IdContainer(const IdContainer<T>& other)
+    : unorderedIds_   (other.unorderedIds_),
+      orderedIds_     (other.orderedIds_),
+      idIssuingMethod_(other.idIssuingMethod_) {}
 
-template<class __T>
-Id_M::IdContainer<__T>::
-~IdContainer() {}
-
-template<class __T>
-bool
-Id_M::IdContainer<__T>::
-getNextId(__T& id)
+template<class T>
+IdM::IdContainer<T>::
+IdContainer(IdContainer<T>&& other)
+    : unorderedIds_   (std::move(other.unorderedIds_)),
+      orderedIds_     (std::move(other.orderedIds_)),
+      idIssuingMethod_(std::move(other.idIssuingMethod_))
 {
-    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        auto _it = unorderedFreeIds_.begin();
-
-        if (_it != unorderedFreeIds_.end()) {
-            id = *_it;
-            unorderedFreeIds_.erase(_it);
-            return true;
-        }
-
-        return false;
-    }
-
-    if (orderedFreeIds_.size()) {
-        if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
-            auto _it = orderedFreeIds_.begin();
-            id = *_it;
-            orderedFreeIds_.erase(_it);
-            return true;
-        }
-
-        if (idIssuingMethod_ == IdIssuingMethod::Descending) {
-            auto _it = orderedFreeIds_.end();
-            --_it;
-            id = *_it;
-            orderedFreeIds_.erase(_it);
-            return true;
-        }
-    }
-
-    return false;
+    other.unorderedIds_.clear();
+    other.orderedIds_.clear();
+    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
 }
 
-template<class __T>
+template<class T>
+IdM::IdContainer<T>::
+~IdContainer() {}
+
+template<class T>
 bool
-Id_M::IdContainer<__T>::
-add(__T id)
+IdM::IdContainer<T>::
+add(T id)
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        if (std::find(unorderedFreeIds_.begin(), unorderedFreeIds_.end(), id) != unorderedFreeIds_.end())
+        if (std::find(unorderedIds_.begin(), unorderedIds_.end(), id) != unorderedIds_.end())
             return false;
 
-        unorderedFreeIds_.push_back(id);
+        unorderedIds_.push_back(std::move(id));
         return true;
     }
 
-    if (orderedFreeIds_.find(id) != orderedFreeIds_.end())
+    if (orderedIds_.find(id) != orderedIds_.end())
         return false;
 
-    orderedFreeIds_.insert(id);
+    orderedIds_.insert(std::move(id));
     return true;
 }
 
-template<class __T>
-bool
-Id_M::IdContainer<__T>::
-find(__T id) const
+template<class T>
+std::optional<T>
+IdM::IdContainer<T>::
+getNext()
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        return std::find(unorderedFreeIds_.begin(), unorderedFreeIds_.end(), id) != unorderedFreeIds_.end();
+        auto it = unorderedIds_.begin();
+
+        if (it == unorderedIds_.end())
+            return std::nullopt;
+
+        T id = *it;
+        unorderedIds_.erase(std::move(it));
+        return id;
     }
 
-    return orderedFreeIds_.find(id) != orderedFreeIds_.end();
+    if (!orderedIds_.size())
+        return std::nullopt;
+
+    if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
+        auto it = orderedIds_.begin();
+        T id = *it;
+        orderedIds_.erase(std::move(it));
+        return id;
+    }
+
+    auto it = orderedIds_.end();
+    --it;
+    T id = *it;
+    orderedIds_.erase(std::move(it));
+    return id;
 }
 
-template<class __T>
-size_t
-Id_M::IdContainer<__T>::
-size() const
-{
-    if (idIssuingMethod_ == IdIssuingMethod::Dynamic)
-        return unorderedFreeIds_.size();
-
-    return orderedFreeIds_.size();
-}
-
-template<class __T>
+template<class T>
 void
-Id_M::IdContainer<__T>::
-freeId(__T id)
+IdM::IdContainer<T>::
+erase(T id)
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        auto _it = std::find(unorderedFreeIds_.begin(), unorderedFreeIds_.end(), id);
+        auto it = std::find(unorderedIds_.begin(), unorderedIds_.end(), std::move(id));
 
-        if (_it != unorderedFreeIds_.end())
-            unorderedFreeIds_.erase(_it);
+        if (it != unorderedIds_.end())
+            unorderedIds_.erase(std::move(it));
 
         return;
     }
 
-    auto _it = orderedFreeIds_.find(id);
+    auto it = orderedIds_.find(std::move(id));
 
-    if (_it != orderedFreeIds_.end())
-        orderedFreeIds_.erase(_it);
+    if (it != orderedIds_.end())
+        orderedIds_.erase(std::move(it));
 }
 
-template<class __T>
-void
-Id_M::IdContainer<__T>::
+template<class T>
+inline void
+IdM::IdContainer<T>::
 clear()
 {
-    unorderedFreeIds_.clear();
-    orderedFreeIds_.clear();
+    unorderedIds_.clear();
+    orderedIds_.clear();
 }
 
-template<class __T>
-__T
-Id_M::IdContainer<__T>::
-findIdByIndex(long long i) const
-{
-    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        if (i >= unorderedFreeIds_.size())
-            throw "--------------";
-
-        return unorderedFreeIds_[i];
-    }
-
-    if (i >= orderedFreeIds_.size())
-        throw "--------------";
-
-    auto _it = orderedFreeIds_.begin();
-    std::advance(_it, i);
-
-    return *_it;
-}
-
-template<class __T>
+template<class T>
 void
-Id_M::IdContainer<__T>::
+IdM::IdContainer<T>::
 setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 {
     if (idIssuingMethod == idIssuingMethod_)
@@ -164,95 +129,187 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 
     if ((idIssuingMethod == IdIssuingMethod::Ascending || idIssuingMethod == IdIssuingMethod::Descending) &&
         (idIssuingMethod_ == IdIssuingMethod::Ascending || idIssuingMethod_ == IdIssuingMethod::Descending)) {
-        idIssuingMethod_ = idIssuingMethod;
+        idIssuingMethod_ = std::move(idIssuingMethod);
         return;
     }
 
-    idIssuingMethod_ = idIssuingMethod;
+    idIssuingMethod_ = std::move(idIssuingMethod);
 
-    if (idIssuingMethod == IdIssuingMethod::Dynamic) {
-        for (auto it = orderedFreeIds_.begin(); it != orderedFreeIds_.end(); ++it) {
-            unorderedFreeIds_.push_back(*it);
+    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
+        for (auto it = orderedIds_.begin(); it != orderedIds_.end(); ++it) {
+            unorderedIds_.push_back(*it);
         }
 
-        orderedFreeIds_.clear();
+        orderedIds_.clear();
         return;
     }
 
-    for (auto it = unorderedFreeIds_.begin(); it != unorderedFreeIds_.end(); ++it) {
-        orderedFreeIds_.insert(*it);
+    for (auto it = unorderedIds_.begin(); it != unorderedIds_.end(); ++it) {
+        orderedIds_.insert(*it);
     }
 
-    unorderedFreeIds_.clear();
+    unorderedIds_.clear();
 }
 
-template<class __T>
-Id_M::IdIssuingMethod
-Id_M::IdContainer<__T>::
+template<class T>
+inline IdM::IdIssuingMethod
+IdM::IdContainer<T>::
 getIdIssuingMethod() const
 {
     return idIssuingMethod_;
 }
 
-template<class __T>
-Id_M::IdContainer<__T>&
-Id_M::IdContainer<__T>::
-operator=(const IdContainer<__T>& other)
+template<class T>
+inline bool
+IdM::IdContainer<T>::
+find(T id) const
 {
-    unorderedFreeIds_ = other.unorderedFreeIds_;
-    orderedFreeIds_ = other.orderedFreeIds_;
+    if (idIssuingMethod_ == IdIssuingMethod::Dynamic)
+        return std::find(unorderedIds_.begin(), unorderedIds_.end(), std::move(id)) != unorderedIds_.end();
+
+    return orderedIds_.find(std::move(id)) != orderedIds_.end();
+}
+
+template<class T>
+std::optional<T>
+IdM::IdContainer<T>::
+findByIndex(size_t index) const
+{
+    if (index < 0)
+        return std::nullopt;
+
+    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
+        if (index >= unorderedIds_.size())
+            return std::nullopt;
+
+        auto it = unorderedIds_.begin();
+        std::advance(it, std::move(index));
+        return *it;
+    }
+
+    if (index >= orderedIds_.size())
+        return std::nullopt;
+
+    if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
+        auto it = orderedIds_.begin();
+        std::advance(it, std::move(index));
+        return *it;
+    }
+
+    auto it = orderedIds_.end();
+    std::advance(it, -(std::move(index) + 1));
+    return *it;
+}
+
+template<class T>
+inline size_t
+IdM::IdContainer<T>::
+size() const
+{
+    if (idIssuingMethod_ == IdIssuingMethod::Dynamic)
+        return unorderedIds_.size();
+
+    return orderedIds_.size();
+}
+
+template<class T>
+IdM::IdContainer<T>&
+IdM::IdContainer<T>::
+operator=(const IdContainer<T>& other)
+{
+    unorderedIds_ = other.unorderedIds_;
+    orderedIds_ = other.orderedIds_;
     idIssuingMethod_ = other.idIssuingMethod_;
 
     return *this;
 }
 
-template<class __T>
-size_t
-Id_M::IdContainer<__T>::
-getOrderedFreeIdsSize() const
+template<class T>
+IdM::IdContainer<T>&
+IdM::IdContainer<T>::
+operator=(IdContainer<T>&& other)
 {
-    return orderedFreeIds_.size();
+    unorderedIds_ = std::move(other.unorderedIds_);
+    orderedIds_ = std::move(other.orderedIds_);
+    idIssuingMethod_ = std::move(other.idIssuingMethod_);
+
+    other.unorderedIds_.clear();
+    other.orderedIds_.clear();
+    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
+
+    return *this;
 }
 
-template<class __T>
-size_t
-Id_M::IdContainer<__T>::
-getUnorderedFreeIdsSize() const
+template<class T>
+inline size_t
+IdM::IdContainer<T>::
+getUnorderedIdsSize() const
 {
-    return unorderedFreeIds_.size();
+    return unorderedIds_.size();
+}
+
+template<class T>
+inline size_t
+IdM::IdContainer<T>::
+getOrderedIdsSize() const
+{
+    return orderedIds_.size();
 }
 
 
 
+template<class T>
+inline T
+IdM::
+idm_abs(T value)
+{
+    return value < 0 ? -value : value;
+}
 
+template<class T>
+inline bool
+IdM::
+isStandardId(T id, T start, T step)
+{
+    long double An = static_cast<long double>(std::move(id));
+    long double A1 = static_cast<long double>(std::move(start));
+    long double d  = static_cast<long double>(std::move(step));
 
-
-
-
-
-
-
-
-
+    long double n = std::abs((An - A1 + d) / d);
+    return (n - static_cast<unsigned long long>(n) == static_cast<long double>(0.0));
+}
 
 
 
 template<class __T>
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 IdArea(__T start, __T step)
     : upperBorderState_(false),
       upperBorder_     (start),
-      upperLimit_      (std::numeric_limits<__T>::max()),
       lowerBorderState_(false),
       lowerBorder_     (start),
-      lowerLimit_      (std::numeric_limits<__T>::min()),
       start_           (start)
 {
     step_ = idm_abs((step == 0 ? 1 : step));
+
+    if (std::is_same<__T, unsigned long long>::value) {
+        upperLimit_ = std::numeric_limits<long long>::max();
+        lowerLimit_ = 0;
+    }
+    else if (std::is_same<__T, float>::value ||
+        std::is_same<__T, double>::value ||
+        std::is_same<__T, long double>::value) {
+        upperLimit_ = std::numeric_limits<long long>::max();
+        lowerLimit_ = std::numeric_limits<long long>::min();
+    }
+    else {
+        upperLimit_ = std::numeric_limits<__T>::max();
+        lowerLimit_ = std::numeric_limits<__T>::min();
+    }
 }
 
 template<class __T>
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 IdArea(const IdArea<__T>& other)
     : upperBorderState_(other.upperBorderState_),
       upperBorder_     (other.upperBorder_),
@@ -264,21 +321,21 @@ IdArea(const IdArea<__T>& other)
       step_            (other.step_) {}
 
 template<class __T>
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 ~IdArea() {}
 
 template<class __T>
-Id_M::IdArea<__T>::Result<__T>
-Id_M::IdArea<__T>::
+typename IdM::IdArea<__T>::Result
+IdM::IdArea<__T>::
 moveBorder(BorderRange borderRange, long long n)
 {
-    Result<__T> _result;
+    Result _result;
 
     _result.position = IDM_POS_ON_BORDER;
 
     if (borderRange == BorderRange::UpperBorder) {
         if (n > 0) {
-            if (static_cast<long long>(upperBorder_) + static_cast<long long>(n * step_) < static_cast<long long>(upperLimit_)) {
+            if (static_cast<long double>(upperBorder_) + static_cast<long double>(n * step_) <= static_cast<long double>(upperLimit_)) {
                 upperBorder_ += n * step_;
 
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
@@ -298,7 +355,7 @@ moveBorder(BorderRange borderRange, long long n)
             }
 
             for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long long>(upperBorder_) + static_cast<long long>(i * step_) < static_cast<long long>(upperLimit_)) {
+                if (static_cast<long double>(upperBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperLimit_)) {
                     upperBorder_ += i * step_;
 
                     _result.errCode = IDM_ERR_IDS_RUN_OUT;
@@ -335,7 +392,7 @@ moveBorder(BorderRange borderRange, long long n)
         }
 
         if (n < 0) {
-            if (static_cast<long long>(upperBorder_) - static_cast<long long>(idm_abs(n) * step_) > static_cast<long long>(lowerBorder_)) {
+            if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(n) * step_) >= static_cast<long double>(lowerBorder_)) {
                 upperBorder_ -= idm_abs(n) * step_;
 
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
@@ -355,7 +412,7 @@ moveBorder(BorderRange borderRange, long long n)
             }
 
             for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long long>(upperBorder_) - static_cast<long long>(idm_abs(i) * step_) > static_cast<long long>(lowerBorder_)) {
+                if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(i) * step_) >= static_cast<long double>(lowerBorder_)) {
                     upperBorder_ -= i * step_;
 
                     _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
@@ -411,7 +468,7 @@ moveBorder(BorderRange borderRange, long long n)
 
     if (borderRange == BorderRange::LowerBorder) {
         if (n > 0) {
-            if (static_cast<long long>(lowerBorder_) - static_cast<long long>(n * step_) > static_cast<long long>(lowerLimit_)) {
+            if (static_cast<long double>(lowerBorder_) - static_cast<long double>(n * step_) >= static_cast<long double>(lowerLimit_)) {
                 lowerBorder_ -= n * step_;
 
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
@@ -431,7 +488,7 @@ moveBorder(BorderRange borderRange, long long n)
             }
 
             for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long long>(lowerBorder_) - static_cast<long long>(i * step_) > static_cast<long long>(lowerLimit_)) {
+                if (static_cast<long double>(lowerBorder_) - static_cast<long double>(i * step_) >= static_cast<long double>(lowerLimit_)) {
                     lowerBorder_ -= i * step_;
 
                     _result.errCode = IDM_ERR_IDS_RUN_OUT;
@@ -468,7 +525,7 @@ moveBorder(BorderRange borderRange, long long n)
         }
 
         if (n < 0) {
-            if (static_cast<long long>(lowerBorder_) + static_cast<long long>(idm_abs(n) * step_) < static_cast<long long>(upperBorder_)) {
+            if (static_cast<long double>(lowerBorder_) + static_cast<long double>(idm_abs(n) * step_) <= static_cast<long double>(upperBorder_)) {
                 lowerBorder_ += idm_abs(n) * step_;
 
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
@@ -488,7 +545,7 @@ moveBorder(BorderRange borderRange, long long n)
             }
 
             for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long long>(lowerBorder_) + static_cast<long long>(i * step_) < static_cast<long long>(upperBorder_)) {
+                if (static_cast<long double>(lowerBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperBorder_)) {
                     lowerBorder_ += i * step_;
 
                     _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
@@ -544,15 +601,15 @@ moveBorder(BorderRange borderRange, long long n)
 }
 
 template<class __T>
-Id_M::IdArea<__T>::Result<__T>
-Id_M::IdArea<__T>::
+typename IdM::IdArea<__T>::Result
+IdM::IdArea<__T>::
 getIdInfo(BorderRange borderRange, long long n) const
 {
-    Result<__T> _result;
+    Result _result;
 
     if (borderRange == BorderRange::UpperBorder) {
         if (n > 0) {
-            if (static_cast<long long>(upperBorder_) + static_cast<long long>(n * step_) < static_cast<long long>(upperLimit_)) {
+            if (static_cast<long double>(upperBorder_) + static_cast<long double>(n * step_) <= static_cast<long double>(upperLimit_)) {
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
                 _result.position = IDM_POS_OUT_RANGE;
                 _result.value = upperBorder_ + (n * step_);
@@ -571,7 +628,7 @@ getIdInfo(BorderRange borderRange, long long n) const
             }
 
             for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long long>(upperBorder_) + static_cast<long long>(i * step_) < static_cast<long long>(upperLimit_)) {
+                if (static_cast<long double>(upperBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperLimit_)) {
                     _result.errCode = IDM_ERR_IDS_RUN_OUT;
                     _result.position = IDM_POS_OUT_RANGE;
                     _result.value = upperBorder_ + (i * step_);
@@ -608,7 +665,7 @@ getIdInfo(BorderRange borderRange, long long n) const
         }
 
         if (n < 0) {
-            if (static_cast<long long>(upperBorder_) - static_cast<long long>(idm_abs(n) * step_) > static_cast<long long>(lowerBorder_)) {
+            if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(n) * step_) >= static_cast<long double>(lowerBorder_)) {
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
                 _result.position = IDM_POS_IN_RANGE;
                 _result.value = upperBorder_ - (idm_abs(n) * step_);
@@ -627,7 +684,7 @@ getIdInfo(BorderRange borderRange, long long n) const
             }
 
             for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long long>(upperBorder_) - static_cast<long long>(idm_abs(i) * step_) > static_cast<long long>(lowerBorder_)) {
+                if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(i) * step_) >= static_cast<long double>(lowerBorder_)) {
                     _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
                     _result.position = IDM_POS_IN_RANGE;
                     _result.value = upperBorder_ - (i * step_);
@@ -684,7 +741,7 @@ getIdInfo(BorderRange borderRange, long long n) const
 
     if (borderRange == BorderRange::LowerBorder) {
         if (n > 0) {
-            if (static_cast<long long>(lowerBorder_) - static_cast<long long>(n * step_) > static_cast<long long>(lowerLimit_)) {
+            if (static_cast<long double>(lowerBorder_) - static_cast<long double>(n * step_) >= static_cast<long double>(lowerLimit_)) {
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
                 _result.position = IDM_POS_OUT_RANGE;
                 _result.value = lowerBorder_ - (n * step_);
@@ -703,7 +760,7 @@ getIdInfo(BorderRange borderRange, long long n) const
             }
 
             for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long long>(lowerBorder_) - static_cast<long long>(i * step_) > static_cast<long long>(lowerLimit_)) {
+                if (static_cast<long double>(lowerBorder_) - static_cast<long double>(i * step_) >= static_cast<long double>(lowerLimit_)) {
                     _result.errCode = IDM_ERR_IDS_RUN_OUT;
                     _result.position = IDM_POS_OUT_RANGE;
                     _result.value = lowerBorder_ - (i * step_);
@@ -740,7 +797,7 @@ getIdInfo(BorderRange borderRange, long long n) const
         }
 
         if (n < 0) {
-            if (static_cast<long long>(lowerBorder_) + static_cast<long long>(idm_abs(n) * step_) < static_cast<long long>(upperBorder_)) {
+            if (static_cast<long double>(lowerBorder_) + static_cast<long double>(idm_abs(n) * step_) <= static_cast<long double>(upperBorder_)) {
                 _result.errCode = IDM_ERR_SUCCESSFULLY;
                 _result.position = IDM_POS_IN_RANGE;
                 _result.value = lowerBorder_ + (idm_abs(n) * step_);
@@ -759,7 +816,7 @@ getIdInfo(BorderRange borderRange, long long n) const
             }
 
             for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long long>(lowerBorder_) + static_cast<long long>(i * step_) < static_cast<long long>(upperBorder_)) {
+                if (static_cast<long double>(lowerBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperBorder_)) {
                     _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
                     _result.position = IDM_POS_IN_RANGE;
                     _result.value = lowerBorder_ + (i * step_);
@@ -816,11 +873,11 @@ getIdInfo(BorderRange borderRange, long long n) const
 }
 
 template<class __T>
-Id_M::IdArea<__T>::Result<__T>
-Id_M::IdArea<__T>::
+typename IdM::IdArea<__T>::Result
+IdM::IdArea<__T>::
 getIdInfo(__T id) const
 {
-    Result<__T> _result;
+    Result _result;
 
     _result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDM_ERR_IDS_RUN_OUT : IDM_ERR_SUCCESSFULLY);
 
@@ -868,7 +925,7 @@ getIdInfo(__T id) const
 
 template<class __T>
 void
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 reset()
 {
     upperBorderState_ = false;
@@ -880,7 +937,7 @@ reset()
 
 template<class __T>
 bool
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 setBorderValue(BorderRange borderRange, __T value)
 {
     if (value > upperLimit_ || value < lowerLimit_)
@@ -903,7 +960,7 @@ setBorderValue(BorderRange borderRange, __T value)
 
 template<class __T>
 inline __T
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 getBorderValue(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -914,7 +971,7 @@ getBorderValue(BorderRange borderRange) const
 
 template<class __T>
 void
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 setBorderState(BorderRange borderRange, bool state)
 {
     switch (borderRange) {
@@ -925,7 +982,7 @@ setBorderState(BorderRange borderRange, bool state)
 
 template<class __T>
 inline bool
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 getBorderState(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -936,7 +993,7 @@ getBorderState(BorderRange borderRange) const
 
 template<class __T>
 bool
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 setBorderLimit(BorderRange borderRange, __T limit)
 {
     if (borderRange == BorderRange::UpperBorder) {
@@ -964,7 +1021,7 @@ setBorderLimit(BorderRange borderRange, __T limit)
 
 template<class __T>
 inline __T
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 getBorderLimit(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -975,7 +1032,7 @@ getBorderLimit(BorderRange borderRange) const
 
 template<class __T>
 inline __T
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 getStart() const
 {
     return start_;
@@ -983,15 +1040,15 @@ getStart() const
 
 template<class __T>
 inline __T
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>::
 getStep() const
 {
     return step_;
 }
 
 template<class __T>
-Id_M::IdArea<__T>&
-Id_M::IdArea<__T>::
+IdM::IdArea<__T>&
+IdM::IdArea<__T>::
 operator=(const IdArea<__T>& other)
 {
     upperBorderState_ = other.upperBorderState_;
@@ -1008,53 +1065,17 @@ operator=(const IdArea<__T>& other)
     return *this;
 }
 
-template<class __T>
-template<class __TF>
-inline __TF
-Id_M::IdArea<__T>::
-idm_abs(__TF value) const
-{
-    return value < 0 ? -value : value;
-}
-
-template<class __T>
-template<class __TF>
-inline bool
-Id_M::IdArea<__T>::
-isStandardId(__TF id, __TF start, __TF step) const
-{
-    long double _An = static_cast<long double>(id);
-    long double _A1 = static_cast<long double>(start);
-    long double _d = static_cast<long double>(step);
-
-    long double n = std::abs((_An - _A1 + _d) / _d);
-    return (n - static_cast<unsigned long long>(n) == static_cast<long double>(0.0));
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 template<class __T, class __Step>
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 IdManager(__T startId,
           __Step step,
           IdIssuingMethod idIssuingMethod,
           bool isHardStep)
-    : freeIds_(idIssuingMethod),
-      reservedIds_(),
-      isHardStep_(isHardStep),
+    : freeIds_        (idIssuingMethod),
+      reservedIds_    (),
+      isHardStep_     (isHardStep),
       idIssuingMethod_(idIssuingMethod)
 {
     static_assert(is_types_combination_prohibited<__T, __Step> == false);
@@ -1064,23 +1085,23 @@ IdManager(__T startId,
 }
 
 template<class __T, class __Step>
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 IdManager(const IdManager<__T, __Step>& other)
-    : freeIds_(other.freeIds_),
-      reservedIds_(other.reservedIds_),
-      idArea_(other.idArea_),
-      step_(other.step_),
-      isHardStep_(other.isHardStep),
+    : freeIds_        (other.freeIds_),
+      reservedIds_    (other.reservedIds_),
+      idArea_         (other.idArea_),
+      step_           (other.step_),
+      isHardStep_     (other.isHardStep),
       idIssuingMethod_(other.idIssuingMethod_) {}
 
 template<class __T, class __Step>
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 ~IdManager() {}
 
 
 template<class __T, class __Step>
 int
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 getFreeId(__T& id)
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
@@ -1240,7 +1261,7 @@ getFreeId(__T& id)
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 reserveId(__T id, ReservationMethod reservationMethod)
 {
     if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
@@ -1347,7 +1368,7 @@ reserveId(__T id, ReservationMethod reservationMethod)
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 interpolateIds(BorderRange border, __T id)
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
@@ -1431,7 +1452,7 @@ interpolateIds(BorderRange border, __T id)
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 reserveIds(BorderRange border, __T id)
 {
     if (idArea_.getBorderValue(BorderRange::UpperBorder) == idArea_.getBorderValue(BorderRange::LowerBorder)) {
@@ -1466,7 +1487,7 @@ reserveIds(BorderRange border, __T id)
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 freeId(__T id)
 {
     if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
@@ -1554,7 +1575,7 @@ freeId(__T id)
 
 template<class __T, class __Step>
 void
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 freeAll()
 {
     freeIds_.clear();
@@ -1564,7 +1585,7 @@ freeAll()
 
 template<class __T, class __Step>
 void
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 setHardStep(bool value)
 {
     if (value == isHardStep_)
@@ -1589,7 +1610,7 @@ setHardStep(bool value)
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 isHardStep() const
 {
     return isHardStep_;
@@ -1597,7 +1618,7 @@ isHardStep() const
 
 template<class __T, class __Step>
 void
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 {
     if (idIssuingMethod == idIssuingMethod_)
@@ -1618,8 +1639,8 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 }
 
 template<class __T, class __Step>
-inline Id_M::IdIssuingMethod
-Id_M::IdManager<__T, __Step>::
+inline IdM::IdIssuingMethod
+IdM::IdManager<__T, __Step>::
 getIdIssuingMethod() const
 {
     return idIssuingMethod_;
@@ -1627,7 +1648,7 @@ getIdIssuingMethod() const
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 findId(__T id) const
 {
     if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
@@ -1655,7 +1676,7 @@ findId(__T id) const
 
 template<class __T, class __Step>
 bool
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 isStandardId(__T id) const
 {
     long double _An = static_cast<long double>(id);
@@ -1668,15 +1689,15 @@ isStandardId(__T id) const
 
 template<class __T, class __Step>
 __Step
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 getStep() const
 {
     return step_;
 }
 
 template<class __T, class __Step>
-Id_M::IdManager<__T, __Step>&
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>&
+IdM::IdManager<__T, __Step>::
 operator=(const IdManager<__T, __Step>& other)
 {
     freeIds_ = other.freeIds_;
@@ -1692,7 +1713,7 @@ operator=(const IdManager<__T, __Step>& other)
 
 template<class __T, class __Step>
 int
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 expandRange(BorderRange border)
 {
     while (true) {
@@ -1709,7 +1730,7 @@ expandRange(BorderRange border)
 
 template<class __T, class __Step>
 int
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 reduceRange(BorderRange border)
 {
     while (true) {
@@ -1727,7 +1748,7 @@ reduceRange(BorderRange border)
 
 template<class __T, class __Step>
 int
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 normalizeRange(BorderRange border)
 {
     auto _result = idArea_.getIdInfo(border, 1);
@@ -1751,7 +1772,7 @@ normalizeRange(BorderRange border)
 
 template<class __T, class __Step>
 int
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 getNextId(BorderRange border, __T& id)
 {
     while (true) {
@@ -1769,7 +1790,7 @@ getNextId(BorderRange border, __T& id)
 template<class __T, class __Step>
 template<class __TF>
 inline __TF
-Id_M::IdManager<__T, __Step>::
+IdM::IdManager<__T, __Step>::
 idm_abs(__TF value) const
 {
     return value < 0 ? -value : value;
@@ -1802,7 +1823,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //bool
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //reserveId(__T id, ReservationMethod reservationMethod)
 //{
 //    if (!isStandardId(id)) {
@@ -2106,7 +2127,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //int
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //expandRangeToTop(BorderRange border, __T* id)
 //{
 //    int _errCode = IDM_ERR_SUCCESSFULLY;
@@ -2138,7 +2159,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //int
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //expandRangeToTopWithowtReserv(BorderRange border, __T* id)
 //{
 //    int _errCode = IDM_ERR_SUCCESSFULLY;
@@ -2172,7 +2193,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //int
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //expandRangeToBottom(BorderRange border, __T* id)
 //{
 //    int _errCode = IDM_ERR_SUCCESSFULLY;
@@ -2204,7 +2225,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //bool
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //checkRangeBorder(__T value, BorderRange border) const
 //{
 //    switch (border) {
@@ -2233,7 +2254,7 @@ idm_abs(__TF value) const
 
 
 //template<class __T, class __Step>
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //IdManager(__T startId,
 //          __Step step,
 //          IdIssuingMethod idIssuingMethod,
@@ -2254,7 +2275,7 @@ idm_abs(__TF value) const
 //}
 
 //template<class __T, class __Step>
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //IdManager(const IdManager<__T, __Step>& other)
 //    : freeIds_(other.freeIds_),
 //      reservedIds_(other.reservedIds_),
@@ -2268,12 +2289,12 @@ idm_abs(__TF value) const
 //      idIssuingMethod_(other.idIssuingMethod_) {}
 
 //template<class __T, class __Step>
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //~IdManager() {}
 
 //template<class __T, class __Step>
 //int
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //getFreeId(__T& id)
 //{
 //    if (freeIds_.size()) {
@@ -2308,7 +2329,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //bool
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //isStandardId(__T id) const
 //{
 //    long double _An = static_cast<long double>(id);
@@ -2321,7 +2342,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //void
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //expandRange()
 //{
 //    isCrossingUpperBorder_ = checkRangeBorder(maxId_, UpperBorder);
@@ -2355,7 +2376,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //bool
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //checkRangeBorder(__T value, Borders border) const
 //{
 //    switch (border) {
@@ -2369,7 +2390,7 @@ idm_abs(__TF value) const
 //template<class __T, class __Step>
 //template<class __TF>
 //inline __TF
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //idm_abs(__TF value) const
 //{
 //    return value < 0 ? -value : value;
@@ -2401,7 +2422,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //__T
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //getFreeId()
 //{
 
@@ -2441,7 +2462,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //__T
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //getStartId() const
 //{
 //    return startId_;
@@ -2449,7 +2470,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //__T
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //getMaxId() const
 //{
 //    return maxId_;
@@ -2457,7 +2478,7 @@ idm_abs(__TF value) const
 
 //template<class __T, class __Step>
 //__T
-//Id_M::IdManager<__T, __Step>::
+//IdM::IdManager<__T, __Step>::
 //getMinId() const
 //{
 //    return minId_;

@@ -1,9 +1,10 @@
-#ifndef _ID_MANAGER_
-#define _ID_MANAGER_
+#ifndef ID_MANAGER_H_
+#define ID_MANAGER_H_
 
-#include <vector>
+#include <list>
 #include <set>
 #include <type_traits>
+#include <optional>
 
 #define ID_MANAGER_VER_MAJOR   0
 #define ID_MANAGER_VER_MINOR   0
@@ -19,18 +20,8 @@
 #define IDM_POS_ON_BORDER                 2
 
 
-namespace Id_M
+namespace IdM
 {
-    enum class ReservationMethod
-    {
-        Interpolate,
-        NonInterpolate,
-        AutoSelect,
-
-        ReserveRange
-//        ExpandRange
-    };
-
     enum class IdIssuingMethod
     {
         Dynamic,
@@ -39,55 +30,52 @@ namespace Id_M
     };
 
 
-    template<class __T>
+    template<class T>
     class IdContainer
     {
-        std::vector<__T> unorderedFreeIds_;
-        std::set<__T> orderedFreeIds_;
+        std::list<T> unorderedIds_;
+        std::set<T> orderedIds_;
 
         IdIssuingMethod idIssuingMethod_;
 
     public:
         IdContainer(IdIssuingMethod idIssuingMethod = IdIssuingMethod::Dynamic);
-        IdContainer(const IdContainer<__T>& other);
+        IdContainer(const IdContainer<T>& other);
+        IdContainer(IdContainer<T>&& other);
         virtual ~IdContainer();
 
-        bool getNextId(__T& id);
-        bool add(__T id);
+        bool add(T id);
+        std::optional<T> getNext();
 
-        bool find(__T id) const;
-        size_t size() const;
-
-        void freeId(__T id);
-        void clear();
-
-        __T findIdByIndex(long long i) const;  //long long -> __T
+        void erase(T id);
+        inline void clear();
 
         void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
-        IdIssuingMethod getIdIssuingMethod() const;
+        inline IdIssuingMethod getIdIssuingMethod() const;
 
-        IdContainer<__T>& operator=(const IdContainer<__T>& other);
+        inline bool find(T id) const;
+        std::optional<T> findByIndex(size_t index) const;
+
+        inline size_t size() const;
+
+        IdContainer<T>& operator=(const IdContainer<T>& other);
+        IdContainer<T>& operator=(IdContainer<T>&& other);
 
     protected:
-        size_t getOrderedFreeIdsSize() const;
-        size_t getUnorderedFreeIdsSize() const;
+        inline size_t getUnorderedIdsSize() const;
+        inline size_t getOrderedIdsSize() const;
 
     };
 
-    //TODO: Добавить float_t, double_t.
 
-    template<class __T, class __Step>
-    constexpr bool is_types_combination_prohibited =
-            (!std::is_same<__T, float>::value           &&
-             !std::is_same<__T, double>::value          &&
-             !std::is_same<__T, long double>::value)
-                                                        &&
-            ( std::is_same<__Step, float>::value        ||
-              std::is_same<__Step, double>::value       ||
-              std::is_same<__Step, long double>::value);
+    enum class ReservationMethod
+    {
+        Interpolate,
+        NonInterpolate,
+        AutoSelect,
 
-
-
+        ReserveRange
+    };
 
     enum class BorderRange
     {
@@ -95,13 +83,27 @@ namespace Id_M
         LowerBorder
     };
 
+    template<class T, class T_Step>
+    constexpr bool is_types_combination_prohibited =
+            (!std::is_same<T, float>::value           &&
+             !std::is_same<T, double>::value          &&
+             !std::is_same<T, long double>::value)
+                                                        &&
+            ( std::is_same<T_Step, float>::value        ||
+              std::is_same<T_Step, double>::value       ||
+              std::is_same<T_Step, long double>::value);
+
+    template<class T>
+    inline T idm_abs(T value);
+
+    template<class T>
+    inline bool isStandardId(T id, T start, T step);
 
 
     template<class __T>
-    class IdArea
+    class IdArea //TODO: Увеличить макс. и мин. значение с long long на что-то побольше.
     {
     public:
-        template<class __TC>
         struct Result
         {
             int errCode;
@@ -109,7 +111,7 @@ namespace Id_M
 
             BorderRange border;
             bool state;
-            __TC value;
+            __T value;
 
             long long stepCount;
         };
@@ -129,12 +131,12 @@ namespace Id_M
     public:
         IdArea(__T start = 0, __T step = 1);
         IdArea(const IdArea<__T>& other);
-        ~IdArea();
+        virtual ~IdArea();
 
-        Result<__T> moveBorder(BorderRange borderRange, long long n);
+        Result moveBorder(BorderRange borderRange, long long n);
 
-        Result<__T> getIdInfo(BorderRange borderRange, long long n) const;
-        Result<__T> getIdInfo(__T id) const;
+        Result getIdInfo(BorderRange borderRange, long long n) const;
+        Result getIdInfo(__T id) const;
 
         void reset();
 
@@ -151,13 +153,6 @@ namespace Id_M
         inline __T getStep() const;
 
         IdArea<__T>& operator=(const IdArea<__T>& other);
-
-    private:
-        template<class __TF>
-        inline __TF idm_abs(__TF value) const;
-
-        template<class __TF>
-        inline bool isStandardId(__TF id, __TF start, __TF step) const;
 
     };
 
@@ -216,159 +211,10 @@ namespace Id_M
 
         template<class __TF>
         inline __TF idm_abs(__TF value) const;
-
-
-
-
-        int expandRangeToTop(BorderRange border, __T* id);
-        int expandRangeToTopWithowtReserv(BorderRange border, __T* id);
-
-        int expandRangeToBottom(BorderRange border, __T* id);
-
-
-        int expandRange(__T* id);
-        bool checkRangeBorder(__T value, BorderRange border) const;
-
-
-
     };
-
-
-
-
-
-
-
-
-
-
-//    template<class __T, class __Step = __T>
-//    class IdManager
-//    {
-//        enum Borders
-//        {
-//            LowerBorder,
-//            UpperBorder
-//        };
-
-//    private:
-//        IdContainer<__T> freeIds_;
-//        IdContainer<__T> reservedIds_;
-
-//        __T maxId_;
-//        __T minId_;
-//        __T startId_;
-
-//        bool isCrossingUpperBorder_;
-//        bool isCrossingLowerBorder_;
-
-//        __Step step_;
-//        bool isHardStep_;
-//        IdIssuingMethod idIssuingMethod_;
-
-//    public:
-//        IdManager(__T startId = 0,
-//                  __Step step = 1,
-//                  IdIssuingMethod idIssuingMethod = IdIssuingMethod::Dynamic,
-//                  bool isHardStep = false);
-//        IdManager(const IdManager<__T, __Step>& other);
-//        ~IdManager();
-
-//        int getFreeId(__T& id);
-//        bool reserveId(__T id, ReservationMethod reservationMethod = ReservationMethod::AutoSelect);
-
-//        void freeId(__T id);
-//        void freeAll();
-
-//        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
-//        IdIssuingMethod getIdIssuingMethod();
-
-//        bool findId(__T id) const;
-
-//        bool isStandardId(__T id) const;
-
-//        __T getStartId() const;
-//        __Step getStep() const;
-//        __T getMaxId() const;
-//        __T getMinId() const;
-//        bool isHardStep() const;
-
-//        IdManager<__T, __Step>& operator=(const IdManager<__T, __Step>& other);
-
-//    private:
-//        void expandRange();
-//        bool checkRangeBorder(__T value, Borders border) const;
-
-//        template<class __TF>
-//        inline __TF idm_abs(__TF value) const;
-
-//    };
 }
 
 
 #include "../src/Id_Manager.inl"
 
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-//template<class __T>
-//class IdManager
-//{
-//public:
-//    enum ReservationMethod
-//    {
-//        Interpolate,
-//        NonInterpolate,
-//        AutoSelect
-//    };
-
-//private:
-//    std::vector<__T> freeIds_;
-//    std::vector<__T> reservedIds_;
-//    __T maxId_;
-//    __T minId_;
-
-//    __T startId_;
-//    __T step_;
-//    bool isHardStep_;
-
-//public:
-//    IdManager();
-//    IdManager(const IdManager<__T>& other);
-//    IdManager(__T startId, __T step = (__T)1, bool isHardStep = false);
-//    ~IdManager();
-
-//    __T getFreeId();
-//    bool reserveId(__T id, ReservationMethod reservationMethod = AutoSelect);
-
-//    void freeId(__T id);
-//    void freeAll();
-
-//    bool findId(__T id) const;
-
-//    __T getStartId() const;
-//    __T getStep() const;
-//    __T getMaxId() const;
-//    __T getMinId() const;
-//    bool isHardStep() const;
-//    bool isStandardId(__T id) const;
-
-//    IdManager<__T>& operator=(const IdManager<__T>& other);
-
-//};
-
-
-//#include "../src/Id_Manager.inl"
-
-//#endif
