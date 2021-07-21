@@ -10,10 +10,10 @@
 #define ID_MANAGER_VER_MINOR   0
 #define ID_MANAGER_VER_PATCH   0
 
-#define IDM_ERR_NO_SUCH_ID                1 //TODO: Сделать возможность совмещать.
-#define IDM_ERR_SUCCESSFULLY              0
-#define IDM_ERR_IDS_RUN_OUT              -1
-#define IDM_ERR_IMPOSSIBLE_REDUCE_RANGE  -2
+#define IDAREA_ERRC_SUCCESSFULLY               0x00001
+#define IDAREA_ERRC_IDS_RUN_OUT                0x00002
+#define IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE    0x00004
+#define IDAREA_ERRC_NO_SUCH_ID                 0x00008
 
 #define IDM_POS_IN_RANGE                  0
 #define IDM_POS_OUT_RANGE                 1
@@ -22,6 +22,10 @@
 
 namespace IdM
 {
+    typedef unsigned long long ulonglong;
+    typedef long long longlong;
+    typedef long double ldouble;
+
     enum class IdIssuingMethod
     {
         Dynamic,
@@ -31,7 +35,7 @@ namespace IdM
 
 
     template<class T>
-    class IdContainer
+    class IdContainer //TODO: Заменить advance на next и prev.
     {
         std::list<T> unorderedIds_;
         std::set<T> orderedIds_;
@@ -85,74 +89,95 @@ namespace IdM
 
     template<class T, class T_Step>
     constexpr bool is_types_combination_prohibited =
-            (!std::is_same<T, float>::value           &&
-             !std::is_same<T, double>::value          &&
-             !std::is_same<T, long double>::value)
+            (!std::is_same<T, float>::value             &&
+             !std::is_same<T, double>::value            &&
+             !std::is_same<T, ldouble>::value     )
                                                         &&
             ( std::is_same<T_Step, float>::value        ||
               std::is_same<T_Step, double>::value       ||
-              std::is_same<T_Step, long double>::value);
+              std::is_same<T_Step, ldouble>::value);
 
     template<class T>
     inline T idm_abs(T value);
 
     template<class T>
-    inline bool isStandardId(T id, T start, T step);
+    inline bool isStandardId(T target, T start, T step);
 
 
-    template<class __T>
+    template<class T>
     class IdArea //TODO: Увеличить макс. и мин. значение с long long на что-то побольше.
     {
     public:
         struct Result
         {
-            int errCode;
-            int position;
+            unsigned    errCode;
+            int         position;
 
             BorderRange border;
-            bool state;
-            __T value;
+            bool        state;
+            T           value;
 
-            long long stepCount;
+            longlong    stepCount;
+
+            Result& operator=(const Result& other);
         };
 
     private:
+        enum class Action
+        {
+            Move,
+            GetInfo
+        };
+
         bool upperBorderState_;
-        __T upperBorder_;
-        __T upperLimit_;
+        T upperBorder_;
+        T upperLimit_;
 
         bool lowerBorderState_;
-        __T lowerBorder_;
-        __T lowerLimit_;
+        T lowerBorder_;
+        T lowerLimit_;
 
-        __T start_;
-        __T step_;
+        T start_;
+        T step_;
 
     public:
-        IdArea(__T start = 0, __T step = 1);
-        IdArea(const IdArea<__T>& other);
+        IdArea(T start = 0, T step = 1);
+        IdArea(const IdArea<T>& other);
         virtual ~IdArea();
 
-        Result moveBorder(BorderRange borderRange, long long n);
+        Result moveBorder(BorderRange borderRange, longlong n);
 
-        Result getIdInfo(BorderRange borderRange, long long n) const;
-        Result getIdInfo(__T id) const;
+        Result getIdInfo(BorderRange borderRange, longlong n) const;
+        Result getIdInfo(const Result& result, longlong n) const;
+        Result getIdInfo(T id, longlong n) const;
+        Result getIdInfo(T id) const;
 
         void reset();
 
-        bool setBorderValue(BorderRange borderRange, __T value);
-        inline __T getBorderValue(BorderRange borderRange) const;
+        bool setBorderValue(BorderRange borderRange, T value);
+        inline T getBorderValue(BorderRange borderRange) const;
 
         void setBorderState(BorderRange borderRange, bool state);
         inline bool getBorderState(BorderRange borderRange) const;
 
-        bool setBorderLimit(BorderRange borderRange, __T limit);
-        inline __T getBorderLimit(BorderRange borderRange) const;
+        bool setBorderLimit(BorderRange borderRange, T limit);
+        inline T getBorderLimit(BorderRange borderRange) const;
 
-        inline __T getStart() const;
-        inline __T getStep() const;
+        inline T getStart() const;
+        inline T getStep() const;
 
-        IdArea<__T>& operator=(const IdArea<__T>& other);
+        IdArea<T>& operator=(const IdArea<T>& other);
+
+    private:
+        std::optional<Result> moveToBottom(T border, T limit, ldouble n, Action action) const;
+        std::optional<Result> moveToTop(T border, T limit, ldouble n, Action action) const;
+        Result motionless(T border) const;
+        Result findMotionless(T border, ldouble n) const;
+
+        void fillBorderAndState(T border, Result& result) const;
+        void fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const;
+
+        int isSucces(BorderRange borderRange, ldouble n, Result& result, Action action) const;
 
     };
 

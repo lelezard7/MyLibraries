@@ -269,48 +269,35 @@ idm_abs(T value)
 template<class T>
 inline bool
 IdM::
-isStandardId(T id, T start, T step)
+isStandardId(T target, T start, T step)
 {
-    long double An = static_cast<long double>(std::move(id));
-    long double A1 = static_cast<long double>(std::move(start));
-    long double d  = static_cast<long double>(std::move(step));
+    ldouble An = static_cast<ldouble>(std::move(target));
+    ldouble A1 = static_cast<ldouble>(std::move(start));
+    ldouble d  = static_cast<ldouble>(std::move(step));
 
-    long double n = std::abs((An - A1 + d) / d);
-    return (n - static_cast<unsigned long long>(n) == static_cast<long double>(0.0));
+    ldouble n = std::abs((An - A1 + d) / d);
+    return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
 }
 
 
 
-template<class __T>
-IdM::IdArea<__T>::
-IdArea(__T start, __T step)
+template<class T>
+IdM::IdArea<T>::
+IdArea(T start, T step)
     : upperBorderState_(false),
       upperBorder_     (start),
+      upperLimit_      (std::numeric_limits<T>::max()),
       lowerBorderState_(false),
       lowerBorder_     (start),
+      lowerLimit_      (std::numeric_limits<T>::min()),
       start_           (start)
 {
     step_ = idm_abs((step == 0 ? 1 : step));
-
-    if (std::is_same<__T, unsigned long long>::value) {
-        upperLimit_ = std::numeric_limits<long long>::max();
-        lowerLimit_ = 0;
-    }
-    else if (std::is_same<__T, float>::value ||
-        std::is_same<__T, double>::value ||
-        std::is_same<__T, long double>::value) {
-        upperLimit_ = std::numeric_limits<long long>::max();
-        lowerLimit_ = std::numeric_limits<long long>::min();
-    }
-    else {
-        upperLimit_ = std::numeric_limits<__T>::max();
-        lowerLimit_ = std::numeric_limits<__T>::min();
-    }
 }
 
-template<class __T>
-IdM::IdArea<__T>::
-IdArea(const IdArea<__T>& other)
+template<class T>
+IdM::IdArea<T>::
+IdArea(const IdArea<T>& other)
     : upperBorderState_(other.upperBorderState_),
       upperBorder_     (other.upperBorder_),
       upperLimit_      (other.upperLimit_),
@@ -320,566 +307,288 @@ IdArea(const IdArea<__T>& other)
       start_           (other.start_),
       step_            (other.step_) {}
 
-template<class __T>
-IdM::IdArea<__T>::
+template<class T>
+IdM::IdArea<T>::
 ~IdArea() {}
 
-template<class __T>
-typename IdM::IdArea<__T>::Result
-IdM::IdArea<__T>::
-moveBorder(BorderRange borderRange, long long n)
+
+template<class T>
+typename IdM::IdArea<T>::Result&
+IdM::IdArea<T>::Result::
+operator=(const Result& other)
 {
-    Result _result;
+    errCode = other.errCode;
+    position = other.position;
 
-    _result.position = IDM_POS_ON_BORDER;
+    border = other.border;
+    state = other.state;
+    value = other.value;
 
-    if (borderRange == BorderRange::UpperBorder) {
-        if (n > 0) {
-            if (static_cast<long double>(upperBorder_) + static_cast<long double>(n * step_) <= static_cast<long double>(upperLimit_)) {
-                upperBorder_ += n * step_;
+    stepCount = other.stepCount;
 
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.value = upperBorder_;
-                _result.stepCount = n;
+    return *this;
+}
 
-                if (upperBorder_ < start_) {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
 
-                return _result;
-            }
+template<class T>
+std::optional<typename IdM::IdArea<T>::Result>
+IdM::IdArea<T>::
+moveToBottom(T border, T limit, ldouble n, Action action) const
+{
+    if (static_cast<ldouble>(border) - static_cast<ldouble>(idm_abs(n) * step_) >= static_cast<ldouble>(limit)) {
+        Result result;
 
-            for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long double>(upperBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperLimit_)) {
-                    upperBorder_ += i * step_;
+        result.errCode = IDAREA_ERRC_SUCCESSFULLY;
+        result.value = border - (idm_abs(n) * step_);
+        result.stepCount = n;
 
-                    _result.errCode = IDM_ERR_IDS_RUN_OUT;
-                    _result.value = upperBorder_;
-                    _result.stepCount = i;
+        fillPositionAndChangeBorder(action, result, n);
+        fillBorderAndState(result.value, result);
 
-                    if (upperBorder_ < start_) {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
+        return result;
+    }
 
-                    return _result;
-                }
-            }
+    for(ldouble i = idm_abs(n) - 1; i > 0; --i) {
+        if (static_cast<ldouble>(border) - static_cast<ldouble>(idm_abs(i) * step_) >= static_cast<ldouble>(limit)) {
+            Result result;
 
-            _result.errCode = IDM_ERR_IDS_RUN_OUT;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
+            result.value = border - (idm_abs(i) * step_);
 
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
+            if (n > 0) {
+                result.errCode = IDAREA_ERRC_IDS_RUN_OUT;
+                result.stepCount = i;
             }
             else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
+                result.errCode = IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+                result.stepCount = -i;
             }
 
-            return _result;
-        }
+            fillPositionAndChangeBorder(action, result, n);
+            fillBorderAndState(result.value, result);
 
-        if (n < 0) {
-            if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(n) * step_) >= static_cast<long double>(lowerBorder_)) {
-                upperBorder_ -= idm_abs(n) * step_;
-
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.value = upperBorder_;
-                _result.stepCount = n;
-
-                if (upperBorder_ < start_) {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-
-                return _result;
-            }
-
-            for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(i) * step_) >= static_cast<long double>(lowerBorder_)) {
-                    upperBorder_ -= i * step_;
-
-                    _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-                    _result.value = upperBorder_;
-                    _result.stepCount = -i;
-
-                    if (upperBorder_ < start_) {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
-
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-            else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n == 0) {
-            _result.errCode = IDM_ERR_SUCCESSFULLY;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
-
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-            else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-
-            return _result;
+            return result;
         }
     }
 
-    if (borderRange == BorderRange::LowerBorder) {
-        if (n > 0) {
-            if (static_cast<long double>(lowerBorder_) - static_cast<long double>(n * step_) >= static_cast<long double>(lowerLimit_)) {
-                lowerBorder_ -= n * step_;
+    return std::nullopt;
+}
 
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.value = lowerBorder_;
-                _result.stepCount = n;
+template<class T>
+std::optional<typename IdM::IdArea<T>::Result>
+IdM::IdArea<T>::
+moveToTop(T border, T limit, ldouble n, Action action) const
+{
+    if (static_cast<ldouble>(border) + static_cast<ldouble>(idm_abs(n) * step_) <= static_cast<ldouble>(limit)) {
+        Result result;
 
-                if (lowerBorder_ > start_) {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
+        result.errCode = IDAREA_ERRC_SUCCESSFULLY;
+        result.value = border + (idm_abs(n) * step_);
+        result.stepCount = n;
 
-                return _result;
-            }
+        fillPositionAndChangeBorder(action, result, n);
+        fillBorderAndState(result.value, result);
 
-            for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long double>(lowerBorder_) - static_cast<long double>(i * step_) >= static_cast<long double>(lowerLimit_)) {
-                    lowerBorder_ -= i * step_;
+        return result;
+    }
 
-                    _result.errCode = IDM_ERR_IDS_RUN_OUT;
-                    _result.value = lowerBorder_;
-                    _result.stepCount = i;
+    for(ldouble i = idm_abs(n) - 1; i > 0; --i) {
+        if (static_cast<ldouble>(border) + static_cast<ldouble>(i * step_) <= static_cast<ldouble>(limit)) {
+            Result result;
 
-                    if (lowerBorder_ > start_) {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
+            result.value = border + (i * step_);
 
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IDS_RUN_OUT;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
+            if (n > 0) {
+                result.errCode = IDAREA_ERRC_IDS_RUN_OUT;
+                result.stepCount = i;
             }
             else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
+                result.errCode = IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+                result.stepCount = -i;
             }
 
-            return _result;
+            fillPositionAndChangeBorder(action, result, n);
+            fillBorderAndState(result.value, result);
+
+            return result;
         }
+    }
 
-        if (n < 0) {
-            if (static_cast<long double>(lowerBorder_) + static_cast<long double>(idm_abs(n) * step_) <= static_cast<long double>(upperBorder_)) {
-                lowerBorder_ += idm_abs(n) * step_;
+    return std::nullopt;
+}
 
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.value = lowerBorder_;
-                _result.stepCount = n;
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+motionless(T border) const
+{
+    Result result;
+    result.position = IDM_POS_ON_BORDER;
+    result.errCode = IDAREA_ERRC_SUCCESSFULLY;
+    result.value = border;
+    result.stepCount = 0;
 
-                if (lowerBorder_ > start_) {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
+    fillBorderAndState(border, result);
 
-                return _result;
-            }
+    return result;
+}
 
-            for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long double>(lowerBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperBorder_)) {
-                    lowerBorder_ += i * step_;
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+findMotionless(T border, ldouble n) const
+{
+    Result result;
+    result.position = IDM_POS_ON_BORDER;
+    result.value = border;
+    result.stepCount = 0;
+    result.errCode = (n > 0 ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
 
-                    _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-                    _result.value = lowerBorder_;
-                    _result.stepCount = -i;
+    fillBorderAndState(border, result);
 
-                    if (lowerBorder_ > start_) {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
+    return result;
+}
 
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-            else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n == 0) {
-            _result.errCode = IDM_ERR_SUCCESSFULLY;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-            else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-
-            return _result;
-        }
+template<class T>
+void
+IdM::IdArea<T>::
+fillBorderAndState(T border, Result& result) const
+{
+    if (border < start_) {
+        result.border = BorderRange::LowerBorder;
+        result.state = lowerBorderState_;
+    }
+    else {
+        result.border = BorderRange::UpperBorder;
+        result.state = upperBorderState_;
     }
 }
 
-template<class __T>
-typename IdM::IdArea<__T>::Result
-IdM::IdArea<__T>::
-getIdInfo(BorderRange borderRange, long long n) const
+template<class T>
+void
+IdM::IdArea<T>::
+fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const
 {
-    Result _result;
-
-    if (borderRange == BorderRange::UpperBorder) {
-        if (n > 0) {
-            if (static_cast<long double>(upperBorder_) + static_cast<long double>(n * step_) <= static_cast<long double>(upperLimit_)) {
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.position = IDM_POS_OUT_RANGE;
-                _result.value = upperBorder_ + (n * step_);
-                _result.stepCount = n;
-
-                if (upperBorder_ + (n * step_) < start_) {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-
-                return _result;
-            }
-
-            for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long double>(upperBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperLimit_)) {
-                    _result.errCode = IDM_ERR_IDS_RUN_OUT;
-                    _result.position = IDM_POS_OUT_RANGE;
-                    _result.value = upperBorder_ + (i * step_);
-                    _result.stepCount = i;
-
-                    if (upperBorder_ + (i * step_) < start_) {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IDS_RUN_OUT;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
-
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-            else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n < 0) {
-            if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(n) * step_) >= static_cast<long double>(lowerBorder_)) {
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.position = IDM_POS_IN_RANGE;
-                _result.value = upperBorder_ - (idm_abs(n) * step_);
-                _result.stepCount = n;
-
-                if (upperBorder_ - (idm_abs(n) * step_) < start_) {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-
-                return _result;
-            }
-
-            for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long double>(upperBorder_) - static_cast<long double>(idm_abs(i) * step_) >= static_cast<long double>(lowerBorder_)) {
-                    _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-                    _result.position = IDM_POS_IN_RANGE;
-                    _result.value = upperBorder_ - (i * step_);
-                    _result.stepCount = -i;
-
-                    if (upperBorder_ - (i * step_) < start_) {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
-
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-            else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n == 0) {
-            _result.errCode = IDM_ERR_SUCCESSFULLY;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = upperBorder_;
-            _result.stepCount = 0;
-
-            if (upperBorder_ < start_) {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-            else {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-
-            return _result;
-        }
+    if (action == Action::Move) {
+        result.position = IDM_POS_ON_BORDER;
     }
-
-    if (borderRange == BorderRange::LowerBorder) {
-        if (n > 0) {
-            if (static_cast<long double>(lowerBorder_) - static_cast<long double>(n * step_) >= static_cast<long double>(lowerLimit_)) {
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.position = IDM_POS_OUT_RANGE;
-                _result.value = lowerBorder_ - (n * step_);
-                _result.stepCount = n;
-
-                if (lowerBorder_ - (n * step_) > start_) {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-
-                return _result;
-            }
-
-            for(long long i = n - 1; i > 0; --i) {
-                if (static_cast<long double>(lowerBorder_) - static_cast<long double>(i * step_) >= static_cast<long double>(lowerLimit_)) {
-                    _result.errCode = IDM_ERR_IDS_RUN_OUT;
-                    _result.position = IDM_POS_OUT_RANGE;
-                    _result.value = lowerBorder_ - (i * step_);
-                    _result.stepCount = i;
-
-                    if (lowerBorder_ - (i * step_) > start_) {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IDS_RUN_OUT;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-            else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n < 0) {
-            if (static_cast<long double>(lowerBorder_) + static_cast<long double>(idm_abs(n) * step_) <= static_cast<long double>(upperBorder_)) {
-                _result.errCode = IDM_ERR_SUCCESSFULLY;
-                _result.position = IDM_POS_IN_RANGE;
-                _result.value = lowerBorder_ + (idm_abs(n) * step_);
-                _result.stepCount = n;
-
-                if (lowerBorder_ + (idm_abs(n) * step_) > start_) {
-                    _result.border = BorderRange::UpperBorder;
-                    _result.state = upperBorderState_;
-                }
-                else {
-                    _result.border = BorderRange::LowerBorder;
-                    _result.state = lowerBorderState_;
-                }
-
-                return _result;
-            }
-
-            for(long long i = idm_abs(n) - 1; i > 0; --i) {
-                if (static_cast<long double>(lowerBorder_) + static_cast<long double>(i * step_) <= static_cast<long double>(upperBorder_)) {
-                    _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-                    _result.position = IDM_POS_IN_RANGE;
-                    _result.value = lowerBorder_ + (i * step_);
-                    _result.stepCount = -i;
-
-                    if (lowerBorder_ + (i * step_) > start_) {
-                        _result.border = BorderRange::UpperBorder;
-                        _result.state = upperBorderState_;
-                    }
-                    else {
-                        _result.border = BorderRange::LowerBorder;
-                        _result.state = lowerBorderState_;
-                    }
-
-                    return _result;
-                }
-            }
-
-            _result.errCode = IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-            else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-
-            return _result;
-        }
-
-        if (n == 0) {
-            _result.errCode = IDM_ERR_SUCCESSFULLY;
-            _result.position = IDM_POS_ON_BORDER;
-            _result.value = lowerBorder_;
-            _result.stepCount = 0;
-
-            if (lowerBorder_ > start_) {
-                _result.border = BorderRange::UpperBorder;
-                _result.state = upperBorderState_;
-            }
-            else {
-                _result.border = BorderRange::LowerBorder;
-                _result.state = lowerBorderState_;
-            }
-
-            return _result;
-        }
+    else {
+        result.position = (n > 0 ? IDM_POS_OUT_RANGE : IDM_POS_IN_RANGE);
     }
 }
 
-template<class __T>
-typename IdM::IdArea<__T>::Result
-IdM::IdArea<__T>::
-getIdInfo(__T id) const
+template<class T>
+int
+IdM::IdArea<T>::
+isSucces(BorderRange borderRange, ldouble n, Result& result, Action action) const
+{
+    if (borderRange == BorderRange::UpperBorder) {
+        if (n > 0) {
+            auto localResult = moveToTop(upperBorder_, upperLimit_, n, action);
+            if (localResult.has_value()) {
+                result = *localResult;
+                return 1;
+            }
+
+            result = findMotionless(upperBorder_, n);
+            return 0;
+        }
+
+        if (n < 0) {
+            auto localResult = moveToBottom(upperBorder_, lowerBorder_, n, action);
+            if (localResult.has_value()) {
+                result = *localResult;
+                return 1;
+            }
+
+            result = findMotionless(upperBorder_, n);
+            return 0;
+        }
+
+        result = motionless(upperBorder_);
+        return 0;
+    }
+
+    if (n > 0) {
+        auto localResult = moveToBottom(lowerBorder_, lowerLimit_, n, action);
+        if (localResult.has_value()) {
+            result = *localResult;
+            return 2;
+        }
+
+        result = findMotionless(lowerBorder_, n);
+        return 0;
+    }
+
+    if (n < 0) {
+        auto localResult = moveToTop(lowerBorder_, upperBorder_, n, action);
+        if (localResult.has_value()) {
+            result = *localResult;
+            return 2;
+        }
+
+        result = findMotionless(lowerBorder_, n);
+        return 0;
+    }
+
+    result = motionless(lowerBorder_);
+    return 0;
+}
+
+
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+moveBorder(BorderRange borderRange, longlong n)
+{
+    Result result;
+
+    int whatToDo = isSucces(borderRange, static_cast<ldouble>(n), result, Action::Move);
+
+    if (whatToDo == 1)
+        upperBorder_ = result.value;
+
+    if (whatToDo == 2)
+        lowerBorder_ = result.value;
+
+    return result;
+}
+
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+getIdInfo(BorderRange borderRange, longlong n) const
+{
+    Result result;
+
+    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo);
+
+    return result;
+}
+
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+getIdInfo(const Result& result, longlong n) const
+{
+
+}
+
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+getIdInfo(T id, longlong n) const
+{
+
+}
+
+template<class T>
+typename IdM::IdArea<T>::Result
+IdM::IdArea<T>::
+getIdInfo(T id) const
 {
     Result _result;
 
-    _result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDM_ERR_IDS_RUN_OUT : IDM_ERR_SUCCESSFULLY);
+    _result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_SUCCESSFULLY);
 
     if (id == upperBorder_ || id == lowerBorder_)
         _result.position = IDM_POS_ON_BORDER;
@@ -893,7 +602,7 @@ getIdInfo(__T id) const
     _result.value = id;
 
     if (!isStandardId(id, start_, step_)) {
-        _result.errCode = IDM_ERR_NO_SUCH_ID;
+        _result.errCode = IDAREA_ERRC_NO_SUCH_ID;
         _result.stepCount = 0;
         return _result;
     }
@@ -923,9 +632,9 @@ getIdInfo(__T id) const
     }
 }
 
-template<class __T>
+template<class T>
 void
-IdM::IdArea<__T>::
+IdM::IdArea<T>::
 reset()
 {
     upperBorderState_ = false;
@@ -935,10 +644,10 @@ reset()
     lowerBorder_ = start_;
 }
 
-template<class __T>
+template<class T>
 bool
-IdM::IdArea<__T>::
-setBorderValue(BorderRange borderRange, __T value)
+IdM::IdArea<T>::
+setBorderValue(BorderRange borderRange, T value)
 {
     if (value > upperLimit_ || value < lowerLimit_)
         return false;
@@ -958,9 +667,9 @@ setBorderValue(BorderRange borderRange, __T value)
     return true;
 }
 
-template<class __T>
-inline __T
-IdM::IdArea<__T>::
+template<class T>
+inline T
+IdM::IdArea<T>::
 getBorderValue(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -969,9 +678,9 @@ getBorderValue(BorderRange borderRange) const
     }
 }
 
-template<class __T>
+template<class T>
 void
-IdM::IdArea<__T>::
+IdM::IdArea<T>::
 setBorderState(BorderRange borderRange, bool state)
 {
     switch (borderRange) {
@@ -980,9 +689,9 @@ setBorderState(BorderRange borderRange, bool state)
     }
 }
 
-template<class __T>
+template<class T>
 inline bool
-IdM::IdArea<__T>::
+IdM::IdArea<T>::
 getBorderState(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -991,16 +700,16 @@ getBorderState(BorderRange borderRange) const
     }
 }
 
-template<class __T>
+template<class T>
 bool
-IdM::IdArea<__T>::
-setBorderLimit(BorderRange borderRange, __T limit)
+IdM::IdArea<T>::
+setBorderLimit(BorderRange borderRange, T limit)
 {
     if (borderRange == BorderRange::UpperBorder) {
         if (upperBorder_ > limit)
             return false;
 
-        if (limit > std::numeric_limits<__T>::max())
+        if (limit > std::numeric_limits<T>::max())
             return false;
 
         upperLimit_ = limit;
@@ -1011,7 +720,8 @@ setBorderLimit(BorderRange borderRange, __T limit)
         if (lowerBorder_ < limit)
             return false;
 
-        if (limit < std::numeric_limits<__T>::min())
+        T d = std::numeric_limits<T>::min();
+        if (limit < d)
             return false;
 
         lowerLimit_ = limit;
@@ -1019,9 +729,9 @@ setBorderLimit(BorderRange borderRange, __T limit)
     }
 }
 
-template<class __T>
-inline __T
-IdM::IdArea<__T>::
+template<class T>
+inline T
+IdM::IdArea<T>::
 getBorderLimit(BorderRange borderRange) const
 {
     switch (borderRange) {
@@ -1030,26 +740,26 @@ getBorderLimit(BorderRange borderRange) const
     }
 }
 
-template<class __T>
-inline __T
-IdM::IdArea<__T>::
+template<class T>
+inline T
+IdM::IdArea<T>::
 getStart() const
 {
     return start_;
 }
 
-template<class __T>
-inline __T
-IdM::IdArea<__T>::
+template<class T>
+inline T
+IdM::IdArea<T>::
 getStep() const
 {
     return step_;
 }
 
-template<class __T>
-IdM::IdArea<__T>&
-IdM::IdArea<__T>::
-operator=(const IdArea<__T>& other)
+template<class T>
+IdM::IdArea<T>&
+IdM::IdArea<T>::
+operator=(const IdArea<T>& other)
 {
     upperBorderState_ = other.upperBorderState_;
     upperBorder_ = other.upperBorder_;
@@ -1117,49 +827,49 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderValue(BorderRange::UpperBorder) < idArea_.getStart()) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderValue(BorderRange::LowerBorder) > idArea_.getStart()) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
-        return IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
+        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
     }
 
     if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
@@ -1175,39 +885,39 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
-        return IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
+        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
     }
 
     if (idIssuingMethod_ == IdIssuingMethod::Descending) {
@@ -1223,39 +933,39 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDM_ERR_SUCCESSFULLY;
+            return IDAREA_ERRC_SUCCESSFULLY;
         }
 
-        return IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
+        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
     }
 }
 
@@ -1503,7 +1213,7 @@ freeId(__T id)
 
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (id == idArea_.getBorderValue(BorderRange::UpperBorder)) {
-            if (reduceRange(BorderRange::UpperBorder) == IDM_ERR_IMPOSSIBLE_REDUCE_RANGE) {
+            if (reduceRange(BorderRange::UpperBorder) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
                 idArea_.setBorderState(BorderRange::UpperBorder, false);
                 idArea_.setBorderState(BorderRange::LowerBorder, false);
                 return true;
@@ -1513,7 +1223,7 @@ freeId(__T id)
         }
 
         if (id == idArea_.getBorderValue(BorderRange::LowerBorder)) {
-            if (reduceRange(BorderRange::LowerBorder) == IDM_ERR_IMPOSSIBLE_REDUCE_RANGE) {
+            if (reduceRange(BorderRange::LowerBorder) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
                 idArea_.setBorderState(BorderRange::UpperBorder, false);
                 idArea_.setBorderState(BorderRange::LowerBorder, false);
                 return true;
@@ -1628,8 +1338,8 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
     idIssuingMethod_ = idIssuingMethod;
 
     if (idIssuingMethod == IdIssuingMethod::Dynamic) {
-        if (normalizeRange(BorderRange::UpperBorder, IdIssuingMethod::Dynamic) == IDM_ERR_IMPOSSIBLE_REDUCE_RANGE ||
-            normalizeRange(BorderRange::LowerBorder, IdIssuingMethod::Dynamic) == IDM_ERR_IMPOSSIBLE_REDUCE_RANGE) {
+        if (normalizeRange(BorderRange::UpperBorder, IdIssuingMethod::Dynamic) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE ||
+            normalizeRange(BorderRange::LowerBorder, IdIssuingMethod::Dynamic) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
             idArea_.setBorderState(BorderRange::UpperBorder, false);
             idArea_.setBorderState(BorderRange::LowerBorder, false);
         }
@@ -1679,12 +1389,12 @@ bool
 IdM::IdManager<__T, __Step>::
 isStandardId(__T id) const
 {
-    long double _An = static_cast<long double>(id);
-    long double _A1 = static_cast<long double>(idArea_.getStart());
-    long double _d = static_cast<long double>(step_);
+    ldouble _An = static_cast<ldouble>(id);
+    ldouble _A1 = static_cast<ldouble>(idArea_.getStart());
+    ldouble _d = static_cast<ldouble>(step_);
 
-    long double n = std::abs((_An - _A1 + _d) / _d);
-    return (n - static_cast<unsigned long long>(n) == static_cast<long double>(0.0));
+    ldouble n = std::abs((_An - _A1 + _d) / _d);
+    return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
 }
 
 template<class __T, class __Step>
@@ -1736,8 +1446,8 @@ reduceRange(BorderRange border)
     while (true) {
         auto _result = idArea_.moveBorder(border, -1);
 
-        if (_result.errCode == IDM_ERR_IMPOSSIBLE_REDUCE_RANGE)
-            return IDM_ERR_IMPOSSIBLE_REDUCE_RANGE;
+        if (_result.errCode == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE)
+            return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
 
         if (freeIds_.find(_result.value))
             continue;
@@ -1763,7 +1473,7 @@ normalizeRange(BorderRange border)
     }
 
     if (idArea_.getBorderState(border)) {
-        return IDM_ERR_SUCCESSFULLY;
+        return IDAREA_ERRC_SUCCESSFULLY;
     }
 
     idArea_.setBorderState(border, true);
@@ -2130,7 +1840,7 @@ idm_abs(__TF value) const
 //IdM::IdManager<__T, __Step>::
 //expandRangeToTop(BorderRange border, __T* id)
 //{
-//    int _errCode = IDM_ERR_SUCCESSFULLY;
+//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
 
 //    if (border == BorderRange::UpperBorder) {
 //        while (true) {
@@ -2162,7 +1872,7 @@ idm_abs(__TF value) const
 //IdM::IdManager<__T, __Step>::
 //expandRangeToTopWithowtReserv(BorderRange border, __T* id)
 //{
-//    int _errCode = IDM_ERR_SUCCESSFULLY;
+//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
 
 //    if (border == BorderRange::UpperBorder) {
 //        while (true) {
@@ -2196,7 +1906,7 @@ idm_abs(__TF value) const
 //IdM::IdManager<__T, __Step>::
 //expandRangeToBottom(BorderRange border, __T* id)
 //{
-//    int _errCode = IDM_ERR_SUCCESSFULLY;
+//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
 
 //    if (border == UpperBorder) {
 //        while (true) {
@@ -2299,7 +2009,7 @@ idm_abs(__TF value) const
 //{
 //    if (freeIds_.size()) {
 //        freeIds_.getNextId(id);
-//        return IDM_ERR_SUCCESSFULLY;
+//        return IDAREA_ERRC_SUCCESSFULLY;
 //    }
 
 //    if (maxId_ == startId_ && startId_ == minId_) {
@@ -2308,22 +2018,22 @@ idm_abs(__TF value) const
 
 //    if (step_ > 0) {
 //        if (isCrossingUpperBorder_)
-//            return IDM_ERR_IDS_RUN_OUT;
+//            return IDAREA_ERRC_IDS_RUN_OUT;
 
 //        id = maxId_;
 //        maxId_ += static_cast<__T>(step_);
 //        expandRange();
-//        return IDM_ERR_SUCCESSFULLY;
+//        return IDAREA_ERRC_SUCCESSFULLY;
 //    }
 
 //    if (step_ < 0) {
 //        if (isCrossingLowerBorder_)
-//            return IDM_ERR_IDS_RUN_OUT;
+//            return IDAREA_ERRC_IDS_RUN_OUT;
 
 //        id = minId_;
 //        minId_ += static_cast<__T>(step_);
 //        expandRange();
-//        return IDM_ERR_SUCCESSFULLY;
+//        return IDAREA_ERRC_SUCCESSFULLY;
 //    }
 //}
 
