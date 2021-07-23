@@ -23,4 +23,5 @@ add_executable(ONF temporaryFile.cpp
                    include/ONF.h
                    include/Console_IO.h
                    include/VersionNames.h
+                   include/IdManager.inl
                    include/IdManager.h)

@@ -1,6 +1,4 @@
-﻿#define UNICODE
-
-#include "include/ONF.h"
+﻿#include "include/ONF.h"
 #include <iostream>
 #include <locale>
 

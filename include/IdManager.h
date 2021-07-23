@@ -97,6 +97,9 @@ namespace ONF
     template<class T>
     inline bool isStandardId(T target, T start, T step);
 
+    template<class T>
+    inline T makeStep(T start, T step, longlong n);
+
 
     template<class T>
     class IdArea //TODO: Увеличить макс. и мин. значение с long long на что-то побольше.
@@ -107,7 +110,7 @@ namespace ONF
             unsigned    errCode;
             int         position;
 
-            BorderRange border;
+            BorderRange border;  //TODO: GetIdInfo рандомно устанавливает это значение если нужно получить информацию о об id == start id.
             bool        state;
             T           value;
 
@@ -131,20 +134,20 @@ namespace ONF
         T lowerBorder_;
         T lowerLimit_;
 
-        T start_;
-        T step_;
+        const T start_;
+        const T step_;
 
     public:
         IdArea(T start = 0, T step = 1);
         IdArea(const IdArea<T>& other);
+        IdArea(const IdArea<T>&& other);
         virtual ~IdArea();
 
         Result moveBorder(BorderRange borderRange, longlong n);
 
         Result getIdInfo(BorderRange borderRange, longlong n) const;
-        Result getIdInfo(const Result& result, longlong n) const;
-        Result getIdInfo(T id, longlong n) const;
-        Result getIdInfo(T id) const;
+        std::optional<Result> getIdInfo(BorderRange borderRange, T id, longlong n) const;
+        std::optional<Result> getIdInfo(T id) const;
 
         void reset();
 
@@ -161,17 +164,18 @@ namespace ONF
         inline T getStep() const;
 
         IdArea<T>& operator=(const IdArea<T>& other);
+        IdArea<T>& operator=(IdArea<T>&& other);
 
     private:
-        std::optional<Result> moveToBottom(T border, T limit, ldouble n, Action action) const;
-        std::optional<Result> moveToTop(T border, T limit, ldouble n, Action action) const;
-        Result motionless(T border) const;
-        Result findMotionless(T border, ldouble n) const;
+        std::optional<Result> moveToBottom(T border, T limit, ldouble n, Action actio, BorderRange borderRangen) const;
+        std::optional<Result> moveToTop(T border, T limit, ldouble n, Action action, BorderRange borderRange) const;
+        Result motionless(T border, BorderRange borderRange) const;
+        Result findMotionless(T border, ldouble n, BorderRange borderRange) const;
 
-        void fillBorderAndState(T border, Result& result) const;
+        void fillBorderAndState(T border, Result& result, BorderRange borderRange) const;
         void fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const;
 
-        int isSucces(BorderRange borderRange, ldouble n, Result& result, Action action) const;
+        int isSucces(BorderRange borderRange, ldouble n, Result& result, Action action, T* alterBorder = nullptr) const;
 
     };
 

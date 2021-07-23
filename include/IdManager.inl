@@ -272,6 +272,14 @@ isStandardId(T target, T start, T step)
     return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
 }
 
+template<class T>
+inline T
+ONF::
+makeStep(T start, T step, longlong n)
+{
+    return start + (n * step);
+}
+
 
 
 template<class T>
@@ -282,11 +290,9 @@ IdArea(T start, T step)
       upperLimit_      (std::numeric_limits<T>::max()),
       lowerBorderState_(false),
       lowerBorder_     (start),
-      lowerLimit_      (std::numeric_limits<T>::min()),
-      start_           (start)
-{
-    step_ = onf_abs((step == 0 ? 1 : step));
-}
+      lowerLimit_      (std::numeric_limits<T>::lowest()),
+      start_           (start),
+      step_            (onf_abs((step == 0 ? 1 : step))) {}
 
 template<class T>
 ONF::IdArea<T>::
@@ -299,6 +305,26 @@ IdArea(const IdArea<T>& other)
       lowerLimit_      (other.lowerLimit_),
       start_           (other.start_),
       step_            (other.step_) {}
+
+template<class T>
+ONF::IdArea<T>::
+IdArea(const IdArea<T>&& other)
+    : upperBorderState_(std::move(other.upperBorderState_)),
+      upperBorder_     (std::move(other.upperBorder_)),
+      upperLimit_      (std::move(other.upperLimit_)),
+      lowerBorderState_(std::move(other.lowerBorderState_)),
+      lowerBorder_     (std::move(other.lowerBorder_)),
+      lowerLimit_      (std::move(other.lowerLimit_)),
+      start_           (std::move(other.start_)),
+      step_            (std::move(other.step_))
+{
+    other.upperBorderState_ = false;
+    other.upperBorder_ = other.start_;
+    other.upperLimit_ = std::numeric_limits<T>::max();
+    other.lowerBorderState_ = false;
+    other.lowerBorder_ = other.start_;
+    other.lowerLimit_ = std::numeric_limits<T>::lowest();
+}
 
 template<class T>
 ONF::IdArea<T>::
@@ -326,7 +352,7 @@ operator=(const Result& other)
 template<class T>
 std::optional<typename ONF::IdArea<T>::Result>
 ONF::IdArea<T>::
-moveToBottom(T border, T limit, ldouble n, Action action) const
+moveToBottom(T border, T limit, ldouble n, Action action, BorderRange borderRange) const
 {
     if (static_cast<ldouble>(border) - static_cast<ldouble>(onf_abs(n) * step_) >= static_cast<ldouble>(limit)) {
         Result result;
@@ -336,7 +362,7 @@ moveToBottom(T border, T limit, ldouble n, Action action) const
         result.stepCount = n;
 
         fillPositionAndChangeBorder(action, result, n);
-        fillBorderAndState(result.value, result);
+        fillBorderAndState(result.value, result, borderRange);
 
         return result;
     }
@@ -357,7 +383,7 @@ moveToBottom(T border, T limit, ldouble n, Action action) const
             }
 
             fillPositionAndChangeBorder(action, result, n);
-            fillBorderAndState(result.value, result);
+            fillBorderAndState(result.value, result, borderRange);
 
             return result;
         }
@@ -369,7 +395,7 @@ moveToBottom(T border, T limit, ldouble n, Action action) const
 template<class T>
 std::optional<typename ONF::IdArea<T>::Result>
 ONF::IdArea<T>::
-moveToTop(T border, T limit, ldouble n, Action action) const
+moveToTop(T border, T limit, ldouble n, Action action, BorderRange borderRange) const
 {
     if (static_cast<ldouble>(border) + static_cast<ldouble>(onf_abs(n) * step_) <= static_cast<ldouble>(limit)) {
         Result result;
@@ -379,7 +405,7 @@ moveToTop(T border, T limit, ldouble n, Action action) const
         result.stepCount = n;
 
         fillPositionAndChangeBorder(action, result, n);
-        fillBorderAndState(result.value, result);
+        fillBorderAndState(result.value, result, borderRange);
 
         return result;
     }
@@ -400,7 +426,7 @@ moveToTop(T border, T limit, ldouble n, Action action) const
             }
 
             fillPositionAndChangeBorder(action, result, n);
-            fillBorderAndState(result.value, result);
+            fillBorderAndState(result.value, result, borderRange);
 
             return result;
         }
@@ -412,7 +438,7 @@ moveToTop(T border, T limit, ldouble n, Action action) const
 template<class T>
 typename ONF::IdArea<T>::Result
 ONF::IdArea<T>::
-motionless(T border) const
+motionless(T border, BorderRange borderRange) const
 {
     Result result;
     result.position = IDM_POS_ON_BORDER;
@@ -420,7 +446,7 @@ motionless(T border) const
     result.value = border;
     result.stepCount = 0;
 
-    fillBorderAndState(border, result);
+    fillBorderAndState(border, result, borderRange);
 
     return result;
 }
@@ -428,7 +454,7 @@ motionless(T border) const
 template<class T>
 typename ONF::IdArea<T>::Result
 ONF::IdArea<T>::
-findMotionless(T border, ldouble n) const
+findMotionless(T border, ldouble n, BorderRange borderRange) const
 {
     Result result;
     result.position = IDM_POS_ON_BORDER;
@@ -436,7 +462,7 @@ findMotionless(T border, ldouble n) const
     result.stepCount = 0;
     result.errCode = (n > 0 ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
 
-    fillBorderAndState(border, result);
+    fillBorderAndState(border, result, borderRange);
 
     return result;
 }
@@ -444,16 +470,22 @@ findMotionless(T border, ldouble n) const
 template<class T>
 void
 ONF::IdArea<T>::
-fillBorderAndState(T border, Result& result) const
+fillBorderAndState(T border, Result& result, BorderRange borderRange) const
 {
     if (border < start_) {
         result.border = BorderRange::LowerBorder;
         result.state = lowerBorderState_;
+        return;
     }
-    else {
+
+    if (border > start_) {
         result.border = BorderRange::UpperBorder;
         result.state = upperBorderState_;
+        return;
     }
+
+    result.border = borderRange;
+    result.state = (borderRange ==  BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
 }
 
 template<class T>
@@ -472,58 +504,100 @@ fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const
 template<class T>
 int
 ONF::IdArea<T>::
-isSucces(BorderRange borderRange, ldouble n, Result& result, Action action) const
+isSucces(BorderRange borderRange, ldouble n, Result& result, Action action, T* alterBorder) const
 {
+    std::optional<Result> localResult;
+
     if (borderRange == BorderRange::UpperBorder) {
         if (n > 0) {
-            auto localResult = moveToTop(upperBorder_, upperLimit_, n, action);
+            if (alterBorder)
+                localResult = moveToTop(*alterBorder, upperLimit_, n, action, borderRange);
+            else
+                localResult = moveToTop(upperBorder_, upperLimit_, n, action, borderRange);
+
             if (localResult.has_value()) {
                 result = *localResult;
                 return 1;
             }
 
-            result = findMotionless(upperBorder_, n);
+            if (alterBorder)
+                result = findMotionless(*alterBorder, n, borderRange);
+            else
+                result = findMotionless(upperBorder_, n, borderRange);
+
             return 0;
         }
 
         if (n < 0) {
-            auto localResult = moveToBottom(upperBorder_, lowerBorder_, n, action);
+            if (alterBorder)
+                localResult = moveToBottom(*alterBorder, lowerBorder_, n, action, borderRange);
+            else
+                localResult = moveToBottom(upperBorder_, lowerBorder_, n, action, borderRange);
+
             if (localResult.has_value()) {
                 result = *localResult;
                 return 1;
             }
 
-            result = findMotionless(upperBorder_, n);
+            if (alterBorder)
+                result = findMotionless(*alterBorder, n, borderRange);
+            else
+                result = findMotionless(upperBorder_, n, borderRange);
+
             return 0;
         }
 
-        result = motionless(upperBorder_);
+        if (alterBorder)
+            result = motionless(*alterBorder, borderRange);
+        else
+            result = motionless(upperBorder_, borderRange);
+
         return 0;
     }
 
     if (n > 0) {
-        auto localResult = moveToBottom(lowerBorder_, lowerLimit_, n, action);
+        if (alterBorder)
+            localResult = moveToBottom(*alterBorder, lowerLimit_, n, action, borderRange);
+        else
+            localResult = moveToBottom(lowerBorder_, lowerLimit_, n, action, borderRange);
+
         if (localResult.has_value()) {
             result = *localResult;
             return 2;
         }
 
-        result = findMotionless(lowerBorder_, n);
+        if (alterBorder)
+            result = findMotionless(*alterBorder, n, borderRange);
+        else
+            result = findMotionless(lowerBorder_, n, borderRange);
+
         return 0;
     }
 
     if (n < 0) {
-        auto localResult = moveToTop(lowerBorder_, upperBorder_, n, action);
+        if (alterBorder)
+            localResult = moveToTop(*alterBorder, upperBorder_, n, action, borderRange);
+        else
+            localResult = moveToTop(lowerBorder_, upperBorder_, n, action, borderRange);
+
         if (localResult.has_value()) {
             result = *localResult;
             return 2;
         }
 
-        result = findMotionless(lowerBorder_, n);
+        if (alterBorder)
+            result = findMotionless(*alterBorder, n, borderRange);
+        else
+            result = findMotionless(lowerBorder_, n, borderRange);
+
         return 0;
     }
 
-    result = motionless(lowerBorder_);
+    if (alterBorder)
+        result = motionless(*alterBorder, borderRange);
+    else
+        result = motionless(lowerBorder_, borderRange);
+
     return 0;
 }
 
@@ -559,69 +633,65 @@ getIdInfo(BorderRange borderRange, longlong n) const
 }
 
 template<class T>
-typename ONF::IdArea<T>::Result
+std::optional<typename ONF::IdArea<T>::Result>
 ONF::IdArea<T>::
-getIdInfo(const Result& result, longlong n) const
+getIdInfo(BorderRange borderRange, T id, longlong n) const
 {
+    if (!isStandardId(id, start_, step_))
+        return std::nullopt;
 
+    Result result;
+
+    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo, id);
+
+    return result;
 }
 
 template<class T>
-typename ONF::IdArea<T>::Result
-ONF::IdArea<T>::
-getIdInfo(T id, longlong n) const
-{
-
-}
-
-template<class T>
-typename ONF::IdArea<T>::Result
+std::optional<typename ONF::IdArea<T>::Result>
 ONF::IdArea<T>::
 getIdInfo(T id) const
 {
-    Result _result;
+    if (!isStandardId(id, start_, step_))
+        return std::nullopt;
 
-    _result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_SUCCESSFULLY);
+    Result result;
+
+    result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_SUCCESSFULLY);
 
     if (id == upperBorder_ || id == lowerBorder_)
-        _result.position = IDM_POS_ON_BORDER;
+        result.position = IDM_POS_ON_BORDER;
     else if (id > upperBorder_ || id < lowerBorder_)
-        _result.position = IDM_POS_OUT_RANGE;
+        result.position = IDM_POS_OUT_RANGE;
     else
-        _result.position = IDM_POS_IN_RANGE;
+        result.position = IDM_POS_IN_RANGE;
 
-    _result.border = (id >= start_ ? BorderRange::UpperBorder : BorderRange::LowerBorder);
-    _result.state = (_result.border == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
-    _result.value = id;
+    result.border = (id >= start_ ? BorderRange::UpperBorder : BorderRange::LowerBorder);
+    result.state = (result.border == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
+    result.value = id;
 
-    if (!isStandardId(id, start_, step_)) {
-        _result.errCode = IDAREA_ERRC_NO_SUCH_ID;
-        _result.stepCount = 0;
-        return _result;
+    if (result.position == IDM_POS_ON_BORDER) {
+        result.stepCount = 0;
+        return result;
     }
 
-    if (_result.position == IDM_POS_ON_BORDER) {
-        _result.stepCount = 0;
-        return _result;
-    }
-
-    if (_result.border == BorderRange::UpperBorder) {
-        if (_result.position == IDM_POS_OUT_RANGE) {
-            _result.stepCount = (id - upperBorder_) / step_;
-            return _result;
+    if (result.border == BorderRange::UpperBorder) {
+        if (result.position == IDM_POS_OUT_RANGE) {
+            result.stepCount = (id - upperBorder_) / step_;
+            return result;
         }
 
-        _result.stepCount = (upperBorder_ - id) / step_;
-        return _result;
+        result.stepCount = (upperBorder_ - id) / step_;
+        return result;
     }
     else {
-        if (_result.position == IDM_POS_OUT_RANGE) {
-            _result.stepCount = (lowerBorder_ - id) / step_;
-            return _result;
+        if (result.position == IDM_POS_OUT_RANGE) {
+            result.stepCount = (lowerBorder_ - id) / step_;
+            return result;
         }
 
-        _result.stepCount = (id - lowerBorder_) / step_;
-        return _result;
+        result.stepCount = (id - lowerBorder_) / step_;
+        return result;
     }
 }
 
@@ -649,11 +719,17 @@ setBorderValue(BorderRange borderRange, T value)
         if (value < lowerBorder_)
             return false;
 
+        if (!isStandardId(value, start_, step_))
+            return false;
+
         upperBorder_ = value;
         return true;
     }
 
     if (value > upperBorder_)
+        return false;
+
+    if (!isStandardId(value, start_, step_))
         return false;
 
     lowerBorder_ = value;
@@ -702,19 +778,12 @@ setBorderLimit(BorderRange borderRange, T limit)
         if (upperBorder_ > limit)
             return false;
 
-        if (limit > std::numeric_limits<T>::max())
-            return false;
-
         upperLimit_ = limit;
         return true;
     }
 
     if (borderRange == BorderRange::LowerBorder) {
         if (lowerBorder_ < limit)
-            return false;
-
-        T d = std::numeric_limits<T>::min();
-        if (limit < d)
             return false;
 
         lowerLimit_ = limit;
@@ -757,13 +826,35 @@ operator=(const IdArea<T>& other)
     upperBorderState_ = other.upperBorderState_;
     upperBorder_ = other.upperBorder_;
     upperLimit_ = other.upperLimit_;
-
     lowerBorderState_ = other.lowerBorderState_;
     lowerBorder_ = other.lowerBorder_;
     lowerLimit_ = other.lowerLimit_;
-
     start_ = other.start_;
     step_ = other.step_;
+
+    return *this;
+}
+
+template<class T>
+ONF::IdArea<T>&
+ONF::IdArea<T>::
+operator=(IdArea<T>&& other)
+{
+    upperBorderState_ = std::move(other.upperBorderState_);
+    upperBorder_ = std::move(other.upperBorder_);
+    upperLimit_ = std::move(other.upperLimit_);
+    lowerBorderState_ = std::move(other.lowerBorderState_);
+    lowerBorder_ = std::move(other.lowerBorder_);
+    lowerLimit_ = std::move(other.lowerLimit_);
+    start_ = std::move(other.start_);
+    step_ = std::move(other.step_);
+
+    other.upperBorderState_ = false;
+    other.upperBorder_ = other.start_;
+    other.upperLimit_ = std::numeric_limits<T>::max();
+    other.lowerBorderState_ = false;
+    other.lowerBorder_ = other.start_;
+    other.lowerLimit_ = std::numeric_limits<T>::lowest();
 
     return *this;
 }
@@ -967,7 +1058,7 @@ bool
 ONF::IdManager<__T, __Step>::
 reserveId(__T id, ReservationMethod reservationMethod)
 {
-    if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
+    if (id < std::numeric_limits<__T>::lowest() || id > std::numeric_limits<__T>::max())
         return false;
 
     if (!isStandardId(id)) {
@@ -1193,7 +1284,7 @@ bool
 ONF::IdManager<__T, __Step>::
 freeId(__T id)
 {
-    if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
+    if (id < std::numeric_limits<__T>::lowest() || id > std::numeric_limits<__T>::max())
         return false;
 
     if (!isStandardId(id)) {
@@ -1354,7 +1445,7 @@ bool
 ONF::IdManager<__T, __Step>::
 findId(__T id) const
 {
-    if (id < std::numeric_limits<__T>::min() || id > std::numeric_limits<__T>::max())
+    if (id < std::numeric_limits<__T>::lowest() || id > std::numeric_limits<__T>::max())
         return false;
 
     if (!isStandardId(id)) {
