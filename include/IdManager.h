@@ -10,6 +10,7 @@
 #define IDAREA_ERRC_IDS_RUN_OUT                0x00002
 #define IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE    0x00004
 #define IDAREA_ERRC_NO_SUCH_ID                 0x00008
+#define IDAREA_ERRC_AT_THE_START               0x00010
 
 #define IDM_POS_IN_RANGE                  0
 #define IDM_POS_OUT_RANGE                 1
@@ -102,7 +103,7 @@ namespace ONF
 
 
     template<class T>
-    class IdArea //TODO: Увеличить макс. и мин. значение с long long на что-то побольше.
+    class IdArea
     {
     public:
         struct Result

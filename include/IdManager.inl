@@ -640,9 +640,18 @@ getIdInfo(BorderRange borderRange, T id, longlong n) const
     if (!isStandardId(id, start_, step_))
         return std::nullopt;
 
+    if (borderRange == BorderRange::UpperBorder) {
+        if (id < lowerBorder_ || id > upperLimit_)
+            return std::nullopt;
+    }
+    else {
+        if (id > upperBorder_ || id < lowerLimit_)
+            return std::nullopt;
+    }
+
     Result result;
 
-    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo, id);
+    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo, &id);
 
     return result;
 }
