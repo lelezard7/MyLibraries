@@ -1,28 +1,26 @@
 ﻿#ifndef ID_MANAGER_H_
 #define ID_MANAGER_H_
 
+#include <ONF.h>
 #include <list>
 #include <set>
 #include <type_traits>
 #include <optional>
 
-#define IDAREA_ERRC_SUCCESSFULLY               0x00001
-#define IDAREA_ERRC_IDS_RUN_OUT                0x00002
-#define IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE    0x00004
-#define IDAREA_ERRC_NO_SUCH_ID                 0x00008
-#define IDAREA_ERRC_AT_THE_START               0x00010
+#define IDRF_NOT_SET                    0x00000
+#define IDRF_SUCCESSFULLY               0x00001
+#define IDRF_ID_OUT_RANGE               0x00002
+#define IDRF_RANGE_ARE_BENT             0x00004
+#define IDRF_ID_AT_START                0x00008
 
-#define IDM_POS_IN_RANGE                  0
-#define IDM_POS_OUT_RANGE                 1
-#define IDM_POS_ON_BORDER                 2
+#define IDRP_NOT_SET                   -1
+#define IDRP_IN_RANGE                   0
+#define IDRP_ON_BORDER                  1
+#define IDRP_OUT_RANGE                  2
 
 
 namespace ONF
 {
-    typedef unsigned long long ulonglong;
-    typedef long long longlong;
-    typedef long double ldouble;
-
     enum class IdIssuingMethod
     {
         Dynamic,
@@ -32,7 +30,7 @@ namespace ONF
 
 
     template<class T>
-    class IdContainer //TODO: Заменить advance на next и prev.
+    class IdContainer
     {
         std::list<T> unorderedIds_;
         std::set<T> orderedIds_;
@@ -69,55 +67,52 @@ namespace ONF
     };
 
 
-    enum class ReservationMethod
-    {
-        Interpolate,
-        NonInterpolate,
-        AutoSelect,
-
-        ReserveRange
-    };
-
     enum class BorderRange
     {
         UpperBorder,
         LowerBorder
     };
 
-    template<class T, class T_Step>
-    constexpr bool is_types_combination_prohibited =
-            (!std::is_same<T, float>::value             &&
-             !std::is_same<T, double>::value            &&
-             !std::is_same<T, ldouble>::value     )
-                                                        &&
-            ( std::is_same<T_Step, float>::value        ||
-              std::is_same<T_Step, double>::value       ||
-              std::is_same<T_Step, ldouble>::value);
+
+    template<class T>
+    inline bool isStandardId(T target, T start, T step) {
+        ldouble An = static_cast<ldouble>(target);
+        ldouble A1 = static_cast<ldouble>(start);
+        ldouble d  = static_cast<ldouble>(step);
+
+        ldouble n = std::abs((An - A1 + d) / d);
+        return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
+    }
+
+    template<class T>
+    inline T moveFromId(T start, T step, longlong n) {
+        return start + (n * step);
+    }
 
 
     template<class T>
-    inline bool isStandardId(T target, T start, T step);
-
-    template<class T>
-    inline T makeStep(T start, T step, longlong n);
-
-
-    template<class T>
-    class IdArea
+    class IdRange
     {
     public:
-        struct Result
+        class IdInfo
         {
-            unsigned    errCode;
+        public:
+            IdInfo();
+            IdInfo(const IdInfo& other);
+            IdInfo(IdInfo&& other);
+            ~IdInfo();
+
+            unsigned    flags;
             int         position;
 
-            BorderRange border;  //TODO: GetIdInfo рандомно устанавливает это значение если нужно получить информацию о об id == start id.
+            BorderRange border;
             bool        state;
             T           value;
 
             longlong    stepCount;
 
-            Result& operator=(const Result& other);
+            IdInfo& operator=(const IdInfo& other);
+            IdInfo& operator=(IdInfo&& other);
         };
 
     private:
@@ -135,50 +130,68 @@ namespace ONF
         T lowerBorder_;
         T lowerLimit_;
 
-        const T start_;
-        const T step_;
+        T start_;
+        T step_;
 
     public:
-        IdArea(T start = 0, T step = 1);
-        IdArea(const IdArea<T>& other);
-        IdArea(const IdArea<T>&& other);
-        virtual ~IdArea();
+        IdRange(T start = 0, T step = 1);
+        IdRange(const IdRange<T>& other);
+        IdRange(IdRange<T>&& other);
+        virtual ~IdRange();
 
-        Result moveBorder(BorderRange borderRange, longlong n);
+        IdInfo moveBorder(BorderRange borderRange, longlong n);
 
-        Result getIdInfo(BorderRange borderRange, longlong n) const;
-        std::optional<Result> getIdInfo(BorderRange borderRange, T id, longlong n) const;
-        std::optional<Result> getIdInfo(T id) const;
+        IdInfo getIdInfo(BorderRange borderRange, longlong n) const;
+        std::optional<IdInfo> getIdInfo(BorderRange borderRange, T id, longlong n) const;
 
-        void reset();
+        inline void reset();
 
         bool setBorderValue(BorderRange borderRange, T value);
         inline T getBorderValue(BorderRange borderRange) const;
 
-        void setBorderState(BorderRange borderRange, bool state);
+        inline void setBorderState(BorderRange borderRange, bool state);
         inline bool getBorderState(BorderRange borderRange) const;
 
-        bool setBorderLimit(BorderRange borderRange, T limit);
+        bool setBorderLimit(BorderRange borderRange, T value);
         inline T getBorderLimit(BorderRange borderRange) const;
 
         inline T getStart() const;
         inline T getStep() const;
 
-        IdArea<T>& operator=(const IdArea<T>& other);
-        IdArea<T>& operator=(IdArea<T>&& other);
+        IdRange<T>& operator=(const IdRange<T>& other);
+        IdRange<T>& operator=(IdRange<T>&& other);
 
     private:
-        std::optional<Result> moveToBottom(T border, T limit, ldouble n, Action actio, BorderRange borderRangen) const;
-        std::optional<Result> moveToTop(T border, T limit, ldouble n, Action action, BorderRange borderRange) const;
-        Result motionless(T border, BorderRange borderRange) const;
-        Result findMotionless(T border, ldouble n, BorderRange borderRange) const;
+        //TODO: Написать в документации почему я поставил возращаемый тип int, а не bool.
+        int fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Action action) const;
 
-        void fillBorderAndState(T border, Result& result, BorderRange borderRange) const;
-        void fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const;
+        bool fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const;
+        bool fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const;
 
-        int isSucces(BorderRange borderRange, ldouble n, Result& result, Action action, T* alterBorder = nullptr) const;
+        void fillInfoAboutTerritory(IdInfo& idInfo, BorderRange borderRange, T borderValue) const;
+        void fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const;
 
     };
+
+
+    enum class ReservationMethod
+    {
+        Interpolate,
+        NonInterpolate,
+        AutoSelect,
+
+        ReserveRange
+    };
+
+    template<class T, class T_Step>
+    constexpr bool is_types_combination_prohibited =
+            (!std::is_same<T, float>::value             &&
+             !std::is_same<T, double>::value            &&
+             !std::is_same<T, ldouble>::value     )
+                                                        &&
+            ( std::is_same<T_Step, float>::value        ||
+              std::is_same<T_Step, double>::value       ||
+              std::is_same<T_Step, ldouble>::value);
 
 
     template<class __T, class __Step = __T>  //Проверить все функции на unsigned и на наличие проверок возвращаемых err кодов (IDM_ERR_IDS_RUN_OUT и т.д.).
@@ -187,7 +200,7 @@ namespace ONF
         IdContainer<__T> freeIds_;
         IdContainer<__T> reservedIds_;  //Не учитывает maxId в idArea_.
 
-        IdArea<__T> idArea_;
+        IdRange<__T> idArea_; //Rename.
 
         __Step step_;
         bool isHardStep_;

@@ -5,44 +5,44 @@
 using namespace ONF;
 
 
-struct IdAreaTests : public ::testing::Test
+struct IdRangeTests : public ::testing::Test
 {
-    IdArea<int> IdArea_int;
-    IdArea<float> IdArea_float;
-    IdArea<unsigned> IdArea_unsigned;
+    IdRange<int> IdRange_int;
+    IdRange<float> IdRange_float;
+    IdRange<unsigned> IdRange_unsigned;
 
-    IdArea<int> IdArea_int_Start_2_Step_2;
-    IdArea<float> IdArea_float_Start_1p5_Step_1p5;
-    IdArea<unsigned> IdArea_unsigned_Start_2_Step_2;
+    IdRange<int> IdRange_int_Start_2_Step_2;
+    IdRange<float> IdRange_float_Start_1p5_Step_1p5;
+    IdRange<unsigned> IdRange_unsigned_Start_2_Step_2;
 
-    IdArea<int> IdArea_int_Start_n2_Step_2;
-    IdArea<float> IdArea_float_Start_n2_Step_1p5;
-    IdArea<unsigned> IdArea_unsigned_Start_n2_Step_2;
+    IdRange<int> IdRange_int_Start_n2_Step_2;
+    IdRange<float> IdRange_float_Start_n2_Step_1p5;
+    IdRange<unsigned> IdRange_unsigned_Start_n2_Step_2;
 
-    IdArea<int> IdArea_int_Start_2_Step_n2;
-    IdArea<float> IdArea_float_Start_2_Step_n1p5;
-    IdArea<unsigned> IdArea_unsigned_Start_2_Step_n2;
+    IdRange<int> IdRange_int_Start_2_Step_n2;
+    IdRange<float> IdRange_float_Start_2_Step_n1p5;
+    IdRange<unsigned> IdRange_unsigned_Start_2_Step_n2;
 
-    IdArea<int> IdArea_int_Start_n2_Step_n2;
-    IdArea<float> IdArea_float_Start_n1p5_Step_n1p5;
-    IdArea<unsigned> IdArea_unsigned_Start_n2_Step_n2;
+    IdRange<int> IdRange_int_Start_n2_Step_n2;
+    IdRange<float> IdRange_float_Start_n1p5_Step_n1p5;
+    IdRange<unsigned> IdRange_unsigned_Start_n2_Step_n2;
 
-    IdAreaTests()
-        : IdArea_int_Start_2_Step_2(2, 2),
-          IdArea_float_Start_1p5_Step_1p5(1.5, 1.5),
-          IdArea_unsigned_Start_2_Step_2(2, 2),
+    IdRangeTests()
+        : IdRange_int_Start_2_Step_2(2, 2),
+          IdRange_float_Start_1p5_Step_1p5(1.5, 1.5),
+          IdRange_unsigned_Start_2_Step_2(2, 2),
 
-          IdArea_int_Start_n2_Step_2(-2, 2),
-          IdArea_float_Start_n2_Step_1p5(-2.0, 1.5),
-          IdArea_unsigned_Start_n2_Step_2(-2, 2),
+          IdRange_int_Start_n2_Step_2(-2, 2),
+          IdRange_float_Start_n2_Step_1p5(-2.0, 1.5),
+          IdRange_unsigned_Start_n2_Step_2(-2, 2),
 
-          IdArea_int_Start_2_Step_n2(2, -2),
-          IdArea_float_Start_2_Step_n1p5(2.0, -1.5),
-          IdArea_unsigned_Start_2_Step_n2(2, -2),
+          IdRange_int_Start_2_Step_n2(2, -2),
+          IdRange_float_Start_2_Step_n1p5(2.0, -1.5),
+          IdRange_unsigned_Start_2_Step_n2(2, -2),
 
-          IdArea_int_Start_n2_Step_n2(-2, -2),
-          IdArea_float_Start_n1p5_Step_n1p5(-1.5, -1.5),
-          IdArea_unsigned_Start_n2_Step_n2(-2, -2) {};
+          IdRange_int_Start_n2_Step_n2(-2, -2),
+          IdRange_float_Start_n1p5_Step_n1p5(-1.5, -1.5),
+          IdRange_unsigned_Start_n2_Step_n2(-2, -2) {};
 };
 
 
@@ -120,3657 +120,3583 @@ TEST(SingleTests, Function_isStandardId)
     EXPECT_FALSE(isStandardId(-13.1, -1.5, -1.5));
 }
 
-TEST_F(IdAreaTests, getStart)
+TEST_F(IdRangeTests, getStart)
 {
-    EXPECT_EQ(IdArea_int.getStart(), 0);
-    EXPECT_FLOAT_EQ(IdArea_float.getStart(), 0.0);
-    EXPECT_EQ(IdArea_unsigned.getStart(), 0);
+    EXPECT_EQ(IdRange_int.getStart(), 0);
+    EXPECT_FLOAT_EQ(IdRange_float.getStart(), 0.0);
+    EXPECT_EQ(IdRange_unsigned.getStart(), 0);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getStart(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getStart(), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getStart(), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getStart(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getStart(), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getStart(), 2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getStart(), -2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getStart(), -2.0);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getStart(), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getStart(), -2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getStart(), -2.0);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getStart(), -2);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getStart(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getStart(), 2.0);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getStart(), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getStart(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getStart(), 2.0);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getStart(), 2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getStart(), -2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getStart(), -1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getStart(), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getStart(), -2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getStart(), -1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getStart(), -2);
 }
 
-TEST_F(IdAreaTests, getStep)
+TEST_F(IdRangeTests, getStep)
 {
-    EXPECT_EQ(IdArea_int.getStep(), 1);
-    EXPECT_FLOAT_EQ(IdArea_float.getStep(), 1.0);
-    EXPECT_EQ(IdArea_unsigned.getStep(), 1);
+    EXPECT_EQ(IdRange_int.getStep(), 1);
+    EXPECT_FLOAT_EQ(IdRange_float.getStep(), 1.0);
+    EXPECT_EQ(IdRange_unsigned.getStep(), 1);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getStep(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getStep(), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getStep(), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getStep(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getStep(), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getStep(), 2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getStep(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getStep(), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getStep(), 2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getStep(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getStep(), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getStep(), 2);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getStep(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getStep(), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getStep(), -2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getStep(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getStep(), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getStep(), -2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getStep(), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getStep(), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getStep(), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getStep(), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getStep(), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getStep(), -2);
 }
 
-TEST_F(IdAreaTests, BorderState)
+TEST_F(IdRangeTests, BorderState)
 {
-    EXPECT_FALSE(IdArea_int.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
-
-
-    IdArea_int.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_float.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_unsigned.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned.setBorderState(BorderRange::LowerBorder, true);
-
-    IdArea_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_1p5_Step_1p5.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, true);
-
-    IdArea_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_n2_Step_1p5.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, true);
-
-    IdArea_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_2_Step_n1p5.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
-
-    IdArea_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::LowerBorder, true);
-    IdArea_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
-
-    EXPECT_TRUE(IdArea_int.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_float.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_float.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_unsigned.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_unsigned.getBorderState(BorderRange::LowerBorder));
-
-    EXPECT_TRUE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
-
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
-
-    EXPECT_TRUE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
-
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
 
 
-    IdArea_int.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_float.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_unsigned.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_int.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_float.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_unsigned.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned.setBorderState(BorderRange::LowerBorder, true);
 
-    IdArea_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_1p5_Step_1p5.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, true);
 
-    IdArea_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_n2_Step_1p5.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, true);
 
-    IdArea_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_2_Step_n1p5.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
 
-    IdArea_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, false);
-    IdArea_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::LowerBorder, true);
+    IdRange_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, true);
 
-    EXPECT_FALSE(IdArea_int.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_float.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_unsigned.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
 
 
-    IdArea_int.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_float.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_unsigned.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_int.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_float.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_unsigned.setBorderState(BorderRange::UpperBorder, false);
 
-    IdArea_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_1p5_Step_1p5.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, false);
 
-    IdArea_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_n2_Step_1p5.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, false);
 
-    IdArea_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_2_Step_n1p5.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
 
-    IdArea_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_int_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::LowerBorder, false);
-    IdArea_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
-    IdArea_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, false);
+    IdRange_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, false);
 
-    EXPECT_TRUE (IdArea_int.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_float.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_unsigned.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+
+
+    IdRange_int.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_float.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_unsigned.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned.setBorderState(BorderRange::LowerBorder, false);
+
+    IdRange_int_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_float_Start_1p5_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_1p5_Step_1p5.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_unsigned_Start_2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+
+    IdRange_int_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_float_Start_n2_Step_1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_n2_Step_1p5.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_unsigned_Start_n2_Step_2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_n2_Step_2.setBorderState(BorderRange::LowerBorder, false);
+
+    IdRange_int_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_float_Start_2_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_2_Step_n1p5.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_unsigned_Start_2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+
+    IdRange_int_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float_Start_n1p5_Step_n1p5.setBorderState(BorderRange::LowerBorder, false);
+    IdRange_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned_Start_n2_Step_n2.setBorderState(BorderRange::LowerBorder, false);
+
+    EXPECT_TRUE (IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
 }
 
-TEST_F(IdAreaTests, BorderLimit)
+TEST_F(IdRangeTests, BorderLimit)
 {
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_EQ(IdArea_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_EQ(IdArea_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
-
-
-    EXPECT_TRUE (IdArea_int.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_int.setBorderLimit(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float.setBorderLimit(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float.setBorderLimit(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_unsigned.setBorderLimit(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, -1));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, -1));
-
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -1));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -1));
-
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderLimit(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
-
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
-
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), -1);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
-
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
-
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
 
-    EXPECT_FALSE(IdArea_int.setBorderLimit(BorderRange::UpperBorder, -10));
-    EXPECT_TRUE (IdArea_int.setBorderLimit(BorderRange::LowerBorder, -10));
-    EXPECT_FALSE(IdArea_float.setBorderLimit(BorderRange::UpperBorder, -10.0));
-    EXPECT_TRUE (IdArea_float.setBorderLimit(BorderRange::LowerBorder, -10.0));
-    EXPECT_TRUE (IdArea_unsigned.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+    EXPECT_TRUE (IdRange_int.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_int.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float.setBorderLimit(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float.setBorderLimit(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_unsigned.setBorderLimit(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, -10));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -10));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
-    EXPECT_TRUE (IdArea_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 1));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 1));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, -10));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, -10));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, -1));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, -1));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -10));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -10));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 1));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 1));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -10));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -10));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
-    EXPECT_TRUE (IdArea_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -1));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -1));
 
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::UpperBorder),  10);
-    EXPECT_EQ(IdArea_int.getBorderLimit(BorderRange::LowerBorder), -10);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderLimit(BorderRange::UpperBorder),  10.0);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderLimit(BorderRange::LowerBorder), -10.0);
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder),  10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), -10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 1);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder),  10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), -10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), -1);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), -1);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), 1);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+
+    EXPECT_FALSE(IdRange_int.setBorderLimit(BorderRange::UpperBorder, -10));
+    EXPECT_TRUE (IdRange_int.setBorderLimit(BorderRange::LowerBorder, -10));
+    EXPECT_FALSE(IdRange_float.setBorderLimit(BorderRange::UpperBorder, -10.0));
+    EXPECT_TRUE (IdRange_float.setBorderLimit(BorderRange::LowerBorder, -10.0));
+    EXPECT_TRUE (IdRange_unsigned.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, -10));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -10));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
+    EXPECT_TRUE (IdRange_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 1));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 1));
+
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, -10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, -10));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.setBorderLimit(BorderRange::LowerBorder, 10));
+
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -10));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -10));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 1));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 1));
+
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -10));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::UpperBorder, -10.0));
+    EXPECT_TRUE (IdRange_float_Start_n1p5_Step_n1p5.setBorderLimit(BorderRange::LowerBorder, -10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, 10));
+
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), -10);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), -10.0);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), -10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 1);
+
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder), -10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::UpperBorder), -1);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderLimit(BorderRange::LowerBorder),  10);
+
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), 1);
+
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderLimit(BorderRange::LowerBorder), -10.0);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder),  10);
 }
 
-TEST_F(IdAreaTests, BorderValue)
+TEST_F(IdRangeTests, BorderValue)
 {
-    EXPECT_EQ(IdArea_int.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdArea_int.getBorderValue(BorderRange::LowerBorder), 0);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderValue(BorderRange::UpperBorder), 0.0);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderValue(BorderRange::LowerBorder), 0.0);
-    EXPECT_EQ(IdArea_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdArea_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), -2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderValue(BorderRange::UpperBorder), -2.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderValue(BorderRange::LowerBorder), -2.0);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderValue(BorderRange::UpperBorder), -2.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderValue(BorderRange::LowerBorder), -2.0);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), -2);
 
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderValue(BorderRange::UpperBorder), 2.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderValue(BorderRange::LowerBorder), 2.0);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderValue(BorderRange::LowerBorder), 2.0);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
 
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::UpperBorder), -1.5);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::LowerBorder), -1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
-
-
-    EXPECT_TRUE(IdArea_int.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE(IdArea_int.setBorderValue(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE(IdArea_float.setBorderValue(BorderRange::UpperBorder, 10.0));
-    EXPECT_TRUE(IdArea_float.setBorderValue(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE(IdArea_unsigned.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE(IdArea_unsigned.setBorderValue(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
-
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
-
-    EXPECT_EQ(IdArea_int.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int.getBorderValue(BorderRange::LowerBorder), 10);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderValue(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float.getBorderValue(BorderRange::LowerBorder), 10.0);
-    EXPECT_EQ(IdArea_unsigned.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned.getBorderValue(BorderRange::LowerBorder), 10);
-
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
-
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderValue(BorderRange::UpperBorder), 10.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n2_Step_1p5.getBorderValue(BorderRange::LowerBorder), 10.0);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
-
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderValue(BorderRange::UpperBorder), 2.0);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_2_Step_n1p5.getBorderValue(BorderRange::LowerBorder), 2.0);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
-    EXPECT_EQ(IdArea_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
-
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
-    EXPECT_EQ(IdArea_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::UpperBorder), -1.5);
-    EXPECT_FLOAT_EQ(IdArea_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::LowerBorder), -1.5);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
-    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::UpperBorder), -1.5);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::LowerBorder), -1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
 
 
-    EXPECT_FALSE(IdArea_int.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_TRUE (IdArea_int.setBorderValue(BorderRange::UpperBorder, 20));
-    EXPECT_FALSE(IdArea_float.setBorderValue(BorderRange::LowerBorder, 20.0));
-    EXPECT_TRUE (IdArea_float.setBorderValue(BorderRange::UpperBorder, 20.0));
-    EXPECT_FALSE(IdArea_unsigned.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_TRUE (IdArea_unsigned.setBorderValue(BorderRange::UpperBorder, 20));
+    EXPECT_TRUE(IdRange_int.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE(IdRange_int.setBorderValue(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE(IdRange_float.setBorderValue(BorderRange::UpperBorder, 10.0));
+    EXPECT_TRUE(IdRange_float.setBorderValue(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE(IdRange_unsigned.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE(IdRange_unsigned.setBorderValue(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 20));
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::LowerBorder, 18.0));
-    EXPECT_TRUE (IdArea_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::UpperBorder, 18.0));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 21));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_TRUE (IdArea_int_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 20));
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.setBorderValue(BorderRange::LowerBorder, 17.5));
-    EXPECT_TRUE (IdArea_float_Start_n2_Step_1p5.setBorderValue(BorderRange::UpperBorder, 17.5));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, -4));
-    EXPECT_TRUE (IdArea_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, -4));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 10));
 
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 20));
-    EXPECT_TRUE (IdArea_int_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 20));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.setBorderValue(BorderRange::LowerBorder, -11.5));
-    EXPECT_TRUE (IdArea_float_Start_2_Step_n1p5.setBorderValue(BorderRange::UpperBorder, -11.5));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 2));
-    EXPECT_TRUE (IdArea_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 2));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
 
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, -22));
-    EXPECT_TRUE(IdArea_int_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, -22));
-    EXPECT_TRUE(IdArea_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::LowerBorder, -16.5));
-    EXPECT_TRUE(IdArea_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::UpperBorder, -16.5));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, -2));
-    EXPECT_TRUE(IdArea_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, -2));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::UpperBorder, 10.0));
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::LowerBorder, 10.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, 10));
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, 10));
+
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), 10);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), 10.0);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 10);
+
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
+
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderValue(BorderRange::UpperBorder), 10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n2_Step_1p5.getBorderValue(BorderRange::LowerBorder), 10.0);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_2.getBorderValue(BorderRange::LowerBorder), 10);
+
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_2_Step_n1p5.getBorderValue(BorderRange::LowerBorder), 2.0);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(IdRange_unsigned_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
+
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::UpperBorder), -1.5);
+    EXPECT_FLOAT_EQ(IdRange_float_Start_n1p5_Step_n1p5.getBorderValue(BorderRange::LowerBorder), -1.5);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(IdRange_unsigned_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
+
+
+    EXPECT_FALSE(IdRange_int.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_TRUE (IdRange_int.setBorderValue(BorderRange::UpperBorder, 20));
+    EXPECT_FALSE(IdRange_float.setBorderValue(BorderRange::LowerBorder, 20.0));
+    EXPECT_TRUE (IdRange_float.setBorderValue(BorderRange::UpperBorder, 20.0));
+    EXPECT_FALSE(IdRange_unsigned.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_TRUE (IdRange_unsigned.setBorderValue(BorderRange::UpperBorder, 20));
+
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 20));
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::LowerBorder, 18.0));
+    EXPECT_TRUE (IdRange_float_Start_1p5_Step_1p5.setBorderValue(BorderRange::UpperBorder, 18.0));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.setBorderValue(BorderRange::UpperBorder, 21));
+
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_TRUE (IdRange_int_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, 20));
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.setBorderValue(BorderRange::LowerBorder, 17.5));
+    EXPECT_TRUE (IdRange_float_Start_n2_Step_1p5.setBorderValue(BorderRange::UpperBorder, 17.5));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::LowerBorder, -4));
+    EXPECT_TRUE (IdRange_unsigned_Start_n2_Step_2.setBorderValue(BorderRange::UpperBorder, -4));
+
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 20));
+    EXPECT_TRUE (IdRange_int_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 20));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.setBorderValue(BorderRange::LowerBorder, -11.5));
+    EXPECT_TRUE (IdRange_float_Start_2_Step_n1p5.setBorderValue(BorderRange::UpperBorder, -11.5));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::LowerBorder, 2));
+    EXPECT_TRUE (IdRange_unsigned_Start_2_Step_n2.setBorderValue(BorderRange::UpperBorder, 2));
+
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, -22));
+    EXPECT_TRUE(IdRange_int_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, -22));
+    EXPECT_TRUE(IdRange_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::LowerBorder, -16.5));
+    EXPECT_TRUE(IdRange_float_Start_n1p5_Step_n1p5.setBorderValue(BorderRange::UpperBorder, -16.5));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::LowerBorder, -2));
+    EXPECT_TRUE(IdRange_unsigned_Start_n2_Step_n2.setBorderValue(BorderRange::UpperBorder, -2));
 }
 
-TEST_F(IdAreaTests, moveBorder)
+TEST_F(IdRangeTests, moveBorder)
 {
-    IdArea<int>::Result result_int[10];
-    IdArea<float>::Result result_float[10];
-    IdArea<unsigned>::Result result_unsigned[10];
+    IdRange<int>::IdInfo idInfo_int[10];
+    IdRange<float>::IdInfo idInfo_float[10];
+    IdRange<unsigned>::IdInfo idInfo_unsigned[10];
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[1] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[2] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[3] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[4] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[1] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[2] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[3] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[4] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_unsigned[5] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[6] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[7] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[8] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[9] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[5] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[6] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[7] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[8] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[9] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_unsigned[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_unsigned[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_unsigned[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, 10);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, 10);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 10)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 10)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 10) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 22) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 18) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 22) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 18) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 10) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 22) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 18) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 22) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 18) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -10) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -18) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -22) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -18) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -22) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -10) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -18) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -22) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -18) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -22) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, 10);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, 10);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 10)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 10)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 10.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 16.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 13.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 17.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 13.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 10.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 16.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 13.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 17.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 13.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -10.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -13.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -17.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -13.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -16.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -10.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -13.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -17.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -13.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -16.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 10);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 10);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 22);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 22);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 1);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -22);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -22);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 1);
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, -3);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, -3);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, -3)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, -3)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, -3);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, -3);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, -3)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, -3)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 7);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 7);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 16);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -8);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -8);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, -1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -1);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 0)             << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 0)             << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 7);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 7);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 16);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -8);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -8);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, -7);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, -7);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, -7)                     << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, -7)               << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, -7);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -7);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -7);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -7);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -7);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -7);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, -7);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -7);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -7);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -7);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -7);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -7);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, -7)                     << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, -7)               << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5)  << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0)  << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5)  << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0)  << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, -4);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -4);
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, -5);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -5);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, -4);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -4);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -7);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 }
 
-TEST_F(IdAreaTests, reset)
+TEST_F(IdRangeTests, reset)
 {
-    IdArea_int.moveBorder(BorderRange::UpperBorder, -17);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 20);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -2);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 44);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 900);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, -17);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 20);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -2);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 44);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 900);
 
-    IdArea_int.moveBorder(BorderRange::LowerBorder, 0);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -90);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -55);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 1);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 3111);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, 0);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -90);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -55);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 1);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 3111);
 
-    IdArea_float.moveBorder(BorderRange::UpperBorder, 1);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 3);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 6099);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 6);
+    IdRange_float.moveBorder(BorderRange::UpperBorder, 1);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 3);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 6099);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 6);
 
-    IdArea_float.moveBorder(BorderRange::LowerBorder, 0);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -10);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 1);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 700);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -50);
+    IdRange_float.moveBorder(BorderRange::LowerBorder, 0);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -10);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 1);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 700);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -50);
 
-    IdArea_unsigned.moveBorder(BorderRange::UpperBorder, -17);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 20);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -2);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 44);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 900);
+    IdRange_unsigned.moveBorder(BorderRange::UpperBorder, -17);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 20);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -2);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 44);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 900);
 
-    IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 1);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 31111);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 3);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 2);
-
-
-    IdArea_int.reset();
-    IdArea_int_Start_2_Step_2.reset();
-    IdArea_int_Start_n2_Step_2.reset();
-    IdArea_int_Start_2_Step_n2.reset();
-    IdArea_int_Start_n2_Step_n2.reset();
-
-    IdArea_float.reset();
-    IdArea_float_Start_1p5_Step_1p5.reset();
-    IdArea_float_Start_n2_Step_1p5.reset();
-    IdArea_float_Start_2_Step_n1p5.reset();
-    IdArea_float_Start_n1p5_Step_n1p5.reset();
-
-    IdArea_unsigned.reset();
-    IdArea_unsigned_Start_2_Step_2.reset();
-    IdArea_unsigned_Start_n2_Step_2.reset();
-    IdArea_unsigned_Start_2_Step_n2.reset();
-    IdArea_unsigned_Start_n2_Step_n2.reset();
+    IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 1);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 31111);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 3);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 2);
 
 
-    IdArea<int>::Result result_int[10];
-    IdArea<float>::Result result_float[10];
-    IdArea<unsigned>::Result result_unsigned[10];
+    IdRange_int.reset();
+    IdRange_int_Start_2_Step_2.reset();
+    IdRange_int_Start_n2_Step_2.reset();
+    IdRange_int_Start_2_Step_n2.reset();
+    IdRange_int_Start_n2_Step_n2.reset();
 
-    result_int[0] = IdArea_int.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    IdRange_float.reset();
+    IdRange_float_Start_1p5_Step_1p5.reset();
+    IdRange_float_Start_n2_Step_1p5.reset();
+    IdRange_float_Start_2_Step_n1p5.reset();
+    IdRange_float_Start_n1p5_Step_n1p5.reset();
 
-    result_int[5] = IdArea_int.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    IdRange_unsigned.reset();
+    IdRange_unsigned_Start_2_Step_2.reset();
+    IdRange_unsigned_Start_n2_Step_2.reset();
+    IdRange_unsigned_Start_2_Step_n2.reset();
+    IdRange_unsigned_Start_n2_Step_n2.reset();
+
+
+    IdRange<int>::IdInfo idInfo_int[10];
+    IdRange<float>::IdInfo idInfo_float[10];
+    IdRange<unsigned>::IdInfo idInfo_unsigned[10];
+
+    idInfo_int[0] = IdRange_int.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+
+    idInfo_int[5] = IdRange_int.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[0] = IdRange_float.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_float[5] = IdArea_float.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[5] = IdRange_float.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[1] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[2] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[3] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
-    result_unsigned[4] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[1] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[2] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[3] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[4] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 0);
 
-    result_unsigned[5] = IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[6] = IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[7] = IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[8] = IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
-    result_unsigned[9] = IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[5] = IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[6] = IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[7] = IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[8] = IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[9] = IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_unsigned[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_unsigned[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_unsigned[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 }
 
-TEST_F(IdAreaTests, getIdInfo_1)
+TEST_F(IdRangeTests, getIdInfo_1)
 {
-    IdArea<int>::Result result_int[10];
-    IdArea<float>::Result result_float[10];
-    IdArea<unsigned>::Result result_unsigned[10];
+    IdRange<int>::IdInfo idInfo_int[10];
+    IdRange<float>::IdInfo idInfo_float[10];
+    IdRange<unsigned>::IdInfo idInfo_unsigned[10];
 
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -1.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 0);
-    result_unsigned[1] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_unsigned[2] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_unsigned[3] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_unsigned[4] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[1] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[2] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[3] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_unsigned[4] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
 
-    result_unsigned[5] = IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 0);
-    result_unsigned[6] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_unsigned[7] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_unsigned[8] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_unsigned[9] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[5] = IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[6] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[7] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[8] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_unsigned[9] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_unsigned[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_unsigned[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i].flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_unsigned[i].state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i].stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_unsigned[i].value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_unsigned[i].value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_unsigned[i].value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 10);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 10);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 10)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_OUT_RANGE) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 10)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 10) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 22) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 18) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 22) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 18) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 10) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 22) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 18) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 22) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 18) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -10) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -18) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -22) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -18) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -22) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -10) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -18) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -22) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -18) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -22) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 10);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 10);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 10);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 10);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 10);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 10);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 10);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 10);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 10);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 10);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 10);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 10);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 10)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_OUT_RANGE) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 10)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 10.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 16.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 13.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 17.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 13.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 10.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 16.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 13.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 17.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 13.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -10.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -13.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -17.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -13.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -16.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -10.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -13.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -17.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -13.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -16.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 10);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 10);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 22);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 22);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 1);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -22);
-    EXPECT_EQ(result_unsigned[0].stepCount, 10);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -22);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 10);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 10);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 1);
 
     //-----------------------------------------------------------------------------
 
-    IdArea_int.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
 
-    IdArea_int.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, -3);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, -3);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_IN_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, -3)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_IN_RANGE)  << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, -3)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    IdArea_float.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
 
-    IdArea_float.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, -3);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -3);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -3);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -3);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -3);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -3);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, -3);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -3);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -3);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -3);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -3);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -3);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_IN_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, -3)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_IN_RANGE)  << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, -3)            << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    IdArea_unsigned.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_unsigned.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
 
-    IdArea_unsigned.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_unsigned.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 7);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 7);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 16);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -8);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -8);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, -3);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -3);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, -1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -3);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -1);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -2);
-    EXPECT_EQ(result_unsigned[0].stepCount, -1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -3);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, -1);
 
     //-----------------------------------------------------------------------------
 
-    IdArea_int.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
 
-    IdArea_int.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i].stepCount, 0)             << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i].value, 16) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i].value, 7)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i].value, 16) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i].value, 12) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i].value, -12) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i].value, -7)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i].value, -12) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i].value, -16) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    IdArea_float.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_float.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, -3);
 
-    IdArea_float.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_float.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, -3);
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 0);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 0);
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i].errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i].state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i].stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].flags, IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].position, IDRP_ON_BORDER) << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i].state)                 << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i].stepCount, 0)             << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i].border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 7.0)  << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 8.5)  << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 12.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i].value, 9.0)  << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -7.0)  << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -9.0)  << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -8.5)  << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i].value, -12.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    IdArea_unsigned.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_unsigned.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, -3);
 
-    IdArea_unsigned.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
-    IdArea_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_unsigned.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_unsigned_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_unsigned_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_unsigned_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
+    IdRange_unsigned_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, -3);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 7);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 7);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 3);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 3);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 16);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 6);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 6);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -8);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -8);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, -16);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, -16);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 2);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0].flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 2);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
-    EXPECT_EQ(result_unsigned[0].errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0].position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0].border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0].state);
-    EXPECT_EQ(result_unsigned[0].value, 0);
-    EXPECT_EQ(result_unsigned[0].stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0);
+    EXPECT_EQ(idInfo_unsigned[0].flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0].position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0].border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0].state);
+    EXPECT_EQ(idInfo_unsigned[0].value, 0);
+    EXPECT_EQ(idInfo_unsigned[0].stepCount, 0);
 }
 
-TEST_F(IdAreaTests, getIdInfo_2)
+TEST_F(IdRangeTests, getIdInfo_2)
 {
-    std::optional<IdArea<int>::Result> result_int[10];
-    std::optional<IdArea<float>::Result> result_float[10];
-    std::optional<IdArea<unsigned>::Result> result_unsigned[10];
+    std::optional<IdRange<int>::IdInfo> idInfo_int[10];
+    std::optional<IdRange<float>::IdInfo> idInfo_float[10];
+    std::optional<IdRange<unsigned>::IdInfo> idInfo_unsigned[10];
 
 
-    EXPECT_TRUE (IdArea_int.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_TRUE (IdRange_int.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
 
-    EXPECT_TRUE (IdArea_int.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-
-
-    EXPECT_FALSE(IdArea_float.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
-
-    EXPECT_FALSE(IdArea_float.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
-    EXPECT_FALSE(IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+    EXPECT_TRUE (IdRange_int.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
 
 
-    EXPECT_TRUE (IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_float.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 11.1, 0).has_value());
 
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_float.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+    EXPECT_FALSE(IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -11.1, 0).has_value());
+
+
+    EXPECT_TRUE (IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 11, 0).has_value());
+
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -11, 0).has_value());
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 30, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 0);
 
-    ASSERT_TRUE(result_int[0].has_value());
-    ASSERT_TRUE(result_int[1].has_value());
-    ASSERT_TRUE(result_int[2].has_value());
-    ASSERT_TRUE(result_int[3].has_value());
-    ASSERT_TRUE(result_int[4].has_value());
+    ASSERT_TRUE(idInfo_int[0].has_value());
+    ASSERT_TRUE(idInfo_int[1].has_value());
+    ASSERT_TRUE(idInfo_int[2].has_value());
+    ASSERT_TRUE(idInfo_int[3].has_value());
+    ASSERT_TRUE(idInfo_int[4].has_value());
 
-    EXPECT_FALSE(result_int[5].has_value());
-    EXPECT_FALSE(result_int[6].has_value());
-    EXPECT_FALSE(result_int[7].has_value());
-    EXPECT_FALSE(result_int[8].has_value());
-    EXPECT_FALSE(result_int[9].has_value());
+    EXPECT_FALSE(idInfo_int[5].has_value());
+    EXPECT_FALSE(idInfo_int[6].has_value());
+    EXPECT_FALSE(idInfo_int[7].has_value());
+    EXPECT_FALSE(idInfo_int[8].has_value());
+    EXPECT_FALSE(idInfo_int[9].has_value());
 
     for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_ON_BORDER)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i]->value, 30) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, -30, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, -30, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, -30, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0);
 
-    EXPECT_FALSE(result_int[0].has_value());
-    EXPECT_FALSE(result_int[1].has_value());
-    EXPECT_FALSE(result_int[2].has_value());
-    EXPECT_FALSE(result_int[3].has_value());
-    EXPECT_FALSE(result_int[4].has_value());
+    EXPECT_FALSE(idInfo_int[0].has_value());
+    EXPECT_FALSE(idInfo_int[1].has_value());
+    EXPECT_FALSE(idInfo_int[2].has_value());
+    EXPECT_FALSE(idInfo_int[3].has_value());
+    EXPECT_FALSE(idInfo_int[4].has_value());
 
-    ASSERT_TRUE(result_int[5].has_value());
-    ASSERT_TRUE(result_int[6].has_value());
-    ASSERT_TRUE(result_int[7].has_value());
-    ASSERT_TRUE(result_int[8].has_value());
-    ASSERT_TRUE(result_int[9].has_value());
+    ASSERT_TRUE(idInfo_int[5].has_value());
+    ASSERT_TRUE(idInfo_int[6].has_value());
+    ASSERT_TRUE(idInfo_int[7].has_value());
+    ASSERT_TRUE(idInfo_int[8].has_value());
+    ASSERT_TRUE(idInfo_int[9].has_value());
 
     for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_ON_BORDER)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 5:    EXPECT_EQ(result_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i]->value, -30) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 30.0, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, 0);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 30.0, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, 0);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 30.0, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, 0);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 30.0, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, 0);
 
-    ASSERT_TRUE(result_float[0].has_value());
-    ASSERT_TRUE(result_float[1].has_value());
-    ASSERT_TRUE(result_float[2].has_value());
-    ASSERT_TRUE(result_float[3].has_value());
-    ASSERT_TRUE(result_float[4].has_value());
+    ASSERT_TRUE(idInfo_float[0].has_value());
+    ASSERT_TRUE(idInfo_float[1].has_value());
+    ASSERT_TRUE(idInfo_float[2].has_value());
+    ASSERT_TRUE(idInfo_float[3].has_value());
+    ASSERT_TRUE(idInfo_float[4].has_value());
 
-    EXPECT_FALSE(result_float[5].has_value());
-    EXPECT_FALSE(result_float[6].has_value());
-    EXPECT_FALSE(result_float[7].has_value());
-    EXPECT_FALSE(result_float[8].has_value());
-    EXPECT_FALSE(result_float[9].has_value());
+    EXPECT_FALSE(idInfo_float[5].has_value());
+    EXPECT_FALSE(idInfo_float[6].has_value());
+    EXPECT_FALSE(idInfo_float[7].has_value());
+    EXPECT_FALSE(idInfo_float[8].has_value());
+    EXPECT_FALSE(idInfo_float[9].has_value());
 
     for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_ON_BORDER)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i]->value, 30.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i]->value, 31.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i]->value, 32.5) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i]->value, 32.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i]->value, 30.0) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 30.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 31.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 32.5) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 32.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 30.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, -30.0, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, 0);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, -30.0, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, 0);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, -30.0, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, 0);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, -30.0, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, 0);
 
-    EXPECT_FALSE(result_float[0].has_value());
-    EXPECT_FALSE(result_float[1].has_value());
-    EXPECT_FALSE(result_float[2].has_value());
-    EXPECT_FALSE(result_float[3].has_value());
-    EXPECT_FALSE(result_float[4].has_value());
+    EXPECT_FALSE(idInfo_float[0].has_value());
+    EXPECT_FALSE(idInfo_float[1].has_value());
+    EXPECT_FALSE(idInfo_float[2].has_value());
+    EXPECT_FALSE(idInfo_float[3].has_value());
+    EXPECT_FALSE(idInfo_float[4].has_value());
 
-    ASSERT_TRUE(result_float[5].has_value());
-    ASSERT_TRUE(result_float[6].has_value());
-    ASSERT_TRUE(result_float[7].has_value());
-    ASSERT_TRUE(result_float[8].has_value());
-    ASSERT_TRUE(result_float[9].has_value());
+    ASSERT_TRUE(idInfo_float[5].has_value());
+    ASSERT_TRUE(idInfo_float[6].has_value());
+    ASSERT_TRUE(idInfo_float[7].has_value());
+    ASSERT_TRUE(idInfo_float[8].has_value());
+    ASSERT_TRUE(idInfo_float[9].has_value());
 
     for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_ON_BORDER)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 5:    EXPECT_FLOAT_EQ(result_float[i]->value, -30.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i]->value, -31.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i]->value, -32.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i]->value, -32.5) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i]->value, -30.0) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -30.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -31.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -32.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -32.5) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -30.0) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 30);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 30);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -30, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -30);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, -30, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -30);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 30, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, -30, 0).has_value());
-
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 30);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, 0).has_value());
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0).has_value());
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 0);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 30, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, -30, 0).has_value());
 
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 30);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, 0).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 30);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0).has_value());
 
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, 0).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 0);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 0).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, 0);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 0);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 30);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, 0).has_value());
+
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, 0).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 0).has_value());
+
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 0).has_value());
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_SUCCESSFULLY);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, 0);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 0);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, 0).has_value());
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 0, 0);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 2, 0);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 2, 0);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 0, 0);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 2, 0);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 2, 0);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 0, 0);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 2, 0);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -2, 0);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 2, 0);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -2, 0);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 0, 0);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 2, 0);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -2, 0);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 2, 0);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -2, 0);
 
-    ASSERT_TRUE(result_int[0].has_value());
-    ASSERT_TRUE(result_int[1].has_value());
-    ASSERT_TRUE(result_int[2].has_value());
-    ASSERT_TRUE(result_int[3].has_value());
-    ASSERT_TRUE(result_int[4].has_value());
+    ASSERT_TRUE(idInfo_int[0].has_value());
+    ASSERT_TRUE(idInfo_int[1].has_value());
+    ASSERT_TRUE(idInfo_int[2].has_value());
+    ASSERT_TRUE(idInfo_int[3].has_value());
+    ASSERT_TRUE(idInfo_int[4].has_value());
 
-    ASSERT_TRUE(result_int[5].has_value());
-    ASSERT_TRUE(result_int[6].has_value());
-    ASSERT_TRUE(result_int[7].has_value());
-    ASSERT_TRUE(result_int[8].has_value());
-    ASSERT_TRUE(result_int[9].has_value());
+    ASSERT_TRUE(idInfo_int[5].has_value());
+    ASSERT_TRUE(idInfo_int[6].has_value());
+    ASSERT_TRUE(idInfo_int[7].has_value());
+    ASSERT_TRUE(idInfo_int[8].has_value());
+    ASSERT_TRUE(idInfo_int[9].has_value());
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i]->flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_int[i]->flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_int[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_int[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_int[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i]->value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i]->value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_int[i]->value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_int[i]->value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i]->value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 0.0, 0);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 1.5, 0);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -2.0, 0);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 2.0, 0);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -1.5, 0);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 0.0, 0);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 1.5, 0);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -2.0, 0);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 2.0, 0);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -1.5, 0);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 0.0, 0);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 1.5, 0);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -2.0, 0);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 2.0, 0);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -1.5, 0);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 0.0, 0);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 1.5, 0);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -2.0, 0);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 2.0, 0);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -1.5, 0);
 
-    ASSERT_TRUE(result_float[0].has_value());
-    ASSERT_TRUE(result_float[1].has_value());
-    ASSERT_TRUE(result_float[2].has_value());
-    ASSERT_TRUE(result_float[3].has_value());
-    ASSERT_TRUE(result_float[4].has_value());
+    ASSERT_TRUE(idInfo_float[0].has_value());
+    ASSERT_TRUE(idInfo_float[1].has_value());
+    ASSERT_TRUE(idInfo_float[2].has_value());
+    ASSERT_TRUE(idInfo_float[3].has_value());
+    ASSERT_TRUE(idInfo_float[4].has_value());
 
-    ASSERT_TRUE(result_float[5].has_value());
-    ASSERT_TRUE(result_float[6].has_value());
-    ASSERT_TRUE(result_float[7].has_value());
-    ASSERT_TRUE(result_float[8].has_value());
-    ASSERT_TRUE(result_float[9].has_value());
+    ASSERT_TRUE(idInfo_float[5].has_value());
+    ASSERT_TRUE(idInfo_float[6].has_value());
+    ASSERT_TRUE(idInfo_float[7].has_value());
+    ASSERT_TRUE(idInfo_float[8].has_value());
+    ASSERT_TRUE(idInfo_float[9].has_value());
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i]->flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_float[i]->flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_float[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_float[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_float[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i]->value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i]->value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i]->value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i]->value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i]->value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -1.5) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_FLOAT_EQ(result_float[i]->value,  0.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i]->value,  1.5) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i]->value, -2.0) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i]->value,  2.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i]->value, -1.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  0.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  1.5) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -2.0) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i]->value,  2.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -1.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 0, 0);
-    result_unsigned[1] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 2, 0);
-    result_unsigned[2] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
-    result_unsigned[3] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 2, 0);
-    result_unsigned[4] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 0, 0);
+    idInfo_unsigned[1] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 2, 0);
+    idInfo_unsigned[2] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 0);
+    idInfo_unsigned[3] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 2, 0);
+    idInfo_unsigned[4] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 0);
 
-    result_unsigned[5] = IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 0, 0);
-    result_unsigned[6] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 2, 0);
-    result_unsigned[7] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -2, 0);
-    result_unsigned[8] = IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 2, 0);
-    result_unsigned[9] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -2, 0);
+    idInfo_unsigned[5] = IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 0, 0);
+    idInfo_unsigned[6] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 2, 0);
+    idInfo_unsigned[7] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -2, 0);
+    idInfo_unsigned[8] = IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 2, 0);
+    idInfo_unsigned[9] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -2, 0);
 
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    ASSERT_TRUE(result_unsigned[1].has_value());
-    ASSERT_TRUE(result_unsigned[2].has_value());
-    ASSERT_TRUE(result_unsigned[3].has_value());
-    ASSERT_TRUE(result_unsigned[4].has_value());
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    ASSERT_TRUE(idInfo_unsigned[1].has_value());
+    ASSERT_TRUE(idInfo_unsigned[2].has_value());
+    ASSERT_TRUE(idInfo_unsigned[3].has_value());
+    ASSERT_TRUE(idInfo_unsigned[4].has_value());
 
-    ASSERT_TRUE(result_unsigned[5].has_value());
-    ASSERT_TRUE(result_unsigned[6].has_value());
-    ASSERT_TRUE(result_unsigned[7].has_value());
-    ASSERT_TRUE(result_unsigned[8].has_value());
-    ASSERT_TRUE(result_unsigned[9].has_value());
+    ASSERT_TRUE(idInfo_unsigned[5].has_value());
+    ASSERT_TRUE(idInfo_unsigned[6].has_value());
+    ASSERT_TRUE(idInfo_unsigned[7].has_value());
+    ASSERT_TRUE(idInfo_unsigned[8].has_value());
+    ASSERT_TRUE(idInfo_unsigned[9].has_value());
 
     for (size_t i = 0; i < 10; ++i) {
-        EXPECT_EQ(result_unsigned[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i]->position, IDM_POS_ON_BORDER)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_unsigned[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_unsigned[i]->stepCount, 0)                      << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i]->flags & IDRF_SUCCESSFULLY) << "The error occurred when: i == " << i;
+        EXPECT_TRUE(idInfo_unsigned[i]->flags & IDRF_ID_AT_START)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i]->position, IDRP_ON_BORDER)    << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_unsigned[i]->state)                    << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_unsigned[i]->stepCount, 0)                << "The error occurred when: i == " << i;
 
         if (i <= 4)
-            EXPECT_EQ(result_unsigned[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i]->border, BorderRange::UpperBorder) << "The error occurred when: i == " << i;
         else
-            EXPECT_EQ(result_unsigned[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
+            EXPECT_EQ(idInfo_unsigned[i]->border, BorderRange::LowerBorder) << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_unsigned[i]->value,  0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_unsigned[i]->value,  0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
 
-            case 5:    EXPECT_EQ(result_unsigned[i]->value,  0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_EQ(idInfo_unsigned[i]->value,  0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_unsigned[i]->value,  2) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_unsigned[i]->value, -2) << "The error occurred when: i == " << i;    break;
         }
     }
 
     //-----------------------------------------------------------------------------
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 30, 5);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 5);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, 5);
 
-    ASSERT_TRUE(result_int[0].has_value());
-    ASSERT_TRUE(result_int[1].has_value());
-    ASSERT_TRUE(result_int[2].has_value());
-    ASSERT_TRUE(result_int[3].has_value());
-    ASSERT_TRUE(result_int[4].has_value());
+    ASSERT_TRUE(idInfo_int[0].has_value());
+    ASSERT_TRUE(idInfo_int[1].has_value());
+    ASSERT_TRUE(idInfo_int[2].has_value());
+    ASSERT_TRUE(idInfo_int[3].has_value());
+    ASSERT_TRUE(idInfo_int[4].has_value());
 
-    EXPECT_FALSE(result_int[5].has_value());
-    EXPECT_FALSE(result_int[6].has_value());
-    EXPECT_FALSE(result_int[7].has_value());
-    EXPECT_FALSE(result_int[8].has_value());
-    EXPECT_FALSE(result_int[9].has_value());
-
-    for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
-
-        switch (i) {
-            case 0:    EXPECT_EQ(result_int[i]->value, 35) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
-        }
-    }
-
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5);
-
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, 30, -5);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, -5);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, -5);
-
-    ASSERT_TRUE(result_int[0].has_value());
-    ASSERT_TRUE(result_int[1].has_value());
-    ASSERT_TRUE(result_int[2].has_value());
-    ASSERT_TRUE(result_int[3].has_value());
-    ASSERT_TRUE(result_int[4].has_value());
-
-    EXPECT_FALSE(result_int[5].has_value());
-    EXPECT_FALSE(result_int[6].has_value());
-    EXPECT_FALSE(result_int[7].has_value());
-    EXPECT_FALSE(result_int[8].has_value());
-    EXPECT_FALSE(result_int[9].has_value());
+    EXPECT_FALSE(idInfo_int[5].has_value());
+    EXPECT_FALSE(idInfo_int[6].has_value());
+    EXPECT_FALSE(idInfo_int[7].has_value());
+    EXPECT_FALSE(idInfo_int[8].has_value());
+    EXPECT_FALSE(idInfo_int[9].has_value());
 
     for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_IN_RANGE)        << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_OUT_RANGE)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_EQ(result_int[i]->value, 25) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_EQ(result_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_EQ(result_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_EQ(result_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_EQ(result_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i]->value, 35) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i]->value, 40) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, -30, 5);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 5);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 5);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5);
 
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, -30, 5);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 5);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 5);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, 30, -5);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, -5);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 30, -5);
 
-    EXPECT_FALSE(result_int[0].has_value());
-    EXPECT_FALSE(result_int[1].has_value());
-    EXPECT_FALSE(result_int[2].has_value());
-    EXPECT_FALSE(result_int[3].has_value());
-    EXPECT_FALSE(result_int[4].has_value());
+    ASSERT_TRUE(idInfo_int[0].has_value());
+    ASSERT_TRUE(idInfo_int[1].has_value());
+    ASSERT_TRUE(idInfo_int[2].has_value());
+    ASSERT_TRUE(idInfo_int[3].has_value());
+    ASSERT_TRUE(idInfo_int[4].has_value());
 
-    ASSERT_TRUE(result_int[5].has_value());
-    ASSERT_TRUE(result_int[6].has_value());
-    ASSERT_TRUE(result_int[7].has_value());
-    ASSERT_TRUE(result_int[8].has_value());
-    ASSERT_TRUE(result_int[9].has_value());
-
-    for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
-
-        switch (i) {
-            case 5:    EXPECT_EQ(result_int[i]->value, -35) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
-        }
-    }
-
-    result_int[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, -30, -5);
-    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, -5);
-    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, -5);
-    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5);
-    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5);
-
-    result_int[5] = IdArea_int.getIdInfo(BorderRange::LowerBorder, -30, -5);
-    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, -5);
-    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, -5);
-    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5);
-    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5);
-
-    EXPECT_FALSE(result_int[0].has_value());
-    EXPECT_FALSE(result_int[1].has_value());
-    EXPECT_FALSE(result_int[2].has_value());
-    EXPECT_FALSE(result_int[3].has_value());
-    EXPECT_FALSE(result_int[4].has_value());
-
-    ASSERT_TRUE(result_int[5].has_value());
-    ASSERT_TRUE(result_int[6].has_value());
-    ASSERT_TRUE(result_int[7].has_value());
-    ASSERT_TRUE(result_int[8].has_value());
-    ASSERT_TRUE(result_int[9].has_value());
-
-    for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->position, IDM_POS_IN_RANGE)        << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
-
-        switch (i) {
-            case 5:    EXPECT_EQ(result_int[i]->value, -25) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-        }
-    }
-
-
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 30.0, 5);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, 5);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, 5);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, 5);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, 5);
-
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 30.0, 5);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, 5);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, 5);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, 5);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, 5);
-
-    ASSERT_TRUE(result_float[0].has_value());
-    ASSERT_TRUE(result_float[1].has_value());
-    ASSERT_TRUE(result_float[2].has_value());
-    ASSERT_TRUE(result_float[3].has_value());
-    ASSERT_TRUE(result_float[4].has_value());
-
-    EXPECT_FALSE(result_float[5].has_value());
-    EXPECT_FALSE(result_float[6].has_value());
-    EXPECT_FALSE(result_float[7].has_value());
-    EXPECT_FALSE(result_float[8].has_value());
-    EXPECT_FALSE(result_float[9].has_value());
+    EXPECT_FALSE(idInfo_int[5].has_value());
+    EXPECT_FALSE(idInfo_int[6].has_value());
+    EXPECT_FALSE(idInfo_int[7].has_value());
+    EXPECT_FALSE(idInfo_int[8].has_value());
+    EXPECT_FALSE(idInfo_int[9].has_value());
 
     for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_IN_RANGE)           << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i]->value, 35.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i]->value, 39.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i]->value, 40.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i]->value, 39.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i]->value, 37.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_EQ(idInfo_int[i]->value, 25) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_EQ(idInfo_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_EQ(idInfo_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_EQ(idInfo_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_EQ(idInfo_int[i]->value, 20) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, 30.0, -5);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, -5);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, -5);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, -5);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, -5);
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, 30.0, -5);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, -5);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, -5);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, -5);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, -5);
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, -30, 5);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 5);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, 5);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5);
 
-    ASSERT_TRUE(result_float[0].has_value());
-    ASSERT_TRUE(result_float[1].has_value());
-    ASSERT_TRUE(result_float[2].has_value());
-    ASSERT_TRUE(result_float[3].has_value());
-    ASSERT_TRUE(result_float[4].has_value());
+    EXPECT_FALSE(idInfo_int[0].has_value());
+    EXPECT_FALSE(idInfo_int[1].has_value());
+    EXPECT_FALSE(idInfo_int[2].has_value());
+    EXPECT_FALSE(idInfo_int[3].has_value());
+    EXPECT_FALSE(idInfo_int[4].has_value());
 
-    EXPECT_FALSE(result_float[5].has_value());
-    EXPECT_FALSE(result_float[6].has_value());
-    EXPECT_FALSE(result_float[7].has_value());
-    EXPECT_FALSE(result_float[8].has_value());
-    EXPECT_FALSE(result_float[9].has_value());
+    ASSERT_TRUE(idInfo_int[5].has_value());
+    ASSERT_TRUE(idInfo_int[6].has_value());
+    ASSERT_TRUE(idInfo_int[7].has_value());
+    ASSERT_TRUE(idInfo_int[8].has_value());
+    ASSERT_TRUE(idInfo_int[9].has_value());
+
+    for (size_t i = 5; i < 10; ++i) {
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_OUT_RANGE)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+
+        switch (i) {
+            case 5:    EXPECT_EQ(idInfo_int[i]->value, -35) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i]->value, -40) << "The error occurred when: i == " << i;    break;
+        }
+    }
+
+    idInfo_int[0] = IdRange_int.getIdInfo(BorderRange::UpperBorder, -30, -5);
+    idInfo_int[1] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, -5);
+    idInfo_int[2] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -30, -5);
+    idInfo_int[3] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5);
+    idInfo_int[4] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5);
+
+    idInfo_int[5] = IdRange_int.getIdInfo(BorderRange::LowerBorder, -30, -5);
+    idInfo_int[6] = IdRange_int_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, -5);
+    idInfo_int[7] = IdRange_int_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -30, -5);
+    idInfo_int[8] = IdRange_int_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5);
+    idInfo_int[9] = IdRange_int_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5);
+
+    EXPECT_FALSE(idInfo_int[0].has_value());
+    EXPECT_FALSE(idInfo_int[1].has_value());
+    EXPECT_FALSE(idInfo_int[2].has_value());
+    EXPECT_FALSE(idInfo_int[3].has_value());
+    EXPECT_FALSE(idInfo_int[4].has_value());
+
+    ASSERT_TRUE(idInfo_int[5].has_value());
+    ASSERT_TRUE(idInfo_int[6].has_value());
+    ASSERT_TRUE(idInfo_int[7].has_value());
+    ASSERT_TRUE(idInfo_int[8].has_value());
+    ASSERT_TRUE(idInfo_int[9].has_value());
+
+    for (size_t i = 5; i < 10; ++i) {
+        EXPECT_EQ(idInfo_int[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->position, IDRP_IN_RANGE)           << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_int[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+
+        switch (i) {
+            case 5:    EXPECT_EQ(idInfo_int[i]->value, -25) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_EQ(idInfo_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_EQ(idInfo_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_EQ(idInfo_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_EQ(idInfo_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
+        }
+    }
+
+
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 30.0, 5);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, 5);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, 5);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, 5);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, 5);
+
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 30.0, 5);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, 5);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, 5);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, 5);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, 5);
+
+    ASSERT_TRUE(idInfo_float[0].has_value());
+    ASSERT_TRUE(idInfo_float[1].has_value());
+    ASSERT_TRUE(idInfo_float[2].has_value());
+    ASSERT_TRUE(idInfo_float[3].has_value());
+    ASSERT_TRUE(idInfo_float[4].has_value());
+
+    EXPECT_FALSE(idInfo_float[5].has_value());
+    EXPECT_FALSE(idInfo_float[6].has_value());
+    EXPECT_FALSE(idInfo_float[7].has_value());
+    EXPECT_FALSE(idInfo_float[8].has_value());
+    EXPECT_FALSE(idInfo_float[9].has_value());
 
     for (size_t i = 0; i < 5; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_IN_RANGE)        << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_OUT_RANGE)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 0:    EXPECT_FLOAT_EQ(result_float[i]->value, 25.0) << "The error occurred when: i == " << i;    break;
-            case 1:    EXPECT_FLOAT_EQ(result_float[i]->value, 24.0) << "The error occurred when: i == " << i;    break;
-            case 2:    EXPECT_FLOAT_EQ(result_float[i]->value, 25.0) << "The error occurred when: i == " << i;    break;
-            case 3:    EXPECT_FLOAT_EQ(result_float[i]->value, 24.5) << "The error occurred when: i == " << i;    break;
-            case 4:    EXPECT_FLOAT_EQ(result_float[i]->value, 22.5) << "The error occurred when: i == " << i;    break;
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 35.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 39.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 40.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 39.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 37.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, -30.0, 5);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, 5);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, 5);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, 5);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, 5);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, 30.0, -5);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, 31.5, -5);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, 32.5, -5);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 32.0, -5);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, 30.0, -5);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, -30.0, 5);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, 5);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, 5);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, 5);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, 5);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, 30.0, -5);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, 31.5, -5);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, 32.5, -5);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 32.0, -5);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, 30.0, -5);
 
-    EXPECT_FALSE(result_float[0].has_value());
-    EXPECT_FALSE(result_float[1].has_value());
-    EXPECT_FALSE(result_float[2].has_value());
-    EXPECT_FALSE(result_float[3].has_value());
-    EXPECT_FALSE(result_float[4].has_value());
+    ASSERT_TRUE(idInfo_float[0].has_value());
+    ASSERT_TRUE(idInfo_float[1].has_value());
+    ASSERT_TRUE(idInfo_float[2].has_value());
+    ASSERT_TRUE(idInfo_float[3].has_value());
+    ASSERT_TRUE(idInfo_float[4].has_value());
 
-    ASSERT_TRUE(result_float[5].has_value());
-    ASSERT_TRUE(result_float[6].has_value());
-    ASSERT_TRUE(result_float[7].has_value());
-    ASSERT_TRUE(result_float[8].has_value());
-    ASSERT_TRUE(result_float[9].has_value());
+    EXPECT_FALSE(idInfo_float[5].has_value());
+    EXPECT_FALSE(idInfo_float[6].has_value());
+    EXPECT_FALSE(idInfo_float[7].has_value());
+    EXPECT_FALSE(idInfo_float[8].has_value());
+    EXPECT_FALSE(idInfo_float[9].has_value());
+
+    for (size_t i = 0; i < 5; ++i) {
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_IN_RANGE)           << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::UpperBorder)  << "The error occurred when: i == " << i;
+
+        switch (i) {
+            case 0:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 25.0) << "The error occurred when: i == " << i;    break;
+            case 1:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 24.0) << "The error occurred when: i == " << i;    break;
+            case 2:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 25.0) << "The error occurred when: i == " << i;    break;
+            case 3:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 24.5) << "The error occurred when: i == " << i;    break;
+            case 4:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, 22.5) << "The error occurred when: i == " << i;    break;
+        }
+    }
+
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, -30.0, 5);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, 5);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, 5);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, 5);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, 5);
+
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, -30.0, 5);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, 5);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, 5);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, 5);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, 5);
+
+    EXPECT_FALSE(idInfo_float[0].has_value());
+    EXPECT_FALSE(idInfo_float[1].has_value());
+    EXPECT_FALSE(idInfo_float[2].has_value());
+    EXPECT_FALSE(idInfo_float[3].has_value());
+    EXPECT_FALSE(idInfo_float[4].has_value());
+
+    ASSERT_TRUE(idInfo_float[5].has_value());
+    ASSERT_TRUE(idInfo_float[6].has_value());
+    ASSERT_TRUE(idInfo_float[7].has_value());
+    ASSERT_TRUE(idInfo_float[8].has_value());
+    ASSERT_TRUE(idInfo_float[9].has_value());
 
     for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_OUT_RANGE)       << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_OUT_RANGE)          << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, 5)                      << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 5:    EXPECT_FLOAT_EQ(result_float[i]->value, -35.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i]->value, -39.0) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i]->value, -39.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i]->value, -40.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i]->value, -37.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -35.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -39.0) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -39.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -40.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -37.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
-    result_float[0] = IdArea_float.getIdInfo(BorderRange::UpperBorder, -30.0, -5);
-    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, -5);
-    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, -5);
-    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, -5);
-    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, -5);
+    idInfo_float[0] = IdRange_float.getIdInfo(BorderRange::UpperBorder, -30.0, -5);
+    idInfo_float[1] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::UpperBorder, -31.5, -5);
+    idInfo_float[2] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -32.0, -5);
+    idInfo_float[3] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -32.5, -5);
+    idInfo_float[4] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::UpperBorder, -30.0, -5);
 
-    result_float[5] = IdArea_float.getIdInfo(BorderRange::LowerBorder, -30.0, -5);
-    result_float[6] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, -5);
-    result_float[7] = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, -5);
-    result_float[8] = IdArea_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, -5);
-    result_float[9] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, -5);
+    idInfo_float[5] = IdRange_float.getIdInfo(BorderRange::LowerBorder, -30.0, -5);
+    idInfo_float[6] = IdRange_float_Start_1p5_Step_1p5.getIdInfo(BorderRange::LowerBorder, -31.5, -5);
+    idInfo_float[7] = IdRange_float_Start_n2_Step_1p5.getIdInfo(BorderRange::LowerBorder, -32.0, -5);
+    idInfo_float[8] = IdRange_float_Start_2_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -32.5, -5);
+    idInfo_float[9] = IdRange_float_Start_n1p5_Step_n1p5.getIdInfo(BorderRange::LowerBorder, -30.0, -5);
 
-    EXPECT_FALSE(result_float[0].has_value());
-    EXPECT_FALSE(result_float[1].has_value());
-    EXPECT_FALSE(result_float[2].has_value());
-    EXPECT_FALSE(result_float[3].has_value());
-    EXPECT_FALSE(result_float[4].has_value());
+    EXPECT_FALSE(idInfo_float[0].has_value());
+    EXPECT_FALSE(idInfo_float[1].has_value());
+    EXPECT_FALSE(idInfo_float[2].has_value());
+    EXPECT_FALSE(idInfo_float[3].has_value());
+    EXPECT_FALSE(idInfo_float[4].has_value());
 
-    ASSERT_TRUE(result_float[5].has_value());
-    ASSERT_TRUE(result_float[6].has_value());
-    ASSERT_TRUE(result_float[7].has_value());
-    ASSERT_TRUE(result_float[8].has_value());
-    ASSERT_TRUE(result_float[9].has_value());
+    ASSERT_TRUE(idInfo_float[5].has_value());
+    ASSERT_TRUE(idInfo_float[6].has_value());
+    ASSERT_TRUE(idInfo_float[7].has_value());
+    ASSERT_TRUE(idInfo_float[8].has_value());
+    ASSERT_TRUE(idInfo_float[9].has_value());
 
     for (size_t i = 5; i < 10; ++i) {
-        EXPECT_EQ(result_float[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->position, IDM_POS_IN_RANGE)        << "The error occurred when: i == " << i;
-        EXPECT_FALSE(result_float[i]->state)                          << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
-        EXPECT_EQ(result_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->flags, IDRF_SUCCESSFULLY)          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->position, IDRP_IN_RANGE)           << "The error occurred when: i == " << i;
+        EXPECT_FALSE(idInfo_float[i]->state)                          << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
+        EXPECT_EQ(idInfo_float[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
 
         switch (i) {
-            case 5:    EXPECT_FLOAT_EQ(result_float[i]->value, -25.0) << "The error occurred when: i == " << i;    break;
-            case 6:    EXPECT_FLOAT_EQ(result_float[i]->value, -24.0) << "The error occurred when: i == " << i;    break;
-            case 7:    EXPECT_FLOAT_EQ(result_float[i]->value, -24.5) << "The error occurred when: i == " << i;    break;
-            case 8:    EXPECT_FLOAT_EQ(result_float[i]->value, -25.0) << "The error occurred when: i == " << i;    break;
-            case 9:    EXPECT_FLOAT_EQ(result_float[i]->value, -22.5) << "The error occurred when: i == " << i;    break;
+            case 5:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -25.0) << "The error occurred when: i == " << i;    break;
+            case 6:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -24.0) << "The error occurred when: i == " << i;    break;
+            case 7:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -24.5) << "The error occurred when: i == " << i;    break;
+            case 8:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -25.0) << "The error occurred when: i == " << i;    break;
+            case 9:    EXPECT_FLOAT_EQ(idInfo_float[i]->value, -22.5) << "The error occurred when: i == " << i;    break;
         }
     }
 
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 35);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 5);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 35);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 5);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -30, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -25);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 5);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, -30, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -25);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 5);
 
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 30, 5).has_value());
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, -30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, -30, 5).has_value());
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 25);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -5);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 25);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -5);
 
-    result_unsigned[0] = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -30, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -35);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -5);
+    idInfo_unsigned[0] = IdRange_unsigned.getIdInfo(BorderRange::UpperBorder, -30, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -35);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -5);
 
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, 30, -5).has_value());
-    EXPECT_FALSE(IdArea_unsigned.getIdInfo(BorderRange::LowerBorder, -30, -5).has_value());
-
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 40);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 5);
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, 5).has_value());
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5).has_value());
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 0);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 20);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -5);
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, -5).has_value());
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5).has_value());
-
-    result_unsigned[0] = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -1);
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, 30, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned.getIdInfo(BorderRange::LowerBorder, -30, -5).has_value());
 
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 40);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 5);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, 5).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_OUT_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 20);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 5);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5).has_value());
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -1, 5).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 0);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 20);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -5);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, 0, -5).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_SUCCESSFULLY);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 40);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -5);
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5).has_value());
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -1, -5).has_value());
-
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, 5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, 5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5).has_value());
-
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, -5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, -5).has_value());
-    EXPECT_FALSE(IdArea_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5).has_value());
+    idInfo_unsigned[0] = IdRange_unsigned_Start_2_Step_2.getIdInfo(BorderRange::LowerBorder, 0, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -1);
 
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, 5).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, 5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IDS_RUN_OUT);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, 0);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 20);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 5);
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -1, 5).has_value());
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, 30, -5).has_value());
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_ON_BORDER);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::UpperBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, 0);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -2, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
 
-    result_unsigned[0] = IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, -5);
-    ASSERT_TRUE(result_unsigned[0].has_value());
-    EXPECT_EQ(result_unsigned[0]->errCode, IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-    EXPECT_EQ(result_unsigned[0]->position, IDM_POS_IN_RANGE);
-    EXPECT_EQ(result_unsigned[0]->border, BorderRange::LowerBorder);
-    EXPECT_FALSE(result_unsigned[0]->state);
-    EXPECT_EQ(result_unsigned[0]->value, -2);
-    EXPECT_EQ(result_unsigned[0]->stepCount, -1);
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, 30, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_IN_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 40);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -5);
 
-    EXPECT_FALSE(IdArea_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::LowerBorder, -1, -5).has_value());
+
+
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, 5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, 5).has_value());
+
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder,  30, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::UpperBorder, -30, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder,  30, -5).has_value());
+    EXPECT_FALSE(IdRange_unsigned_Start_2_Step_n2.getIdInfo(BorderRange::LowerBorder, -30, -5).has_value());
+
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, 5).has_value());
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_OUT_RANGE);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, 5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_EQ(idInfo_unsigned[0]->flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, 0);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, 5).has_value());
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, 30, -5).has_value());
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::UpperBorder, -2, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::UpperBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, 0);
+
+    idInfo_unsigned[0] = IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, 0, -5);
+    ASSERT_TRUE(idInfo_unsigned[0].has_value());
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_RANGE_ARE_BENT);
+    EXPECT_TRUE(idInfo_unsigned[0]->flags & IDRF_ID_AT_START);
+    EXPECT_EQ(idInfo_unsigned[0]->position, IDRP_ON_BORDER);
+    EXPECT_EQ(idInfo_unsigned[0]->border, BorderRange::LowerBorder);
+    EXPECT_FALSE(idInfo_unsigned[0]->state);
+    EXPECT_EQ(idInfo_unsigned[0]->value, -2);
+    EXPECT_EQ(idInfo_unsigned[0]->stepCount, -1);
+
+    EXPECT_FALSE(IdRange_unsigned_Start_n2_Step_n2.getIdInfo(BorderRange::LowerBorder, -1, -5).has_value());
 }
 
-TEST_F(IdAreaTests, getIdInfo_3)
+TEST(SingleTests, Test_1)
 {
-    std::optional<IdArea<int>::Result> result_int[10];
-    std::optional<IdArea<float>::Result> result_float[10];
-    std::optional<IdArea<unsigned>::Result> result_unsigned[10];
+    IdRange<int> IdRange_int;
+    IdRange<float> IdRange_float;
+    IdRange<unsigned> IdRange_unsigned;
+
+    IdRange_int.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int.setBorderLimit(BorderRange::UpperBorder,  50);
+    IdRange_int.setBorderLimit(BorderRange::LowerBorder, -50);
+
+    IdRange_float.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float.setBorderLimit(BorderRange::UpperBorder,  50.5);
+    IdRange_float.setBorderLimit(BorderRange::LowerBorder, -50.5);
+
+    IdRange_unsigned.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_unsigned.moveBorder(BorderRange::UpperBorder,  10);
+    IdRange_unsigned.moveBorder(BorderRange::LowerBorder, -5);
+    IdRange_unsigned.setBorderLimit(BorderRange::UpperBorder, 50);
+    IdRange_unsigned.setBorderLimit(BorderRange::LowerBorder, 3);
 
 
-    IdArea_int.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange<int> IdRange_int_cc(IdRange_int);
+    IdRange<float> IdRange_float_cc(IdRange_float);
+    IdRange<unsigned> IdRange_unsigned_cc(IdRange_unsigned);
 
-    IdArea_int.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_n2_Step_2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_int_Start_n2_Step_n2.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE (IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), -50);
 
-    IdArea_float.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::UpperBorder, 10);
+    EXPECT_TRUE (IdRange_int_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_cc.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_cc.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_cc.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_cc.getBorderLimit(BorderRange::LowerBorder), -50);
 
-    IdArea_float.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_1p5_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_n2_Step_1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_2_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
-    IdArea_float_Start_n1p5_Step_n1p5.moveBorder(BorderRange::LowerBorder, 10);
+    EXPECT_TRUE (IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
-    //-----------------------------------------------------------------------------
+    EXPECT_TRUE (IdRange_float_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
-//    result_int[0] = IdArea_int.getIdInfo(0);
-//    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(2);
-//    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(-2);
-//    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(2);
-//    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(-2);
+    EXPECT_TRUE (IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), 3);
 
-//    ASSERT_TRUE(result_int[0].has_value());
-//    ASSERT_TRUE(result_int[1].has_value());
-//    ASSERT_TRUE(result_int[2].has_value());
-//    ASSERT_TRUE(result_int[3].has_value());
-//    ASSERT_TRUE(result_int[4].has_value());
-
-////    for (size_t i = 0; i < 5; ++i) {
-////        EXPECT_EQ(result_int[i]->errCode, IDAREA_ERRC_SUCCESSFULLY) << "The error occurred when: i == " << i;
-////        EXPECT_EQ(result_int[i]->position, IDM_POS_IN_RANGE)        << "The error occurred when: i == " << i;
-////        EXPECT_FALSE(result_int[i]->state)                          << "The error occurred when: i == " << i;
-////        EXPECT_EQ(result_int[i]->stepCount, -5)                     << "The error occurred when: i == " << i;
-////        EXPECT_EQ(result_int[i]->border, BorderRange::LowerBorder)  << "The error occurred when: i == " << i;
-
-////        switch (i) {
-////            case 5:    EXPECT_EQ(result_int[i]->value, -25) << "The error occurred when: i == " << i;    break;
-////            case 6:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-////            case 7:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-////            case 8:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-////            case 9:    EXPECT_EQ(result_int[i]->value, -20) << "The error occurred when: i == " << i;    break;
-////        }
-////    }
+    EXPECT_TRUE (IdRange_unsigned_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderLimit(BorderRange::LowerBorder), 3);
 
 
-//    result_float[0] = IdArea_float.getIdInfo(0.0);
-//    result_float[1] = IdArea_float_Start_1p5_Step_1p5.getIdInfo(1.5);
-//    result_float[2] = IdArea_float_Start_n2_Step_1p5.getIdInfo(-2);
-//    result_float[3] = IdArea_float_Start_2_Step_n1p5.getIdInfo(2);
-//    result_float[4] = IdArea_float_Start_n1p5_Step_n1p5.getIdInfo(-1.5);
+    IdRange<int> IdRange_int_cm(std::move(IdRange_int));
+    IdRange<float> IdRange_float_cm(std::move(IdRange_float));
+    IdRange<unsigned> IdRange_unsigned_cm(std::move(IdRange_unsigned));
 
-//    ASSERT_TRUE(result_float[0].has_value());
-//    ASSERT_TRUE(result_float[1].has_value());
-//    ASSERT_TRUE(result_float[2].has_value());
-//    ASSERT_TRUE(result_float[3].has_value());
-//    ASSERT_TRUE(result_float[4].has_value());
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+
+    EXPECT_TRUE (IdRange_int_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::LowerBorder), -50);
+
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+
+    EXPECT_TRUE (IdRange_float_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::LowerBorder), -50.5);
+
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_TRUE (IdRange_unsigned_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), 3);
 
 
+    IdRange<int> IdRange_int_oc;
+    IdRange<float> IdRange_float_oc;
+    IdRange<unsigned> IdRange_unsigned_oc;
+
+    IdRange_int_oc = IdRange_int_cc;
+    IdRange_float_oc = IdRange_float_cc;
+    IdRange_unsigned_oc = IdRange_unsigned_cc;
+
+    EXPECT_TRUE (IdRange_int_oc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_oc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_oc.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_oc.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_oc.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_oc.getBorderLimit(BorderRange::LowerBorder), -50);
+
+    EXPECT_TRUE (IdRange_int_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_cc.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_cc.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_cc.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_cc.getBorderLimit(BorderRange::LowerBorder), -50);
+
+    EXPECT_TRUE (IdRange_float_oc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_oc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_oc.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_oc.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_oc.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_oc.getBorderLimit(BorderRange::LowerBorder), -50.5);
+
+    EXPECT_TRUE (IdRange_float_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_cc.getBorderLimit(BorderRange::LowerBorder), -50.5);
+
+    EXPECT_TRUE (IdRange_unsigned_oc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_oc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_oc.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_oc.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_oc.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_oc.getBorderLimit(BorderRange::LowerBorder), 3);
+
+    EXPECT_TRUE (IdRange_unsigned_cc.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_cc.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_cc.getBorderLimit(BorderRange::LowerBorder), 3);
 
 
+    IdRange<int> IdRange_int_om;
+    IdRange<float> IdRange_float_om;
+    IdRange<unsigned> IdRange_unsigned_om;
 
+    IdRange_int_om = std::move(IdRange_int_cm);
+    IdRange_float_om = std::move(IdRange_float_cm);
+    IdRange_unsigned_om = std::move(IdRange_unsigned_cm);
 
+    EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
 
+    EXPECT_TRUE (IdRange_int_om.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_int_om.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_int_om.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_om.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_om.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_om.getBorderLimit(BorderRange::LowerBorder), -50);
 
+    EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
 
+    EXPECT_TRUE (IdRange_float_om.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_float_om.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FLOAT_EQ(IdRange_float_om.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_om.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_om.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_om.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
+    EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
 
-
-
-
-//    result_int[0] = IdArea_int.getIdInfo(30);
-//    result_int[1] = IdArea_int_Start_2_Step_2.getIdInfo(30);
-//    result_int[2] = IdArea_int_Start_n2_Step_2.getIdInfo(30);
-//    result_int[3] = IdArea_int_Start_2_Step_n2.getIdInfo(30);
-//    result_int[4] = IdArea_int_Start_n2_Step_n2.getIdInfo(30);
-
-//    result_int[5] = IdArea_int.getIdInfo(-30);
-//    result_int[6] = IdArea_int_Start_2_Step_2.getIdInfo(-30);
-//    result_int[7] = IdArea_int_Start_n2_Step_2.getIdInfo(-30);
-//    result_int[8] = IdArea_int_Start_2_Step_n2.getIdInfo(-30);
-//    result_int[9] = IdArea_int_Start_n2_Step_n2.getIdInfo(-10);
-
-//    ASSERT_TRUE(result_int[0].has_value());
-//    ASSERT_TRUE(result_int[1].has_value());
-//    ASSERT_TRUE(result_int[2].has_value());
-//    ASSERT_TRUE(result_int[3].has_value());
-//    ASSERT_TRUE(result_int[4].has_value());
-
-//    ASSERT_TRUE(result_int[5].has_value());
-//    ASSERT_TRUE(result_int[6].has_value());
-//    ASSERT_TRUE(result_int[7].has_value());
-//    ASSERT_TRUE(result_int[8].has_value());
-//    ASSERT_TRUE(result_int[9].has_value());
+    EXPECT_TRUE (IdRange_unsigned_om.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(IdRange_unsigned_om.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(IdRange_unsigned_om.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_om.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_om.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_om.getBorderLimit(BorderRange::LowerBorder), 3);
 }
 
-
-
-
-
-
-
-
-
-
-
-//TEST_F(IdAreaTests, Test2)
-//{
-////    IdArea<int>::Result<int> IdArea_int_result;
-////    IdArea<float>::Result<float> IdArea_float_result;
-////    IdArea<unsigned>::Result<unsigned> IdArea_unsigned_result;
-
-////    for(int i = 1; i < 50; ++i) {
-////        IdArea_int_result = IdArea_int.getIdInfo(BorderRange::UpperBorder,  i);
-////        IdArea_float_result = IdArea_float.getIdInfo(BorderRange::UpperBorder,  i);
-////        IdArea_unsigned_result = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder,  i);
-
-////        EXPECT_EQ(IdArea_int_result.errCode, IDM_ERR_SUCCESSFULLY) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_int_result.position, IDM_POS_OUT_RANGE) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_int_result.border, BorderRange::UpperBorder) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_int_result.state, false) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_int_result.value, i) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_int_result.stepCount, i) << "The error occurred when i == " << i;
-
-////        EXPECT_EQ(IdArea_float_result.errCode, IDM_ERR_SUCCESSFULLY);
-////        EXPECT_EQ(IdArea_float_result.position, IDM_POS_OUT_RANGE);
-////        EXPECT_EQ(IdArea_float_result.border, BorderRange::UpperBorder);
-////        EXPECT_EQ(IdArea_float_result.state, false);
-////        EXPECT_FLOAT_EQ(IdArea_float_result.value, i);
-////        EXPECT_EQ(IdArea_float_result.stepCount, i);
-
-////        EXPECT_EQ(IdArea_unsigned_result.errCode, IDM_ERR_SUCCESSFULLY) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_unsigned_result.position, IDM_POS_OUT_RANGE) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_unsigned_result.border, BorderRange::UpperBorder) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_unsigned_result.state, false) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_unsigned_result.value, i) << "The error occurred when i == " << i;
-////        EXPECT_EQ(IdArea_unsigned_result.stepCount, i) << "The error occurred when i == " << i;
-////    }
-
-
-
-
-
-
-
-
-
-////    IdArea<int>::Result<int> IdArea_int_result[2];
-////    IdArea<float>::Result<float> IdArea_float_result[2];
-////    IdArea<unsigned>::Result<unsigned> IdArea_unsigned_result[2];
-
-////    IdArea_int_result[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder,  100);
-////    IdArea_int_result[1] = IdArea_int.getIdInfo(BorderRange::UpperBorder,  100);
-
-////    for(int i = 0; i < 2; ++i) {
-////        EXPECT_EQ(IdArea_int_result[i].errCode, IDM_ERR_SUCCESSFULLY);
-////        EXPECT_EQ(IdArea_int_result[i].position, IDM_POS_OUT_RANGE);
-////        EXPECT_EQ(IdArea_int_result[i].border, BorderRange::UpperBorder);
-////        EXPECT_EQ(IdArea_int_result[i].state, false);
-////        EXPECT_EQ(IdArea_int_result[i].value, 100);
-////        EXPECT_EQ(IdArea_int_result[i].stepCount, 100);
-
-////        EXPECT_EQ(IdArea_float_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-////        EXPECT_EQ(IdArea_float_result_1.position, IDM_POS_OUT_RANGE);
-////        EXPECT_EQ(IdArea_float_result_1.border, BorderRange::UpperBorder);
-////        EXPECT_EQ(IdArea_float_result_1.state, false);
-////        EXPECT_FLOAT_EQ(IdArea_float_result_1.value, 100.0);
-////        EXPECT_EQ(IdArea_float_result_1.stepCount, 100);
-
-////        EXPECT_EQ(IdArea_unsigned_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-////        EXPECT_EQ(IdArea_unsigned_result_1.position, IDM_POS_OUT_RANGE);
-////        EXPECT_EQ(IdArea_unsigned_result_1.border, BorderRange::UpperBorder);
-////        EXPECT_EQ(IdArea_unsigned_result_1.state, false);
-////        EXPECT_EQ(IdArea_unsigned_result_1.value, 100);
-////        EXPECT_EQ(IdArea_unsigned_result_1.stepCount, 100);
-////    }
-
-
-
-
-
-
-////    IdArea_int_result_1[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder,  100);
-////    IdArea_int_result_2[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder,  0);
-////    IdArea_int_result_3[0] = IdArea_int.getIdInfo(BorderRange::UpperBorder, -100);
-
-////    IdArea_float_result_1 = IdArea_float.getIdInfo(BorderRange::UpperBorder,  100);
-////    IdArea_float_result_2 = IdArea_float.getIdInfo(BorderRange::UpperBorder,  0);
-////    IdArea_float_result_3 = IdArea_float.getIdInfo(BorderRange::UpperBorder, -100);
-
-////    IdArea_unsigned_result_1 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder,  100);
-////    IdArea_unsigned_result_2 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder,  0);
-////    IdArea_unsigned_result_3 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -100);
-
-
-////    auto IdArea_int_Start_2_Step_2_result_1 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-////    auto IdArea_int_Start_2_Step_2_result_2 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-////    auto IdArea_int_Start_2_Step_2_result_3 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-////    auto IdArea_float_Start_2_Step_1p5_result_1 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  100);
-////    auto IdArea_float_Start_2_Step_1p5_result_2 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  0);
-////    auto IdArea_float_Start_2_Step_1p5_result_3 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -100);
-
-////    auto IdArea_unsigned_Start_2_Step_2_result_1 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-////    auto IdArea_unsigned_Start_2_Step_2_result_2 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-////    auto IdArea_unsigned_Start_2_Step_2_result_3 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-
-
-
-
-
-
-
-//    auto IdArea_int_result_1 = IdArea_int.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_int_result_2 = IdArea_int.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_int_result_3 = IdArea_int.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_int_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_int_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_result_1.state, false);
-//    EXPECT_EQ(IdArea_int_result_1.value, 100);
-//    EXPECT_EQ(IdArea_int_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_int_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_result_2.state, false);
-//    EXPECT_EQ(IdArea_int_result_2.value, 0);
-//    EXPECT_EQ(IdArea_int_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_int_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_int_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_result_3.state, false);
-//    EXPECT_EQ(IdArea_int_result_3.value, 0);
-//    EXPECT_EQ(IdArea_int_result_3.stepCount, 0);
-
-//    auto IdArea_float_result_1 = IdArea_float.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_float_result_2 = IdArea_float.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_float_result_3 = IdArea_float.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_float_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_float_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_result_1.state, false);
-//    EXPECT_FLOAT_EQ(IdArea_float_result_1.value, 100.0);
-//    EXPECT_EQ(IdArea_float_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_float_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_result_2.state, false);
-//    EXPECT_FLOAT_EQ(IdArea_float_result_2.value, 0.0);
-//    EXPECT_EQ(IdArea_float_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_float_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_float_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_result_3.state, false);
-//    EXPECT_FLOAT_EQ(IdArea_float_result_3.value, 0.0);
-//    EXPECT_EQ(IdArea_float_result_3.stepCount, 0);
-
-//    auto IdArea_unsigned_result_1 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_unsigned_result_2 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_unsigned_result_3 = IdArea_unsigned.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_unsigned_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_unsigned_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_unsigned_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_result_1.state, false);
-//    EXPECT_EQ(IdArea_unsigned_result_1.value, 100);
-//    EXPECT_EQ(IdArea_unsigned_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_unsigned_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_unsigned_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_unsigned_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_result_2.state, false);
-//    EXPECT_EQ(IdArea_unsigned_result_2.value, 0);
-//    EXPECT_EQ(IdArea_unsigned_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_unsigned_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_unsigned_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_unsigned_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_result_3.state, false);
-//    EXPECT_EQ(IdArea_unsigned_result_3.value, 0);
-//    EXPECT_EQ(IdArea_unsigned_result_3.stepCount, 0);
-
-
-//    auto IdArea_int_Start_2_Step_2_result_1 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_int_Start_2_Step_2_result_2 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_int_Start_2_Step_2_result_3 = IdArea_int_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.state, false);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.value, 202);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.state, false);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.value, 2);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.state, false);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.value, 2);
-//    EXPECT_EQ(IdArea_int_Start_2_Step_2_result_3.stepCount, 0);
-
-//    auto IdArea_float_Start_2_Step_1p5_result_1 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_float_Start_2_Step_1p5_result_2 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_float_Start_2_Step_1p5_result_3 = IdArea_float_Start_2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.state, false);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.value, 152);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.state, false);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.value, 2);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.state, false);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.value, 2);
-//    EXPECT_EQ(IdArea_float_Start_2_Step_1p5_result_3.stepCount, 0);
-
-//    auto IdArea_unsigned_Start_2_Step_2_result_1 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_unsigned_Start_2_Step_2_result_2 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_unsigned_Start_2_Step_2_result_3 = IdArea_unsigned_Start_2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.state, false);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.value, 202);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.state, false);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.value, 2);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.state, false);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.value, 2);
-//    EXPECT_EQ(IdArea_unsigned_Start_2_Step_2_result_3.stepCount, 0);
-
-
-//    auto IdArea_int_Start_n2_Step_2_result_1 = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_int_Start_n2_Step_2_result_2 = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_int_Start_n2_Step_2_result_3 = IdArea_int_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.state, false);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.value, 198);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.state, false);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.value, -2);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.state, false);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.value, -2);
-//    EXPECT_EQ(IdArea_int_Start_n2_Step_2_result_3.stepCount, 0);
-
-//    auto IdArea_float_Start_n2_Step_1p5_result_1 = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  100);
-//    auto IdArea_float_Start_n2_Step_1p5_result_2 = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder,  0);
-//    auto IdArea_float_Start_n2_Step_1p5_result_3 = IdArea_float_Start_n2_Step_1p5.getIdInfo(BorderRange::UpperBorder, -100);
-
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.position, IDM_POS_OUT_RANGE);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.state, false);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.value, 148);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_1.stepCount, 100);
-
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.state, false);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.value, -2);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_2.stepCount, 0);
-
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.position, IDM_POS_ON_BORDER);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.border, BorderRange::UpperBorder);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.state, false);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.value, -2);
-//    EXPECT_EQ(IdArea_float_Start_n2_Step_1p5_result_3.stepCount, 0);
-
-////    auto IdArea_unsigned_Start_n2_Step_2_result_1 = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder,  100);
-////    auto IdArea_unsigned_Start_n2_Step_2_result_2 = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder,  0);
-////    auto IdArea_unsigned_Start_n2_Step_2_result_3 = IdArea_unsigned_Start_n2_Step_2.getIdInfo(BorderRange::UpperBorder, -100);
-
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.errCode, IDM_ERR_IDS_RUN_OUT);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.position, IDM_POS_OUT_RANGE);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.border, BorderRange::UpperBorder);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.state, false);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.value, -2); //??
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_1.stepCount, 1);
-
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.errCode, IDM_ERR_SUCCESSFULLY);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.position, IDM_POS_ON_BORDER);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.border, BorderRange::UpperBorder);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.state, false);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.value, 2);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_2.stepCount, 0);
-
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.errCode, IDM_ERR_IMPOSSIBLE_REDUCE_RANGE);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.position, IDM_POS_ON_BORDER);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.border, BorderRange::UpperBorder);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.state, false);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.value, 2);
-////    EXPECT_EQ(IdArea_unsigned_Start_n2_Step_2_result_3.stepCount, 0);
-//}
+TEST(SingleTests, Test_2)
+{
+    IdRange<int> IdRange_int;
+    IdRange<float> IdRange_float;
+
+    IdRange<int>::IdInfo IdInfo_int;
+    IdRange<float>::IdInfo IdInfo_float;
+
+    IdRange_int.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_int.setBorderLimit(BorderRange::UpperBorder,  50);
+    IdRange_int.setBorderLimit(BorderRange::LowerBorder, -50);
+
+    IdRange_float.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_float.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_float.moveBorder(BorderRange::LowerBorder, 10);
+    IdRange_float.setBorderLimit(BorderRange::UpperBorder,  50.5);
+    IdRange_float.setBorderLimit(BorderRange::LowerBorder, -50.5);
+
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::UpperBorder, -15);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_IN_RANGE);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, -5);
+    EXPECT_EQ(IdInfo_int.stepCount, -15);
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::LowerBorder, -15);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_IN_RANGE);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 5);
+    EXPECT_EQ(IdInfo_int.stepCount, -15);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::UpperBorder, -15);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_float.position, IDRP_IN_RANGE);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, -5.0);
+    EXPECT_EQ(IdInfo_float.stepCount, -15);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::LowerBorder, -15);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_float.position, IDRP_IN_RANGE);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, 5.0);
+    EXPECT_EQ(IdInfo_float.stepCount, -15);
+
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::UpperBorder, 40);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_OUT_RANGE);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 50);
+    EXPECT_EQ(IdInfo_int.stepCount, 40);
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::LowerBorder, 40);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_OUT_RANGE);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, -50);
+    EXPECT_EQ(IdInfo_int.stepCount, 40);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::UpperBorder, 50);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(IdInfo_float.position, IDRP_OUT_RANGE);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, 50.0);
+    EXPECT_EQ(IdInfo_float.stepCount, 40);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::LowerBorder, 50);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_ID_OUT_RANGE);
+    EXPECT_EQ(IdInfo_float.position, IDRP_OUT_RANGE);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, -50.0);
+    EXPECT_EQ(IdInfo_float.stepCount, 40);
+
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::UpperBorder, -60);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(IdInfo_int.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, -10);
+    EXPECT_EQ(IdInfo_int.stepCount, -20);
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::LowerBorder, -60);
+    EXPECT_EQ(IdInfo_int.flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(IdInfo_int.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 10);
+    EXPECT_EQ(IdInfo_int.stepCount, -20);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::UpperBorder, -70);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(IdInfo_float.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::LowerBorder);
+    EXPECT_FALSE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, -10.0);
+    EXPECT_EQ(IdInfo_float.stepCount, -20);
+
+    IdInfo_float = IdRange_float.getIdInfo(BorderRange::LowerBorder, -70);
+    EXPECT_EQ(IdInfo_float.flags, IDRF_RANGE_ARE_BENT);
+    EXPECT_EQ(IdInfo_float.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_float.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_float.state);
+    EXPECT_FLOAT_EQ(IdInfo_float.value, 10.0);
+    EXPECT_EQ(IdInfo_float.stepCount, -20);
+}

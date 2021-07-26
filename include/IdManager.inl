@@ -47,14 +47,14 @@ add(T id)
         if (std::find(unorderedIds_.begin(), unorderedIds_.end(), id) != unorderedIds_.end())
             return false;
 
-        unorderedIds_.push_back(std::move(id));
+        unorderedIds_.push_back(id);
         return true;
     }
 
     if (orderedIds_.find(id) != orderedIds_.end())
         return false;
 
-    orderedIds_.insert(std::move(id));
+    orderedIds_.insert(id);
     return true;
 }
 
@@ -97,7 +97,7 @@ ONF::IdContainer<T>::
 erase(T id)
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        auto it = std::find(unorderedIds_.begin(), unorderedIds_.end(), std::move(id));
+        auto it = std::find(unorderedIds_.begin(), unorderedIds_.end(), id);
 
         if (it != unorderedIds_.end())
             unorderedIds_.erase(std::move(it));
@@ -105,7 +105,7 @@ erase(T id)
         return;
     }
 
-    auto it = orderedIds_.find(std::move(id));
+    auto it = orderedIds_.find(id);
 
     if (it != orderedIds_.end())
         orderedIds_.erase(std::move(it));
@@ -130,11 +130,11 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 
     if ((idIssuingMethod == IdIssuingMethod::Ascending || idIssuingMethod == IdIssuingMethod::Descending) &&
         (idIssuingMethod_ == IdIssuingMethod::Ascending || idIssuingMethod_ == IdIssuingMethod::Descending)) {
-        idIssuingMethod_ = std::move(idIssuingMethod);
+        idIssuingMethod_ = idIssuingMethod;
         return;
     }
 
-    idIssuingMethod_ = std::move(idIssuingMethod);
+    idIssuingMethod_ = idIssuingMethod;
 
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         for (auto it = orderedIds_.begin(); it != orderedIds_.end(); ++it) {
@@ -166,9 +166,9 @@ ONF::IdContainer<T>::
 find(T id) const
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic)
-        return std::find(unorderedIds_.begin(), unorderedIds_.end(), std::move(id)) != unorderedIds_.end();
+        return std::find(unorderedIds_.begin(), unorderedIds_.end(), id) != unorderedIds_.end();
 
-    return orderedIds_.find(std::move(id)) != orderedIds_.end();
+    return orderedIds_.find(id) != orderedIds_.end();
 }
 
 template<class T>
@@ -176,30 +176,20 @@ std::optional<T>
 ONF::IdContainer<T>::
 findByIndex(size_t index) const
 {
-    if (index < 0)
-        return std::nullopt;
-
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (index >= unorderedIds_.size())
             return std::nullopt;
 
-        auto it = unorderedIds_.begin();
-        std::advance(it, std::move(index));
-        return *it;
+        return *std::next(unorderedIds_.begin(), index);
     }
 
     if (index >= orderedIds_.size())
         return std::nullopt;
 
-    if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
-        auto it = orderedIds_.begin();
-        std::advance(it, std::move(index));
-        return *it;
-    }
+    if (idIssuingMethod_ == IdIssuingMethod::Ascending)
+        return *std::next(orderedIds_.begin(), index);
 
-    auto it = orderedIds_.end();
-    std::advance(it, -(std::move(index) + 1));
-    return *it;
+    return *std::prev(orderedIds_.end(), index + 1);
 }
 
 template<class T>
@@ -218,8 +208,8 @@ ONF::IdContainer<T>&
 ONF::IdContainer<T>::
 operator=(const IdContainer<T>& other)
 {
-    unorderedIds_ = other.unorderedIds_;
-    orderedIds_ = other.orderedIds_;
+    unorderedIds_    = other.unorderedIds_;
+    orderedIds_      = other.orderedIds_;
     idIssuingMethod_ = other.idIssuingMethod_;
 
     return *this;
@@ -230,8 +220,8 @@ ONF::IdContainer<T>&
 ONF::IdContainer<T>::
 operator=(IdContainer<T>&& other)
 {
-    unorderedIds_ = std::move(other.unorderedIds_);
-    orderedIds_ = std::move(other.orderedIds_);
+    unorderedIds_    = std::move(other.unorderedIds_);
+    orderedIds_      = std::move(other.orderedIds_);
     idIssuingMethod_ = std::move(other.idIssuingMethod_);
 
     other.unorderedIds_.clear();
@@ -260,31 +250,88 @@ getOrderedIdsSize() const
 
 
 template<class T>
-inline bool
-ONF::
-isStandardId(T target, T start, T step)
-{
-    ldouble An = static_cast<ldouble>(std::move(target));
-    ldouble A1 = static_cast<ldouble>(std::move(start));
-    ldouble d  = static_cast<ldouble>(std::move(step));
+ONF::IdRange<T>::IdInfo::
+IdInfo()
+    : flags    (IDRF_NOT_SET),
+      position (IDRP_NOT_SET),
+      border   (BorderRange::UpperBorder),
+      state    (false),
+      value    (0),
+      stepCount(0) {}
 
-    ldouble n = std::abs((An - A1 + d) / d);
-    return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
+template<class T>
+ONF::IdRange<T>::IdInfo::
+IdInfo(const IdInfo& other)
+    : flags    (other.flags),
+      position (other.position),
+      border   (other.border),
+      state    (other.state),
+      value    (other.value),
+      stepCount(other.stepCount) {}
+
+template<class T>
+ONF::IdRange<T>::IdInfo::
+IdInfo(IdInfo&& other)
+    : flags    (std::move(other.flags)),
+      position (std::move(other.position)),
+      border   (std::move(other.border)),
+      state    (std::move(other.state)),
+      value    (std::move(other.value)),
+      stepCount(std::move(other.stepCount))
+{
+    other.flags     = IDRF_NOT_SET;
+    other.position  = IDRP_NOT_SET;
+    other.border    = BorderRange::UpperBorder;
+    other.state     = false;
+    other.value     = 0;
+    other.stepCount = 0;
 }
 
 template<class T>
-inline T
-ONF::
-makeStep(T start, T step, longlong n)
+ONF::IdRange<T>::IdInfo::
+~IdInfo() {}
+
+template<class T>
+typename ONF::IdRange<T>::IdInfo&
+ONF::IdRange<T>::IdInfo::
+operator=(const IdInfo& other)
 {
-    return start + (n * step);
+    flags     = other.flags;
+    position  = other.position;
+    border    = other.border;
+    state     = other.state;
+    value     = other.value;
+    stepCount = other.stepCount;
+
+    return *this;
+}
+
+template<class T>
+typename ONF::IdRange<T>::IdInfo&
+ONF::IdRange<T>::IdInfo::
+operator=(IdInfo&& other)
+{
+    flags     = std::move(other.flags);
+    position  = std::move(other.position);
+    border    = std::move(other.border);
+    state     = std::move(other.state);
+    value     = std::move(other.value);
+    stepCount = std::move(other.stepCount);
+
+    other.flags     = IDRF_NOT_SET;
+    other.position  = IDRP_NOT_SET;
+    other.border    = BorderRange::UpperBorder;
+    other.state     = false;
+    other.value     = 0;
+    other.stepCount = 0;
+
+    return *this;
 }
 
 
-
 template<class T>
-ONF::IdArea<T>::
-IdArea(T start, T step)
+ONF::IdRange<T>::
+IdRange(T start, T step)
     : upperBorderState_(false),
       upperBorder_     (start),
       upperLimit_      (std::numeric_limits<T>::max()),
@@ -292,11 +339,11 @@ IdArea(T start, T step)
       lowerBorder_     (start),
       lowerLimit_      (std::numeric_limits<T>::lowest()),
       start_           (start),
-      step_            (onf_abs((step == 0 ? 1 : step))) {}
+      step_            (step == 0 ? 1 : onf_abs(step)) {}
 
 template<class T>
-ONF::IdArea<T>::
-IdArea(const IdArea<T>& other)
+ONF::IdRange<T>::
+IdRange(const IdRange<T>& other)
     : upperBorderState_(other.upperBorderState_),
       upperBorder_     (other.upperBorder_),
       upperLimit_      (other.upperLimit_),
@@ -307,8 +354,8 @@ IdArea(const IdArea<T>& other)
       step_            (other.step_) {}
 
 template<class T>
-ONF::IdArea<T>::
-IdArea(const IdArea<T>&& other)
+ONF::IdRange<T>::
+IdRange(IdRange<T>&& other)
     : upperBorderState_(std::move(other.upperBorderState_)),
       upperBorder_     (std::move(other.upperBorder_)),
       upperLimit_      (std::move(other.upperLimit_)),
@@ -319,322 +366,56 @@ IdArea(const IdArea<T>&& other)
       step_            (std::move(other.step_))
 {
     other.upperBorderState_ = false;
-    other.upperBorder_ = other.start_;
-    other.upperLimit_ = std::numeric_limits<T>::max();
+    other.upperBorder_      = other.start_;
+    other.upperLimit_       = std::numeric_limits<T>::max();
     other.lowerBorderState_ = false;
-    other.lowerBorder_ = other.start_;
-    other.lowerLimit_ = std::numeric_limits<T>::lowest();
+    other.lowerBorder_      = other.start_;
+    other.lowerLimit_       = std::numeric_limits<T>::lowest();
 }
 
 template<class T>
-ONF::IdArea<T>::
-~IdArea() {}
-
-
-template<class T>
-typename ONF::IdArea<T>::Result&
-ONF::IdArea<T>::Result::
-operator=(const Result& other)
-{
-    errCode = other.errCode;
-    position = other.position;
-
-    border = other.border;
-    state = other.state;
-    value = other.value;
-
-    stepCount = other.stepCount;
-
-    return *this;
-}
-
+ONF::IdRange<T>::
+~IdRange() {}
 
 template<class T>
-std::optional<typename ONF::IdArea<T>::Result>
-ONF::IdArea<T>::
-moveToBottom(T border, T limit, ldouble n, Action action, BorderRange borderRange) const
-{
-    if (static_cast<ldouble>(border) - static_cast<ldouble>(onf_abs(n) * step_) >= static_cast<ldouble>(limit)) {
-        Result result;
-
-        result.errCode = IDAREA_ERRC_SUCCESSFULLY;
-        result.value = border - (onf_abs(n) * step_);
-        result.stepCount = n;
-
-        fillPositionAndChangeBorder(action, result, n);
-        fillBorderAndState(result.value, result, borderRange);
-
-        return result;
-    }
-
-    for(ldouble i = onf_abs(n) - 1; i > 0; --i) {
-        if (static_cast<ldouble>(border) - static_cast<ldouble>(onf_abs(i) * step_) >= static_cast<ldouble>(limit)) {
-            Result result;
-
-            result.value = border - (onf_abs(i) * step_);
-
-            if (n > 0) {
-                result.errCode = IDAREA_ERRC_IDS_RUN_OUT;
-                result.stepCount = i;
-            }
-            else {
-                result.errCode = IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
-                result.stepCount = -i;
-            }
-
-            fillPositionAndChangeBorder(action, result, n);
-            fillBorderAndState(result.value, result, borderRange);
-
-            return result;
-        }
-    }
-
-    return std::nullopt;
-}
-
-template<class T>
-std::optional<typename ONF::IdArea<T>::Result>
-ONF::IdArea<T>::
-moveToTop(T border, T limit, ldouble n, Action action, BorderRange borderRange) const
-{
-    if (static_cast<ldouble>(border) + static_cast<ldouble>(onf_abs(n) * step_) <= static_cast<ldouble>(limit)) {
-        Result result;
-
-        result.errCode = IDAREA_ERRC_SUCCESSFULLY;
-        result.value = border + (onf_abs(n) * step_);
-        result.stepCount = n;
-
-        fillPositionAndChangeBorder(action, result, n);
-        fillBorderAndState(result.value, result, borderRange);
-
-        return result;
-    }
-
-    for(ldouble i = onf_abs(n) - 1; i > 0; --i) {
-        if (static_cast<ldouble>(border) + static_cast<ldouble>(i * step_) <= static_cast<ldouble>(limit)) {
-            Result result;
-
-            result.value = border + (i * step_);
-
-            if (n > 0) {
-                result.errCode = IDAREA_ERRC_IDS_RUN_OUT;
-                result.stepCount = i;
-            }
-            else {
-                result.errCode = IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
-                result.stepCount = -i;
-            }
-
-            fillPositionAndChangeBorder(action, result, n);
-            fillBorderAndState(result.value, result, borderRange);
-
-            return result;
-        }
-    }
-
-    return std::nullopt;
-}
-
-template<class T>
-typename ONF::IdArea<T>::Result
-ONF::IdArea<T>::
-motionless(T border, BorderRange borderRange) const
-{
-    Result result;
-    result.position = IDM_POS_ON_BORDER;
-    result.errCode = IDAREA_ERRC_SUCCESSFULLY;
-    result.value = border;
-    result.stepCount = 0;
-
-    fillBorderAndState(border, result, borderRange);
-
-    return result;
-}
-
-template<class T>
-typename ONF::IdArea<T>::Result
-ONF::IdArea<T>::
-findMotionless(T border, ldouble n, BorderRange borderRange) const
-{
-    Result result;
-    result.position = IDM_POS_ON_BORDER;
-    result.value = border;
-    result.stepCount = 0;
-    result.errCode = (n > 0 ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE);
-
-    fillBorderAndState(border, result, borderRange);
-
-    return result;
-}
-
-template<class T>
-void
-ONF::IdArea<T>::
-fillBorderAndState(T border, Result& result, BorderRange borderRange) const
-{
-    if (border < start_) {
-        result.border = BorderRange::LowerBorder;
-        result.state = lowerBorderState_;
-        return;
-    }
-
-    if (border > start_) {
-        result.border = BorderRange::UpperBorder;
-        result.state = upperBorderState_;
-        return;
-    }
-
-    result.border = borderRange;
-    result.state = (borderRange ==  BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
-}
-
-template<class T>
-void
-ONF::IdArea<T>::
-fillPositionAndChangeBorder(Action action, Result& result, ldouble n) const
-{
-    if (action == Action::Move) {
-        result.position = IDM_POS_ON_BORDER;
-    }
-    else {
-        result.position = (n > 0 ? IDM_POS_OUT_RANGE : IDM_POS_IN_RANGE);
-    }
-}
-
-template<class T>
-int
-ONF::IdArea<T>::
-isSucces(BorderRange borderRange, ldouble n, Result& result, Action action, T* alterBorder) const
-{
-    std::optional<Result> localResult;
-
-    if (borderRange == BorderRange::UpperBorder) {
-        if (n > 0) {
-            if (alterBorder)
-                localResult = moveToTop(*alterBorder, upperLimit_, n, action, borderRange);
-            else
-                localResult = moveToTop(upperBorder_, upperLimit_, n, action, borderRange);
-
-            if (localResult.has_value()) {
-                result = *localResult;
-                return 1;
-            }
-
-            if (alterBorder)
-                result = findMotionless(*alterBorder, n, borderRange);
-            else
-                result = findMotionless(upperBorder_, n, borderRange);
-
-            return 0;
-        }
-
-        if (n < 0) {
-            if (alterBorder)
-                localResult = moveToBottom(*alterBorder, lowerBorder_, n, action, borderRange);
-            else
-                localResult = moveToBottom(upperBorder_, lowerBorder_, n, action, borderRange);
-
-            if (localResult.has_value()) {
-                result = *localResult;
-                return 1;
-            }
-
-            if (alterBorder)
-                result = findMotionless(*alterBorder, n, borderRange);
-            else
-                result = findMotionless(upperBorder_, n, borderRange);
-
-            return 0;
-        }
-
-        if (alterBorder)
-            result = motionless(*alterBorder, borderRange);
-        else
-            result = motionless(upperBorder_, borderRange);
-
-        return 0;
-    }
-
-    if (n > 0) {
-        if (alterBorder)
-            localResult = moveToBottom(*alterBorder, lowerLimit_, n, action, borderRange);
-        else
-            localResult = moveToBottom(lowerBorder_, lowerLimit_, n, action, borderRange);
-
-        if (localResult.has_value()) {
-            result = *localResult;
-            return 2;
-        }
-
-        if (alterBorder)
-            result = findMotionless(*alterBorder, n, borderRange);
-        else
-            result = findMotionless(lowerBorder_, n, borderRange);
-
-        return 0;
-    }
-
-    if (n < 0) {
-        if (alterBorder)
-            localResult = moveToTop(*alterBorder, upperBorder_, n, action, borderRange);
-        else
-            localResult = moveToTop(lowerBorder_, upperBorder_, n, action, borderRange);
-
-        if (localResult.has_value()) {
-            result = *localResult;
-            return 2;
-        }
-
-        if (alterBorder)
-            result = findMotionless(*alterBorder, n, borderRange);
-        else
-            result = findMotionless(lowerBorder_, n, borderRange);
-
-        return 0;
-    }
-
-    if (alterBorder)
-        result = motionless(*alterBorder, borderRange);
-    else
-        result = motionless(lowerBorder_, borderRange);
-
-    return 0;
-}
-
-
-template<class T>
-typename ONF::IdArea<T>::Result
-ONF::IdArea<T>::
+typename ONF::IdRange<T>::IdInfo
+ONF::IdRange<T>::
 moveBorder(BorderRange borderRange, longlong n)
 {
-    Result result;
+    IdInfo idInfo;
 
-    int whatToDo = isSucces(borderRange, static_cast<ldouble>(n), result, Action::Move);
+    if (borderRange == BorderRange::UpperBorder) {
+        if (fillIdInfo(idInfo, borderRange, upperBorder_, static_cast<ldouble>(n), Action::Move))
+            upperBorder_ = idInfo.value;
 
-    if (whatToDo == 1)
-        upperBorder_ = result.value;
+        return idInfo;
+    }
 
-    if (whatToDo == 2)
-        lowerBorder_ = result.value;
+    if (fillIdInfo(idInfo, borderRange, lowerBorder_, static_cast<ldouble>(n), Action::Move))
+        lowerBorder_ = idInfo.value;
 
-    return result;
+    return idInfo;
 }
 
 template<class T>
-typename ONF::IdArea<T>::Result
-ONF::IdArea<T>::
+typename ONF::IdRange<T>::IdInfo
+ONF::IdRange<T>::
 getIdInfo(BorderRange borderRange, longlong n) const
 {
-    Result result;
+    IdInfo idInfo;
 
-    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo);
+    if (borderRange == BorderRange::UpperBorder) {
+        fillIdInfo(idInfo, borderRange, upperBorder_, static_cast<ldouble>(n), Action::GetInfo);
+        return idInfo;
+    }
 
-    return result;
+    fillIdInfo(idInfo, borderRange, lowerBorder_, static_cast<ldouble>(n), Action::GetInfo);
+    return idInfo;
 }
 
 template<class T>
-std::optional<typename ONF::IdArea<T>::Result>
-ONF::IdArea<T>::
+std::optional<typename ONF::IdRange<T>::IdInfo>
+ONF::IdRange<T>::
 getIdInfo(BorderRange borderRange, T id, longlong n) const
 {
     if (!isStandardId(id, start_, step_))
@@ -649,86 +430,35 @@ getIdInfo(BorderRange borderRange, T id, longlong n) const
             return std::nullopt;
     }
 
-    Result result;
-
-    isSucces(borderRange, static_cast<ldouble>(n), result, Action::GetInfo, &id);
-
-    return result;
+    IdInfo idInfo;
+    fillIdInfo(idInfo, borderRange, id, static_cast<ldouble>(n), Action::GetInfo);
+    return idInfo;
 }
 
 template<class T>
-std::optional<typename ONF::IdArea<T>::Result>
-ONF::IdArea<T>::
-getIdInfo(T id) const
-{
-    if (!isStandardId(id, start_, step_))
-        return std::nullopt;
-
-    Result result;
-
-    result.errCode = ((id > upperLimit_ || id < lowerLimit_) ? IDAREA_ERRC_IDS_RUN_OUT : IDAREA_ERRC_SUCCESSFULLY);
-
-    if (id == upperBorder_ || id == lowerBorder_)
-        result.position = IDM_POS_ON_BORDER;
-    else if (id > upperBorder_ || id < lowerBorder_)
-        result.position = IDM_POS_OUT_RANGE;
-    else
-        result.position = IDM_POS_IN_RANGE;
-
-    result.border = (id >= start_ ? BorderRange::UpperBorder : BorderRange::LowerBorder);
-    result.state = (result.border == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
-    result.value = id;
-
-    if (result.position == IDM_POS_ON_BORDER) {
-        result.stepCount = 0;
-        return result;
-    }
-
-    if (result.border == BorderRange::UpperBorder) {
-        if (result.position == IDM_POS_OUT_RANGE) {
-            result.stepCount = (id - upperBorder_) / step_;
-            return result;
-        }
-
-        result.stepCount = (upperBorder_ - id) / step_;
-        return result;
-    }
-    else {
-        if (result.position == IDM_POS_OUT_RANGE) {
-            result.stepCount = (lowerBorder_ - id) / step_;
-            return result;
-        }
-
-        result.stepCount = (id - lowerBorder_) / step_;
-        return result;
-    }
-}
-
-template<class T>
-void
-ONF::IdArea<T>::
+inline void
+ONF::IdRange<T>::
 reset()
 {
     upperBorderState_ = false;
     lowerBorderState_ = false;
-
     upperBorder_ = start_;
     lowerBorder_ = start_;
 }
 
 template<class T>
 bool
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 setBorderValue(BorderRange borderRange, T value)
 {
     if (value > upperLimit_ || value < lowerLimit_)
         return false;
 
+    if (!isStandardId(value, start_, step_))
+        return false;
+
     if (borderRange == BorderRange::UpperBorder) {
         if (value < lowerBorder_)
-            return false;
-
-        if (!isStandardId(value, start_, step_))
             return false;
 
         upperBorder_ = value;
@@ -738,82 +468,79 @@ setBorderValue(BorderRange borderRange, T value)
     if (value > upperBorder_)
         return false;
 
-    if (!isStandardId(value, start_, step_))
-        return false;
-
     lowerBorder_ = value;
     return true;
 }
 
 template<class T>
 inline T
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 getBorderValue(BorderRange borderRange) const
 {
     switch (borderRange) {
-        case BorderRange::UpperBorder:  return upperBorder_;
-        case BorderRange::LowerBorder:  return lowerBorder_;
+        case BorderRange::UpperBorder:   return upperBorder_;
+        case BorderRange::LowerBorder:   return lowerBorder_;
     }
 }
 
 template<class T>
-void
-ONF::IdArea<T>::
+inline void
+ONF::IdRange<T>::
 setBorderState(BorderRange borderRange, bool state)
 {
     switch (borderRange) {
-        case BorderRange::UpperBorder:  upperBorderState_ = state;  return;
-        case BorderRange::LowerBorder:  lowerBorderState_ = state;  return;
+        case BorderRange::UpperBorder:   upperBorderState_ = state;   return;
+        case BorderRange::LowerBorder:   lowerBorderState_ = state;   return;
     }
 }
 
 template<class T>
 inline bool
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 getBorderState(BorderRange borderRange) const
 {
     switch (borderRange) {
-        case BorderRange::UpperBorder:  return upperBorderState_;
-        case BorderRange::LowerBorder:  return lowerBorderState_;
+        case BorderRange::UpperBorder:   return upperBorderState_;
+        case BorderRange::LowerBorder:   return lowerBorderState_;
     }
 }
 
 template<class T>
 bool
-ONF::IdArea<T>::
-setBorderLimit(BorderRange borderRange, T limit)
+ONF::IdRange<T>::
+setBorderLimit(BorderRange borderRange, T value)
 {
     if (borderRange == BorderRange::UpperBorder) {
-        if (upperBorder_ > limit)
+        if (upperBorder_ > value)
             return false;
 
-        upperLimit_ = limit;
+        upperLimit_ = value;
         return true;
     }
 
     if (borderRange == BorderRange::LowerBorder) {
-        if (lowerBorder_ < limit)
+        if (lowerBorder_ < value)
             return false;
 
-        lowerLimit_ = limit;
+        lowerLimit_ = value;
         return true;
     }
 }
 
 template<class T>
 inline T
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 getBorderLimit(BorderRange borderRange) const
 {
     switch (borderRange) {
-        case BorderRange::UpperBorder:  return upperLimit_;
-        case BorderRange::LowerBorder:  return lowerLimit_;
+        case BorderRange::UpperBorder:   return upperLimit_;
+        case BorderRange::LowerBorder:   return lowerLimit_;
     }
 }
 
 template<class T>
 inline T
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 getStart() const
 {
     return start_;
@@ -821,51 +548,206 @@ getStart() const
 
 template<class T>
 inline T
-ONF::IdArea<T>::
+ONF::IdRange<T>::
 getStep() const
 {
     return step_;
 }
 
 template<class T>
-ONF::IdArea<T>&
-ONF::IdArea<T>::
-operator=(const IdArea<T>& other)
+ONF::IdRange<T>&
+ONF::IdRange<T>::
+operator=(const IdRange<T>& other)
 {
     upperBorderState_ = other.upperBorderState_;
-    upperBorder_ = other.upperBorder_;
-    upperLimit_ = other.upperLimit_;
+    upperBorder_      = other.upperBorder_;
+    upperLimit_       = other.upperLimit_;
     lowerBorderState_ = other.lowerBorderState_;
-    lowerBorder_ = other.lowerBorder_;
-    lowerLimit_ = other.lowerLimit_;
-    start_ = other.start_;
-    step_ = other.step_;
+    lowerBorder_      = other.lowerBorder_;
+    lowerLimit_       = other.lowerLimit_;
+    start_            = other.start_;
+    step_             = other.step_;
 
     return *this;
 }
 
 template<class T>
-ONF::IdArea<T>&
-ONF::IdArea<T>::
-operator=(IdArea<T>&& other)
+ONF::IdRange<T>&
+ONF::IdRange<T>::
+operator=(IdRange<T>&& other)
 {
     upperBorderState_ = std::move(other.upperBorderState_);
-    upperBorder_ = std::move(other.upperBorder_);
-    upperLimit_ = std::move(other.upperLimit_);
+    upperBorder_      = std::move(other.upperBorder_);
+    upperLimit_       = std::move(other.upperLimit_);
     lowerBorderState_ = std::move(other.lowerBorderState_);
-    lowerBorder_ = std::move(other.lowerBorder_);
-    lowerLimit_ = std::move(other.lowerLimit_);
-    start_ = std::move(other.start_);
-    step_ = std::move(other.step_);
+    lowerBorder_      = std::move(other.lowerBorder_);
+    lowerLimit_       = std::move(other.lowerLimit_);
+    start_            = std::move(other.start_);
+    step_             = std::move(other.step_);
 
     other.upperBorderState_ = false;
-    other.upperBorder_ = other.start_;
-    other.upperLimit_ = std::numeric_limits<T>::max();
+    other.upperBorder_      = other.start_;
+    other.upperLimit_       = std::numeric_limits<T>::max();
     other.lowerBorderState_ = false;
-    other.lowerBorder_ = other.start_;
-    other.lowerLimit_ = std::numeric_limits<T>::lowest();
+    other.lowerBorder_      = other.start_;
+    other.lowerLimit_       = std::numeric_limits<T>::lowest();
 
     return *this;
+}
+
+template<class T>
+int
+ONF::IdRange<T>::
+fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Action action) const
+{
+    if (borderRange == BorderRange::UpperBorder) {
+        if (n > 0) {
+            if (fillInfoAboutMoveUp(idInfo, borderValue, upperLimit_, n)) {
+                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+                fillInfoAboutPos(idInfo, n, action);
+                return 1;
+            }
+        }
+
+        if (n < 0) {
+            if (fillInfoAboutMovemDown(idInfo, borderValue, lowerBorder_, n)) {
+                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+                fillInfoAboutPos(idInfo, n, action);
+                return 1;
+            }
+        }
+    }
+    else {
+        if (n > 0) {
+            if (fillInfoAboutMovemDown(idInfo, borderValue, lowerLimit_, n)) {
+                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+                fillInfoAboutPos(idInfo, n, action);
+                return 1;
+            }
+        }
+
+        if (n < 0) {
+            if (fillInfoAboutMoveUp(idInfo, borderValue, upperBorder_, n)) {
+                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+                fillInfoAboutPos(idInfo, n, action);
+                return 1;
+            }
+        }
+    }
+
+    idInfo.position = IDRP_ON_BORDER;
+    idInfo.value = borderValue;
+    idInfo.stepCount = 0;
+
+    if (n == 0)
+        idInfo.flags = IDRF_SUCCESSFULLY;
+    else
+        idInfo.flags = (n > 0 ? IDRF_ID_OUT_RANGE : IDRF_RANGE_ARE_BENT);
+
+    fillInfoAboutTerritory(idInfo, borderRange, borderValue);
+    return 0;
+}
+
+template<class T>
+bool
+ONF::IdRange<T>::
+fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
+{
+    if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(onf_abs(n) * step_) <= static_cast<ldouble>(borderLimit)) {
+        idInfo.flags = IDRF_SUCCESSFULLY;
+        idInfo.value = borderValue + (onf_abs(n) * step_);
+        idInfo.stepCount = n;
+        return true;
+    }
+
+    for(ldouble i = onf_abs(n) - 1; i > 0; --i) {
+        if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(i * step_) <= static_cast<ldouble>(borderLimit)) {
+            idInfo.value = borderValue + (i * step_);
+
+            if (n > 0) {
+                idInfo.flags = IDRF_ID_OUT_RANGE;
+                idInfo.stepCount = i;
+                return true;
+            }
+
+            idInfo.flags = IDRF_RANGE_ARE_BENT;
+            idInfo.stepCount = -i;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+template<class T>
+bool
+ONF::IdRange<T>::
+fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
+{
+    if (static_cast<ldouble>(borderValue) - static_cast<ldouble>(onf_abs(n) * step_) >= static_cast<ldouble>(borderLimit)) {
+        idInfo.flags = IDRF_SUCCESSFULLY;
+        idInfo.value = borderValue - (onf_abs(n) * step_);
+        idInfo.stepCount = n;
+        return true;
+    }
+
+    for(ldouble i = onf_abs(n) - 1; i > 0; --i) {
+        if (static_cast<ldouble>(borderValue) - static_cast<ldouble>(i * step_) >= static_cast<ldouble>(borderLimit)) {
+            idInfo.value = borderValue - (i * step_);
+
+            if (n > 0) {
+                idInfo.flags = IDRF_ID_OUT_RANGE;
+                idInfo.stepCount = i;
+                return true;
+            }
+
+            idInfo.flags = IDRF_RANGE_ARE_BENT;
+            idInfo.stepCount = -i;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+template<class T>
+void
+ONF::IdRange<T>::
+fillInfoAboutTerritory(IdInfo& idInfo, BorderRange borderRange, T borderValue) const
+{
+    if (borderValue < start_) {
+        idInfo.border = BorderRange::LowerBorder;
+        idInfo.state = lowerBorderState_;
+        return;
+    }
+
+    if (borderValue > start_) {
+        idInfo.border = BorderRange::UpperBorder;
+        idInfo.state = upperBorderState_;
+        return;
+    }
+
+    idInfo.state = (borderRange == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
+    idInfo.border = borderRange;
+    idInfo.flags += IDRF_ID_AT_START;
+}
+
+template<class T>
+void
+ONF::IdRange<T>::
+fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const
+{
+    if (action == Action::Move) {
+        idInfo.position = IDRP_ON_BORDER;
+        return;
+    }
+
+    if (idInfo.value == upperBorder_ || idInfo.value == lowerBorder_) {
+        idInfo.position = IDRP_ON_BORDER;
+        return;
+    }
+
+    idInfo.position = (n > 0 ? IDRP_OUT_RANGE : IDRP_IN_RANGE);
 }
 
 
@@ -884,7 +766,7 @@ IdManager(__T startId,
     static_assert(is_types_combination_prohibited<__T, __Step> == false);
 
     step_ = (step == 0 ? 1 : step);
-    idArea_ = IdArea<__T>(startId, step_);
+    idArea_ = IdRange<__T>(startId, step_);
 }
 
 template<class __T, class __Step>
@@ -920,49 +802,49 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderValue(BorderRange::UpperBorder) < idArea_.getStart()) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderValue(BorderRange::LowerBorder) > idArea_.getStart()) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
-        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+        return IDRF_RANGE_ARE_BENT;
     }
 
     if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
@@ -978,39 +860,39 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
-        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+        return IDRF_RANGE_ARE_BENT;
     }
 
     if (idIssuingMethod_ == IdIssuingMethod::Descending) {
@@ -1026,39 +908,39 @@ getFreeId(__T& id)
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::UpperBorder) == false) {
             idArea_.setBorderState(BorderRange::UpperBorder, true);
             id = idArea_.getBorderValue(BorderRange::UpperBorder);
             expandRange(BorderRange::UpperBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (freeIds_.size()) {
             freeIds_.getNextId(id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (idArea_.getBorderState(BorderRange::LowerBorder) == false) {
             idArea_.setBorderState(BorderRange::LowerBorder, true);
             id = idArea_.getBorderValue(BorderRange::LowerBorder);
             expandRange(BorderRange::LowerBorder);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ < 0) {
             getNextId(BorderRange::LowerBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
         if (step_ > 0) {
             getNextId(BorderRange::UpperBorder, id);
-            return IDAREA_ERRC_SUCCESSFULLY;
+            return IDRF_SUCCESSFULLY;
         }
 
-        return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+        return IDRF_RANGE_ARE_BENT;
     }
 }
 
@@ -1306,7 +1188,7 @@ freeId(__T id)
 
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (id == idArea_.getBorderValue(BorderRange::UpperBorder)) {
-            if (reduceRange(BorderRange::UpperBorder) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
+            if (reduceRange(BorderRange::UpperBorder) == IDRF_RANGE_ARE_BENT) {
                 idArea_.setBorderState(BorderRange::UpperBorder, false);
                 idArea_.setBorderState(BorderRange::LowerBorder, false);
                 return true;
@@ -1316,7 +1198,7 @@ freeId(__T id)
         }
 
         if (id == idArea_.getBorderValue(BorderRange::LowerBorder)) {
-            if (reduceRange(BorderRange::LowerBorder) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
+            if (reduceRange(BorderRange::LowerBorder) == IDRF_RANGE_ARE_BENT) {
                 idArea_.setBorderState(BorderRange::UpperBorder, false);
                 idArea_.setBorderState(BorderRange::LowerBorder, false);
                 return true;
@@ -1431,8 +1313,8 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
     idIssuingMethod_ = idIssuingMethod;
 
     if (idIssuingMethod == IdIssuingMethod::Dynamic) {
-        if (normalizeRange(BorderRange::UpperBorder, IdIssuingMethod::Dynamic) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE ||
-            normalizeRange(BorderRange::LowerBorder, IdIssuingMethod::Dynamic) == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE) {
+        if (normalizeRange(BorderRange::UpperBorder, IdIssuingMethod::Dynamic) == IDRF_RANGE_ARE_BENT ||
+            normalizeRange(BorderRange::LowerBorder, IdIssuingMethod::Dynamic) == IDRF_RANGE_ARE_BENT) {
             idArea_.setBorderState(BorderRange::UpperBorder, false);
             idArea_.setBorderState(BorderRange::LowerBorder, false);
         }
@@ -1539,8 +1421,8 @@ reduceRange(BorderRange border)
     while (true) {
         auto _result = idArea_.moveBorder(border, -1);
 
-        if (_result.errCode == IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE)
-            return IDAREA_ERRC_IMPOSSIBLE_REDUCE_RANGE;
+        if (_result.errCode == IDRF_RANGE_ARE_BENT)
+            return IDRF_RANGE_ARE_BENT;
 
         if (freeIds_.find(_result.value))
             continue;
@@ -1566,7 +1448,7 @@ normalizeRange(BorderRange border)
     }
 
     if (idArea_.getBorderState(border)) {
-        return IDAREA_ERRC_SUCCESSFULLY;
+        return IDRF_SUCCESSFULLY;
     }
 
     idArea_.setBorderState(border, true);
@@ -1933,7 +1815,7 @@ onf_abs(__TF value) const
 //ONF::IdManager<__T, __Step>::
 //expandRangeToTop(BorderRange border, __T* id)
 //{
-//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
+//    int _errCode = IDRF_SUCCESSFULLY;
 
 //    if (border == BorderRange::UpperBorder) {
 //        while (true) {
@@ -1965,7 +1847,7 @@ onf_abs(__TF value) const
 //ONF::IdManager<__T, __Step>::
 //expandRangeToTopWithowtReserv(BorderRange border, __T* id)
 //{
-//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
+//    int _errCode = IDRF_SUCCESSFULLY;
 
 //    if (border == BorderRange::UpperBorder) {
 //        while (true) {
@@ -1999,7 +1881,7 @@ onf_abs(__TF value) const
 //ONF::IdManager<__T, __Step>::
 //expandRangeToBottom(BorderRange border, __T* id)
 //{
-//    int _errCode = IDAREA_ERRC_SUCCESSFULLY;
+//    int _errCode = IDRF_SUCCESSFULLY;
 
 //    if (border == UpperBorder) {
 //        while (true) {
@@ -2102,7 +1984,7 @@ onf_abs(__TF value) const
 //{
 //    if (freeIds_.size()) {
 //        freeIds_.getNextId(id);
-//        return IDAREA_ERRC_SUCCESSFULLY;
+//        return IDRF_SUCCESSFULLY;
 //    }
 
 //    if (maxId_ == startId_ && startId_ == minId_) {
@@ -2111,22 +1993,22 @@ onf_abs(__TF value) const
 
 //    if (step_ > 0) {
 //        if (isCrossingUpperBorder_)
-//            return IDAREA_ERRC_IDS_RUN_OUT;
+//            return IDRF_ID_OUT_RANGE;
 
 //        id = maxId_;
 //        maxId_ += static_cast<__T>(step_);
 //        expandRange();
-//        return IDAREA_ERRC_SUCCESSFULLY;
+//        return IDRF_SUCCESSFULLY;
 //    }
 
 //    if (step_ < 0) {
 //        if (isCrossingLowerBorder_)
-//            return IDAREA_ERRC_IDS_RUN_OUT;
+//            return IDRF_ID_OUT_RANGE;
 
 //        id = minId_;
 //        minId_ += static_cast<__T>(step_);
 //        expandRange();
-//        return IDAREA_ERRC_SUCCESSFULLY;
+//        return IDRF_SUCCESSFULLY;
 //    }
 //}
 

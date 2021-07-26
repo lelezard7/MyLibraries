@@ -9,6 +9,10 @@
 
 namespace ONF
 {
+    typedef unsigned long long ulonglong;
+    typedef long long longlong;
+    typedef long double ldouble;
+
     template<class T>
     inline T
     onf_abs(T value) {
