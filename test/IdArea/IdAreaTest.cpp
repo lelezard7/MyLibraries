@@ -3436,12 +3436,12 @@ TEST(SingleTests, Test_1)
     IdRange<float> IdRange_float_cm(std::move(IdRange_float));
     IdRange<unsigned> IdRange_unsigned_cm(std::move(IdRange_unsigned));
 
-    EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), 0);
-    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int.getBorderLimit(BorderRange::LowerBorder), -50);
 
     EXPECT_TRUE (IdRange_int_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::LowerBorder));
@@ -3450,12 +3450,12 @@ TEST(SingleTests, Test_1)
     EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::LowerBorder), -50);
 
-    EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_float.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder), 0.0);
-    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), 0.0);
-    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
     EXPECT_TRUE (IdRange_float_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::LowerBorder));
@@ -3464,12 +3464,12 @@ TEST(SingleTests, Test_1)
     EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
-    EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_unsigned.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
-    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned.getBorderLimit(BorderRange::LowerBorder), 3);
 
     EXPECT_TRUE (IdRange_unsigned_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::LowerBorder));
@@ -3538,12 +3538,12 @@ TEST(SingleTests, Test_1)
     IdRange_float_om = std::move(IdRange_float_cm);
     IdRange_unsigned_om = std::move(IdRange_unsigned_cm);
 
-    EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_int_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_int_cm.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::LowerBorder), 0);
-    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
-    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::UpperBorder),  10);
+    EXPECT_EQ(IdRange_int_cm.getBorderValue(BorderRange::LowerBorder), -10);
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::UpperBorder),  50);
+    EXPECT_EQ(IdRange_int_cm.getBorderLimit(BorderRange::LowerBorder), -50);
 
     EXPECT_TRUE (IdRange_int_om.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_int_om.getBorderState(BorderRange::LowerBorder));
@@ -3552,12 +3552,12 @@ TEST(SingleTests, Test_1)
     EXPECT_EQ(IdRange_int_om.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(IdRange_int_om.getBorderLimit(BorderRange::LowerBorder), -50);
 
-    EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_float_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_float_cm.getBorderState(BorderRange::LowerBorder));
-    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::UpperBorder), 0.0);
-    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::LowerBorder), 0.0);
-    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
-    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::UpperBorder),  10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderValue(BorderRange::LowerBorder), -10.0);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::UpperBorder),  50.5);
+    EXPECT_FLOAT_EQ(IdRange_float_cm.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
     EXPECT_TRUE (IdRange_float_om.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_float_om.getBorderState(BorderRange::LowerBorder));
@@ -3566,12 +3566,12 @@ TEST(SingleTests, Test_1)
     EXPECT_FLOAT_EQ(IdRange_float_om.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(IdRange_float_om.getBorderLimit(BorderRange::LowerBorder), -50.5);
 
-    EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (IdRange_unsigned_cm.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_unsigned_cm.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 0);
-    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 0);
-    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
-    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 5);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), 50);
+    EXPECT_EQ(IdRange_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), 3);
 
     EXPECT_TRUE (IdRange_unsigned_om.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(IdRange_unsigned_om.getBorderState(BorderRange::LowerBorder));
@@ -3582,6 +3582,105 @@ TEST(SingleTests, Test_1)
 }
 
 TEST(SingleTests, Test_2)
+{
+    IdRange<int> IdRange_int;
+    IdRange<int>::IdInfo IdInfo_int;
+
+    IdRange_int.setBorderState(BorderRange::UpperBorder, true);
+    IdRange_int.setBorderLimit(BorderRange::UpperBorder,  50);
+    IdRange_int.setBorderLimit(BorderRange::LowerBorder, -50);
+    IdRange_int.moveBorder(BorderRange::UpperBorder, 10);
+    IdRange_int.moveBorder(BorderRange::LowerBorder, 10);
+
+
+    EXPECT_EQ(IdInfo_int.flags, IDRF_NOT_SET);
+    EXPECT_EQ(IdInfo_int.position, IDRP_NOT_SET);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_FALSE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 0);
+    EXPECT_EQ(IdInfo_int.stepCount, 0);
+
+    IdInfo_int = IdRange_int.getIdInfo(BorderRange::UpperBorder, 0);
+
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 10);
+    EXPECT_EQ(IdInfo_int.stepCount, 0);
+
+
+    IdRange<int>::IdInfo IdInfo_int_cc(IdInfo_int);
+
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 10);
+    EXPECT_EQ(IdInfo_int.stepCount, 0);
+
+    EXPECT_EQ(IdInfo_int_cc.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_cc.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_cc.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_cc.state);
+    EXPECT_EQ(IdInfo_int_cc.value, 10);
+    EXPECT_EQ(IdInfo_int_cc.stepCount, 0);
+
+
+    IdRange<int>::IdInfo IdInfo_int_cm(std::move(IdInfo_int));
+
+    EXPECT_EQ(IdInfo_int.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int.state);
+    EXPECT_EQ(IdInfo_int.value, 10);
+    EXPECT_EQ(IdInfo_int.stepCount, 0);
+
+    EXPECT_EQ(IdInfo_int_cm.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_cm.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_cm.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_cm.state);
+    EXPECT_EQ(IdInfo_int_cm.value, 10);
+    EXPECT_EQ(IdInfo_int_cm.stepCount, 0);
+
+
+    IdRange<int>::IdInfo IdInfo_int_oc;
+    IdInfo_int_oc = IdInfo_int_cc;
+
+    EXPECT_EQ(IdInfo_int_oc.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_oc.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_oc.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_oc.state);
+    EXPECT_EQ(IdInfo_int_oc.value, 10);
+    EXPECT_EQ(IdInfo_int_oc.stepCount, 0);
+
+    EXPECT_EQ(IdInfo_int_cc.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_cc.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_cc.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_cc.state);
+    EXPECT_EQ(IdInfo_int_cc.value, 10);
+    EXPECT_EQ(IdInfo_int_cc.stepCount, 0);
+
+
+    IdRange<int>::IdInfo IdInfo_int_om;
+    IdInfo_int_om = std::move(IdInfo_int_cm);
+
+    EXPECT_EQ(IdInfo_int_om.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_om.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_om.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_om.state);
+    EXPECT_EQ(IdInfo_int_om.value, 10);
+    EXPECT_EQ(IdInfo_int_om.stepCount, 0);
+
+    EXPECT_EQ(IdInfo_int_cm.flags, IDRF_SUCCESSFULLY);
+    EXPECT_EQ(IdInfo_int_cm.position, IDRP_ON_BORDER);
+    EXPECT_EQ(IdInfo_int_cm.border, BorderRange::UpperBorder);
+    EXPECT_TRUE(IdInfo_int_cm.state);
+    EXPECT_EQ(IdInfo_int_cm.value, 10);
+    EXPECT_EQ(IdInfo_int_cm.stepCount, 0);
+}
+
+TEST(SingleTests, Test_3)
 {
     IdRange<int> IdRange_int;
     IdRange<float> IdRange_float;
