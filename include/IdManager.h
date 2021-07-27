@@ -195,7 +195,7 @@ namespace ONF
 
         IdRange<T> idRange_;
         T_Step step_;
-        size_t size_;   //Не увеличивается.
+        size_t size_;
 
         bool isHardStep_;
         IdIssuingMethod idIssuingMethod_;
@@ -235,15 +235,12 @@ namespace ONF
         int interpolateIds(T id);
         int reserveIds(T id);
 
-        T findNearestStandardId(T id);
+        T findNearestStandardId(T id) const;  //limit не распространяется на него.
 
         unsigned expandRange(BorderRange border);
-//        int reduceRange(BorderRange border);
+        unsigned reduceRange(BorderRange border);
 //        int normalizeRange(BorderRange border);
         bool getNextId(BorderRange border, T& id);
-
-//        template<class TF>
-//        inline TF onf_abs(TF value) const;
     };
 }
 

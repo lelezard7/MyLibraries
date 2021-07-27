@@ -85,6 +85,13 @@ int main(int argc, char **argv)
 
 TEST(yyy, yyy)
 {
+    RangeIdManager<int> r;
+
+    EXPECT_EQ(*r.getFreeId(), 0);
+    EXPECT_TRUE(r.reserveId(10));
+
+    EXPECT_EQ(*r.getFreeId(), 1);
+    EXPECT_FALSE(r.reserveId(10));
 }
 
 
