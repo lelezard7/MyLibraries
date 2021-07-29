@@ -217,7 +217,7 @@ namespace ONF
         void setHardStep(bool value);
         inline bool isHardStep() const;
 
-//        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);  //Нормализовывать диапазон.
+        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod); // Возвращать коды ошибок.
         inline IdIssuingMethod getIdIssuingMethod() const;
 
         bool findId(T id) const;
@@ -239,7 +239,9 @@ namespace ONF
 
         unsigned expandRange(BorderRange border);
         unsigned reduceRange(BorderRange border);
-//        int normalizeRange(BorderRange border);
+
+        int normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod);
+
         bool getNextId(BorderRange border, T& id);
     };
 }

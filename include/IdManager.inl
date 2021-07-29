@@ -736,7 +736,137 @@ getFreeId()
         return std::nullopt;
     }
 
+    // ---------------------------------
 
+    if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+            idRange_.getBorderState(BorderRange::UpperBorder) == false &&
+            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+            T id = idRange_.getBorderValue(BorderRange::UpperBorder);
+            size_++;
+
+            expandRange(BorderRange::UpperBorder);
+            expandRange(BorderRange::LowerBorder);
+
+            return id;
+        }
+
+        if (idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+            T id = idRange_.getBorderValue(BorderRange::LowerBorder);
+            expandRange(BorderRange::LowerBorder);
+
+            size_++;
+            return id;
+        }
+
+        if (freeIds_.size()) {
+            size_++;
+            return *freeIds_.getNext();
+        }
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) == false) {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+
+            T id = idRange_.getBorderValue(BorderRange::UpperBorder);
+            expandRange(BorderRange::UpperBorder);
+
+            size_++;
+            return id;
+        }
+
+        if (step_ > 0) {
+            auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
+
+            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+                expandRange(BorderRange::UpperBorder);
+                size_++;
+                return result.value;
+            }
+        }
+
+        if (step_ < 0) {
+            auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
+
+            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+                expandRange(BorderRange::LowerBorder);
+                size_++;
+                return result.value;
+            }
+        }
+
+        return std::nullopt;
+    }
+
+    // ---------------------------------
+
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+        idRange_.getBorderState(BorderRange::UpperBorder) == false &&
+        idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+        T id = idRange_.getBorderValue(BorderRange::UpperBorder);
+        size_++;
+
+        expandRange(BorderRange::UpperBorder);
+        expandRange(BorderRange::LowerBorder);
+
+        return id;
+    }
+
+    if (idRange_.getBorderState(BorderRange::UpperBorder) == false) {
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+
+        T id = idRange_.getBorderValue(BorderRange::UpperBorder);
+        expandRange(BorderRange::UpperBorder);
+
+        size_++;
+        return id;
+    }
+
+    if (freeIds_.size()) {
+        size_++;
+        return *freeIds_.getNext();
+    }
+
+    if (idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+        T id = idRange_.getBorderValue(BorderRange::LowerBorder);
+        expandRange(BorderRange::LowerBorder);
+
+        size_++;
+        return id;
+    }
+
+    if (step_ > 0) {
+        auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
+
+        if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+            expandRange(BorderRange::UpperBorder);
+            size_++;
+            return result.value;
+        }
+    }
+
+    if (step_ < 0) {
+        auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
+
+        if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+            expandRange(BorderRange::LowerBorder);
+            size_++;
+            return result.value;
+        }
+    }
+
+    return std::nullopt;
 }
 
 template<class T, class T_Step>
@@ -902,7 +1032,144 @@ reserveId(T id, ReservationMethod reservationMethod)
         return true;
     }
 
+    // -------------------------------------
 
+    if (!isStandardId(id)) {
+        if (isHardStep_)
+            return false;
+
+        if (reservationMethod == ReservationMethod::Interpolate) {
+            int errCode = interpolateIds(id);
+
+            if (errCode == -1)
+                throw std::runtime_error("---------");
+
+            return errCode;
+        }
+
+        if (reservationMethod == ReservationMethod::ReserveRange) {
+            int errCode = reserveIds(id);
+
+            if (errCode == -1)
+                throw std::runtime_error("---------");
+
+            return errCode;
+        }
+
+        if (reservedIds_.find(id))
+            return false;
+
+        reservedIds_.add(id);
+        size_++;
+        return true;
+    }
+
+    if (reservationMethod == ReservationMethod::Interpolate) {
+        int errCode = interpolateIds(id);
+
+        if (errCode == -1)
+            throw std::runtime_error("---------");
+
+        return errCode;
+    }
+
+    if (reservationMethod == ReservationMethod::ReserveRange) {
+        int errCode = reserveIds(id);
+
+        if (errCode == -1)
+            throw std::runtime_error("---------");
+
+        return errCode;
+    }
+
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+        idRange_.getBorderValue(BorderRange::UpperBorder) == id) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder) == true &&
+            idRange_.getBorderState(BorderRange::LowerBorder) == true)
+            return false;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+        expandRange(BorderRange::UpperBorder);
+        expandRange(BorderRange::LowerBorder);
+
+        size_++;
+        return true;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder))
+            return false;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        expandRange(BorderRange::UpperBorder);   // В этом нету смысла, так как следующее число всегда свободно.
+
+        size_++;
+        return true;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderState(BorderRange::LowerBorder))
+            return false;
+
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+        expandRange(BorderRange::LowerBorder);   // В этом нету смысла, так как следующее число всегда свободно.
+
+        size_++;
+        return true;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (!freeIds_.find(id))
+            return false;
+
+        freeIds_.erase(id);
+        size_++;
+        return true;
+    }
+
+    if (reservedIds_.find(id))
+        return false;
+
+    if (id == idRange_.getIdInfo(BorderRange::UpperBorder, 1).value &&
+        !(idRange_.getIdInfo(BorderRange::UpperBorder, 1).flags & IDRF_ID_OUT_RANGE)) {  // <-- TODO: Не корректно. В случае ошибки программа сочтет что
+                                                                                         //id != idRange_.getIdInfo(BorderRange::UpperBorder, 1).value
+                                                                                         //Хотя это может быть не так. Исправить везде.
+        if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                freeIds_.add(idRange_.getBorderValue(BorderRange::UpperBorder));
+        }
+
+        idRange_.moveBorder(BorderRange::UpperBorder, 1);
+        expandRange(BorderRange::UpperBorder);
+
+        size_++;
+        return true;
+    }
+
+    if (id == idRange_.getIdInfo(BorderRange::LowerBorder, 1).value &&
+        !(idRange_.getIdInfo(BorderRange::LowerBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+
+        if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                freeIds_.add(idRange_.getBorderValue(BorderRange::LowerBorder));
+        }
+
+        idRange_.moveBorder(BorderRange::LowerBorder, 1);
+        expandRange(BorderRange::LowerBorder);
+
+        size_++;
+        return true;
+    }
+
+    reservedIds_.add(id);
+    size_++;
+    return true;
 }
 
 
@@ -1074,95 +1341,62 @@ freeId(T id)
         return true;
     }
 
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder) &&
+        id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder) == false &&
+            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+            return false;
+        }
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) !=
+            idRange_.getBorderState(BorderRange::LowerBorder))
+            throw std::runtime_error("---------------");
+
+        idRange_.setBorderState(BorderRange::UpperBorder, false);
+        idRange_.setBorderState(BorderRange::LowerBorder, false);
+
+        --size_;
+        return true;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (!idRange_.getBorderState(BorderRange::UpperBorder))
+            return false;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, false);
+        --size_;
+
+        return true;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (!idRange_.getBorderState(BorderRange::LowerBorder))
+            return false;
+
+        idRange_.setBorderState(BorderRange::LowerBorder, false);
+        --size_;
+
+        return true;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) &&
+        id > idRange_.getBorderValue(BorderRange::LowerBorder)) {
+
+        if (freeIds_.find(id))
+            return false;
+
+        freeIds_.add(id);
+        --size_;
+        return true;
+    }
+
+    if (!reservedIds_.find(id))
+        return false;
+
+    reservedIds_.erase(id);
+    --size_;
+    return true;
 }
-
-//template<class T, class T_Step>
-//bool
-//ONF::IdManager<T, T_Step>::
-//freeId(T id)
-//{
-//    if (id < std::numeric_limits<T>::lowest() || id > std::numeric_limits<T>::max())
-//        return false;
-
-//    if (!isStandardId(id)) {
-//        if (!reservedIds_.find(id))
-//            return false;
-
-//        reservedIds_.freeId(id);
-//        return true;
-//    }
-
-//    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-//        if (id == idArea_.getBorderValue(BorderRange::UpperBorder)) {
-//            if (reduceRange(BorderRange::UpperBorder) == IDRF_RANGE_ARE_BENT) {
-//                idArea_.setBorderState(BorderRange::UpperBorder, false);
-//                idArea_.setBorderState(BorderRange::LowerBorder, false);
-//                return true;
-//            }
-
-//            return true;
-//        }
-
-//        if (id == idArea_.getBorderValue(BorderRange::LowerBorder)) {
-//            if (reduceRange(BorderRange::LowerBorder) == IDRF_RANGE_ARE_BENT) {
-//                idArea_.setBorderState(BorderRange::UpperBorder, false);
-//                idArea_.setBorderState(BorderRange::LowerBorder, false);
-//                return true;
-//            }
-
-//            return true;
-//        }
-//    }
-//    else {
-//        if (id == idArea_.getBorderValue(BorderRange::UpperBorder) &&
-//            id == idArea_.getBorderValue(BorderRange::LowerBorder)) {
-
-//            if (!idArea_.getBorderState(BorderRange::UpperBorder) &&
-//                !idArea_.getBorderState(BorderRange::LowerBorder))
-//                return false;
-
-//            if (idArea_.getBorderState(BorderRange::UpperBorder) !=
-//                idArea_.getBorderState(BorderRange::LowerBorder))
-//                throw "---------------";
-
-//            idArea_.setBorderState(BorderRange::UpperBorder, false);
-//            idArea_.setBorderState(BorderRange::LowerBorder, false);
-//            return true;
-//        }
-
-//        if (id == idArea_.getBorderValue(BorderRange::UpperBorder)) {
-//            if (!idArea_.getBorderState(BorderRange::UpperBorder))
-//                return false;
-
-//            idArea_.setBorderState(BorderRange::UpperBorder, false);
-//            return true;
-//        }
-
-//        if (id == idArea_.getBorderValue(BorderRange::LowerBorder)) {
-//            if (!idArea_.getBorderState(BorderRange::LowerBorder))
-//                return false;
-
-//            idArea_.setBorderState(BorderRange::LowerBorder, false);
-//            return true;
-//        }
-//    }
-
-//    if (id < idArea_.getBorderValue(BorderRange::UpperBorder) &&
-//        id > idArea_.getBorderValue(BorderRange::LowerBorder)) {
-
-//        if (freeIds_.find(id))
-//            return false;
-
-//        freeIds_.add(id);
-//        return true;
-//    }
-
-//    if (!reservedIds_.find(id))
-//        return false;
-
-//    reservedIds_.freeId(id);
-//    return true;
-//}
 
 template<class T, class T_Step>
 inline void
@@ -1204,6 +1438,110 @@ ONF::RangeIdManager<T, T_Step>::
 isHardStep() const
 {
     return isHardStep_;
+}
+
+template<class T, class T_Step>
+void
+ONF::RangeIdManager<T, T_Step>::
+setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
+{
+    if (idIssuingMethod == idIssuingMethod_)
+        return;
+
+    if ((idIssuingMethod_ == IdIssuingMethod::Ascending || idIssuingMethod_ == IdIssuingMethod::Descending) &&
+        (idIssuingMethod == IdIssuingMethod::Ascending || idIssuingMethod == IdIssuingMethod::Descending)) {
+
+        freeIds_.setIdIssuingMethod(idIssuingMethod);
+        idIssuingMethod_ = idIssuingMethod;
+        return;
+    }
+
+    freeIds_.setIdIssuingMethod(idIssuingMethod);
+    idIssuingMethod_ = idIssuingMethod;
+
+    if (idIssuingMethod == IdIssuingMethod::Dynamic) {
+        if (normalizeRange(BorderRange::UpperBorder, IdIssuingMethod::Dynamic) == IDRF_RANGE_ARE_BENT ||
+            normalizeRange(BorderRange::LowerBorder, IdIssuingMethod::Dynamic) == IDRF_RANGE_ARE_BENT) {
+            idRange_.setBorderState(BorderRange::UpperBorder, false);
+            idRange_.setBorderState(BorderRange::LowerBorder, false);
+        }
+
+        return;
+    }
+
+    normalizeRange(BorderRange::UpperBorder, idIssuingMethod);
+}
+
+template<class T, class T_Step>
+int
+ONF::RangeIdManager<T, T_Step>::
+normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod)
+{
+    if (idIssuingMethod == IdIssuingMethod::Dynamic) {
+        auto result = idRange_.getIdInfo(border, 1);
+
+//        if (reservedIds_.find(result.value)) {
+//            if (!idRange_.getBorderState(border)) {
+//                freeIds_.add(idRange_.getBorderValue(border));
+//                idRange_.setBorderState(border, true);
+//            }
+
+//            return expandRange(border);
+//        }
+
+        if (idRange_.getBorderState(border)) {
+            return IDRF_SUCCESSFULLY;
+        }
+
+        idRange_.setBorderState(border, true);
+        return reduceRange(border);
+    }
+
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) < idRange_.getStart()) {
+        while (true) {
+            auto result = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
+
+            if (result.flags & IDRF_ID_OUT_RANGE)
+                return result.flags;
+
+            if (result.value > idRange_.getStart())
+                return result.flags;
+
+            if (reservedIds_.find(result.value)) {
+                reservedIds_.erase(result.value);
+                idRange_.moveBorder(BorderRange::UpperBorder, 1);
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+            }
+            else {
+                idRange_.moveBorder(BorderRange::UpperBorder, 1);
+                idRange_.setBorderState(BorderRange::UpperBorder, false);
+            }
+        }
+    }
+
+    if (idRange_.getBorderValue(BorderRange::LowerBorder) > idRange_.getStart()) {
+        while (true) {
+            auto result = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
+
+            if (result.flags & IDRF_ID_OUT_RANGE)
+                return result.flags;
+
+            if (result.value < idRange_.getStart())
+                return result.flags;
+
+            if (reservedIds_.find(result.value)) {
+                reservedIds_.erase(result.value);
+                idRange_.moveBorder(BorderRange::LowerBorder, 1);
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
+            }
+            else {
+                idRange_.moveBorder(BorderRange::LowerBorder, 1);
+                idRange_.setBorderState(BorderRange::LowerBorder, false);
+            }
+        }
+    }
+
+    return IDRF_SUCCESSFULLY;
 }
 
 template<class T, class T_Step>
@@ -1294,20 +1632,23 @@ reserveIds(T id)
         return 0;
 
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
+                return -1;
 
-            if (idRange_.getBorderState(BorderRange::UpperBorder) == true && idRange_.getBorderState(BorderRange::UpperBorder) == true)
-                return 0;
+            if(id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+                if (idRange_.getBorderState(BorderRange::UpperBorder) == true && idRange_.getBorderState(BorderRange::LowerBorder) == true)
+                    return 0;
 
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
 
-            expandRange(BorderRange::UpperBorder);
-            expandRange(BorderRange::LowerBorder);
+                expandRange(BorderRange::UpperBorder);
+                expandRange(BorderRange::LowerBorder);
 
-            ++size_;
-            return 1;
+                ++size_;
+                return 1;
+            }
         }
 
         if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
@@ -1425,6 +1766,164 @@ reserveIds(T id)
 
         return -1;
     }
+
+    // ----------------------------------
+
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+        id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) == true && idRange_.getBorderState(BorderRange::LowerBorder) == true)
+            return 0;
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
+            return -1;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+        expandRange(BorderRange::UpperBorder);
+        expandRange(BorderRange::LowerBorder);
+
+        ++size_;
+        return 1;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder))
+            return 0;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        ++size_;
+        return 1;
+    }
+
+    if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderState(BorderRange::LowerBorder))
+            return 0;
+
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+        ++size_;
+        return 1;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
+        return 0;
+
+    if (isStandardId(id)) {
+        if (id > idRange_.getBorderValue(BorderRange::UpperBorder)) {
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
+            }
+            else {
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+            }
+
+            while (true) {
+                auto idInfo = idRange_.moveBorder(BorderRange::UpperBorder, 1);
+
+                if (reservedIds_.find(idInfo.value))
+                    reservedIds_.erase(idInfo.value);
+                else
+                    ++size_;
+
+                if (idInfo.value == id)
+                    break;
+            }
+
+            expandRange(BorderRange::UpperBorder);
+            return 1;
+        }
+
+        if (id < idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
+            }
+            else {
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
+            }
+
+            while (true) {
+                auto idInfo = idRange_.moveBorder(BorderRange::LowerBorder, 1);
+
+                if (reservedIds_.find(idInfo.value))
+                    reservedIds_.erase(idInfo.value);
+                else
+                    ++size_;
+
+                if (idInfo.value == id)
+                    break;
+            }
+
+            expandRange(BorderRange::LowerBorder);
+            return 1;
+        }
+
+        return -1;
+    }
+
+    if (id > idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+        }
+        else {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+        }
+
+        int i = 1;
+
+        while (true) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, i);
+
+            if (idInfo.value > id || (idInfo.flags & IDRF_ID_OUT_RANGE))
+                break;
+
+            if (reservedIds_.find(idInfo.value))
+                reservedIds_.erase(idInfo.value);
+            else
+                ++size_;
+
+            idRange_.moveBorder(BorderRange::UpperBorder, 1);
+            ++i;
+        }
+
+        expandRange(BorderRange::UpperBorder);
+        return 1;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+        }
+        else {
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+        }
+
+        int i = 1;
+
+        while (true) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, i);
+
+            if (idInfo.value < id || (idInfo.flags & IDRF_ID_OUT_RANGE))
+                break;
+
+            if (reservedIds_.find(idInfo.value))
+                reservedIds_.erase(idInfo.value);
+            else
+                ++size_;
+
+            idRange_.moveBorder(BorderRange::LowerBorder, 1);
+            ++i;
+        }
+
+        expandRange(BorderRange::LowerBorder);
+        return 1;
+    }
+
+    return -1;
 }
 
 template<class T, class T_Step>
@@ -1705,6 +2204,208 @@ interpolateIds(T id)
 
         throw std::runtime_error("---------");
     }
+
+    // ----------------------------------
+
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+        id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) == true && idRange_.getBorderState(BorderRange::LowerBorder) == true)
+            return 0;
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
+            return -1;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+        expandRange(BorderRange::UpperBorder);
+        expandRange(BorderRange::LowerBorder);
+
+        ++size_;
+        return 1;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
+        return 0;
+
+    if (isStandardId(id)) {
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+            if (idRange_.getBorderState(BorderRange::UpperBorder))
+                return 0;
+
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+            ++size_;
+            return 1;
+        }
+
+        if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (idRange_.getBorderState(BorderRange::LowerBorder))
+                return 0;
+
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+            ++size_;
+            return 1;
+        }
+
+        if (id > idRange_.getBorderValue(BorderRange::UpperBorder)) {
+            if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
+                idRange_.setBorderState(BorderRange::UpperBorder, true);
+
+                if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                    freeIds_.add(idRange_.getBorderValue(BorderRange::UpperBorder));
+            }
+
+            while (true) {
+                auto idInfo = idRange_.moveBorder(BorderRange::UpperBorder, 1);
+
+                if (idInfo.value == id)
+                    break;
+
+                if (!reservedIds_.find(idInfo.value))
+                    freeIds_.add(idInfo.value);
+                else
+                    reservedIds_.erase(idInfo.value);
+            }
+
+            expandRange(BorderRange::UpperBorder);
+            ++size_;
+            return 1;
+        }
+
+        if (id < idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
+                idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+                if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                    freeIds_.add(idRange_.getBorderValue(BorderRange::LowerBorder));
+            }
+
+            while (true) {
+                auto idInfo = idRange_.moveBorder(BorderRange::LowerBorder, 1);
+
+                if (idInfo.value == id)
+                    break;
+
+                if (!reservedIds_.find(idInfo.value))
+                    freeIds_.add(idInfo.value);
+                else
+                    reservedIds_.erase(idInfo.value);
+            }
+
+            expandRange(BorderRange::LowerBorder);
+            ++size_;
+            return 1;
+        }
+
+        throw std::runtime_error("---------");
+    }
+
+    if ( (id < idRange_.getIdInfo(BorderRange::UpperBorder, 1).value) &&
+        !(idRange_.getIdInfo(BorderRange::UpperBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+
+        if (idRange_.getBorderState(BorderRange::UpperBorder))
+            return 0;
+
+        idRange_.setBorderState(BorderRange::UpperBorder, true);
+        ++size_;
+        return 1;
+    }
+
+    if ( (id > idRange_.getIdInfo(BorderRange::LowerBorder, 1).value) &&
+        !(idRange_.getIdInfo(BorderRange::LowerBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+
+        if (idRange_.getBorderState(BorderRange::LowerBorder))
+            return 0;
+
+        idRange_.setBorderState(BorderRange::LowerBorder, true);
+        ++size_;
+        return 1;
+    }
+
+    if (id > idRange_.getBorderValue(BorderRange::UpperBorder)) {
+        if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
+            idRange_.setBorderState(BorderRange::UpperBorder, true);
+
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                freeIds_.add(idRange_.getBorderValue(BorderRange::UpperBorder));
+        }
+
+        int i = 1;
+
+        while (true) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, i);
+
+            if (idInfo.value > id || (idInfo.flags & IDRF_ID_OUT_RANGE))
+                break;
+
+            auto idInfo2 = idRange_.getIdInfo(BorderRange::UpperBorder, i + 1);
+
+            if (idInfo2.value < id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+                if (!reservedIds_.find(idInfo.value))
+                    freeIds_.add(idInfo.value);
+                else
+                    reservedIds_.erase(idInfo.value);
+
+                idRange_.moveBorder(BorderRange::UpperBorder, 1);
+                ++i;
+                continue;
+            }
+
+            if (reservedIds_.find(idInfo.value))
+                reservedIds_.erase(idInfo.value);
+
+            idRange_.moveBorder(BorderRange::UpperBorder, 1);
+            break;
+        }
+
+        expandRange(BorderRange::UpperBorder);
+        ++size_;
+        return 1;
+    }
+
+    if (id < idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
+            idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                freeIds_.add(idRange_.getBorderValue(BorderRange::LowerBorder));
+        }
+
+        int i = 1;  //TODO: int заменить на longlong
+
+        while (true) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, i);
+
+            if (idInfo.value < id || (idInfo.flags & IDRF_ID_OUT_RANGE))
+                break;
+
+            auto idInfo2 = idRange_.getIdInfo(BorderRange::LowerBorder, i + 1);
+
+            if (idInfo2.value > id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+                if (!reservedIds_.find(idInfo.value))
+                    freeIds_.add(idInfo.value);
+                else
+                    reservedIds_.erase(idInfo.value);
+
+                idRange_.moveBorder(BorderRange::LowerBorder, 1);
+                ++i;
+                continue;
+            }
+
+            if (reservedIds_.find(idInfo.value))
+                reservedIds_.erase(idInfo.value);
+
+            idRange_.moveBorder(BorderRange::LowerBorder, 1);
+            break;
+        }
+
+        expandRange(BorderRange::LowerBorder);
+        ++size_;
+        return 1;
+    }
+
+    throw std::runtime_error("---------");
 }
 
 template<class T, class T_Step>
@@ -1821,30 +2522,28 @@ unsigned
 ONF::RangeIdManager<T, T_Step>::
 reduceRange(BorderRange border)
 {
-    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            idRange_.getBorderState(BorderRange::UpperBorder) == false &&
-            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
-            return 0xFFFF;
-        }
+    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+        idRange_.getBorderState(BorderRange::UpperBorder) == false &&
+        idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+        return 0xFFFF;
+    }
 
-        longlong i = 0;
+    longlong i = 0;
 
-        while (true) {
-            auto result = idRange_.getIdInfo(border, -i);
+    while (true) {
+        auto result = idRange_.getIdInfo(border, -i);
 
-            if (result.flags & IDRF_RANGE_ARE_BENT)
-                return result.flags;
-
-            if (freeIds_.find(result.value)) {
-                freeIds_.erase(result.value);
-                ++i;
-                continue;
-            }
-
-            idRange_.moveBorder(border, -i);
+        if (result.flags & IDRF_RANGE_ARE_BENT)
             return result.flags;
+
+        if (freeIds_.find(result.value)) {
+            freeIds_.erase(result.value);
+            ++i;
+            continue;
         }
+
+        idRange_.moveBorder(border, -i);
+        return result.flags;
     }
 }
 
