@@ -4,77 +4,40 @@
 
 using namespace ONF;
 
-//TODO: Добавить тест с дробным StartId.
-
 struct RangeIdManagerTests : public ::testing::Test
 {
-    RangeIdManager<int, int> RangeIdManager_int;
-    RangeIdManager<float, float> RangeIdManager_float;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int;
-    RangeIdManager<float, int> RangeIdManager_float_2Int;
+    RangeIdManager<int> RangeIdManager_int;
+    RangeIdManager<float> RangeIdManager_float;
+    RangeIdManager<unsigned> RangeIdManager_unsigned;
 
-    RangeIdManager<int, int> RangeIdManager_int_Ascending;
-    RangeIdManager<float, float> RangeIdManager_float_Descending;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt_Ascending;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int_Descending;
-    RangeIdManager<float, int> RangeIdManager_float_2Int_Ascending;
+    RangeIdManager<int> RangeIdManager_int_Start_2_Step_2;
+    RangeIdManager<float> RangeIdManager_float_Start_1p5_Step_1p5;
+    RangeIdManager<unsigned> RangeIdManager_unsigned_Start_2_Step_2;
 
+    RangeIdManager<int> RangeIdManager_int_Start_n2_Step_n2;
+    RangeIdManager<float, int> RangeIdManager_float_int_Start_n1p5_Step_n2;
+    RangeIdManager<unsigned, int> RangeIdManager_unsigned_int_Start_10_Step_n2;
 
-    RangeIdManager<int, int> RangeIdManager_int_Start_2_Step_2;
-    RangeIdManager<float, float> RangeIdManager_float_Start_2_Step_1p5;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt_Start_2_Step_2;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int_Start_2_Step_2;
-    RangeIdManager<float, int> RangeIdManager_float_2Int_Start_1p5_Step_2;
+    RangeIdManager<int> RangeIdManager_int_Start_n2_Step_4;
+    RangeIdManager<float, int> RangeIdManager_float_int_Start_n2p0_Step_2;
 
-    RangeIdManager<int, int> RangeIdManager_int_Start_n2_Step_2;
-    RangeIdManager<float, float> RangeIdManager_float_Start_n2_Step_1p5;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt_Start_n2_Step_2;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int_Start_n2_Step_2;
-    RangeIdManager<float, int> RangeIdManager_float_2Int_Start_n1p5_Step_2;
+    RangeIdManager<int> RangeIdManager_int_Start_2_Step_n2;
+    RangeIdManager<float> RangeIdManager_float_Start_2p0_Step_n2p0;
 
-    RangeIdManager<int, int> RangeIdManager_int_Start_2_Step_n2;
-    RangeIdManager<float, float> RangeIdManager_float_Start_2_Step_n1p5;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt_Start_2_Step_n2;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int_Start_2_Step_n2;
-    RangeIdManager<float, int> RangeIdManager_float_2Int_Start_1p5_Step_n2;
+    RangeIdManagerTests()
+        : RangeIdManager_int_Start_2_Step_2(2, 2),
+          RangeIdManager_float_Start_1p5_Step_1p5(1.5, 1.5),
+          RangeIdManager_unsigned_Start_2_Step_2(2, 2),
 
-    RangeIdManager<int, int> RangeIdManager_int_Start_n2_Step_n2;
-    RangeIdManager<float, float> RangeIdManager_float_Start_n2_Step_n1p5;
-    RangeIdManager<unsigned, unsigned> RangeIdManager_uInt_Start_n2_Step_n2;
-    RangeIdManager<unsigned, int> RangeIdManager_uInt_2Int_Start_n2_Step_n2;
-    RangeIdManager<float, int> RangeIdManager_float_2Int_Start_n1p5_Step_n2;
+          RangeIdManager_int_Start_n2_Step_n2(-2, -2),
+          RangeIdManager_float_int_Start_n1p5_Step_n2(-1.5, -2),
+          RangeIdManager_unsigned_int_Start_10_Step_n2(10, -2),
 
-//    RangeIdManagerTests()
-//        : RangeIdManager_int_Ascending(0, 1, IdIssuingMethod::Ascending),
-//          RangeIdManager_float_Descending(0.0, 1.0, IdIssuingMethod::Descending),
-//          RangeIdManager_uInt_Ascending(0, 1, IdIssuingMethod::Ascending),
-//          RangeIdManager_uInt_2Int_Descending(0, 1, IdIssuingMethod::Descending),
-//          RangeIdManager_float_2Int_Ascending(0.0, 1, IdIssuingMethod::Ascending),
+          RangeIdManager_int_Start_n2_Step_4(-2, 4),
+          RangeIdManager_float_int_Start_n2p0_Step_2(-2.0, 2),
 
-//          RangeIdManager_int_Start_2_Step_2(2, 2),
-//          RangeIdManager_float_Start_2_Step_1p5(2.0, 1.5),
-//          RangeIdManager_uInt_Start_2_Step_2(2, 2),
-//          RangeIdManager_uInt_2Int_Start_2_Step_2(2, 2),
-//          RangeIdManager_float_2Int_Start_1p5_Step_2(1.5, 2),
-
-//          RangeIdManager_int_Start_n2_Step_2(-2, 2),
-//          RangeIdManager_float_Start_n2_Step_1p5(-2.0, 1.5),
-//          RangeIdManager_uInt_Start_n2_Step_2(-2, 2),
-//          RangeIdManager_uInt_2Int_Start_n2_Step_2(-2, 2),
-//          RangeIdManager_float_2Int_Start_n1p5_Step_2(-1.5, 2),
-
-//          RangeIdManager_int_Start_2_Step_n2(2, -2),
-//          RangeIdManager_float_Start_2_Step_n1p5(2.0, -1.5),
-//          RangeIdManager_uInt_Start_2_Step_n2(2, -2),
-//          RangeIdManager_uInt_2Int_Start_2_Step_n2(2, -2),
-//          RangeIdManager_float_2Int_Start_1p5_Step_n2(1.5, -2),
-
-//          RangeIdManager_int_Start_n2_Step_n2(-2, -2),
-//          RangeIdManager_float_Start_n2_Step_n1p5(-2.0, -1.5),
-//          RangeIdManager_uInt_Start_n2_Step_n2(-2, -2),
-//          RangeIdManager_uInt_2Int_Start_n2_Step_n2(-2, -2),
-//          RangeIdManager_float_2Int_Start_n1p5_Step_n2(-1.5, -2) {}
+          RangeIdManager_int_Start_2_Step_n2(2, -2),
+          RangeIdManager_float_Start_2p0_Step_n2p0(2.0, -2.0) {};
 };
 
 int main(int argc, char **argv)
@@ -83,26 +46,996 @@ int main(int argc, char **argv)
     return RUN_ALL_TESTS();
 }
 
-TEST(yyy, yyy)
+TEST_F(RangeIdManagerTests, getStart)
 {
-    RangeIdManager<int> r;
-    RangeIdManager<unsigned, int> r2(1, -1);
+    EXPECT_EQ(RangeIdManager_int.getStart(), 0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getStart(), 0.0);
+    EXPECT_EQ(RangeIdManager_unsigned.getStart(), 0);
 
-    EXPECT_EQ(*r.getFreeId(), 0);
-    EXPECT_TRUE(r.reserveId(10));
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getStart(), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getStart(), 1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getStart(), 2);
 
-    EXPECT_EQ(*r.getFreeId(), 1);
-    EXPECT_FALSE(r.reserveId(10));
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getStart(), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getStart(), -1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getStart(), 10);
 
-    EXPECT_EQ(r.size(), 3);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getStart(), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getStart(), -2.0);
 
-
-    EXPECT_TRUE (r2.getFreeId().has_value());
-    EXPECT_FALSE(r2.getFreeId().has_value());
-    EXPECT_EQ(r2.size(), 1);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getStart(), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getStart(), 2.0);
 }
 
+TEST_F(RangeIdManagerTests, getStep)
+{
+    EXPECT_EQ(RangeIdManager_int.getStep(), 1);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getStep(), 1.0);
+    EXPECT_EQ(RangeIdManager_unsigned.getStep(), 1);
 
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getStep(), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getStep(), 1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getStep(), 2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getStep(), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getStep(), -2);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getStep(), -2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getStep(), 4);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getStep(), 2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getStep(), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getStep(), -2.0);
+}
+
+TEST_F(RangeIdManagerTests, getBorderValue)
+{
+    EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::UpperBorder), -1.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::LowerBorder), -1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::UpperBorder), -2.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::LowerBorder), -2.0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::LowerBorder), 2.0);
+}
+
+TEST_F(RangeIdManagerTests, size)
+{
+    EXPECT_EQ(RangeIdManager_int.size(), 0);
+    EXPECT_EQ(RangeIdManager_float.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.size(), 0);
+}
+
+TEST_F(RangeIdManagerTests, getBorderState)
+{
+    EXPECT_FALSE(RangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(RangeIdManagerTests, isStandardId)
+{
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(0));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(1));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(2));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(10));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(-1));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(-2));
+    EXPECT_TRUE(RangeIdManager_int.isStandardId(-10));
+
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(0.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(1.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(2.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(10.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(-1.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(-2.0));
+    EXPECT_TRUE (RangeIdManager_float.isStandardId(-10.0));
+    EXPECT_FALSE(RangeIdManager_float.isStandardId(10.5));
+    EXPECT_FALSE(RangeIdManager_float.isStandardId(-10.5));
+    EXPECT_FALSE(RangeIdManager_float.isStandardId(-0.5));
+    EXPECT_FALSE(RangeIdManager_float.isStandardId(1.5));
+
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(0));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(1));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(2));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(10));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(-1));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(-2));
+    EXPECT_TRUE(RangeIdManager_unsigned.isStandardId(-10));
+
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(2));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(4));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(6));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(20));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(0));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(-2));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_2.isStandardId(-20));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.isStandardId(-19));
+
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(1.5));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(3.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(4.5));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(18.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(0.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(-1.5));
+    EXPECT_TRUE (RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(-18.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(19.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(1.501));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(-1.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.isStandardId(-18.001));
+
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(2));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(4));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(6));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(20));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(0));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(-2));
+    EXPECT_TRUE (RangeIdManager_unsigned_Start_2_Step_2.isStandardId(-20));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.isStandardId(-19));
+
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(-2));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(0));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(2));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(20));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(-4));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(-6));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.isStandardId(-20));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.isStandardId(-19));
+
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-1.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(0.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(2.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(20.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-3.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-5.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-19.5));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(19.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(1.501));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-1.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.isStandardId(-18.001));
+
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(10));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(12));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(14));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(40));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(8));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(6));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(-40));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.isStandardId(-49));
+
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(-2));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(2));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(6));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(22));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(-6));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(-10));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_4.isStandardId(-22));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.isStandardId(-19));
+
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-2.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(0.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(2.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(20.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-4.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-6.0));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-20.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(19.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(1.501));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-1.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.isStandardId(-18.001));
+
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(2));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(4));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(6));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(22));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(0));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(-2));
+    EXPECT_TRUE (RangeIdManager_int_Start_2_Step_n2.isStandardId(-22));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.isStandardId(21));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.isStandardId(1));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.isStandardId(-1));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.isStandardId(-19));
+
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(2.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(4.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(6.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(20.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(0.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(-2.0));
+    EXPECT_TRUE (RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(-20.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(19.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(1.501));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(-1.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.isStandardId(-18.001));
+}
+
+TEST_F(RangeIdManagerTests, GetFreeId)
+{
+    std::optional<int> optional_id_int;
+    std::optional<float> optional_id_float;
+    std::optional<unsigned> optional_id_unsigned;
+
+
+    for (int i = 0; i < 3; ++i) {
+        EXPECT_EQ(RangeIdManager_int.size(), 0);
+        EXPECT_EQ(RangeIdManager_float.size(), 0);
+        EXPECT_EQ(RangeIdManager_unsigned.size(), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.size(), 0);
+        EXPECT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.size(), 0);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.size(), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.size(), 0);
+        EXPECT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.size(), 0);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.size(), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.size(), 0);
+        EXPECT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.size(), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.size(), 0);
+        EXPECT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.size(), 0);
+
+        EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 0);
+        EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 0.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+        EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
+        EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 1.5);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 2);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::UpperBorder), -1.5);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::LowerBorder), -1.5);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::LowerBorder), 10);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::UpperBorder), -2);
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::LowerBorder), -2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::UpperBorder), -2.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::LowerBorder), -2.0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder), 2);
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), 2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::UpperBorder), 2.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::LowerBorder), 2.0);
+
+
+        if (i == 1) {
+            RangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            RangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            RangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            RangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            RangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            RangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        }
+
+        if (i == 2) {
+            RangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            RangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            RangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            RangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            RangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            RangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+        }
+
+
+        for (int j = 0; j < 22; ++j) {
+            optional_id_int = RangeIdManager_int.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j)           << "The error occurred when: i == " << i << ", j == " << j;
+
+            optional_id_float = RangeIdManager_float.getFreeId();
+            ASSERT_TRUE(optional_id_float.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_FLOAT_EQ(*optional_id_float, j)     << "The error occurred when: i == " << i << ", j == " << j;
+
+            optional_id_unsigned = RangeIdManager_unsigned.getFreeId();
+            ASSERT_TRUE(optional_id_unsigned.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_unsigned, j)           << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (int j = 2; j < 22; j += 2) {
+            optional_id_int = RangeIdManager_int_Start_2_Step_2.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j)           << "The error occurred when: i == " << i << ", j == " << j;
+
+            optional_id_unsigned = RangeIdManager_unsigned_Start_2_Step_2.getFreeId();
+            ASSERT_TRUE(optional_id_unsigned.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_unsigned, j)           << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (float j = 1.5; j < 30.0; j += 1.5) {
+            optional_id_float = RangeIdManager_float_Start_1p5_Step_1p5.getFreeId();
+            ASSERT_TRUE(optional_id_float.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_FLOAT_EQ(*optional_id_float, j)     << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (int j = -2; j > -22; j -= 2) {
+            optional_id_int = RangeIdManager_int_Start_n2_Step_n2.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j)           << "The error occurred when: i == " << i << ", j == " << j;
+
+            optional_id_int = RangeIdManager_int_Start_2_Step_n2.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j + 4)       << "The error occurred when: i == " << i << ", j == " << j;
+
+            optional_id_float = RangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
+            ASSERT_TRUE(optional_id_float.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_FLOAT_EQ(*optional_id_float, j + 4) << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (float j = -2.0; j < 22.0; j += 2.0) {
+            optional_id_float = RangeIdManager_float_int_Start_n2p0_Step_2.getFreeId();
+            ASSERT_TRUE(optional_id_float.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_FLOAT_EQ(*optional_id_float, j)     << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (int j = -2; j < 44; j += 4) {
+            optional_id_int = RangeIdManager_int_Start_n2_Step_4.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j)           << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        for (int j = 10; j >= 0; j -= 2) {
+            optional_id_int = RangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+            ASSERT_TRUE(optional_id_int.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_EQ(*optional_id_int, j)           << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+        optional_id_int = RangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+        EXPECT_FALSE(optional_id_int.has_value());
+
+        for (float j = -1.5; j > -22.0; j -= 2.0) {
+            optional_id_float = RangeIdManager_float_int_Start_n1p5_Step_n2.getFreeId();
+            ASSERT_TRUE(optional_id_float.has_value()) << "The error occurred when: i == " << i << ", j == " << j;
+            EXPECT_FLOAT_EQ(*optional_id_float, j)     << "The error occurred when: i == " << i << ", j == " << j;
+        }
+
+
+        EXPECT_EQ(RangeIdManager_int.size(), 22);
+        EXPECT_EQ(RangeIdManager_float.size(), 22);
+        EXPECT_EQ(RangeIdManager_unsigned.size(), 22);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.size(), 10);
+        EXPECT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.size(), 19);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.size(), 10);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.size(), 10);
+        EXPECT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.size(), 11);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.size(), 6);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.size(), 12);
+        EXPECT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.size(), 12);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.size(), 10);
+        EXPECT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.size(), 10);
+
+        EXPECT_TRUE(RangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned.getBorderState(BorderRange::LowerBorder));
+
+        EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+
+        EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::LowerBorder));
+
+        EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::LowerBorder));
+
+        EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+        EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::UpperBorder));
+        EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
+
+        EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 21);
+        EXPECT_EQ(RangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 21.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+        EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 21);
+        EXPECT_EQ(RangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 20);
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::UpperBorder), 28.5);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderValue(BorderRange::LowerBorder), 1.5);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 20);
+        EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 2);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::UpperBorder), -2);
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderValue(BorderRange::LowerBorder), -20);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::UpperBorder), -1.5);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderValue(BorderRange::LowerBorder), -21.5);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::UpperBorder), 10);
+        EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderValue(BorderRange::LowerBorder), 0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::UpperBorder),  42);
+        EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderValue(BorderRange::LowerBorder), -2);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::UpperBorder),  20.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderValue(BorderRange::LowerBorder), -2.0);
+
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::UpperBorder),  2);
+        EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderValue(BorderRange::LowerBorder), -16);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::UpperBorder),  2.0);
+        EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::LowerBorder), -16.0);
+
+
+        RangeIdManager_int.freeAll();
+        RangeIdManager_float.freeAll();
+        RangeIdManager_unsigned.freeAll();
+
+        RangeIdManager_int_Start_2_Step_2.freeAll();
+        RangeIdManager_float_Start_1p5_Step_1p5.freeAll();
+        RangeIdManager_unsigned_Start_2_Step_2.freeAll();
+
+        RangeIdManager_int_Start_n2_Step_n2.freeAll();
+        RangeIdManager_float_int_Start_n1p5_Step_n2.freeAll();
+        RangeIdManager_unsigned_int_Start_10_Step_n2.freeAll();
+
+        RangeIdManager_int_Start_n2_Step_4.freeAll();
+        RangeIdManager_float_int_Start_n2p0_Step_2.freeAll();
+
+        RangeIdManager_int_Start_2_Step_n2.freeAll();
+        RangeIdManager_float_Start_2p0_Step_n2p0.freeAll();
+    }
+}
+
+TEST_F(RangeIdManagerTests, BorderLimit)
+{
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+
+
+    EXPECT_FALSE(RangeIdManager_int.setBorderLimit(BorderRange::UpperBorder, -300));
+    EXPECT_FALSE(RangeIdManager_int.setBorderLimit(BorderRange::LowerBorder,  300));
+    EXPECT_FALSE(RangeIdManager_float.setBorderLimit(BorderRange::UpperBorder, -300.5));
+    EXPECT_FALSE(RangeIdManager_float.setBorderLimit(BorderRange::LowerBorder,  300.5));
+    EXPECT_FALSE(RangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 300));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, -300));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder,  300));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, -300.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder,  300.0));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 0));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 300));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -300));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder,  300));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder, -300.1));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder,  300.1));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder, 1));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, 300));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder, -300));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder,  300));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder, -300.9999));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder,  300.9999));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -300));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder,  300));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder, -300.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder,  300.0));
+
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<unsigned>::max());
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<unsigned>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<int>::max());
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<int>::lowest());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder), std::numeric_limits<float>::max());
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), std::numeric_limits<float>::lowest());
+
+
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  200));
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -200));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  200.5));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -200.5));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 200));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  200));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -200));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder,  200.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -200.0));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 200));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  200));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -200));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder,  200.1));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder, -200.1));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder, 200));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder,  200));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder, -200));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder,  200.9999));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder, -200.9999));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  200));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -200));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder,  200.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder, -200.0));
+
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  200);
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), -200);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder),  200.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), -200.5);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 200);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder),  200);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), -200);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  200.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -200.0);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 200);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  200);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -200);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder),  200.1);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), -200.1);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), 200);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder),  200);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), -200);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder),  200.9999);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), -200.9999);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  200);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -200);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder),  200.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), -200.0);
+
+
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  300));
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -300));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  300.5));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -300.5));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 300));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  300));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -300));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder,  300.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -300.0));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 300));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  300));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -300));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder,  300.1));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder, -300.1));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder, 300));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder,  300));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder, -300));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder,  300.9999));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder, -300.9999));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  300));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -300));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder,  300.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder, -300.0));
+
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  300);
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), -300);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder),  300.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), -300.5);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 300);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder),  300);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), -300);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder),  300.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), -300.0);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 300);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  300);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -300);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder),  300.1);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), -300.1);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), 300);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder),  300);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), -300);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder),  300.9999);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), -300.9999);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  300);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -300);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder),  300.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), -300.0);
+
+
+    EXPECT_EQ(RangeIdManager_int.size(), 0);
+    EXPECT_EQ(RangeIdManager_float.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.size(), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.size(), 0);
+    EXPECT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.size(), 0);
+
+    for (int i = 0; i < 30; ++i) {
+        RangeIdManager_int.getFreeId();
+        RangeIdManager_float.getFreeId();
+        RangeIdManager_unsigned.getFreeId();
+
+        RangeIdManager_int_Start_2_Step_2.getFreeId();
+        RangeIdManager_float_Start_1p5_Step_1p5.getFreeId();
+        RangeIdManager_unsigned_Start_2_Step_2.getFreeId();
+
+        RangeIdManager_int_Start_n2_Step_n2.getFreeId();
+        RangeIdManager_float_int_Start_n1p5_Step_n2.getFreeId();
+        RangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+
+        RangeIdManager_int_Start_n2_Step_4.getFreeId();
+        RangeIdManager_float_int_Start_n2p0_Step_2.getFreeId();
+
+        RangeIdManager_int_Start_2_Step_n2.getFreeId();
+        RangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
+    }
+
+    EXPECT_EQ(RangeIdManager_int.size(), 30);
+    EXPECT_EQ(RangeIdManager_float.size(), 30);
+    EXPECT_EQ(RangeIdManager_unsigned.size(), 30);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.size(), 30);
+    EXPECT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.size(), 30);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.size(), 30);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.size(), 30);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.size(), 30);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.size(), 6);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.size(), 30);
+    EXPECT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.size(), 30);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.size(), 30);
+    EXPECT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.size(), 30);
+
+    EXPECT_TRUE(RangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.getBorderState(BorderRange::LowerBorder));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
+
+
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::UpperBorder, 29));
+    EXPECT_TRUE(RangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, 0));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::UpperBorder, 29.0));
+    EXPECT_TRUE(RangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, 0.0));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 29));
+    EXPECT_TRUE(RangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 60));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 2));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 45.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 1.5));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 60));
+    EXPECT_TRUE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 2));
+
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder, -2));
+    EXPECT_TRUE (RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -60));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder, -1.5));
+    EXPECT_TRUE (RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder, -59.5));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder,  10));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, -48));
+    EXPECT_TRUE (RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder,  0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder,  114));
+    EXPECT_TRUE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder, -2));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder,  56.0));
+    EXPECT_TRUE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder, -2.0));
+
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  2));
+    EXPECT_TRUE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -56));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder,  2.0));
+    EXPECT_TRUE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder, -56.0));
+
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder), 29);
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder), 29.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), 0.0);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 29);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 60);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 45.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), 1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 60);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -60);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), -59.5);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder),  114);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder),  56.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), -2.0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  2);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -56);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder),  2.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), -56.0);
+
+
+    EXPECT_FALSE(RangeIdManager_int.setBorderLimit(BorderRange::UpperBorder, 28));
+    EXPECT_FALSE(RangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, 1));
+    EXPECT_FALSE(RangeIdManager_float.setBorderLimit(BorderRange::UpperBorder, 28.0));
+    EXPECT_FALSE(RangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, 1.0));
+    EXPECT_FALSE(RangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 28));
+    EXPECT_FALSE(RangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 1));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 58));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 4));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder, 43.5));
+    EXPECT_FALSE(RangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, 3.0));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 58));
+    EXPECT_FALSE(RangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 4));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  -4));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -58));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder, -3.5));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder, -57.5));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder, 8));
+    EXPECT_FALSE(RangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, 2));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder, 110));
+    EXPECT_FALSE(RangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder, 2));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder, 54.0));
+    EXPECT_FALSE(RangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder, 0.0));
+
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  0));
+    EXPECT_FALSE(RangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -54));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder,  0.0));
+    EXPECT_FALSE(RangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder, -54.0));
+
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::UpperBorder), 29);
+    EXPECT_EQ(RangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::UpperBorder), 29.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), 0.0);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 29);
+    EXPECT_EQ(RangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 60);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::UpperBorder), 45.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_1p5_Step_1p5.getBorderLimit(BorderRange::LowerBorder), 1.5);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::UpperBorder), 60);
+    EXPECT_EQ(RangeIdManager_unsigned_Start_2_Step_2.getBorderLimit(BorderRange::LowerBorder), 2);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::UpperBorder), -2);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -60);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::UpperBorder), -1.5);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n1p5_Step_n2.getBorderLimit(BorderRange::LowerBorder), -59.5);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::UpperBorder), 10);
+    EXPECT_EQ(RangeIdManager_unsigned_int_Start_10_Step_n2.getBorderLimit(BorderRange::LowerBorder), 0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::UpperBorder),  114);
+    EXPECT_EQ(RangeIdManager_int_Start_n2_Step_4.getBorderLimit(BorderRange::LowerBorder), -2);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::UpperBorder),  56.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_int_Start_n2p0_Step_2.getBorderLimit(BorderRange::LowerBorder), -2.0);
+
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::UpperBorder),  2);
+    EXPECT_EQ(RangeIdManager_int_Start_2_Step_n2.getBorderLimit(BorderRange::LowerBorder), -56);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::UpperBorder),  2.0);
+    EXPECT_FLOAT_EQ(RangeIdManager_float_Start_2p0_Step_n2p0.getBorderLimit(BorderRange::LowerBorder), -56.0);
+}
 
 
 

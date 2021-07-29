@@ -641,7 +641,7 @@ ONF::RangeIdManager<T, T_Step>::
 RangeIdManager(T start, T_Step step)
     : freeIds_        (IdIssuingMethod::Dynamic),
       reservedIds_    (),
-      idRange_        (start, step),
+      idRange_        (start, onf_abs(step)),
       step_           (step == 0 ? 1 : step),
       size_           (0),
       isHardStep_     (true),
@@ -1186,31 +1186,25 @@ bool
 ONF::RangeIdManager<T, T_Step>::
 setBorderLimit(BorderRange borderRange, T value)
 {
-    if (value == idRange_.getBorderLimit(BorderRange::UpperBorder) || value == idRange_.getBorderLimit(BorderRange::LowerBorder))
-        return true;
-
     if (borderRange == BorderRange::UpperBorder) {
+        if (value == idRange_.getBorderLimit(BorderRange::UpperBorder))
+            return true;
+
         if (value > idRange_.getBorderLimit(BorderRange::UpperBorder))
             return idRange_.setBorderLimit(BorderRange::UpperBorder, value);
 
         if (value < idRange_.getBorderValue(BorderRange::UpperBorder))
             return false;
 
-        longlong i = 1;
-        T startId = findNearestStandardId(value);
-        T currentLimit = idRange_.getBorderLimit(BorderRange::UpperBorder);
         std::vector<T> buffer;
 
-        while (true) {
-            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, startId, i);
+        for (size_t i = 0; i < reservedIds_.size(); ++i) {
+            T id = *reservedIds_.findByIndex(i);
 
-            if (reservedIds_.find(idInfo.value)) {
-                reservedIds_.erase(idInfo.value);
-                buffer.pop_back(idInfo.value);
+            if (id > value) {
+                reservedIds_.erase(id);
+                buffer.push_back(id);
             }
-
-            if (idInfo.value >= currentLimit)
-                break;
         }
 
         if (!idRange_.setBorderLimit(BorderRange::UpperBorder, value)) {
@@ -1225,27 +1219,24 @@ setBorderLimit(BorderRange borderRange, T value)
         return true;
     }
 
+    if (value == idRange_.getBorderLimit(BorderRange::LowerBorder))
+        return true;
+
     if (value < idRange_.getBorderLimit(BorderRange::LowerBorder))
         return idRange_.setBorderLimit(BorderRange::LowerBorder, value);
 
     if (value > idRange_.getBorderValue(BorderRange::LowerBorder))
         return false;
 
-    longlong i = 1;
-    T startId = findNearestStandardId(value);
-    T currentLimit = idRange_.getBorderLimit(BorderRange::LowerBorder);
     std::vector<T> buffer;
 
-    while (true) {
-        auto idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, startId, i);
+    for (size_t i = 0; i < reservedIds_.size(); ++i) {
+        T id = *reservedIds_.findByIndex(i);
 
-        if (reservedIds_.find(idInfo.value)) {
-            reservedIds_.erase(idInfo.value);
-            buffer.pop_back(idInfo.value);
+        if (id < value) {
+            reservedIds_.erase(id);
+            buffer.push_back(id);
         }
-
-        if (idInfo.value <= currentLimit)
-            break;
     }
 
     if (!idRange_.setBorderLimit(BorderRange::LowerBorder, value)) {
