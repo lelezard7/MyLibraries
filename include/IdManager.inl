@@ -688,21 +688,21 @@ getFreeId()
             return id;
         }
 
-        if (idRange_.getBorderValue(BorderRange::UpperBorder) < idRange_.getStart()) {
-            auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
-
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-                expandRange(BorderRange::UpperBorder);
-                size_++;
-                return result.value;
-            }
-        }
-
         if (idRange_.getBorderValue(BorderRange::LowerBorder) > idRange_.getStart()) {
             auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
 
             if (!(result.flags & IDRF_ID_OUT_RANGE)) {
                 expandRange(BorderRange::LowerBorder);
+                size_++;
+                return result.value;
+            }
+        }
+
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) < idRange_.getStart()) {
+            auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
+
+            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+                expandRange(BorderRange::UpperBorder);
                 size_++;
                 return result.value;
             }
@@ -1294,7 +1294,7 @@ freeId(T id)
         if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
             auto idInfo = idRange_.moveBorder(BorderRange::UpperBorder, -1);
 
-            if (idInfo & IDRF_RANGE_ARE_BENT)
+            if (idInfo.flags & IDRF_RANGE_ARE_BENT)
                 return false;
 
             reduceRange(BorderRange::UpperBorder);
@@ -1305,7 +1305,7 @@ freeId(T id)
         if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
             auto idInfo = idRange_.moveBorder(BorderRange::LowerBorder, -1);
 
-            if (idInfo & IDRF_RANGE_ARE_BENT)
+            if (idInfo.flags & IDRF_RANGE_ARE_BENT)
                 return false;
 
             reduceRange(BorderRange::LowerBorder);
@@ -1470,15 +1470,6 @@ normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod)
 {
     if (idIssuingMethod == IdIssuingMethod::Dynamic) {
         auto result = idRange_.getIdInfo(border, 1);
-
-//        if (reservedIds_.find(result.value)) {
-//            if (!idRange_.getBorderState(border)) {
-//                freeIds_.add(idRange_.getBorderValue(border));
-//                idRange_.setBorderState(border, true);
-//            }
-
-//            return expandRange(border);
-//        }
 
         if (idRange_.getBorderState(border)) {
             return IDRF_SUCCESSFULLY;
@@ -2536,6 +2527,22 @@ reduceRange(BorderRange border)
         idRange_.moveBorder(border, -i);
         return result.flags;
     }
+}
+
+template<class T, class T_Step>
+inline size_t
+ONF::RangeIdManager<T, T_Step>::
+getFreeIdsSize() const
+{
+    return freeIds_.size();
+}
+
+template<class T, class T_Step>
+inline size_t
+ONF::RangeIdManager<T, T_Step>::
+getReservedIdsSize() const
+{
+    return reservedIds_.size();
 }
 
 
