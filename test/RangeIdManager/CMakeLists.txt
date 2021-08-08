@@ -15,6 +15,8 @@ target_include_directories(RangeIdManagerTest PRIVATE "../../lib/GoogleTest 1.11
 
 target_link_libraries(RangeIdManagerTest PRIVATE gtest_main)
 target_link_libraries(RangeIdManagerTest PRIVATE gtest)
+target_link_libraries(RangeIdManagerTest PRIVATE gmock_main)
+target_link_libraries(RangeIdManagerTest PRIVATE gmock)
 
 if(UNIX)
     target_link_libraries(RangeIdManagerTest PRIVATE pthread)

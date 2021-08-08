@@ -43,6 +43,7 @@ struct IdRangeTests : public ::testing::Test
           IdRange_int_Start_n2_Step_n2(-2, -2),
           IdRange_float_Start_n1p5_Step_n1p5(-1.5, -1.5),
           IdRange_unsigned_Start_n2_Step_n2(-2, -2) {};
+
 };
 
 
@@ -50,74 +51,6 @@ int main(int argc, char **argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-}
-
-TEST(SingleTests, Function_isStandardId)
-{
-    EXPECT_TRUE(isStandardId( 10, 0, 1));
-    EXPECT_TRUE(isStandardId( 1,  0, 1));
-    EXPECT_TRUE(isStandardId( 0,  0, 1));
-    EXPECT_TRUE(isStandardId(-1,  0, 1));
-    EXPECT_TRUE(isStandardId(-5,  0, 1));
-
-
-    EXPECT_FALSE(isStandardId( 10.0, 0.0, 1.5));
-    EXPECT_TRUE (isStandardId( 1.5,  0.0, 1.5));
-    EXPECT_TRUE (isStandardId( 0.0,  0.0, 1.5));
-    EXPECT_FALSE(isStandardId( 1.1,  0.0, 1.5));
-    EXPECT_TRUE (isStandardId(-3.0,  0.0, 1.5));
-    EXPECT_TRUE (isStandardId(-10.5, 0.0, 1.5));
-    EXPECT_FALSE(isStandardId( 8.3,  0.0, 1.5));
-
-    EXPECT_FALSE(isStandardId( 10.0, 0.0, -1.5));
-    EXPECT_TRUE (isStandardId( 1.5,  0.0, -1.5));
-    EXPECT_TRUE (isStandardId( 0.0,  0.0, -1.5));
-    EXPECT_FALSE(isStandardId( 1.1,  0.0, -1.5));
-    EXPECT_TRUE (isStandardId(-3.0,  0.0, -1.5));
-    EXPECT_TRUE (isStandardId(-10.5, 0.0, -1.5));
-    EXPECT_FALSE(isStandardId( 8.3,  0.0, -1.5));
-
-
-    EXPECT_FALSE(isStandardId( 10.0, 2.0, 1.5));
-    EXPECT_TRUE (isStandardId( 11.0, 2.0, 1.5));
-    EXPECT_TRUE (isStandardId( 3.5,  2.0, 1.5));
-    EXPECT_TRUE (isStandardId( 2.0,  2.0, 1.5));
-    EXPECT_FALSE(isStandardId( 0.0,  2.0, 1.5));
-    EXPECT_TRUE (isStandardId(-1.0,  2.0, 1.5));
-    EXPECT_TRUE (isStandardId(-10.0, 2.0, 1.5));
-    EXPECT_TRUE (isStandardId(-2.5,  2.0, 1.5));
-    EXPECT_FALSE(isStandardId(-11.0, 2.0, 1.5));
-
-    EXPECT_FALSE(isStandardId( 10.0, 2.0, -1.5));
-    EXPECT_TRUE (isStandardId( 11.0, 2.0, -1.5));
-    EXPECT_TRUE (isStandardId( 3.5,  2.0, -1.5));
-    EXPECT_TRUE (isStandardId( 2.0,  2.0, -1.5));
-    EXPECT_FALSE(isStandardId( 0.0,  2.0, -1.5));
-    EXPECT_TRUE (isStandardId(-1.0,  2.0, -1.5));
-    EXPECT_TRUE (isStandardId(-10.0, 2.0, -1.5));
-    EXPECT_TRUE (isStandardId(-2.5,  2.0, -1.5));
-    EXPECT_FALSE(isStandardId(-11.0, 2.0, -1.5));
-
-
-    EXPECT_FALSE(isStandardId( 10.0, -1.5, 1.5));
-    EXPECT_TRUE (isStandardId( 10.5, -1.5, 1.5));
-    EXPECT_TRUE (isStandardId( 0.0,  -1.5, 1.5));
-    EXPECT_TRUE (isStandardId(-1.5,  -1.5, 1.5));
-    EXPECT_FALSE(isStandardId( 1.0,  -1.5, 1.5));
-    EXPECT_TRUE (isStandardId(-3.0,  -1.5, 1.5));
-    EXPECT_TRUE (isStandardId(-12.0, -1.5, 1.5));
-    EXPECT_TRUE (isStandardId(-7.5,  -1.5, 1.5));
-    EXPECT_FALSE(isStandardId(-13.1, -1.5, 1.5));
-
-    EXPECT_FALSE(isStandardId( 10.0, -1.5, -1.5));
-    EXPECT_TRUE (isStandardId( 10.5, -1.5, -1.5));
-    EXPECT_TRUE (isStandardId( 0.0,  -1.5, -1.5));
-    EXPECT_TRUE (isStandardId(-1.5,  -1.5, -1.5));
-    EXPECT_FALSE(isStandardId( 1.0,  -1.5, -1.5));
-    EXPECT_TRUE (isStandardId(-3.0,  -1.5, -1.5));
-    EXPECT_TRUE (isStandardId(-12.0, -1.5, -1.5));
-    EXPECT_TRUE (isStandardId(-7.5,  -1.5, -1.5));
-    EXPECT_FALSE(isStandardId(-13.1, -1.5, -1.5));
 }
 
 TEST_F(IdRangeTests, getStart)

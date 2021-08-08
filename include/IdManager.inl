@@ -1414,11 +1414,12 @@ setHardStep(bool value)
         return;
 
     for (size_t i = 0; i < reservedIds_.size(); ++i) {
-        T id = reservedIds_.findIdByIndex(i);
+        T id = *reservedIds_.findByIndex(i);
 
         if (!isStandardId(id)) {
             reservedIds_.erase(id);
             --size_;
+            --i;
         }
     }
 }
@@ -1469,12 +1470,11 @@ ONF::RangeIdManager<T, T_Step>::
 normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod)
 {
     if (idIssuingMethod == IdIssuingMethod::Dynamic) {
-        auto result = idRange_.getIdInfo(border, 1);
-
         if (idRange_.getBorderState(border)) {
             return IDRF_SUCCESSFULLY;
         }
 
+        idRange_.moveBorder(border, -1);
         idRange_.setBorderState(border, true);
         return reduceRange(border);
     }
@@ -1497,6 +1497,16 @@ normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod)
             else {
                 idRange_.moveBorder(BorderRange::UpperBorder, 1);
                 idRange_.setBorderState(BorderRange::UpperBorder, false);
+
+                auto result2 = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
+
+                if (result2.flags & IDRF_ID_OUT_RANGE)
+                    return result2.flags;
+
+                if (result2.value > idRange_.getStart())
+                    return result2.flags;
+
+                freeIds_.add(result.value);
             }
         }
     }
@@ -1519,6 +1529,16 @@ normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod)
             else {
                 idRange_.moveBorder(BorderRange::LowerBorder, 1);
                 idRange_.setBorderState(BorderRange::LowerBorder, false);
+
+                auto result2 = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
+
+                if (result2.flags & IDRF_ID_OUT_RANGE)
+                    return result2.flags;
+
+                if (result2.value < idRange_.getStart())
+                    return result2.flags;
+
+                freeIds_.add(result.value);
             }
         }
     }

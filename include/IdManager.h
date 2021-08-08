@@ -205,35 +205,35 @@ namespace ONF
         RangeIdManager(const RangeIdManager<T, T_Step>& other);
         virtual ~RangeIdManager();
 
-        std::optional<T> getFreeId(); // +
+        std::optional<T> getFreeId();
         bool reserveId(T id, ReservationMethod reservationMethod = ReservationMethod::NotSet);
 
-        bool setBorderLimit(BorderRange borderRange, T value); // +
-        inline T getBorderLimit(BorderRange borderRange) const; // +
+        bool setBorderLimit(BorderRange borderRange, T value);
+        inline T getBorderLimit(BorderRange borderRange) const;
 
-        bool freeId(T id); // +
-        inline void freeAll(); // +
+        bool freeId(T id);
+        inline void freeAll();
 
         void setHardStep(bool value);
         inline bool isHardStep() const;
 
-        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod); // Возвращать коды ошибок. // +
-        inline IdIssuingMethod getIdIssuingMethod() const; // +
+        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod); // Возвращать коды ошибок.
+        inline IdIssuingMethod getIdIssuingMethod() const;
 
-        bool findId(T id) const; // +
-        inline size_t size() const; // +
-        inline bool isStandardId(T id) const; // +
+        bool findId(T id) const;
+        inline size_t size() const;
+        inline bool isStandardId(T id) const;
 
-        inline T getStart() const; // +
-        inline T_Step getStep() const; // +
-        inline T getBorderValue(BorderRange borderRange) const; // +
-        inline bool getBorderState(BorderRange borderRange) const; // +
+        inline T getStart() const;
+        inline T_Step getStep() const;
+        inline T getBorderValue(BorderRange borderRange) const;
+        inline bool getBorderState(BorderRange borderRange) const;
 
 //        RangeIdManager<T, T_Step>& operator=(const RangeIdManager<T, T_Step>& other);
 
     protected:
-        inline size_t getFreeIdsSize() const; // +
-        inline size_t getReservedIdsSize() const; // +
+        inline size_t getFreeIdsSize() const;
+        inline size_t getReservedIdsSize() const;
 
     private:
         int interpolateIds(T id);
