@@ -31,7 +31,7 @@ namespace ONF
 
 
     template<class T>
-    class IdContainer  //TODO: Разобраться с перемещением и копированием.
+    class IdContainer
     {
         std::list<T> unorderedIds_;
         std::set<T> orderedIds_;
@@ -202,10 +202,13 @@ namespace ONF
 
     public:
         RangeIdManager(T start = 0, T_Step step = 1);
-        RangeIdManager(const RangeIdManager<T, T_Step>& other);
+        RangeIdManager(const RangeIdManager<T, T_Step>& other) = default;
+        RangeIdManager(RangeIdManager<T, T_Step>&& other);
         virtual ~RangeIdManager();
 
         std::optional<T> getFreeId();
+
+        //TODO: Протестировать перепрыгивание.
         bool reserveId(T id, ReservationMethod reservationMethod = ReservationMethod::NotSet);
 
         bool setBorderLimit(BorderRange borderRange, T value);
@@ -229,7 +232,8 @@ namespace ONF
         inline T getBorderValue(BorderRange borderRange) const;
         inline bool getBorderState(BorderRange borderRange) const;
 
-//        RangeIdManager<T, T_Step>& operator=(const RangeIdManager<T, T_Step>& other);
+        RangeIdManager<T, T_Step>& operator=(const RangeIdManager<T, T_Step>& other) = default;
+        RangeIdManager<T, T_Step>& operator=(RangeIdManager<T, T_Step>&& other);
 
     protected:
         inline size_t getFreeIdsSize() const;
