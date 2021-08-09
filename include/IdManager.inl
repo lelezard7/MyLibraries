@@ -2042,9 +2042,6 @@ interpolateIds(T id)
     if (id > idRange_.getBorderLimit(BorderRange::UpperBorder) || id < idRange_.getBorderLimit(BorderRange::LowerBorder))
         return 0;
 
-    if (reservedIds_.find(id))
-        return 0;
-
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
             idRange_.getBorderState(BorderRange::UpperBorder) == false &&
@@ -2071,7 +2068,11 @@ interpolateIds(T id)
                     expandRange(BorderRange::UpperBorder);
                     expandRange(BorderRange::LowerBorder);
 
-                    ++size_;
+                    if (!reservedIds_.find(id))
+                        ++size_;
+                    else
+                        reservedIds_.erase(id);
+
                     return 1;
                 }
 
@@ -2092,7 +2093,11 @@ interpolateIds(T id)
                     expandRange(BorderRange::UpperBorder);
                     expandRange(BorderRange::LowerBorder);
 
-                    ++size_;
+                    if (!reservedIds_.find(id))
+                        ++size_;
+                    else
+                        reservedIds_.erase(id);
+
                     return 1;
                 }
 
@@ -2110,6 +2115,8 @@ interpolateIds(T id)
                 return 0;
             }
 
+            if (reservedIds_.find(id))
+                return 0;
 
             T upperBorderValue = idRange_.getBorderValue(BorderRange::UpperBorder);
             T lowerBorderValue = idRange_.getBorderValue(BorderRange::LowerBorder);
@@ -2124,12 +2131,10 @@ interpolateIds(T id)
                     expandRange(BorderRange::UpperBorder);
                     expandRange(BorderRange::LowerBorder);
 
-                    ++size_;
+                    reservedIds_.add(id);
+                    size_ += 2;
                     return 1;
                 }
-
-                if (reservedIds_.find(standardId))
-                    return 0;
 
                 if (!idRange_.setBorderValue(BorderRange::UpperBorder, standardId))
                     return 0;
@@ -2147,7 +2152,14 @@ interpolateIds(T id)
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
+                reservedIds_.add(id);
                 ++size_;
+
+                if (!reservedIds_.find(standardId))
+                    ++size_;
+                else
+                    reservedIds_.erase(standardId);
+
                 return 1;
             }
 
@@ -2161,12 +2173,10 @@ interpolateIds(T id)
                     expandRange(BorderRange::UpperBorder);
                     expandRange(BorderRange::LowerBorder);
 
-                    ++size_;
+                    reservedIds_.add(id);
+                    size_ += 2;
                     return 1;
                 }
-
-                if (reservedIds_.find(standardId))
-                    return 0;
 
                 if (!idRange_.setBorderValue(BorderRange::LowerBorder, standardId))
                     return 0;
@@ -2184,12 +2194,22 @@ interpolateIds(T id)
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
+                reservedIds_.add(id);
                 ++size_;
+
+                if (!reservedIds_.find(standardId))
+                    ++size_;
+                else
+                    reservedIds_.erase(standardId);
+
                 return 1;
             }
 
             return 0;
         }
+
+        if (reservedIds_.find(id))
+            return 0;
 
         if (isStandardId(id)) {
             if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder)) {
@@ -2338,6 +2358,9 @@ interpolateIds(T id)
     }
 
     // ----------------------------------
+
+    if (reservedIds_.find(id))
+        return 0;
 
     if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
         id == idRange_.getBorderValue(BorderRange::UpperBorder)) {

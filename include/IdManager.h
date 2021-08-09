@@ -191,7 +191,7 @@ namespace ONF
     class RangeIdManager // Проверять на limit. Везде проверять на ошибки (moveBorder, например).
     {
         IdContainer<T> freeIds_;
-        IdContainer<T> reservedIds_;  //Не учитывает maxId в idArea_.
+        IdContainer<T> reservedIds_;
 
         IdRange<T> idRange_;
         T_Step step_;
@@ -208,7 +208,6 @@ namespace ONF
 
         std::optional<T> getFreeId();
 
-        //TODO: Протестировать перепрыгивание.
         bool reserveId(T id, ReservationMethod reservationMethod = ReservationMethod::NotSet);
 
         bool setBorderLimit(BorderRange borderRange, T value);

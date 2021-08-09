@@ -42,6 +42,10 @@ struct OpenRangeIdManagerTests : public ::testing::Test
     OpenRangeIdManager<int> OpenRangeIdManager_int_Start_2_Step_n2;
     OpenRangeIdManager<float> OpenRangeIdManager_float_Start_2p0_Step_n2p0;
 
+    std::optional<int> optional_id_int;
+    std::optional<float> optional_id_float;
+    std::optional<unsigned> optional_id_unsigned;
+
     OpenRangeIdManagerTests()
         : OpenRangeIdManager_int_Start_2_Step_2(2, 2),
           OpenRangeIdManager_float_Start_1p5_Step_1p5(1.5, 1.5),
@@ -386,11 +390,6 @@ TEST_F(OpenRangeIdManagerTests, getReservedIdsSize)
 
 TEST_F(OpenRangeIdManagerTests, GetFreeId)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
-
     for (int i = 0; i < 3; ++i) {
         EXPECT_EQ(OpenRangeIdManager_int.size(), 0);
         EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
@@ -2120,11 +2119,6 @@ TEST_F(OpenRangeIdManagerTests, FreeIds)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Dynamic)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
-
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
         OpenRangeIdManager_float.getFreeId();
@@ -2531,11 +2525,6 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Dynamic)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Ascending)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
-
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
         OpenRangeIdManager_float.getFreeId();
@@ -2942,11 +2931,6 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Ascending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Descending)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
-
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
         OpenRangeIdManager_float.getFreeId();
@@ -3353,10 +3337,6 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Descending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
@@ -3780,10 +3760,6 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
@@ -4207,10 +4183,6 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Dynamic)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
@@ -4981,6 +4953,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 7);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 7);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 4);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 3);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 3);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 2);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 2);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 2);
+
 
         OpenRangeIdManager_int.setHardStep(false);
         OpenRangeIdManager_float.setHardStep(false);
@@ -5133,6 +5136,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 11);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 11);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 4);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 6);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 7);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 6);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 6);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 6);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 6);
+
 
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  2);
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -2);
@@ -5221,6 +5255,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 7);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 7);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 4);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 3);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 3);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 2);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 2);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 2);
+
         EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
         EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
         EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
@@ -5294,10 +5359,6 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
 
 TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     for (size_t i = 0; i < 2; ++i)
     {
         EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2, ReservationMethod::ReserveRange));
@@ -5531,6 +5592,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 21);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 21);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
+
 
         OpenRangeIdManager_int.setHardStep(false);
         OpenRangeIdManager_float.setHardStep(false);
@@ -5714,6 +5806,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 25);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 29);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 3);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 4);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 4);
+
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 4);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 4);
+
 
         optional_id_int = OpenRangeIdManager_int.getFreeId();
         ASSERT_TRUE(optional_id_int.has_value());
@@ -5892,38 +6015,36 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
         EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 24);
         EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 28);
 
+        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
 
-//        EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);               //TODO: Дописать везде.
-//        EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
 
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
 
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 2);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
 
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 2);
-
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 2);
-//        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
-//        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 2);
-
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 0);
+        EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
 
         EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
         EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
@@ -5998,10 +6119,6 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
 
 TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2, ReservationMethod::Interpolate));
     EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 0, ReservationMethod::Interpolate));
     EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 1, ReservationMethod::Interpolate));
@@ -6234,6 +6351,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 7);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 7);
 
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 5);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
+
 
     OpenRangeIdManager_int.setHardStep(false);
     OpenRangeIdManager_float.setHardStep(false);
@@ -6400,7 +6548,7 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getBorderValue(BorderRange::LowerBorder), -24.0);
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 8);
-    EXPECT_EQ(OpenRangeIdManager_float.size(), 13);  //TODO: В статическом режиме было бы 11, проверить.
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 13);
     EXPECT_EQ(OpenRangeIdManager_unsigned.size(), 4);
 
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.size(), 11);
@@ -6416,6 +6564,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
 
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 11);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 13);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 22);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 22);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 18);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 3);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 4);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 5);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 4);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 16);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 4);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -6603,6 +6782,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 10);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 12);
 
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 19);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 19);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 2);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 11);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 13);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
+
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
@@ -6637,10 +6847,6 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
 
 TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
 {
-    std::optional<int> optional_id_int;
-    std::optional<float> optional_id_float;
-    std::optional<unsigned> optional_id_unsigned;
-
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
     OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
@@ -6892,6 +7098,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 7);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 7);
 
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 5);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
+
 
     OpenRangeIdManager_int.setHardStep(false);
     OpenRangeIdManager_float.setHardStep(false);
@@ -7074,6 +7311,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
 
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 11);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 11);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 22);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 22);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 6);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 18);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 3);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 4);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 5);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 4);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 4);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 16);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 4);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -7261,6 +7529,37 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.size(), 10);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 10);
 
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 19);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 20);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeIdsSize(), 15);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeIdsSize(), 12);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getFreeIdsSize(), 1);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeIdsSize(), 2);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getFreeIdsSize(), 11);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeIdsSize(), 14);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
+
     EXPECT_TRUE (OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE (OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
@@ -7293,7 +7592,761 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
     EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
 }
 
-TEST(SingleTests, Test_1)
+TEST_F(OpenRangeIdManagerTests, SituationalTest_1)
+{
+    for (size_t i = 0; i < 3; ++i)
+    {
+        EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  2));
+        EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -2));
+        EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  2.0));
+        EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -2.0));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 2));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 2));
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 2));
+        EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::UpperBorder,  5.1));
+        EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.setBorderLimit(BorderRange::LowerBorder, -5.1));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder, 7));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, 0));
+
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  8));
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -2));
+        EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::UpperBorder,  2.4));
+        EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setBorderLimit(BorderRange::LowerBorder, -2.4));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::UpperBorder, 10));
+        EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setBorderLimit(BorderRange::LowerBorder, 6));
+
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::UpperBorder,  1));
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.setBorderLimit(BorderRange::LowerBorder, -2));
+        EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::UpperBorder,  2));
+        EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.setBorderLimit(BorderRange::LowerBorder, -2));
+
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::UpperBorder,  2));
+        EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.setBorderLimit(BorderRange::LowerBorder, -1));
+        EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::UpperBorder,  2));
+        EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.setBorderLimit(BorderRange::LowerBorder, -2));
+
+        optional_id_int = OpenRangeIdManager_int.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 0);
+        optional_id_int = OpenRangeIdManager_int.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 1);
+        optional_id_int = OpenRangeIdManager_int.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 2);
+        EXPECT_FALSE(OpenRangeIdManager_int.getFreeId().has_value());
+
+        optional_id_float = OpenRangeIdManager_float.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+        optional_id_float = OpenRangeIdManager_float.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 1.0);
+        optional_id_float = OpenRangeIdManager_float.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+        EXPECT_FALSE(OpenRangeIdManager_float.getFreeId().has_value());
+
+        optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 0);
+        optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 1);
+        optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 2);
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.getFreeId().has_value());
+
+        optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 2);
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.getFreeId().has_value());
+
+        optional_id_float = OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 1.5);
+        optional_id_float = OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+        optional_id_float = OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 4.5);
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.getFreeId().has_value());
+
+        optional_id_unsigned = OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 2);
+        optional_id_unsigned = OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 4);
+        optional_id_unsigned = OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_unsigned.has_value());
+        EXPECT_EQ(*optional_id_unsigned, 6);
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.getFreeId().has_value());
+
+        optional_id_int = OpenRangeIdManager_int_Start_n2_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, -2);
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.getFreeId().has_value());
+
+        optional_id_float = OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, -1.5);
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getFreeId().has_value());
+
+        optional_id_int = OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 10);
+        optional_id_int = OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 8);
+        optional_id_int = OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 6);
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getFreeId().has_value());
+
+        optional_id_int = OpenRangeIdManager_int_Start_n2_Step_4.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, -2);
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.getFreeId().has_value());
+
+        optional_id_float = OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, -2.0);
+        optional_id_float = OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+        optional_id_float = OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getFreeId().has_value());
+
+        optional_id_int = OpenRangeIdManager_int_Start_2_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 2);
+        optional_id_int = OpenRangeIdManager_int_Start_2_Step_n2.getFreeId();
+        ASSERT_TRUE(optional_id_int.has_value());
+        EXPECT_EQ(*optional_id_int, 0);
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.getFreeId().has_value());
+
+        optional_id_float = OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+        optional_id_float = OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+        optional_id_float = OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
+        ASSERT_TRUE(optional_id_float.has_value());
+        EXPECT_FLOAT_EQ(*optional_id_float, -2.0);
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId().has_value());
+
+
+        OpenRangeIdManager_int.freeAll();
+        OpenRangeIdManager_float.freeAll();
+        OpenRangeIdManager_unsigned.freeAll();
+
+        OpenRangeIdManager_int_Start_2_Step_2.freeAll();
+        OpenRangeIdManager_float_Start_1p5_Step_1p5.freeAll();
+        OpenRangeIdManager_unsigned_Start_2_Step_2.freeAll();
+
+        OpenRangeIdManager_int_Start_n2_Step_n2.freeAll();
+        OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeAll();
+        OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeAll();
+
+        OpenRangeIdManager_int_Start_n2_Step_4.freeAll();
+        OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeAll();
+
+        OpenRangeIdManager_int_Start_2_Step_n2.freeAll();
+        OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeAll();
+
+        if (i == 1) {
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        }
+
+        if (i == 2) {
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+        }
+    }
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_2)
+{
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  3));
+    EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -2));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(2.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -2.0));
+
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.reserveId(2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 3));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
+
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -4));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 1);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 3);
+    EXPECT_FALSE(OpenRangeIdManager_int.getFreeId().has_value());
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 1.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getFreeId().has_value());
+
+    optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+    ASSERT_TRUE(optional_id_unsigned.has_value());
+    EXPECT_EQ(*optional_id_unsigned, 1);
+    optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+    ASSERT_TRUE(optional_id_unsigned.has_value());
+    EXPECT_EQ(*optional_id_unsigned, 0);
+    optional_id_unsigned = OpenRangeIdManager_unsigned.getFreeId();
+    ASSERT_TRUE(optional_id_unsigned.has_value());
+    EXPECT_EQ(*optional_id_unsigned, 3);
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.getFreeId().has_value());
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.getFreeId().has_value());
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_3)
+{
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(3));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 1);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 3);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 6);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 7);
+
+
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 5.0);
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
+{
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(3));
+
+    EXPECT_TRUE(OpenRangeIdManager_int.freeId(5));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 1);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 3);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 5);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 6);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_int = OpenRangeIdManager_int.getFreeId();
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 7);
+
+    EXPECT_TRUE(OpenRangeIdManager_int.freeId(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.freeId(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.freeId(4));
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 7);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_int.freeId(7));
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 3);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(1.0));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 1.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 5.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  5.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(5.0));
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  5.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE (OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 5.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 4.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 6.0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  6.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_5_1)
+{
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_5_2)
+{
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_6_1)
+{
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_6_2)
+{
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 4.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
+{
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_FALSE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 1.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 4.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 5.0);
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
+{
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_float.setHardStep(false);
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_TRUE (OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_TRUE (OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+
+    EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
+    EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
+    EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
+
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 4.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
+
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 0.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 1.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 3.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 4.0);
+    optional_id_float = OpenRangeIdManager_float.getFreeId();
+    ASSERT_TRUE(optional_id_float.has_value());
+    EXPECT_FLOAT_EQ(*optional_id_float, 5.0);
+}
+
+TEST(SingleTests, CopyAndMoveTest)
 {
     std::optional<int> optional_id_int;
     std::optional<float> optional_id_float;
