@@ -239,8 +239,18 @@ namespace ONF
         inline size_t getReservedIdsSize() const;
 
     private:
-        int interpolateIds(T id);
-        int reserveIds(T id);
+        T onBothBorder();
+        bool jumpOver(T id, BorderRange borderRange);
+        void reserv_1(BorderRange borderRange);
+        std::optional<T> getNextId();
+
+
+
+
+
+
+        bool interpolateIds(T id);
+        bool reserveIds(T id);
 
         T findNearestStandardId(T id) const;  //limit не распространяется на него.
 
@@ -248,8 +258,6 @@ namespace ONF
         unsigned reduceRange(BorderRange border);
 
         int normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod);
-
-        bool getNextId(BorderRange border, T& id);
     };
 }
 

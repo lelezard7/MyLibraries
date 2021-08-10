@@ -640,7 +640,6 @@ template<class T, class T_Step>
 ONF::RangeIdManager<T, T_Step>::
 RangeIdManager(T start, T_Step step)
     : freeIds_        (IdIssuingMethod::Dynamic),
-      reservedIds_    (),
       idRange_        (start, onf_abs(step)),
       step_           (step == 0 ? 1 : step),
       size_           (0),
@@ -673,7 +672,6 @@ template<class T, class T_Step>
 ONF::RangeIdManager<T, T_Step>::
 ~RangeIdManager() {}
 
-
 template<class T, class T_Step>
 std::optional<T>
 ONF::RangeIdManager<T, T_Step>::
@@ -681,27 +679,16 @@ getFreeId()
 {
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            idRange_.getBorderState(BorderRange::UpperBorder) == false &&
-            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
-
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-            T id = idRange_.getBorderValue(BorderRange::UpperBorder);
-            size_++;
-
-            expandRange(BorderRange::UpperBorder);
-            expandRange(BorderRange::LowerBorder);
-
-            return id;
+            !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+            return onBothBorder();
         }
 
         if (idRange_.getBorderValue(BorderRange::LowerBorder) > idRange_.getStart()) {
             auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
 
             if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+                ++size_;
                 expandRange(BorderRange::LowerBorder);
-                size_++;
                 return result.value;
             }
         }
@@ -710,171 +697,162 @@ getFreeId()
             auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
 
             if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+                ++size_;
                 expandRange(BorderRange::UpperBorder);
-                size_++;
                 return result.value;
             }
         }
 
         if (freeIds_.size()) {
-            size_++;
+            ++size_;
             return *freeIds_.getNext();
         }
 
-        if (step_ > 0) {
-            auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
-
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-                expandRange(BorderRange::UpperBorder);
-                size_++;
-                return result.value;
-            }
-        }
-
-        if (step_ < 0) {
-            auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
-
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-                expandRange(BorderRange::LowerBorder);
-                size_++;
-                return result.value;
-            }
-        }
-
-        return std::nullopt;
+        return getNextId();
     }
 
-    // ---------------------------------
 
     if (idIssuingMethod_ == IdIssuingMethod::Ascending) {
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            idRange_.getBorderState(BorderRange::UpperBorder) == false &&
-            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
-
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-            T id = idRange_.getBorderValue(BorderRange::UpperBorder);
-            size_++;
-
-            expandRange(BorderRange::UpperBorder);
-            expandRange(BorderRange::LowerBorder);
-
-            return id;
+            !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+            return onBothBorder();
         }
 
-        if (idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+        if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
             idRange_.setBorderState(BorderRange::LowerBorder, true);
 
             T id = idRange_.getBorderValue(BorderRange::LowerBorder);
-            expandRange(BorderRange::LowerBorder);
-
-            size_++;
+            ++size_;
             return id;
         }
 
         if (freeIds_.size()) {
-            size_++;
+            ++size_;
             return *freeIds_.getNext();
         }
 
-        if (idRange_.getBorderState(BorderRange::UpperBorder) == false) {
+        if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
             idRange_.setBorderState(BorderRange::UpperBorder, true);
 
             T id = idRange_.getBorderValue(BorderRange::UpperBorder);
-            expandRange(BorderRange::UpperBorder);
-
-            size_++;
+            ++size_;
             return id;
         }
 
-        if (step_ > 0) {
-            auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
-
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-                expandRange(BorderRange::UpperBorder);
-                size_++;
-                return result.value;
-            }
-        }
-
-        if (step_ < 0) {
-            auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
-
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-                expandRange(BorderRange::LowerBorder);
-                size_++;
-                return result.value;
-            }
-        }
-
-        return std::nullopt;
+        return getNextId();
     }
 
-    // ---------------------------------
 
     if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-        idRange_.getBorderState(BorderRange::UpperBorder) == false &&
-        idRange_.getBorderState(BorderRange::LowerBorder) == false) {
-
-        idRange_.setBorderState(BorderRange::UpperBorder, true);
-        idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-        T id = idRange_.getBorderValue(BorderRange::UpperBorder);
-        size_++;
-
-        expandRange(BorderRange::UpperBorder);
-        expandRange(BorderRange::LowerBorder);
-
-        return id;
+        !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+        return onBothBorder();
     }
 
-    if (idRange_.getBorderState(BorderRange::UpperBorder) == false) {
+    if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
         idRange_.setBorderState(BorderRange::UpperBorder, true);
 
         T id = idRange_.getBorderValue(BorderRange::UpperBorder);
-        expandRange(BorderRange::UpperBorder);
-
-        size_++;
+        ++size_;
         return id;
     }
 
     if (freeIds_.size()) {
-        size_++;
+        ++size_;
         return *freeIds_.getNext();
     }
 
-    if (idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+    if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
         idRange_.setBorderState(BorderRange::LowerBorder, true);
 
         T id = idRange_.getBorderValue(BorderRange::LowerBorder);
-        expandRange(BorderRange::LowerBorder);
-
-        size_++;
+        ++size_;
         return id;
     }
 
+    return getNextId();
+}
+
+template<class T, class T_Step>
+std::optional<T>
+ONF::RangeIdManager<T, T_Step>::
+getNextId()
+{
     if (step_ > 0) {
         auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
 
-        if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-            expandRange(BorderRange::UpperBorder);
-            size_++;
-            return result.value;
-        }
+        if (result.flags & IDRF_ID_OUT_RANGE)
+            return std::nullopt;
+
+        ++size_;
+        expandRange(BorderRange::UpperBorder);
+        return result.value;
     }
 
     if (step_ < 0) {
         auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
 
-        if (!(result.flags & IDRF_ID_OUT_RANGE)) {
-            expandRange(BorderRange::LowerBorder);
-            size_++;
-            return result.value;
-        }
+        if (result.flags & IDRF_ID_OUT_RANGE)
+            return std::nullopt;
+
+        ++size_;
+        expandRange(BorderRange::LowerBorder);
+        return result.value;
     }
 
-    return std::nullopt;
+    throw std::runtime_error("---------");
+}
+
+template<class T, class T_Step>
+T
+ONF::RangeIdManager<T, T_Step>::
+onBothBorder()
+{
+    idRange_.setBorderState(BorderRange::UpperBorder, true);
+    idRange_.setBorderState(BorderRange::LowerBorder, true);
+
+    T id = idRange_.getBorderValue(BorderRange::UpperBorder);
+    ++size_;
+
+    return id;
+}
+
+template<class T, class T_Step>
+bool
+ONF::RangeIdManager<T, T_Step>::
+jumpOver(T id, BorderRange borderRange)
+{
+    if (!isStandardId(id))
+        return false;
+
+    if (borderRange == BorderRange::UpperBorder) {
+        T upperBorderBackup = idRange_.getBorderValue(BorderRange::UpperBorder);
+
+        if (!idRange_.setBorderValue(BorderRange::UpperBorder, id))
+            return false;
+
+        if (!idRange_.setBorderValue(BorderRange::LowerBorder, id)) {
+            if (!idRange_.setBorderValue(BorderRange::UpperBorder, upperBorderBackup))
+                throw std::runtime_error("---------");
+
+            return false;
+        }
+
+        return true;
+    }
+
+    T lowerBorderBackup = idRange_.getBorderValue(BorderRange::LowerBorder);
+
+    if (!idRange_.setBorderValue(BorderRange::LowerBorder, id))
+        return false;
+
+    if (!idRange_.setBorderValue(BorderRange::UpperBorder, id)) {
+        if (!idRange_.setBorderValue(BorderRange::LowerBorder, lowerBorderBackup))
+            throw std::runtime_error("---------");
+
+        return false;
+    }
+
+    return true;
 }
 
 template<class T, class T_Step>
@@ -890,115 +868,62 @@ reserveId(T id, ReservationMethod reservationMethod)
             if (isHardStep_)
                 return false;
 
-            if (reservationMethod == ReservationMethod::Interpolate) {
-                int errCode = interpolateIds(id);
+            if (reservationMethod == ReservationMethod::Interpolate)
+                return interpolateIds(id);
 
-                if (errCode == -1)
-                    throw std::runtime_error("---------");
-
-                return errCode;
-            }
-
-            if (reservationMethod == ReservationMethod::ReserveRange) {
-                int errCode = reserveIds(id);
-
-                if (errCode == -1)
-                    throw std::runtime_error("---------");
-
-                return errCode;
-            }
+            if (reservationMethod == ReservationMethod::ReserveRange)
+                return reserveIds(id);  //TODO: runtime_error -> "error message" + __LINE__
 
             if (reservedIds_.find(id))
                 return false;
 
             reservedIds_.add(id);
-            size_++;
+            ++size_;
             return true;
         }
 
+        if (reservationMethod == ReservationMethod::Interpolate)
+            return interpolateIds(id);
 
-        if (reservationMethod == ReservationMethod::Interpolate) {
-            int errCode = interpolateIds(id);
+        if (reservationMethod == ReservationMethod::ReserveRange)
+            return reserveIds(id);
 
-            if (errCode == -1)
-                throw std::runtime_error("---------");
-
-            return errCode;
-        }
-
-        if (reservationMethod == ReservationMethod::ReserveRange) {
-            int errCode = reserveIds(id);
-
-            if (errCode == -1)
-                throw std::runtime_error("---------");
-
-            return errCode;
-        }
-
-        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            idRange_.getBorderValue(BorderRange::UpperBorder) == id) {
-            if (idRange_.getBorderState(BorderRange::UpperBorder) == true &&
-                idRange_.getBorderState(BorderRange::LowerBorder) == true)
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
                 return false;
 
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-            expandRange(BorderRange::UpperBorder);
-            expandRange(BorderRange::LowerBorder);
-
-            size_++;
+            onBothBorder();
             return true;
         }
 
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            idRange_.getBorderState(BorderRange::UpperBorder) == false &&
-            idRange_.getBorderState(BorderRange::LowerBorder) == false) {
+            !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
-            if (id == idRange_.getIdInfo(BorderRange::UpperBorder, 1).value &&
-                !(idRange_.getIdInfo(BorderRange::UpperBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+                if (!jumpOver(idInfo.value, BorderRange::UpperBorder))
+                    return false;
 
-                if (!(idRange_.moveBorder(BorderRange::UpperBorder, 1).flags & IDRF_SUCCESSFULLY))
-                    return 0;
-
-                if (!(idRange_.moveBorder(BorderRange::LowerBorder, -1).flags & IDRF_SUCCESSFULLY)) {
-                    if (!(idRange_.moveBorder(BorderRange::UpperBorder, -1).flags & IDRF_SUCCESSFULLY))
-                        throw std::runtime_error("---------");
-
-                    return 0;
-                }
-
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
+                onBothBorder();
 
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
-                size_++;
-                return 1;
+                return true;
             }
 
-            if (id == idRange_.getIdInfo(BorderRange::LowerBorder, 1).value &&
-                !(idRange_.getIdInfo(BorderRange::LowerBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+            idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
-                if (!(idRange_.moveBorder(BorderRange::LowerBorder, 1).flags & IDRF_SUCCESSFULLY))
-                    return 0;
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+                if (!jumpOver(idInfo.value, BorderRange::LowerBorder))
+                    return false;
 
-                if (!(idRange_.moveBorder(BorderRange::UpperBorder, -1).flags & IDRF_SUCCESSFULLY)) {
-                    if (!(idRange_.moveBorder(BorderRange::LowerBorder, -1).flags & IDRF_SUCCESSFULLY))
-                        throw std::runtime_error("---------");
-
-                    return 0;
-                }
-
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
+                onBothBorder();
 
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
-                size_++;
-                return 1;
+                return true;
             }
         }
 
@@ -1010,33 +935,35 @@ reserveId(T id, ReservationMethod reservationMethod)
                 return false;
 
             freeIds_.erase(id);
-            size_++;
+            ++size_;
             return true;
         }
 
         if (reservedIds_.find(id))
             return false;
 
-        if (id == idRange_.getIdInfo(BorderRange::UpperBorder, 1).value &&
-            !(idRange_.getIdInfo(BorderRange::UpperBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+        auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
+        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
             idRange_.moveBorder(BorderRange::UpperBorder, 1);
+            ++size_;
+
             expandRange(BorderRange::UpperBorder);
-            size_++;
             return true;
         }
 
-        if (id == idRange_.getIdInfo(BorderRange::LowerBorder, 1).value &&
-            !(idRange_.getIdInfo(BorderRange::LowerBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+        idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
+        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
             idRange_.moveBorder(BorderRange::LowerBorder, 1);
+            ++size_;
+
             expandRange(BorderRange::LowerBorder);
-            size_++;
             return true;
         }
 
         reservedIds_.add(id);
-        size_++;
+        ++size_;
         return true;
     }
 
@@ -1046,63 +973,31 @@ reserveId(T id, ReservationMethod reservationMethod)
         if (isHardStep_)
             return false;
 
-        if (reservationMethod == ReservationMethod::Interpolate) {
-            int errCode = interpolateIds(id);
+        if (reservationMethod == ReservationMethod::Interpolate)
+            return interpolateIds(id);
 
-            if (errCode == -1)
-                throw std::runtime_error("---------");
-
-            return errCode;
-        }
-
-        if (reservationMethod == ReservationMethod::ReserveRange) {
-            int errCode = reserveIds(id);
-
-            if (errCode == -1)
-                throw std::runtime_error("---------");
-
-            return errCode;
-        }
+        if (reservationMethod == ReservationMethod::ReserveRange)
+            return reserveIds(id);
 
         if (reservedIds_.find(id))
             return false;
 
         reservedIds_.add(id);
-        size_++;
+        ++size_;
         return true;
     }
 
-    if (reservationMethod == ReservationMethod::Interpolate) {
-        int errCode = interpolateIds(id);
+    if (reservationMethod == ReservationMethod::Interpolate)
+        return interpolateIds(id);
 
-        if (errCode == -1)
-            throw std::runtime_error("---------");
+    if (reservationMethod == ReservationMethod::ReserveRange)
+        return reserveIds(id);
 
-        return errCode;
-    }
-
-    if (reservationMethod == ReservationMethod::ReserveRange) {
-        int errCode = reserveIds(id);
-
-        if (errCode == -1)
-            throw std::runtime_error("---------");
-
-        return errCode;
-    }
-
-    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-        idRange_.getBorderValue(BorderRange::UpperBorder) == id) {
-        if (idRange_.getBorderState(BorderRange::UpperBorder) == true &&
-            idRange_.getBorderState(BorderRange::LowerBorder) == true)
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
             return false;
 
-        idRange_.setBorderState(BorderRange::UpperBorder, true);
-        idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-        expandRange(BorderRange::UpperBorder);
-        expandRange(BorderRange::LowerBorder);
-
-        size_++;
+        onBothBorder();
         return true;
     }
 
@@ -1111,9 +1006,7 @@ reserveId(T id, ReservationMethod reservationMethod)
             return false;
 
         idRange_.setBorderState(BorderRange::UpperBorder, true);
-        expandRange(BorderRange::UpperBorder);   // В этом нету смысла, так как следующее число всегда свободно.
-
-        size_++;
+        ++size_;
         return true;
     }
 
@@ -1122,9 +1015,7 @@ reserveId(T id, ReservationMethod reservationMethod)
             return false;
 
         idRange_.setBorderState(BorderRange::LowerBorder, true);
-        expandRange(BorderRange::LowerBorder);   // В этом нету смысла, так как следующее число всегда свободно.
-
-        size_++;
+        ++size_;
         return true;
     }
 
@@ -1133,17 +1024,16 @@ reserveId(T id, ReservationMethod reservationMethod)
             return false;
 
         freeIds_.erase(id);
-        size_++;
+        ++size_;
         return true;
     }
 
     if (reservedIds_.find(id))
         return false;
 
-    if (id == idRange_.getIdInfo(BorderRange::UpperBorder, 1).value &&
-        !(idRange_.getIdInfo(BorderRange::UpperBorder, 1).flags & IDRF_ID_OUT_RANGE)) {  // <-- TODO: Не корректно. В случае ошибки программа сочтет что
-                                                                                         //id != idRange_.getIdInfo(BorderRange::UpperBorder, 1).value
-                                                                                         //Хотя это может быть не так. Исправить везде.
+    auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
+
+    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
         if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
             idRange_.setBorderState(BorderRange::UpperBorder, true);
 
@@ -1152,15 +1042,15 @@ reserveId(T id, ReservationMethod reservationMethod)
         }
 
         idRange_.moveBorder(BorderRange::UpperBorder, 1);
-        expandRange(BorderRange::UpperBorder);
+        ++size_;
 
-        size_++;
+        expandRange(BorderRange::UpperBorder);
         return true;
     }
 
-    if (id == idRange_.getIdInfo(BorderRange::LowerBorder, 1).value &&
-        !(idRange_.getIdInfo(BorderRange::LowerBorder, 1).flags & IDRF_ID_OUT_RANGE)) {
+    idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
+    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
         if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
             idRange_.setBorderState(BorderRange::LowerBorder, true);
 
@@ -1169,14 +1059,14 @@ reserveId(T id, ReservationMethod reservationMethod)
         }
 
         idRange_.moveBorder(BorderRange::LowerBorder, 1);
-        expandRange(BorderRange::LowerBorder);
+        ++size_;
 
-        size_++;
+        expandRange(BorderRange::LowerBorder);
         return true;
     }
 
     reservedIds_.add(id);
-    size_++;
+    ++size_;
     return true;
 }
 
@@ -1654,7 +1544,7 @@ operator=(RangeIdManager<T, T_Step>&& other)
 }
 
 template<class T, class T_Step>
-int
+bool
 ONF::RangeIdManager<T, T_Step>::
 reserveIds(T id)
 {
@@ -1667,19 +1557,13 @@ reserveIds(T id)
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
             if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
-                return -1;
+                throw std::runtime_error("---------");
 
             if(id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
                 if (idRange_.getBorderState(BorderRange::UpperBorder) == true && idRange_.getBorderState(BorderRange::LowerBorder) == true)
                     return 0;
 
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-                expandRange(BorderRange::UpperBorder);
-                expandRange(BorderRange::LowerBorder);
-
-                ++size_;
+                onBothBorder();
                 return 1;
             }
         }
@@ -1760,7 +1644,7 @@ reserveIds(T id)
                 return 1;
             }
 
-            return -1;
+            throw std::runtime_error("---------");
         }
 
 
@@ -1789,14 +1673,12 @@ reserveIds(T id)
                 idRange_.moveBorder(BorderRange::UpperBorder, 1);
             }
 
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
+            onBothBorder();
 
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
             reservedIds_.add(id);
-            size_++;
             return 1;
         }
 
@@ -1819,18 +1701,16 @@ reserveIds(T id)
             // .....lb.....@...
             //ub и lb могут быть на старте и при перемещении одной из границ обе активируются,
             //а потому expandRange делаем с обоими границами.
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
+            onBothBorder();
 
             expandRange(BorderRange::UpperBorder);
             expandRange(BorderRange::LowerBorder);
 
             reservedIds_.add(id);
-            size_++;
             return 1;
         }
 
-        return -1;
+        throw std::runtime_error("---------");
     }
 
     // ----------------------------------
@@ -1842,15 +1722,9 @@ reserveIds(T id)
             return 0;
 
         if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
-            return -1;
+            throw std::runtime_error("---------");
 
-        idRange_.setBorderState(BorderRange::UpperBorder, true);
-        idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-        expandRange(BorderRange::UpperBorder);
-        expandRange(BorderRange::LowerBorder);
-
-        ++size_;
+        onBothBorder();
         return 1;
     }
 
@@ -1945,7 +1819,7 @@ reserveIds(T id)
             return 1;
         }
 
-        return -1;
+        throw std::runtime_error("---------");
     }
 
 
@@ -2031,11 +1905,11 @@ reserveIds(T id)
         return 1;
     }
 
-    return -1;
+    throw std::runtime_error("---------");
 }
 
 template<class T, class T_Step>
-int
+bool
 ONF::RangeIdManager<T, T_Step>::
 interpolateIds(T id)
 {
@@ -2052,15 +1926,8 @@ interpolateIds(T id)
                 T lowerBorderValue = idRange_.getBorderValue(BorderRange::LowerBorder);
 
                 if (id > upperBorderValue) {
-                    if (!idRange_.setBorderValue(BorderRange::UpperBorder, id))
+                    if (!jumpOver(id, BorderRange::UpperBorder))
                         return 0;
-
-                    if (!idRange_.setBorderValue(BorderRange::LowerBorder, id)) {
-                        if (!idRange_.setBorderValue(BorderRange::UpperBorder, upperBorderValue))
-                            return -1;
-
-                        return 0;
-                    }
 
                     idRange_.setBorderState(BorderRange::UpperBorder, true);
                     idRange_.setBorderState(BorderRange::LowerBorder, true);
@@ -2077,15 +1944,8 @@ interpolateIds(T id)
                 }
 
                 if (id < lowerBorderValue) {
-                    if (!idRange_.setBorderValue(BorderRange::LowerBorder, id))
+                    if (!jumpOver(id, BorderRange::LowerBorder))
                         return 0;
-
-                    if (!idRange_.setBorderValue(BorderRange::UpperBorder, id)) {
-                        if (!idRange_.setBorderValue(BorderRange::LowerBorder, lowerBorderValue))
-                            return -1;
-
-                        return 0;
-                    }
 
                     idRange_.setBorderState(BorderRange::UpperBorder, true);
                     idRange_.setBorderState(BorderRange::LowerBorder, true);
@@ -2102,13 +1962,7 @@ interpolateIds(T id)
                 }
 
                 if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {  // UpperBorder == LowerBorder
-                    idRange_.setBorderState(BorderRange::UpperBorder, true);
-                    idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-                    expandRange(BorderRange::UpperBorder);
-                    expandRange(BorderRange::LowerBorder);
-
-                    ++size_;
+                    onBothBorder();
                     return 1;
                 }
 
@@ -2125,35 +1979,21 @@ interpolateIds(T id)
                 T standardId = findNearestStandardId(id);
 
                 if (standardId == idRange_.getBorderValue(BorderRange::UpperBorder)) {  // UpperBorder == LowerBorder
-                    idRange_.setBorderState(BorderRange::UpperBorder, true);
-                    idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-                    expandRange(BorderRange::UpperBorder);
-                    expandRange(BorderRange::LowerBorder);
-
+                    onBothBorder();
                     reservedIds_.add(id);
-                    size_ += 2;
+                    ++size_;
                     return 1;
                 }
 
-                if (!idRange_.setBorderValue(BorderRange::UpperBorder, standardId))
+                if (!jumpOver(standardId, BorderRange::UpperBorder))
                     return 0;
 
-                if (!idRange_.setBorderValue(BorderRange::LowerBorder, standardId)) {
-                    if (!idRange_.setBorderValue(BorderRange::UpperBorder, upperBorderValue))
-                        return -1;
-
-                    return 0;
-                }
-
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
+                onBothBorder();
 
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
                 reservedIds_.add(id);
-                ++size_;
 
                 if (!reservedIds_.find(standardId))
                     ++size_;
@@ -2167,35 +2007,21 @@ interpolateIds(T id)
                 T standardId = findNearestStandardId(id);
 
                 if (standardId == idRange_.getBorderValue(BorderRange::LowerBorder)) {  // UpperBorder == LowerBorder
-                    idRange_.setBorderState(BorderRange::UpperBorder, true);
-                    idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-                    expandRange(BorderRange::UpperBorder);
-                    expandRange(BorderRange::LowerBorder);
-
+                    onBothBorder();
                     reservedIds_.add(id);
-                    size_ += 2;
+                    ++size_;
                     return 1;
                 }
 
-                if (!idRange_.setBorderValue(BorderRange::LowerBorder, standardId))
+                if (!jumpOver(standardId, BorderRange::LowerBorder))
                     return 0;
 
-                if (!idRange_.setBorderValue(BorderRange::UpperBorder, standardId)) {
-                    if (!idRange_.setBorderValue(BorderRange::LowerBorder, lowerBorderValue))
-                        return -1;
-
-                    return 0;
-                }
-
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
+                onBothBorder();
 
                 expandRange(BorderRange::UpperBorder);
                 expandRange(BorderRange::LowerBorder);
 
                 reservedIds_.add(id);
-                ++size_;
 
                 if (!reservedIds_.find(standardId))
                     ++size_;
@@ -2369,15 +2195,9 @@ interpolateIds(T id)
             return 0;
 
         if (idRange_.getBorderState(BorderRange::UpperBorder) != idRange_.getBorderState(BorderRange::LowerBorder))
-            return -1;
+            throw std::runtime_error("---------");
 
-        idRange_.setBorderState(BorderRange::UpperBorder, true);
-        idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-        expandRange(BorderRange::UpperBorder);
-        expandRange(BorderRange::LowerBorder);
-
-        ++size_;
+        onBothBorder();
         return 1;
     }
 
