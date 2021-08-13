@@ -14,14 +14,13 @@ namespace ONF
     typedef long double ldouble;
 
     template<class T>
-    inline T
-    onf_abs(T value) {
+    T abs(T value) {
         return value < 0 ? -value : value;
     }
 }
 
 
-#include "IdManager.h"
+#include "IdManagement.h"
 #include "Console_IO.h"
 #include "XmlSave/SaveModule.h"
 #include "XmlSave/TagStructure.h"

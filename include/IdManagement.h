@@ -1,23 +1,11 @@
-﻿#ifndef ID_MANAGER_H_
-#define ID_MANAGER_H_
+﻿#ifndef ID_MANAGEMENT_H_
+#define ID_MANAGEMENT_H_
 
-#include <ONF.h>
+#include "ONF.h"
+
+#include <optional>
 #include <list>
 #include <set>
-#include <vector>
-#include <type_traits>
-#include <optional>
-
-#define IDRF_NOT_SET                    0x00000
-#define IDRF_SUCCESSFULLY               0x00001
-#define IDRF_ID_OUT_RANGE               0x00002
-#define IDRF_RANGE_ARE_BENT             0x00004
-#define IDRF_ID_AT_START                0x00008
-
-#define IDRP_NOT_SET                   -1
-#define IDRP_IN_RANGE                   0
-#define IDRP_ON_BORDER                  1
-#define IDRP_OUT_RANGE                  2
 
 
 namespace ONF
@@ -25,8 +13,8 @@ namespace ONF
     enum class IdIssuingMethod
     {
         Dynamic,
-        Ascending,
-        Descending
+        Static_Ascending,
+        Static_Descending
     };
 
 
@@ -45,29 +33,45 @@ namespace ONF
         virtual ~IdContainer();
 
         bool add(T id);
-        std::optional<T> getNext();
+        std::optional<T> getNextId();
 
         void erase(T id);
-        inline void clear();
+        void clear();
 
-        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
-        inline IdIssuingMethod getIdIssuingMethod() const;
-
-        inline bool find(T id) const;
+        bool find(T id) const;
         std::optional<T> findByIndex(size_t index) const;
 
-        inline size_t size() const;
+        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
+        IdIssuingMethod getIdIssuingMethod() const;
+
+        size_t size() const;
 
         IdContainer<T>& operator=(const IdContainer<T>& other);
         IdContainer<T>& operator=(IdContainer<T>&& other);
 
     protected:
-        inline size_t getUnorderedIdsSize() const;
-        inline size_t getOrderedIdsSize() const;
+        size_t getUnorderedIdsSize() const;
+        size_t getOrderedIdsSize() const;
 
     };
+}
+
+#include "IdManagement/IdContainer.inl"
 
 
+#define IDRF_NOT_SET                    0x00000
+#define IDRF_SUCCESSFULLY               0x00001
+#define IDRF_ID_OUT_RANGE               0x00002
+#define IDRF_RANGE_ARE_BENT             0x00004
+#define IDRF_ID_AT_START                0x00008
+
+#define IDRP_NOT_SET                   -1
+#define IDRP_IN_RANGE                   0
+#define IDRP_ON_BORDER                  1
+#define IDRP_OUT_RANGE                  2
+
+namespace ONF
+{
     enum class BorderRange
     {
         UpperBorder,
@@ -76,7 +80,7 @@ namespace ONF
 
 
     template<class T>
-    inline bool isStandardId(T target, T start, T step) {
+    bool isStandardId(T target, T start, T step) {
         ldouble An = static_cast<ldouble>(target);
         ldouble A1 = static_cast<ldouble>(start);
         ldouble d  = static_cast<ldouble>(step);
@@ -86,7 +90,7 @@ namespace ONF
     }
 
     template<class T>
-    inline T moveFromId(T start, T step, longlong n) {
+    T moveFromId(T start, T step, longlong n) {
         return start + (n * step);
     }
 
@@ -167,8 +171,13 @@ namespace ONF
         void fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const;
 
     };
+}
+
+#include "IdManagement/IdRange.inl"
 
 
+namespace ONF
+{
     enum class ReservationMethod
     {
         NotSet,
@@ -177,52 +186,48 @@ namespace ONF
     };
 
     template<class T, class T_Step>
-    constexpr bool is_types_combination_prohibited =
-            (!std::is_same<T, float>::value             &&
-             !std::is_same<T, double>::value            &&
-             !std::is_same<T, ldouble>::value     )
-                                                        &&
-            ( std::is_same<T_Step, float>::value        ||
-              std::is_same<T_Step, double>::value       ||
-              std::is_same<T_Step, ldouble>::value);
+    constexpr bool is_forbidden_types_combination =
+            !std::is_floating_point_v<T> && std::is_floating_point_v<T_Step>;
 
 
-    template<class T, class T_Step = T>  //Проверить все функции на unsigned и на наличие проверок возвращаемых err кодов (IDM_ERR_IDS_RUN_OUT и т.д.).
-    class RangeIdManager // Проверять на limit. Везде проверять на ошибки (moveBorder, например).
+    template<class T, class T_Step = T, class T_Access = void>
+    class RangeIdManager;
+
+    template<class T, class T_Step>
+    class RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>
     {
-        IdContainer<T> freeIds_;
         IdContainer<T> reservedIds_;
-
+        IdContainer<T> freeIds_;
         IdRange<T> idRange_;
+
         T_Step step_;
         size_t size_;
-
         bool isHardStep_;
         IdIssuingMethod idIssuingMethod_;
 
     public:
         RangeIdManager(T start = 0, T_Step step = 1);
-        RangeIdManager(const RangeIdManager<T, T_Step>& other) = default;
+        RangeIdManager(const RangeIdManager<T, T_Step>& other);
         RangeIdManager(RangeIdManager<T, T_Step>&& other);
         virtual ~RangeIdManager();
 
         std::optional<T> getFreeId();
+        bool reserve(T id, ReservationMethod reservationMethod = ReservationMethod::NotSet);
 
-        bool reserveId(T id, ReservationMethod reservationMethod = ReservationMethod::NotSet);
+        bool free(T id);
+        inline void freeAll();
+
+        bool find(T id) const; // TODO: Протестировать в разных ситуациях.
 
         bool setBorderLimit(BorderRange borderRange, T value);
         inline T getBorderLimit(BorderRange borderRange) const;
 
-        bool freeId(T id);
-        inline void freeAll();
-
         void setHardStep(bool value);
         inline bool isHardStep() const;
 
-        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod); // Возвращать коды ошибок.
+        void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
         inline IdIssuingMethod getIdIssuingMethod() const;
 
-        bool findId(T id) const;
         inline size_t size() const;
         inline bool isStandardId(T id) const;
 
@@ -231,37 +236,41 @@ namespace ONF
         inline T getBorderValue(BorderRange borderRange) const;
         inline bool getBorderState(BorderRange borderRange) const;
 
-        RangeIdManager<T, T_Step>& operator=(const RangeIdManager<T, T_Step>& other) = default;
-        RangeIdManager<T, T_Step>& operator=(RangeIdManager<T, T_Step>&& other);
+        // limit не распространяется на них.
+        std::optional<T> findClosestStdId(T id) const;
+        std::optional<T> findClosestStdId(T id, BorderRange borderRange) const;
+
+        RangeIdManager& operator=(const RangeIdManager<T, T_Step>& other);
+        RangeIdManager& operator=(RangeIdManager<T, T_Step>&& other);
 
     protected:
         inline size_t getFreeIdsSize() const;
         inline size_t getReservedIdsSize() const;
 
     private:
-        T onBothBorder();
-        bool jumpOver(T id, BorderRange borderRange);
-        void reserv_1(BorderRange borderRange);
         std::optional<T> getNextId();
 
+        typename IdRange<T>::IdInfo expandRangeIfPossible(BorderRange border); // TODO в .inl
+        typename IdRange<T>::IdInfo reduceRangeIfPossible(BorderRange border);
 
+        inline T activateBothBorders();
+        inline T activateBothBordersWithExpending();
 
+        bool jumpOver(T id, BorderRange borderRange);
+        unsigned normalizeBorderRange(BorderRange borderRange);
+        bool reserveIdInRange(T id);
+        inline bool reserveBorderRange(BorderRange borderRange);
 
-
+        // Написать о том что эта функция не отлавливает ошибки связзанные с нахождением id
+        // в диапазоне или на границе.
+        BorderRange getExpandableBorderRange(T id) const;
 
         bool interpolateIds(T id);
         bool reserveIds(T id);
 
-        T findNearestStandardId(T id) const;  //limit не распространяется на него.
-
-        unsigned expandRange(BorderRange border);
-        unsigned reduceRange(BorderRange border);
-
-        int normalizeRange(BorderRange border, IdIssuingMethod idIssuingMethod);
     };
 }
 
-
-#include "IdManager.inl"
+#include "IdManagement/RangeIdManager.inl"
 
 #endif

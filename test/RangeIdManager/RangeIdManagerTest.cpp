@@ -1,4 +1,4 @@
-﻿#include "IdManager.h"
+﻿#include "IdManagement.h"
 
 #include <gtest/gtest.h>
 
@@ -6,7 +6,7 @@ using namespace ONF;
 
 
 template<class T, class T_Step = T>
-class OpenRangeIdManager : public RangeIdManager<T, T_Step>
+class OpenRangeIdManager : public RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>
 {
 public:
     OpenRangeIdManager(T start = 0, T_Step step = 1)
@@ -17,6 +17,7 @@ public:
 
     using RangeIdManager<T, T_Step>::getFreeIdsSize;
     using RangeIdManager<T, T_Step>::getReservedIdsSize;
+    using RangeIdManager<T, T_Step>::findClosestStdId;
 
     OpenRangeIdManager<T, T_Step>& operator=(const OpenRangeIdManager<T, T_Step>& other) = default;
     OpenRangeIdManager<T, T_Step>& operator=(OpenRangeIdManager<T, T_Step>&& other) = default;
@@ -67,6 +68,178 @@ int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
+}
+
+
+TEST_F(OpenRangeIdManagerTests, findClosestStdId_outRange)
+{
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(21);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 20);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -20);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(22);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 22);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -22);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(37);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 36);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -36);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(32);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 32);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -32);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(7);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -2);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -2);
+
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0).has_value());
+}
+
+TEST_F(OpenRangeIdManagerTests, findClosestStdId_inRange)
+{
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 21, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 22, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 3,  BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 1,  BorderRange::UpperBorder).has_value());
+
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 21, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 22, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 3,  BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 1,  BorderRange::LowerBorder).has_value());
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
+
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 37, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 32, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32, BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 7,  BorderRange::UpperBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3,  BorderRange::UpperBorder).has_value());
+
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 37, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 32, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32, BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 7,  BorderRange::LowerBorder).has_value());
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3,  BorderRange::LowerBorder).has_value());
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(5, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(5, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 4);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-1, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 0);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-1, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -2);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 6);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2, BorderRange::UpperBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -2);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2, BorderRange::LowerBorder);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -2);
 }
 
 TEST_F(OpenRangeIdManagerTests, getStart)
@@ -1054,7 +1227,6 @@ TEST_F(OpenRangeIdManagerTests, BorderLimit)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getReservedIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getReservedIdsSize(), 0);
 
-
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
@@ -1216,128 +1388,128 @@ TEST_F(OpenRangeIdManagerTests, BorderLimit)
 
 TEST_F(OpenRangeIdManagerTests, findId)
 {
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-1));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-20));
 
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 8.5));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-0.3));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 8.5));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-0.3));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-20));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-1));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-20));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 3.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 3.3));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 18.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-3.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-18.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 3.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 3.3));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 18.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-3.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-18.0));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(3));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(4));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(6));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(20));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(0));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(3));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(4));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(6));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(1));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-20));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 0.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 2.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 18.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-3.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-5.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-5.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-19.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 0.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 2.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 18.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-3.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-5.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-5.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-19.5));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(10));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(11));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(12));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(14));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(30));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(8));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(7));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(10));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(11));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(12));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(14));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(30));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(8));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(7));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(0));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-7));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-7));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-18));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 0.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-3.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 0.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-3.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-20.0));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 5));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 5));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-20));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-2.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-2.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-20.0));
 
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
@@ -1359,286 +1531,286 @@ TEST_F(OpenRangeIdManagerTests, findId)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE (OpenRangeIdManager_int.findId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_int.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-1));
-    EXPECT_TRUE (OpenRangeIdManager_int.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId(-20));
-    EXPECT_TRUE (OpenRangeIdManager_int.findId( 29));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 30));
-    EXPECT_FALSE(OpenRangeIdManager_int.findId( 500));
+    EXPECT_TRUE (OpenRangeIdManager_int.find( 0));
+    EXPECT_TRUE (OpenRangeIdManager_int.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-1));
+    EXPECT_TRUE (OpenRangeIdManager_int.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int.find(-20));
+    EXPECT_TRUE (OpenRangeIdManager_int.find( 29));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 30));
+    EXPECT_FALSE(OpenRangeIdManager_int.find( 500));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.findId( 0.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.findId( 1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-1.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.findId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.findId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 8.5));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId(-0.3));
-    EXPECT_TRUE (OpenRangeIdManager_float.findId( 29.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.findId( 29.5));
+    EXPECT_TRUE (OpenRangeIdManager_float.find( 0.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.find( 1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-1.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.find( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.find( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 8.5));
+    EXPECT_FALSE(OpenRangeIdManager_float.find(-0.3));
+    EXPECT_TRUE (OpenRangeIdManager_float.find( 29.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.find( 29.5));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.findId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-1));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId(-20));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.findId( 29));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 30));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.findId( 500));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.find( 0));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-1));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-2));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find(-20));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.find( 29));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 30));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.find( 500));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 3));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.findId( 4));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.findId( 6));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.findId( 60));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 61));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findId( 62));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 3));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.find( 4));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.find( 6));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-1));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.find( 60));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 61));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.find( 62));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 1.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 3.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 3.3));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 18.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-3.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId(-18.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 45.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 46.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.findId( 46.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 1.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 3.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 3.3));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 18.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-3.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find(-18.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 45.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 46.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.find( 46.5));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.findId(2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(3));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.findId(4));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.findId(6));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.findId(20));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(0));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(1));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.findId(60));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(61));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.findId(62));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.find(2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(3));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.find(4));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.find(6));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.find(20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(1));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.find(60));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(61));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.find(62));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-3));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.findId(-4));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.findId(-6));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.findId(-20));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.findId(-60));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-61));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.findId(-62));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-3));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.find(-4));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.find(-6));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.find(-20));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.find(-60));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-61));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.find(-62));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 0.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 2.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId( 18.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-3.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-5.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-5.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-19.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-59.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-60.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.findId(-61.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 0.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 2.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find( 18.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-3.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-5.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-5.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-19.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-59.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-60.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.find(-61.5));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(10));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(11));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(12));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(14));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(30));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(8));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(7));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(2));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(0));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.findId(-1));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(10));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(11));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(12));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(14));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(30));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(8));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(7));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(2));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.find(-1));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.findId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.findId( 2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.findId( 6));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.findId( 18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-7));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 7));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId(-18));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.findId( 114));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 115));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.findId( 118));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.find(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.find( 2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.find( 6));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.find( 18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-7));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 7));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find(-18));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.find( 114));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 115));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.find( 118));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 0.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-3.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId(-20.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 56.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 56.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.findId( 58.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 0.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-3.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find(-20.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 56.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 56.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.find( 58.0));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.findId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 5));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId( 20));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.findId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.findId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-3));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.findId(-20));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.findId(-56));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-57));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.findId(-58));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.find( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 5));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find( 20));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.find( 0));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.find(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-3));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.find(-20));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.find(-56));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-57));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.find(-58));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 20.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId( 0.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-2.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-20.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-56.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-57.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.findId(-58.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 20.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.find( 0.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-2.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-20.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-56.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-57.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.find(-58.0));
 }
 
 TEST_F(OpenRangeIdManagerTests, FreeIds)
 {
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_int.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int.free( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-1));
+    EXPECT_FALSE(OpenRangeIdManager_int.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int.free( 9));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-9.3));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-9.3));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free( 1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free( 9));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-0.3));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 3.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-0.3));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 4));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 10));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 0.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 2.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-10.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 10.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-0.3));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 0.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 2.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-10.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 10.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-0.3));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 10));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 8));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 12));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 14));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId( 20));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 10));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 8));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 12));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 14));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free( 20));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-10.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-0.3));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-10.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-0.3));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-9));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free(-9));
 
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-0.3));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-0.3));
 
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
@@ -1741,151 +1913,151 @@ TEST_F(OpenRangeIdManagerTests, FreeIds)
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
 
 
-    EXPECT_TRUE (OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_int.freeId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-1));
-    EXPECT_TRUE (OpenRangeIdManager_int.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int.freeId( 9));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_int.freeId( 29));
-    EXPECT_FALSE(OpenRangeIdManager_int.freeId( 30));
+    EXPECT_TRUE (OpenRangeIdManager_int.free( 0));
+    EXPECT_TRUE (OpenRangeIdManager_int.free( 1));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-1));
+    EXPECT_TRUE (OpenRangeIdManager_int.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int.free( 9));
+    EXPECT_FALSE(OpenRangeIdManager_int.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_int.free( 29));
+    EXPECT_FALSE(OpenRangeIdManager_int.free( 30));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-1.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.freeId( 9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(-9.3));
-    EXPECT_TRUE (OpenRangeIdManager_float.freeId( 29.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId( 30.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.free( 0.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.free( 1.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-1.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.free( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.free( 9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(-9.3));
+    EXPECT_TRUE (OpenRangeIdManager_float.free( 29.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free( 30.0));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-1));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.freeId( 29));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.freeId( 30));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.free( 0));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.free( 1));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-1));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.free( 9));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.free( 29));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.free( 30));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 62));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.free( 2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.free( 4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 0));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.free( 10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.free( 60));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.free( 62));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 0.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-1.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-9.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId(-0.3));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 46.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 1.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 3.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 0.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 4.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-1.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-9.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(-0.3));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 45.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 46.5));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 3));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 62));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 3));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.free( 4));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.free( 10));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.free( 60));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 62));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 0));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 10));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-62));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 0));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 10));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-62));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 0.5));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 2.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-10.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 10.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-0.3));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-61.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 0.5));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 2.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-10.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 10.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-0.3));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-61.5));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(12));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(14));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(20));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(12));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(14));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(20));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-6));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-10));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-18));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-6));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-10));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-18));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-4.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-10.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-0.3));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-10.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-0.3));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 4));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 6));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 20));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 3));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-9));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-58));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 4));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 6));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 20));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free( 3));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free(-9));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.free(-58));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 4.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 6.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 20.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 9.5));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-0.3));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 6.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 20.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 9.5));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-0.3));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 25);
@@ -2144,84 +2316,84 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Dynamic)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
@@ -2550,84 +2722,84 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Ascending)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free( 29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free( 29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free( 29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free( 60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free( 45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free( 60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
@@ -2956,84 +3128,84 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Descending)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
@@ -3398,84 +3570,84 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
@@ -3821,84 +3993,84 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
@@ -4244,98 +4416,98 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Dynamic)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.getFreeId();
     }
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 8));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 8));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId( 29.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(29.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 9));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 7));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.freeId( 29));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(1));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(9));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(7));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.free(29));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 12));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(12));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 4.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 9.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 10.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.freeId( 45.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(9.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(10.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_1p5_Step_1p5.free(45.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 4));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 12));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.freeId( 60));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(4));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(12));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_Start_2_Step_2.free(60));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-10));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-12));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.freeId(-60));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-12));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_n2.free(-60));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-1.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-3.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-5.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-15.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-17.5));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.freeId(-59.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-1.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-3.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-5.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-15.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-17.5));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.free(-59.5));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(10));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(8));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(2));
-    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.freeId(0));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(10));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(8));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.free(0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 6));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 18));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId( 22));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(110));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.freeId(114));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 18));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free( 22));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(110));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_n2_Step_4.free(114));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 10.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 8.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.freeId( 56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 10.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 8.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.free( 56.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-20));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-26));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.freeId(-56));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-20));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-26));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_n2.free(-56));
 
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId( 0.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-20.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-26.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-54.0));
-    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeId(-56.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free( 0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-20.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-26.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
+    EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Dynamic);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Dynamic);
@@ -4665,7 +4837,7 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Dynamic)
     EXPECT_FLOAT_EQ(*optional_id_float, -58.0);
 }
 
-TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
+TEST_F(OpenRangeIdManagerTests, Reserve_DynamicAndAscending_ReserveId)
 {
     for (size_t i = 0; i < 2; ++i)
     {
@@ -4724,189 +4896,189 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
         EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.isHardStep());
 
 
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 1));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-1));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 9));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-9));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 1));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-1));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 9));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-9));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0));
 
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 1.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-1.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 9.0));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-9.0));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 15.3));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-15.3));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 1.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-1.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 9.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-9.0));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 15.3));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-15.3));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 1));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId(-1));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 9));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId(-9));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 1));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve(-1));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 9));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve(-9));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 4));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 10));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 4));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-10));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 3));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 1));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-9));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 3.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 0.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-1.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 3.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 0.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-1.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 30));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 4));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 10));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 5));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 1));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 51));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(-2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 30));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 4));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 10));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 5));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 1));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 51));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(-2));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-4));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-10));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-4));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-3.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-5.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 10.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 20.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-3.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-5.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 10.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 20.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(8));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(12));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(6));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(0));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(15));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(8));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(12));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(6));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(0));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(15));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-6));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 6));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 18));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-16));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 12));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-6));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 6));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 18));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-16));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 12));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 0.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-4.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-10.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-5.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 0.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-4.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-10.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-5.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 4));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 6));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 20));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 4));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 6));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 20));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 0.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-20.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.1));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-4.1));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 0.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-20.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.1));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-4.1));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0));
 
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  2);
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -2);
@@ -5027,100 +5199,100 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
         EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.isHardStep());
 
 
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0));
 
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.5));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-0.5));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 15.3));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-15.3));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.5));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-0.5));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 15.3));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-15.3));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0));
 
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 3));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 1));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-9));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 9));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 5));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 1));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 51));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(-2));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 5));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 1));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 51));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(-2));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(15));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(15));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-16));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 12));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-16));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 12));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-5.5));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.5));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-5.5));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.5));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.1));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-4.1));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.1));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-4.1));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0));
 
 
         EXPECT_EQ(OpenRangeIdManager_int.size(), 7);
@@ -5362,190 +5534,190 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveId)
     }
 }
 
-TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
+TEST_F(OpenRangeIdManagerTests, Reserve_DynamicAndAscending_ReserveRange)
 {
     for (size_t i = 0; i < 2; ++i)
     {
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 1, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-1, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-2, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 9, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-9, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 9, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 2, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 2, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 1, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-1, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-2, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve( 9, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(-9, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 9, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 2, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-1.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 2.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 9.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-1.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 2.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 9.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 1, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 1, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 4,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 10, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 4,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 0.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 3.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-1.5, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 0.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 3.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-1.5, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(4,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(30, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(51, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(4,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(30, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(51, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-4,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-10, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-4,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-3.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-5.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 20.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 10.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-3.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-5.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 20.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 10.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(12, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(8,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(15, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(12, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(8,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(15, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-6,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 18, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-16, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 12, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-6,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 18, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-16, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 12, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-10.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-4.0,   ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 0.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-5.5,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.5,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-10.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-4.0,   ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 0.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-5.5,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.5,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 4,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 20, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 4,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 20, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 0.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-2.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-20.0, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-4.1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 0.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-2.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-20.0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-4.1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::ReserveRange));
 
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  9);
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -9);
@@ -5666,100 +5838,100 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
         EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.isHardStep());
 
 
-        EXPECT_TRUE (OpenRangeIdManager_int.reserveId(20, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId(9,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId(2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int.reserveId(0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int.reserve(20, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve(9,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve(2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int.reserve(0,  ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::ReserveRange));
 
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 1,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 51, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 1,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 51, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2,  ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(23, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(23, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-24, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 24, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-24, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 24, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-8.1,   ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 8.1,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-8.1,   ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 8.1,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::ReserveRange));
 
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 25.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-25.0, ReservationMethod::ReserveRange));
-        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::ReserveRange));
-        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 25.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-25.0, ReservationMethod::ReserveRange));
+        EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::ReserveRange));
+        EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::ReserveRange));
 
 
         EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  20);
@@ -6122,190 +6294,190 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_DynamicAndAscending_ReserveRange)
     }
 }
 
-TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
+TEST_F(OpenRangeIdManagerTests, Reserve_Dynamic_Interpolate)
 {
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-1.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 9.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 9.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 0.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 3.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-1.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 0.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 3.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-1.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(30, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(51, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(30, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(51, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-3.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-5.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 20.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 10.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-3.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-5.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 20.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 10.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(12, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(8,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(15, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(12, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(8,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(15, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 18, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-16, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 12, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-16, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 12, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-10.0,  ReservationMethod::Interpolate));
     EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.size(), 1);
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-4.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 0.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-5.5,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.5,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-4.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 0.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-5.5,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.5,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 1);
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 0.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-20.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-4.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 0.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-20.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-4.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  9);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -9);
@@ -6425,100 +6597,100 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
     EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.isHardStep());
 
 
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 51, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 51, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(23, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(23, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-24, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 24, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-24, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 24, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-8.1,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 8.1,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-8.1,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 8.1,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 25.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-25.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 25.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-25.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  20);
@@ -6850,7 +7022,7 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Dynamic_Interpolate)
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getBorderState(BorderRange::LowerBorder));
 }
 
-TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
+TEST_F(OpenRangeIdManagerTests, Reserve_Ascending_Interpolate)
 {
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
@@ -6871,188 +7043,188 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
     OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
 
 
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-1.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 9.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 9.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 1, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 1, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 0.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 3.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-1.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 0.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 3.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-1.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(30, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(51, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId(40, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(30, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(51, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve(40, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-3.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-5.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 20.5, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 10.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-3.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-5.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 20.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 10.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(12, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(8,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(15, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(12, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(8,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(15, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 18, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-16, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 12, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-16, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve( 12, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-10.0,  ReservationMethod::Interpolate));
     EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.size(), 1);
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-4.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 0.0,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-5.5,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.5,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-4.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 0.0,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-5.5,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.5,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.size(), 1);
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 0.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-20.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 4.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-4.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 0.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-20.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 4.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-4.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  9);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -9);
@@ -7172,100 +7344,100 @@ TEST_F(OpenRangeIdManagerTests, ReserveId_Ascending_Interpolate)
     EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.isHardStep());
 
 
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(20, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(20, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId( 15.3, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(-15.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(-9.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId( 1.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve( 15.3, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(-15.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(-9.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve( 1.0,  ReservationMethod::Interpolate));
 
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 2, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 9, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId( 0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 2, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 9, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve( 0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 3,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId(-9,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserveId( 9,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 3,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve(-9,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_2.reserve( 9,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 2.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.3, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId(-9.3, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 1.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserveId( 9.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 2.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.3, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve(-9.3, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 1.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_1p5_Step_1p5.reserve( 9.0, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 51, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserveId( 2,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 51, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_Start_2_Step_2.reserve( 2,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 11, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId(-6,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserveId( 10, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 11, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve(-6,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_n2.reserve( 10, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-8.0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 1.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-2.5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-1.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId( 0.5,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserveId(-21.5, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-8.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 1.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-2.5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-1.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve( 0.5,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.reserve(-21.5, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(11, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(9,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(23, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(7,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(14, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserveId(20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(11, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(9,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(23, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(7,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(14, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.reserve(20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 0,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-4,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-24, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserveId( 24, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-10, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserveId(-18, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-4,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve(-24, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_n2_Step_4.reserve( 24, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-10, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_n2_Step_4.reserve(-18, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-3.999, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-1.3,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-8.1,   ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 8.1,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId(-2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 2.0,   ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserveId( 10.0,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-3.999, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-1.3,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-8.1,   ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 8.1,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve(-2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 2.0,   ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_int_Start_n2p0_Step_2.reserve( 10.0,  ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 5,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 7,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-3,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId( 2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-2,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserveId(-20, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 5,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve( 7,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_int_Start_2_Step_n2.reserve(-3,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve( 2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-2,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_n2.reserve(-20, ReservationMethod::Interpolate));
 
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-0.1,  ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 25.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId(-25.0, ReservationMethod::Interpolate));
-    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 8.1,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 2.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 6.0,  ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserveId( 20.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-0.1,  ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 25.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve(-25.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE (OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 8.1,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 2.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 6.0,  ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.reserve( 20.0, ReservationMethod::Interpolate));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  20);
@@ -7811,19 +7983,19 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_1)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_2)
 {
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(2, ReservationMethod::Interpolate));
     EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  3));
     EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -2));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(2.0, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(2.0, ReservationMethod::Interpolate));
     EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  3.0));
     EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -2.0));
 
-    EXPECT_TRUE(OpenRangeIdManager_unsigned.reserveId(2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_unsigned.reserve(2, ReservationMethod::Interpolate));
     EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder, 3));
     EXPECT_TRUE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, 0));
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserveId(-2, ReservationMethod::Interpolate));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-2, ReservationMethod::Interpolate));
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  6));
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -4));
 
@@ -7877,9 +8049,9 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_2)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_3)
 {
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(6));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(5));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(3));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(3));
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
     ASSERT_TRUE(optional_id_int.has_value());
@@ -7910,10 +8082,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_3)
     EXPECT_EQ(*optional_id_int, 7);
 
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 4.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-1.0));
 
     optional_id_float = OpenRangeIdManager_float.getFreeId();
     ASSERT_TRUE(optional_id_float.has_value());
@@ -7940,11 +8112,11 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_3)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
 {
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(6));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(5));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(3));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(3));
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(5));
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
     ASSERT_TRUE(optional_id_int.has_value());
@@ -7977,16 +8149,16 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
     ASSERT_TRUE(optional_id_int.has_value());
     EXPECT_EQ(*optional_id_int, 7);
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(6));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(5));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(4));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(5));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(4));
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 7);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(7));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(7));
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 3);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
@@ -7996,10 +8168,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
 
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 4.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-1.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 1);
@@ -8010,7 +8182,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(1.0));
 
     optional_id_float = OpenRangeIdManager_float.getFreeId();
     ASSERT_TRUE(optional_id_float.has_value());
@@ -8042,10 +8214,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(3.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(5.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(3.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(5.0));
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder),  5.0);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), -1.0);
@@ -8079,9 +8251,9 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_1)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8092,7 +8264,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_1)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8103,7 +8275,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_1)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8120,16 +8292,16 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_2)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8140,7 +8312,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_2)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8151,7 +8323,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_5_2)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8168,8 +8340,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_6_1)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8180,7 +8352,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_6_1)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8197,16 +8369,16 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_6_2)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8217,7 +8389,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_6_2)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8236,9 +8408,9 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8249,7 +8421,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8260,7 +8432,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_FALSE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8298,16 +8470,16 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.0));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.0));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 1);
 
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5, ReservationMethod::Interpolate));
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(4.5));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5, ReservationMethod::Interpolate));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 2);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8318,7 +8490,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
     EXPECT_TRUE (OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.5));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.5));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 1);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8329,7 +8501,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
     EXPECT_TRUE (OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.freeId(4.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.free(4.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 3);
@@ -8362,10 +8534,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_8_1)
 {
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-1));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8376,7 +8548,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_1)
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(0));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 5);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8388,10 +8560,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_1)
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-2.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8402,7 +8574,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_1)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(0.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 5);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8419,10 +8591,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
 
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-1));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 1);
@@ -8433,7 +8605,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(0));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(0));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 5);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8448,10 +8620,10 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
     OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
     EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 2.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId( 1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-1.0));
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(-2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve( 1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-1.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(-2.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 1);
@@ -8462,7 +8634,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_float.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_float.reserveId(0.0));
+    EXPECT_TRUE(OpenRangeIdManager_float.reserve(0.0));
 
     EXPECT_EQ(OpenRangeIdManager_float.size(), 5);
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
@@ -8477,8 +8649,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
 TEST_F(OpenRangeIdManagerTests, SituationalTest_9)
 {
     for (size_t i = 0; i < 3; ++i) {
-        EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 2));
-        EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-2));
+        EXPECT_TRUE(OpenRangeIdManager_int.reserve( 2));
+        EXPECT_TRUE(OpenRangeIdManager_int.reserve(-2));
 
         EXPECT_EQ(OpenRangeIdManager_int.size(), 2);
         EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8490,11 +8662,11 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_9)
         EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
         if (i == 0)
-            EXPECT_TRUE(OpenRangeIdManager_int.reserveId(0));
+            EXPECT_TRUE(OpenRangeIdManager_int.reserve(0));
         if (i == 1)
-            EXPECT_TRUE(OpenRangeIdManager_int.reserveId(0, ReservationMethod::Interpolate));
+            EXPECT_TRUE(OpenRangeIdManager_int.reserve(0, ReservationMethod::Interpolate));
         if (i == 2)
-            EXPECT_TRUE(OpenRangeIdManager_int.reserveId(0, ReservationMethod::ReserveRange));
+            EXPECT_TRUE(OpenRangeIdManager_int.reserve(0, ReservationMethod::ReserveRange));
 
         EXPECT_EQ(OpenRangeIdManager_int.size(), 3);
         EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8524,9 +8696,9 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_9)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_10)
 {
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(2));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(1));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(1));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(1));
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 2);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 2);
@@ -8554,11 +8726,11 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_11)
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
 
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 1));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(-1));
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int.freeId(2));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 2));
+    EXPECT_TRUE(OpenRangeIdManager_int.free(2));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 3);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
@@ -8569,7 +8741,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_11)
     EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE (OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
-    EXPECT_TRUE(OpenRangeIdManager_int.reserveId(3));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(3));
 
     EXPECT_EQ(OpenRangeIdManager_int.size(), 4);
     EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 1);
@@ -8587,6 +8759,99 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_11)
     optional_id_int = OpenRangeIdManager_int.getFreeId();
     ASSERT_TRUE(optional_id_int.has_value());
     EXPECT_EQ(*optional_id_int, 4);
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_12)
+{
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 0));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-1));
+
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(7));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(9));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(12));
+
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-6));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-7));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-9));
+    EXPECT_TRUE(OpenRangeIdManager_int.reserve(-12));
+
+    EXPECT_EQ(OpenRangeIdManager_int.size(), 11);
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 8);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  1);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -1);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+
+    EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::UpperBorder,  3));
+    EXPECT_TRUE(OpenRangeIdManager_int.setBorderLimit(BorderRange::LowerBorder, -3));
+
+    EXPECT_EQ(OpenRangeIdManager_int.size(), 3);
+    EXPECT_EQ(OpenRangeIdManager_int.getFreeIdsSize(), 0);
+    EXPECT_EQ(OpenRangeIdManager_int.getReservedIdsSize(), 0);
+
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder),  1);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -1);
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_13)
+{
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  50));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -50));
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(50);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 50);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-50);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -50);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(61);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 60);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-61);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -60);
+
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(62);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, 62);
+    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-62);
+    ASSERT_TRUE(optional_id_int.has_value());
+    EXPECT_EQ(*optional_id_int, -62);
+}
+
+TEST_F(OpenRangeIdManagerTests, SituationalTest_14)
+{
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+
+
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
+
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+
+
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
+
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
+
+
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Dynamic);
+
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
+    EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
 }
 
 TEST(SingleTests, CopyAndMoveTest)
@@ -8613,8 +8878,8 @@ TEST(SingleTests, CopyAndMoveTest)
     ASSERT_TRUE(optional_id_int.has_value());
     EXPECT_EQ(*optional_id_int, 2);
 
-    EXPECT_FALSE(OpenRangeIdManager_int.reserveId(-90));
-    EXPECT_TRUE (OpenRangeIdManager_int.reserveId(-50));
+    EXPECT_FALSE(OpenRangeIdManager_int.reserve(-90));
+    EXPECT_TRUE (OpenRangeIdManager_int.reserve(-50));
 
     EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::UpperBorder,  50.5));
     EXPECT_TRUE(OpenRangeIdManager_float.setBorderLimit(BorderRange::LowerBorder, -50.5));
@@ -8631,9 +8896,9 @@ TEST(SingleTests, CopyAndMoveTest)
     ASSERT_TRUE(optional_id_float.has_value());
     EXPECT_FLOAT_EQ(*optional_id_float, 2.0);
 
-    EXPECT_FALSE(OpenRangeIdManager_float.reserveId(90.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(50.0));
-    EXPECT_TRUE (OpenRangeIdManager_float.reserveId(0.5));
+    EXPECT_FALSE(OpenRangeIdManager_float.reserve(90.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(50.0));
+    EXPECT_TRUE (OpenRangeIdManager_float.reserve(0.5));
 
     EXPECT_TRUE (OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::UpperBorder,  50));
     EXPECT_FALSE(OpenRangeIdManager_unsigned.setBorderLimit(BorderRange::LowerBorder, -50));
@@ -8648,9 +8913,9 @@ TEST(SingleTests, CopyAndMoveTest)
     ASSERT_TRUE(optional_id_unsigned.has_value());
     EXPECT_EQ(*optional_id_unsigned, 2);
 
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId(50));
-    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserveId(33));
-    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserveId(90));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve(50));
+    EXPECT_TRUE (OpenRangeIdManager_unsigned.reserve(33));
+    EXPECT_FALSE(OpenRangeIdManager_unsigned.reserve(90));
 
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  50);
