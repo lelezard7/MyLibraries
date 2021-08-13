@@ -835,7 +835,7 @@ ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<
 reduceRangeIfPossible(BorderRange border)
 {
     typename IdRange<T>::IdInfo idInfo;
-    longlong i = 1;
+    dlong i = 1;
 
     while (true) {
         idInfo = idRange_.getIdInfo(border, -i);

@@ -10,14 +10,72 @@
 
 namespace ONF
 {
+    /**
+     * Это перечисление отвечает за задание метода выдачи ID в классе IdContainer и RangeIdManager. <br>
+     * В RangeIdManager оно так же отвечает за поведение границ которые создаются в нем классом IdRange.
+     *
+     * @warning
+     * IdIssuingMethod имеет пару НО. Подробнее о каждом перечислителе см. IdContainer и RangeIdManager.
+     *
+     * @see IdRange
+     */
     enum class IdIssuingMethod
     {
-        Dynamic,
-        Static_Ascending,
-        Static_Descending
+        Dynamic,            ///<ID выдаются в порядке их добавления. <br>
+                            ///<В классе RangeIdManager границы имеют плавающий характер.
+        Static_Ascending,   ///<ID выдаются в порядке возрастания. <br>
+                            ///<В классе RangeIdManager границы имеют фиксированный характер.
+        Static_Descending   ///<ID выдаются в порядке убывания. <br>
+                            ///<В классе RangeIdManager границы имеют фиксированный характер.
     };
 
 
+    /**
+     * @brief Контейнер с настраиваемым способом выдачи ID.
+     *
+     * По сути IdContainer это объединение [std::list](https://en.cppreference.com/w/cpp/container/list)
+     * и [std::set](https://en.cppreference.com/w/cpp/container/set). <br>
+     * IdContainer хранит все записанные в него уникальные ID и выдает их в порядке возрастания,
+     * убывания или добавления. <br>
+     * Если метод выдачи ID равен IdIssuingMethod::Static_Ascending то
+     * ID выдаются в порядке возрастания. <br>
+     * Если метод выдачи ID равен IdIssuingMethod::Static_Descending то
+     * ID выдаются в порядке убывания. <br>
+     * Если метод выдачи ID равен IdIssuingMethod::Dynamic то
+     * ID выдаются в порядке их добавления в контейнер. <br>
+     * По умолчанию метод выдачи ID равен IdIssuingMethod::Dynamic. <br>
+     * Мы можем задать способ выдачи ID в конструкторе при создании и менять через метод
+     * setIdIssuingMethod(IdIssuingMethod).
+     *
+     * Когда метод выдачи ID равен IdIssuingMethod::Dynamic, все ID хранятся в **unorderedIds_**,
+     * а при IdIssuingMethod::Static_Ascending и IdIssuingMethod::Static_Descending в
+     * **orderedIds_**:
+     *
+     * ``` Cxx
+     * std::list<T> unorderedIds_;
+     * std::set<T> orderedIds_;
+     * ```
+     *
+     * @warning
+     * IdContainer не хранит порядок добавления ID, он просто перекидывает все хранимые ID
+     * в [std::list](https://en.cppreference.com/w/cpp/container/list)
+     * в случае если способ выдачи ID равен IdIssuingMethod::Dynamic
+     * и в [std::set](https://en.cppreference.com/w/cpp/container/set)
+     * если способ выдачи ID равен IdIssuingMethod::Static_Ascending
+     * или IdIssuingMethod::Static_Descending. <br>
+     * Отсюда вытекает проблема при которой после смены режима выдачи с IdIssuingMethod::Dynamic
+     * на IdIssuingMethod::Static_Ascending или IdIssuingMethod::Static_Descending,
+     * а затем обратно на IdIssuingMethod::Dynamic,
+     * IdContainer уже не будет выдавать ранее добавленные ID в том порядке
+     * в котором мы их добавляли в него. Но вновь добавленные ID будут выдаваться в порядке добавления. <br>
+     * Сейчас это скорее баг нежели фича. В будущих версиях этот момент будет доработан
+     * (будет обратно совместим).
+     *
+     * @see
+     * IdContainer(IdIssuingMethod idIssuingMethod) <br>
+     * setIdIssuingMethod(IdIssuingMethod) <br>
+     * IdIssuingMethod
+     */
     template<class T>
     class IdContainer
     {
@@ -27,30 +85,111 @@ namespace ONF
         IdIssuingMethod idIssuingMethod_;
 
     public:
+        /**
+         * @param idIssuingMethod - метод выдачи ID.
+         */
         IdContainer(IdIssuingMethod idIssuingMethod = IdIssuingMethod::Dynamic);
+
+        /**
+         * @param other - копируемый объект класса.
+         */
         IdContainer(const IdContainer<T>& other);
+
+        /**
+         * После перемещения other остается пустым и
+         * переводится в режим выдачи ID: IdIssuingMethod::Dynamic.
+         *
+         * @param other - перемещаемый объект класса.
+         */
         IdContainer(IdContainer<T>&& other);
         virtual ~IdContainer();
 
+        /**
+         * @brief Добавляет уникальные ID в IdContainer.
+         * @param id - ID для добавления.
+         * @return В случае успеха возвращает true, иначе false.
+         */
         bool add(T id);
+
+        /**
+         * @brief Возвращает ID в соответствии с методом выдачи ID.
+         * @return
+         * Если ID для возврата был найден, возвращает ID,
+         * иначе [std::nullopt](https://en.cppreference.com/w/cpp/utility/optional/nullopt).
+         */
         std::optional<T> getNextId();
 
+        /**
+         * @brief Удаляет ID из IdContainer.
+         *
+         * Если ID переданный для удаления найден, метод удалит его.
+         * Если же ID не был найден, метод проигнорирует его.
+         *
+         * @param id - ID для удаления.
+         */
         void erase(T id);
+
+        /**
+         * @brief Очищает IdContainer.
+         *
+         * Все ID при очистке будут удалены, но метод выдачи ID останется прежним
+         * и не сбросится до значения по умолчанию.
+         */
         void clear();
 
+        /**
+         * @brief Проверяет наличие ID в IdContainer.
+         * @param id - Проверяемое ID.
+         * @return Если ID найдено, возвращает true, иначе false.
+         */
         bool find(T id) const;
+
+        /**
+         * @brief Возвращает ID по указанному индексу.
+         * @param index - индекс по которому нужно найти ID.
+         * @return
+         * Если ID по указанному индексу найден, возвращает ID,
+         * иначе [std::nullopt](https://en.cppreference.com/w/cpp/utility/optional/nullopt).
+         */
         std::optional<T> findByIndex(size_t index) const;
 
+        /**
+         * @brief Задает метод выдачи ID для IdContainer.
+         *
+         * @bug
+         * На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени.<br>
+         * Это связанно с тем что IdContainer переписывает все ID
+         * из [std::list](https://en.cppreference.com/w/cpp/container/list)
+         * в [std::set](https://en.cppreference.com/w/cpp/container/set)
+         * или обратно.
+         *
+         * @param idIssuingMethod - метод выдачи ID который нужно установить.
+         */
         void setIdIssuingMethod(IdIssuingMethod idIssuingMethod);
+
+        /**
+         * @brief Возвращает метод выдачи ID заданный для IdContainer.
+         * @return Возвращает один из перечислителей @ref IdIssuingMethod.
+         */
         IdIssuingMethod getIdIssuingMethod() const;
 
+        /**
+         * @return Возвращает количество хранимых ID.
+         */
         size_t size() const;
 
         IdContainer<T>& operator=(const IdContainer<T>& other);
         IdContainer<T>& operator=(IdContainer<T>&& other);
 
     protected:
+        /**
+         * @return Возвращает количество ID хранимых в unorderedIds_.
+         */
         size_t getUnorderedIdsSize() const;
+
+        /**
+         * @return Возвращает количество ID хранимых в orderedIds_.
+         */
         size_t getOrderedIdsSize() const;
 
     };
@@ -86,11 +225,11 @@ namespace ONF
         ldouble d  = static_cast<ldouble>(step);
 
         ldouble n = std::abs((An - A1 + d) / d);
-        return (n - static_cast<ulonglong>(n) == static_cast<ldouble>(0.0));
+        return (n - static_cast<udlong>(n) == static_cast<ldouble>(0.0));
     }
 
     template<class T>
-    T moveFromId(T start, T step, longlong n) {
+    T moveFromId(T start, T step, dlong n) {
         return start + (n * step);
     }
 
@@ -111,7 +250,7 @@ namespace ONF
             bool        state;
             T           value;
 
-            longlong    stepCount;
+            dlong    stepCount;
         };
 
     private:
@@ -138,10 +277,10 @@ namespace ONF
         IdRange(IdRange&& other) = default;
         virtual ~IdRange();
 
-        IdInfo moveBorder(BorderRange borderRange, longlong n);
+        IdInfo moveBorder(BorderRange borderRange, dlong n);
 
-        IdInfo getIdInfo(BorderRange borderRange, longlong n) const;
-        std::optional<IdInfo> getIdInfo(BorderRange borderRange, T id, longlong n) const;
+        IdInfo getIdInfo(BorderRange borderRange, dlong n) const;
+        std::optional<IdInfo> getIdInfo(BorderRange borderRange, T id, dlong n) const;
 
         inline void reset();
 

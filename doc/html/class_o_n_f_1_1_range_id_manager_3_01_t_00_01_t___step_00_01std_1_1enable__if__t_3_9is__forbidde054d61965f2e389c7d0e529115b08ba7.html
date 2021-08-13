@@ -1,0 +1,855 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ONF: Шаблон класса ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ONF
+   </div>
+   <div id="projectbrief">Небольшая, разнородная библиотека</div>
+  </td>
+   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="#pro-methods">Защищенные члены</a> &#124;
+<a href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbiddeb011ac9db348f345ce927499709c98b2.html">Полный список членов класса</a>  </div>
+  <div class="headertitle">
+<div class="title">Шаблон класса ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_id_management_8h_source.html">IdManagement.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a4ceba726feeaeef39fc1abaa880623d2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a4ceba726feeaeef39fc1abaa880623d2">RangeIdManager</a> (T start=0, T_Step step=1)</td></tr>
+<tr class="separator:a4ceba726feeaeef39fc1abaa880623d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad82802a3f31998362120e19872092f65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ad82802a3f31998362120e19872092f65">RangeIdManager</a> (const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;other)</td></tr>
+<tr class="separator:ad82802a3f31998362120e19872092f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a226844fdd6a9a3f565d1dde550954b52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a226844fdd6a9a3f565d1dde550954b52">RangeIdManager</a> (<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;other)</td></tr>
+<tr class="separator:a226844fdd6a9a3f565d1dde550954b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8549d726973836682c84e922d7ab2971"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a8549d726973836682c84e922d7ab2971">~RangeIdManager</a> ()</td></tr>
+<tr class="separator:a8549d726973836682c84e922d7ab2971"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0ea6611f98fd070cdcaf2757460860e"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa0ea6611f98fd070cdcaf2757460860e">getFreeId</a> ()</td></tr>
+<tr class="separator:aa0ea6611f98fd070cdcaf2757460860e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1aa3a2ad9d85e300a5cdbd06d4f51da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da">reserve</a> (T id, <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">ReservationMethod</a> reservationMethod=<a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ReservationMethod::NotSet</a>)</td></tr>
+<tr class="separator:ac1aa3a2ad9d85e300a5cdbd06d4f51da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b108ee8c0a501b103e2927574d1d158"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a3b108ee8c0a501b103e2927574d1d158">free</a> (T id)</td></tr>
+<tr class="separator:a3b108ee8c0a501b103e2927574d1d158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e6d84e1541a2ff6fe7a556f0eba095c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a1e6d84e1541a2ff6fe7a556f0eba095c">freeAll</a> ()</td></tr>
+<tr class="separator:a1e6d84e1541a2ff6fe7a556f0eba095c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9a9e934afa0bb2fba3cd78acc8c909f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ab9a9e934afa0bb2fba3cd78acc8c909f">find</a> (T id) const</td></tr>
+<tr class="separator:ab9a9e934afa0bb2fba3cd78acc8c909f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7105d538b95cffc51819249cfd7b649"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa7105d538b95cffc51819249cfd7b649">setBorderLimit</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, T value)</td></tr>
+<tr class="separator:aa7105d538b95cffc51819249cfd7b649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06c80646468d3c32e7cd314a7702f6ff"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a06c80646468d3c32e7cd314a7702f6ff">getBorderLimit</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="separator:a06c80646468d3c32e7cd314a7702f6ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4823db69e97ac226450d392eb8db1b6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ab4823db69e97ac226450d392eb8db1b6">setHardStep</a> (bool value)</td></tr>
+<tr class="separator:ab4823db69e97ac226450d392eb8db1b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77d90ec0b94b0d2ce584ba5e64012ec9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a77d90ec0b94b0d2ce584ba5e64012ec9">isHardStep</a> () const</td></tr>
+<tr class="separator:a77d90ec0b94b0d2ce584ba5e64012ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa079b0a8e3c18c514c1cc367cb6add79"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa079b0a8e3c18c514c1cc367cb6add79">setIdIssuingMethod</a> (<a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> idIssuingMethod)</td></tr>
+<tr class="separator:aa079b0a8e3c18c514c1cc367cb6add79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaeb358bc57c2dafd85df7df103b78c6f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aaeb358bc57c2dafd85df7df103b78c6f">getIdIssuingMethod</a> () const</td></tr>
+<tr class="separator:aaeb358bc57c2dafd85df7df103b78c6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa04101b6babb9059c7207ca5b8146d65"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa04101b6babb9059c7207ca5b8146d65">size</a> () const</td></tr>
+<tr class="separator:aa04101b6babb9059c7207ca5b8146d65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef9998889d9fd5694f6efc30b1b0a4f7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aef9998889d9fd5694f6efc30b1b0a4f7">isStandardId</a> (T id) const</td></tr>
+<tr class="separator:aef9998889d9fd5694f6efc30b1b0a4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2da08b56ebaf0300bc78fd4b1c542441"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a2da08b56ebaf0300bc78fd4b1c542441">getStart</a> () const</td></tr>
+<tr class="separator:a2da08b56ebaf0300bc78fd4b1c542441"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a33d1e8ddeb4de9cdaafff9516d35c907"><td class="memItemLeft" align="right" valign="top">T_Step&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a33d1e8ddeb4de9cdaafff9516d35c907">getStep</a> () const</td></tr>
+<tr class="separator:a33d1e8ddeb4de9cdaafff9516d35c907"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fb17d196ee564f48f44af7814380cf5"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a5fb17d196ee564f48f44af7814380cf5">getBorderValue</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="separator:a5fb17d196ee564f48f44af7814380cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c2ba0b31ea16f7c4e3acae9573081ee"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a6c2ba0b31ea16f7c4e3acae9573081ee">getBorderState</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="separator:a6c2ba0b31ea16f7c4e3acae9573081ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f11a8d1bb74ade211ac7b60165efa9b"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a7f11a8d1bb74ade211ac7b60165efa9b">findClosestStdId</a> (T id) const</td></tr>
+<tr class="separator:a7f11a8d1bb74ade211ac7b60165efa9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0aa12e36a8d1c0abb4ea4c7f608e8de"><td class="memItemLeft" align="right" valign="top">std::optional&lt; T &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#af0aa12e36a8d1c0abb4ea4c7f608e8de">findClosestStdId</a> (T id, <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="separator:af0aa12e36a8d1c0abb4ea4c7f608e8de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8a8365ef10b3a1327be87c90f7c0ae0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ad8a8365ef10b3a1327be87c90f7c0ae0">operator=</a> (const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;other)</td></tr>
+<tr class="separator:ad8a8365ef10b3a1327be87c90f7c0ae0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719be95876c2264ddecfc9e3f6eded56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a719be95876c2264ddecfc9e3f6eded56">operator=</a> (<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;other)</td></tr>
+<tr class="separator:a719be95876c2264ddecfc9e3f6eded56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Защищенные члены</h2></td></tr>
+<tr class="memitem:a3fc72f4b93d7622f82cb09d99df34a59"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a3fc72f4b93d7622f82cb09d99df34a59">getFreeIdsSize</a> () const</td></tr>
+<tr class="separator:a3fc72f4b93d7622f82cb09d99df34a59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa82a4e607f471a05bb1258bd6602f0f4"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa82a4e607f471a05bb1258bd6602f0f4">getReservedIdsSize</a> () const</td></tr>
+<tr class="separator:aa82a4e607f471a05bb1258bd6602f0f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a4ceba726feeaeef39fc1abaa880623d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ceba726feeaeef39fc1abaa880623d2">&#9670;&nbsp;</a></span>RangeIdManager() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>start</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T_Step&#160;</td>
+          <td class="paramname"><em>step</em> = <code>1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad82802a3f31998362120e19872092f65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad82802a3f31998362120e19872092f65">&#9670;&nbsp;</a></span>RangeIdManager() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a226844fdd6a9a3f565d1dde550954b52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a226844fdd6a9a3f565d1dde550954b52">&#9670;&nbsp;</a></span>RangeIdManager() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8549d726973836682c84e922d7ab2971"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8549d726973836682c84e922d7ab2971">&#9670;&nbsp;</a></span>~RangeIdManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::~<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="ab9a9e934afa0bb2fba3cd78acc8c909f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9a9e934afa0bb2fba3cd78acc8c909f">&#9670;&nbsp;</a></span>find()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::find </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7f11a8d1bb74ade211ac7b60165efa9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f11a8d1bb74ade211ac7b60165efa9b">&#9670;&nbsp;</a></span>findClosestStdId() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;T&gt; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::findClosestStdId </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af0aa12e36a8d1c0abb4ea4c7f608e8de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0aa12e36a8d1c0abb4ea4c7f608e8de">&#9670;&nbsp;</a></span>findClosestStdId() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;T&gt; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::findClosestStdId </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
+          <td class="paramname"><em>borderRange</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b108ee8c0a501b103e2927574d1d158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b108ee8c0a501b103e2927574d1d158">&#9670;&nbsp;</a></span>free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::free </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1e6d84e1541a2ff6fe7a556f0eba095c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e6d84e1541a2ff6fe7a556f0eba095c">&#9670;&nbsp;</a></span>freeAll()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::freeAll </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a06c80646468d3c32e7cd314a7702f6ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06c80646468d3c32e7cd314a7702f6ff">&#9670;&nbsp;</a></span>getBorderLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderLimit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
+          <td class="paramname"><em>borderRange</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6c2ba0b31ea16f7c4e3acae9573081ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c2ba0b31ea16f7c4e3acae9573081ee">&#9670;&nbsp;</a></span>getBorderState()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderState </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
+          <td class="paramname"><em>borderRange</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5fb17d196ee564f48f44af7814380cf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb17d196ee564f48f44af7814380cf5">&#9670;&nbsp;</a></span>getBorderValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
+          <td class="paramname"><em>borderRange</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0ea6611f98fd070cdcaf2757460860e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0ea6611f98fd070cdcaf2757460860e">&#9670;&nbsp;</a></span>getFreeId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt;T&gt; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeId </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3fc72f4b93d7622f82cb09d99df34a59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fc72f4b93d7622f82cb09d99df34a59">&#9670;&nbsp;</a></span>getFreeIdsSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeIdsSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaeb358bc57c2dafd85df7df103b78c6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaeb358bc57c2dafd85df7df103b78c6f">&#9670;&nbsp;</a></span>getIdIssuingMethod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getIdIssuingMethod </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa82a4e607f471a05bb1258bd6602f0f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa82a4e607f471a05bb1258bd6602f0f4">&#9670;&nbsp;</a></span>getReservedIdsSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getReservedIdsSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2da08b56ebaf0300bc78fd4b1c542441"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2da08b56ebaf0300bc78fd4b1c542441">&#9670;&nbsp;</a></span>getStart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStart </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a33d1e8ddeb4de9cdaafff9516d35c907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a33d1e8ddeb4de9cdaafff9516d35c907">&#9670;&nbsp;</a></span>getStep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T_Step <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStep </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a77d90ec0b94b0d2ce584ba5e64012ec9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77d90ec0b94b0d2ce584ba5e64012ec9">&#9670;&nbsp;</a></span>isHardStep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isHardStep </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aef9998889d9fd5694f6efc30b1b0a4f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef9998889d9fd5694f6efc30b1b0a4f7">&#9670;&nbsp;</a></span>isStandardId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isStandardId </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad8a8365ef10b3a1327be87c90f7c0ae0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8a8365ef10b3a1327be87c90f7c0ae0">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a719be95876c2264ddecfc9e3f6eded56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a719be95876c2264ddecfc9e3f6eded56">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac1aa3a2ad9d85e300a5cdbd06d4f51da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1aa3a2ad9d85e300a5cdbd06d4f51da">&#9670;&nbsp;</a></span>reserve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::reserve </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">ReservationMethod</a>&#160;</td>
+          <td class="paramname"><em>reservationMethod</em> = <code><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ReservationMethod::NotSet</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7105d538b95cffc51819249cfd7b649"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7105d538b95cffc51819249cfd7b649">&#9670;&nbsp;</a></span>setBorderLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setBorderLimit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
+          <td class="paramname"><em>borderRange</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab4823db69e97ac226450d392eb8db1b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4823db69e97ac226450d392eb8db1b6">&#9670;&nbsp;</a></span>setHardStep()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setHardStep </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa079b0a8e3c18c514c1cc367cb6add79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa079b0a8e3c18c514c1cc367cb6add79">&#9670;&nbsp;</a></span>setIdIssuingMethod()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setIdIssuingMethod </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a>&#160;</td>
+          <td class="paramname"><em>idIssuingMethod</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa04101b6babb9059c7207ca5b8146d65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa04101b6babb9059c7207ca5b8146d65">&#9670;&nbsp;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T , class T_Step &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>Объявления и описания членов класса находятся в файле:<ul>
+<li>Z:/Project/ONF/ONF/include/<a class="el" href="_id_management_8h_source.html">IdManagement.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html">RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

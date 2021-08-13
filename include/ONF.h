@@ -9,10 +9,21 @@
 
 namespace ONF
 {
-    typedef unsigned long long ulonglong;
-    typedef long long longlong;
+    typedef unsigned long long udlong;
+    typedef long long dlong;
     typedef long double ldouble;
 
+    /**
+     * @brief Возвращает абсолютное значение числа.
+     *
+     * Эта функция является заменой [std::abs](https://en.cppreference.com/w/cpp/numeric/math/abs). <br>
+     * Это необходимо для поддержки *unsigned* типов.
+     *
+     * @param value - Число абсолютное значение которого надо найти.
+     * @return
+     * Если **value** >= 0, возвращает **value**.
+     * Если **value** < 0, возвращает **-value**.
+     */
     template<class T>
     T abs(T value) {
         return value < 0 ? -value : value;

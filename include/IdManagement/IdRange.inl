@@ -1,17 +1,4 @@
-﻿//#include "IdManagement.h"
-#include "ONF.h"
-#include <cmath>
-#include <cstdlib>
-#include <type_traits>
-#include <algorithm>
-#include <limits>
-#include <exception>
-#include <string>
-#include <utility>
-
-
-
-
+﻿#include "../IdManagement.h"
 
 
 template<class T>
@@ -48,7 +35,7 @@ ONF::IdRange<T>::
 template<class T>
 typename ONF::IdRange<T>::IdInfo
 ONF::IdRange<T>::
-moveBorder(BorderRange borderRange, longlong n)
+moveBorder(BorderRange borderRange, dlong n)
 {
     IdInfo idInfo;
 
@@ -68,7 +55,7 @@ moveBorder(BorderRange borderRange, longlong n)
 template<class T>
 typename ONF::IdRange<T>::IdInfo
 ONF::IdRange<T>::
-getIdInfo(BorderRange borderRange, longlong n) const
+getIdInfo(BorderRange borderRange, dlong n) const
 {
     IdInfo idInfo;
 
@@ -84,7 +71,7 @@ getIdInfo(BorderRange borderRange, longlong n) const
 template<class T>
 std::optional<typename ONF::IdRange<T>::IdInfo>
 ONF::IdRange<T>::
-getIdInfo(BorderRange borderRange, T id, longlong n) const
+getIdInfo(BorderRange borderRange, T id, dlong n) const
 {
     if (!isStandardId(id, start_, step_))
         return std::nullopt;
