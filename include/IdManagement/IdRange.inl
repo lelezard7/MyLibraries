@@ -2,21 +2,6 @@
 
 
 template<class T>
-ONF::IdRange<T>::IdInfo::
-IdInfo()
-    : flags    (IDRF_NOT_SET),
-      position (IDRP_NOT_SET),
-      border   (BorderRange::UpperBorder),
-      state    (false),
-      value    (0),
-      stepCount(0) {}
-
-template<class T>
-ONF::IdRange<T>::IdInfo::
-~IdInfo() {}
-
-
-template<class T>
 ONF::IdRange<T>::
 IdRange(T start, T step)
     : upperBorderState_(false),
@@ -91,7 +76,7 @@ getIdInfo(BorderRange borderRange, T id, dlong n) const
 }
 
 template<class T>
-inline void
+void
 ONF::IdRange<T>::
 reset()
 {
@@ -128,7 +113,7 @@ setBorderValue(BorderRange borderRange, T value)
 }
 
 template<class T>
-inline T
+T
 ONF::IdRange<T>::
 getBorderValue(BorderRange borderRange) const
 {
@@ -139,7 +124,7 @@ getBorderValue(BorderRange borderRange) const
 }
 
 template<class T>
-inline void
+void
 ONF::IdRange<T>::
 setBorderState(BorderRange borderRange, bool state)
 {
@@ -150,7 +135,7 @@ setBorderState(BorderRange borderRange, bool state)
 }
 
 template<class T>
-inline bool
+bool
 ONF::IdRange<T>::
 getBorderState(BorderRange borderRange) const
 {
@@ -166,7 +151,7 @@ ONF::IdRange<T>::
 setBorderLimit(BorderRange borderRange, T value)
 {
     if (borderRange == BorderRange::UpperBorder) {
-        if (upperBorder_ > value)
+        if (value < upperBorder_)
             return false;
 
         upperLimit_ = value;
@@ -174,7 +159,7 @@ setBorderLimit(BorderRange borderRange, T value)
     }
 
     if (borderRange == BorderRange::LowerBorder) {
-        if (lowerBorder_ < value)
+        if (value > lowerBorder_)
             return false;
 
         lowerLimit_ = value;
@@ -183,7 +168,7 @@ setBorderLimit(BorderRange borderRange, T value)
 }
 
 template<class T>
-inline T
+T
 ONF::IdRange<T>::
 getBorderLimit(BorderRange borderRange) const
 {
@@ -194,7 +179,7 @@ getBorderLimit(BorderRange borderRange) const
 }
 
 template<class T>
-inline T
+T
 ONF::IdRange<T>::
 getStart() const
 {
@@ -202,7 +187,7 @@ getStart() const
 }
 
 template<class T>
-inline T
+T
 ONF::IdRange<T>::
 getStep() const
 {
@@ -249,14 +234,15 @@ fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Ac
         }
     }
 
-    idInfo.position = IDRP_ON_BORDER;
+    idInfo.position += IDRP_ON_BORDER;
+
     idInfo.value = borderValue;
     idInfo.stepCount = 0;
 
     if (n == 0)
-        idInfo.flags = IDRF_SUCCESSFULLY;
+        idInfo.flags += IDRF_SUCCESSFULLY;
     else
-        idInfo.flags = (n > 0 ? IDRF_ID_OUT_RANGE : IDRF_RANGE_ARE_BENT);
+        idInfo.flags += (n > 0 ? IDRF_ID_OUT_RANGE : IDRF_RANGE_ARE_BENT);
 
     fillInfoAboutTerritory(idInfo, borderRange, borderValue);
     return 0;
@@ -268,7 +254,7 @@ ONF::IdRange<T>::
 fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
 {
     if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(ONF::abs(n) * step_) <= static_cast<ldouble>(borderLimit)) {
-        idInfo.flags = IDRF_SUCCESSFULLY;
+        idInfo.flags += IDRF_SUCCESSFULLY;
         idInfo.value = borderValue + (ONF::abs(n) * step_);
         idInfo.stepCount = n;
         return true;
@@ -279,12 +265,12 @@ fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) con
             idInfo.value = borderValue + (i * step_);
 
             if (n > 0) {
-                idInfo.flags = IDRF_ID_OUT_RANGE;
+                idInfo.flags += IDRF_ID_OUT_RANGE;
                 idInfo.stepCount = i;
                 return true;
             }
 
-            idInfo.flags = IDRF_RANGE_ARE_BENT;
+            idInfo.flags += IDRF_RANGE_ARE_BENT;
             idInfo.stepCount = -i;
             return true;
         }
@@ -299,7 +285,7 @@ ONF::IdRange<T>::
 fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
 {
     if (static_cast<ldouble>(borderValue) - static_cast<ldouble>(ONF::abs(n) * step_) >= static_cast<ldouble>(borderLimit)) {
-        idInfo.flags = IDRF_SUCCESSFULLY;
+        idInfo.flags += IDRF_SUCCESSFULLY;
         idInfo.value = borderValue - (ONF::abs(n) * step_);
         idInfo.stepCount = n;
         return true;
@@ -310,12 +296,12 @@ fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) 
             idInfo.value = borderValue - (i * step_);
 
             if (n > 0) {
-                idInfo.flags = IDRF_ID_OUT_RANGE;
+                idInfo.flags += IDRF_ID_OUT_RANGE;
                 idInfo.stepCount = i;
                 return true;
             }
 
-            idInfo.flags = IDRF_RANGE_ARE_BENT;
+            idInfo.flags += IDRF_RANGE_ARE_BENT;
             idInfo.stepCount = -i;
             return true;
         }
@@ -343,7 +329,7 @@ fillInfoAboutTerritory(IdInfo& idInfo, BorderRange borderRange, T borderValue) c
 
     idInfo.state = (borderRange == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
     idInfo.border = borderRange;
-    idInfo.flags += IDRF_ID_AT_START;
+    idInfo.position += IDRP_ID_AT_START;
 }
 
 template<class T>
@@ -352,14 +338,29 @@ ONF::IdRange<T>::
 fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const
 {
     if (action == Action::Move) {
-        idInfo.position = IDRP_ON_BORDER;
+        idInfo.position += IDRP_ON_BORDER;
         return;
     }
 
     if (idInfo.value == upperBorder_ || idInfo.value == lowerBorder_) {
-        idInfo.position = IDRP_ON_BORDER;
+        idInfo.position += IDRP_ON_BORDER;
         return;
     }
 
-    idInfo.position = (n > 0 ? IDRP_OUT_RANGE : IDRP_IN_RANGE);
+    idInfo.position += (n > 0 ? IDRP_OUT_RANGE : IDRP_IN_RANGE);
 }
+
+
+template<class T>
+ONF::IdRange<T>::IdInfo::
+IdInfo()
+    : flags    (IDRF_NOT_SET),
+      position (IDRP_NOT_SET),
+      border   (BorderRange::UpperBorder),
+      state    (false),
+      value    (0),
+      stepCount(0) {}
+
+template<class T>
+ONF::IdRange<T>::IdInfo::
+~IdInfo() {}

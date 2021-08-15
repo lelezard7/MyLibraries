@@ -11,25 +11,6 @@ IdContainer(IdIssuingMethod idIssuingMethod)
 
 template<class T>
 ONF::IdContainer<T>::
-IdContainer(const IdContainer<T>& other)
-    : unorderedIds_   (other.unorderedIds_),
-      orderedIds_     (other.orderedIds_),
-      idIssuingMethod_(other.idIssuingMethod_) {}
-
-template<class T>
-ONF::IdContainer<T>::
-IdContainer(IdContainer<T>&& other)
-    : unorderedIds_   (std::move(other.unorderedIds_)),
-      orderedIds_     (std::move(other.orderedIds_)),
-      idIssuingMethod_(std::move(other.idIssuingMethod_))
-{
-    other.unorderedIds_.clear();
-    other.orderedIds_.clear();
-    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
-}
-
-template<class T>
-ONF::IdContainer<T>::
 ~IdContainer() {}
 
 template<class T>
@@ -195,34 +176,6 @@ size() const
         return unorderedIds_.size();
 
     return orderedIds_.size();
-}
-
-template<class T>
-ONF::IdContainer<T>&
-ONF::IdContainer<T>::
-operator=(const IdContainer<T>& other)
-{
-    unorderedIds_    = other.unorderedIds_;
-    orderedIds_      = other.orderedIds_;
-    idIssuingMethod_ = other.idIssuingMethod_;
-
-    return *this;
-}
-
-template<class T>
-ONF::IdContainer<T>&
-ONF::IdContainer<T>::
-operator=(IdContainer<T>&& other)
-{
-    unorderedIds_    = std::move(other.unorderedIds_);
-    orderedIds_      = std::move(other.orderedIds_);
-    idIssuingMethod_ = std::move(other.idIssuingMethod_);
-
-    other.unorderedIds_.clear();
-    other.orderedIds_.clear();
-    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
-
-    return *this;
 }
 
 template<class T>

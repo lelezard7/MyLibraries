@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -110,10 +117,10 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_container.html','')
 Открытые члены</h2></td></tr>
 <tr class="memitem:a3a950a7194450e9127336fc44d33aaa8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a3a950a7194450e9127336fc44d33aaa8">IdContainer</a> (<a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> idIssuingMethod=<a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>)</td></tr>
 <tr class="separator:a3a950a7194450e9127336fc44d33aaa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae71780908fbff354481e50337274aadb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#ae71780908fbff354481e50337274aadb">IdContainer</a> (const <a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;other)</td></tr>
-<tr class="separator:ae71780908fbff354481e50337274aadb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2ce6ebd42654adfef39dda3f4fcd24c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a2ce6ebd42654adfef39dda3f4fcd24c9">IdContainer</a> (<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&amp;other)</td></tr>
-<tr class="separator:a2ce6ebd42654adfef39dda3f4fcd24c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc72d1f4c3345af5f9d554f891856501"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#acc72d1f4c3345af5f9d554f891856501">IdContainer</a> (const <a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;other)=default</td></tr>
+<tr class="separator:acc72d1f4c3345af5f9d554f891856501"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c59b8d3174776ebae1d12531ada1d13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a4c59b8d3174776ebae1d12531ada1d13">IdContainer</a> (<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&amp;other)=default</td></tr>
+<tr class="separator:a4c59b8d3174776ebae1d12531ada1d13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a434e4986660ff18330d7cd9dae5c5540"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a434e4986660ff18330d7cd9dae5c5540">~IdContainer</a> ()</td></tr>
 <tr class="separator:a434e4986660ff18330d7cd9dae5c5540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3b6ad308da0da72bbb9ee2ee57c0442"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#ac3b6ad308da0da72bbb9ee2ee57c0442">add</a> (T id)</td></tr>
@@ -141,17 +148,20 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_container.html','')
 <tr class="memdesc:ae6539a93793a894ffe0933e0abc3ccd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает метод выдачи ID заданный для <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a>.  <a href="class_o_n_f_1_1_id_container.html#ae6539a93793a894ffe0933e0abc3ccd7">Подробнее...</a><br /></td></tr>
 <tr class="separator:ae6539a93793a894ffe0933e0abc3ccd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a25dab2a3675023a7a74d8459996044ea"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a25dab2a3675023a7a74d8459996044ea">size</a> () const</td></tr>
+<tr class="memdesc:a25dab2a3675023a7a74d8459996044ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество выданных ID.  <a href="class_o_n_f_1_1_id_container.html#a25dab2a3675023a7a74d8459996044ea">Подробнее...</a><br /></td></tr>
 <tr class="separator:a25dab2a3675023a7a74d8459996044ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2af0c51418cf2ffa1d38406ecbe0b50e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a2af0c51418cf2ffa1d38406ecbe0b50e">operator=</a> (const <a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;other)</td></tr>
-<tr class="separator:a2af0c51418cf2ffa1d38406ecbe0b50e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3248876cdff5152f451f0bd68b70c9ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a3248876cdff5152f451f0bd68b70c9ff">operator=</a> (<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&amp;other)</td></tr>
-<tr class="separator:a3248876cdff5152f451f0bd68b70c9ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea3b76437b2f4e78199bf8e54f700a44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#aea3b76437b2f4e78199bf8e54f700a44">operator=</a> (const <a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;other)=default</td></tr>
+<tr class="separator:aea3b76437b2f4e78199bf8e54f700a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9180a8e578700f559bb1f2e23243f0b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#aa9180a8e578700f559bb1f2e23243f0b">operator=</a> (<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt; T &gt; &amp;&amp;other)=default</td></tr>
+<tr class="separator:aa9180a8e578700f559bb1f2e23243f0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Защищенные члены</h2></td></tr>
 <tr class="memitem:a485fea92380d8839b89719b9276194ef"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">getUnorderedIdsSize</a> () const</td></tr>
+<tr class="memdesc:a485fea92380d8839b89719b9276194ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID хранимых в <b>unorderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">Подробнее...</a><br /></td></tr>
 <tr class="separator:a485fea92380d8839b89719b9276194ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3d305cf61c8776de45265b4298309bc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">getOrderedIdsSize</a> () const</td></tr>
+<tr class="memdesc:aa3d305cf61c8776de45265b4298309bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID хранимых в <b>orderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">Подробнее...</a><br /></td></tr>
 <tr class="separator:aa3d305cf61c8776de45265b4298309bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
@@ -161,9 +171,9 @@ class ONF::IdContainer&lt; T &gt;</h3>
 <p>Контейнер с настраиваемым способом выдачи ID. </p>
 <p>По сути <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> это объединение <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> и <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a>. <br  />
  <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> хранит все записанные в него уникальные ID и выдает их в порядке возрастания, убывания или добавления. <br  />
- Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">IdIssuingMethod::Static_Ascending</a> то ID выдаются в порядке возрастания. <br  />
- Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">IdIssuingMethod::Static_Descending</a> то ID выдаются в порядке убывания. <br  />
- Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a> то ID выдаются в порядке их добавления в контейнер. <br  />
+ Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">IdIssuingMethod::Static_Ascending</a>, то ID выдаются в порядке возрастания. <br  />
+ Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">IdIssuingMethod::Static_Descending</a>, то ID выдаются в порядке убывания. <br  />
+ Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>, то ID выдаются в порядке их добавления в контейнер. <br  />
  По умолчанию метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>. <br  />
  Мы можем задать способ выдачи ID в конструкторе при создании и менять через метод <a class="el" href="class_o_n_f_1_1_id_container.html#a5eed11bf8d371806c169b72d0d49fb26" title="Задает метод выдачи ID для IdContainer.">setIdIssuingMethod(IdIssuingMethod)</a>.</p>
 <p>Когда метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>, все ID хранятся в <b>unorderedIds_</b>, а при <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">IdIssuingMethod::Static_Ascending</a> и <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">IdIssuingMethod::Static_Descending</a> в <b>orderedIds_</b>:</p>
@@ -174,7 +184,7 @@ class ONF::IdContainer&lt; T &gt;</h3>
  Сейчас это скорее баг нежели фича. В будущих версиях этот момент будет доработан (будет обратно совместим).</dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_container.html#a3a950a7194450e9127336fc44d33aaa8">IdContainer(IdIssuingMethod idIssuingMethod)</a> <br  />
  <a class="el" href="class_o_n_f_1_1_id_container.html#a5eed11bf8d371806c169b72d0d49fb26" title="Задает метод выдачи ID для IdContainer.">setIdIssuingMethod(IdIssuingMethod)</a> <br  />
- <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> </dd></dl>
+ <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b" title="Содержит методы выдачи ID для IdContainer и характер границ диапазона RangeIdManager.">IdIssuingMethod</a> </dd></dl>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a3a950a7194450e9127336fc44d33aaa8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3a950a7194450e9127336fc44d33aaa8">&#9670;&nbsp;</a></span>IdContainer() <span class="overload">[1/3]</span></h2>
@@ -193,6 +203,7 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>По умолчанию метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">idIssuingMethod</td><td>- метод выдачи ID. </td></tr>
@@ -202,13 +213,16 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="ae71780908fbff354481e50337274aadb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae71780908fbff354481e50337274aadb">&#9670;&nbsp;</a></span>IdContainer() <span class="overload">[2/3]</span></h2>
+<a id="acc72d1f4c3345af5f9d554f891856501"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc72d1f4c3345af5f9d554f891856501">&#9670;&nbsp;</a></span>IdContainer() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer</a>&lt; T &gt;::<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a> </td>
@@ -218,6 +232,11 @@ template&lt;class T &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -228,13 +247,16 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a2ce6ebd42654adfef39dda3f4fcd24c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2ce6ebd42654adfef39dda3f4fcd24c9">&#9670;&nbsp;</a></span>IdContainer() <span class="overload">[3/3]</span></h2>
+<a id="a4c59b8d3174776ebae1d12531ada1d13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c59b8d3174776ebae1d12531ada1d13">&#9670;&nbsp;</a></span>IdContainer() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer</a>&lt; T &gt;::<a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a> </td>
@@ -244,8 +266,13 @@ template&lt;class T &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>После перемещения other остается пустым и переводится в режим выдачи ID: <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>.</p>
+<p>После перемещения, <b>other</b> становится пустым, а режим выдачи ID остается прежним.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">other</td><td>- перемещаемый объект класса. </td></tr>
@@ -308,7 +335,7 @@ template&lt;class T &gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>В случае успеха возвращает true, иначе false. </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>В случае успеха возвращает <em>true</em>, иначе <em>false</em>. </dd></dl>
 
 </div>
 </div>
@@ -384,11 +411,11 @@ template&lt;class T &gt; </div>
 <p>Проверяет наличие ID в <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a>. </p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td>- Проверяемое ID. </td></tr>
+    <tr><td class="paramname">id</td><td>- проверяемое ID. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd>Если ID найдено, возвращает true, иначе false. </dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если ID найдено, возвращает <em>true</em>, иначе <em>false</em>. </dd></dl>
 
 </div>
 </div>
@@ -413,7 +440,7 @@ template&lt;class T &gt; </div>
 <p>Возвращает ID по указанному индексу. </p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramname">index</td><td>- индекс по которому нужно найти ID. </td></tr>
+    <tr><td class="paramname">index</td><td>- индекс по которому нужно найти ID.</td></tr>
   </table>
   </dd>
 </dl>
@@ -489,7 +516,9 @@ template&lt;class T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в orderedIds_. </dd></dl>
+
+<p>Возвращает количество ID хранимых в <b>orderedIds_</b>. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в <b>orderedIds_</b>. </dd></dl>
 
 </div>
 </div>
@@ -517,17 +546,22 @@ template&lt;class T &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в unorderedIds_. </dd></dl>
+
+<p>Возвращает количество ID хранимых в <b>unorderedIds_</b>. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в <b>unorderedIds_</b>. </dd></dl>
 
 </div>
 </div>
-<a id="a2af0c51418cf2ffa1d38406ecbe0b50e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2af0c51418cf2ffa1d38406ecbe0b50e">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+<a id="aea3b76437b2f4e78199bf8e54f700a44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea3b76437b2f4e78199bf8e54f700a44">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt;T&gt;&amp; <a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer</a>&lt; T &gt;::operator= </td>
@@ -537,17 +571,31 @@ template&lt;class T &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- копируемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="a3248876cdff5152f451f0bd68b70c9ff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3248876cdff5152f451f0bd68b70c9ff">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+<a id="aa9180a8e578700f559bb1f2e23243f0b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9180a8e578700f559bb1f2e23243f0b">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a>&lt;T&gt;&amp; <a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer</a>&lt; T &gt;::operator= </td>
@@ -557,7 +605,19 @@ template&lt;class T &gt; </div>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+<p>После перемещения, <b>other</b> становится пустым, а режим выдачи ID остается прежним.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- перемещаемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -580,7 +640,7 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p>Задает метод выдачи ID для <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a>. </p>
-<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени.<br  />
+<dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени. <br  />
  Это связанно с тем что <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> переписывает все ID из <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> в <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> или обратно.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -607,7 +667,9 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество хранимых ID. </dd></dl>
+
+<p>Возвращает количество выданных ID. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество выданных ID. </dd></dl>
 
 </div>
 </div>

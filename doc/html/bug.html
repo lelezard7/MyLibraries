@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -98,7 +105,7 @@ $(document).ready(function(){initNavTree('bug.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><dl class="reflist">
 <dt>Член <a class="el" href="class_o_n_f_1_1_id_container.html#a5eed11bf8d371806c169b72d0d49fb26">ONF::IdContainer&lt; T &gt;::setIdIssuingMethod</a>  (IdIssuingMethod idIssuingMethod)</dt>
-<dd><a class="anchor" id="_bug000001"></a> На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени.<br  />
+<dd><a class="anchor" id="_bug000001"></a> На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени. <br  />
  Это связанно с тем что <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> переписывает все ID из <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> в <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> или обратно.</dd>
 </dl>
 </div></div><!-- contents -->

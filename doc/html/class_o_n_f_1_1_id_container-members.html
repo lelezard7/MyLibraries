@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -109,10 +116,10 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_container.html','')
   <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">getOrderedIdsSize</a>() const</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">getUnorderedIdsSize</a>() const</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a3a950a7194450e9127336fc44d33aaa8">IdContainer</a>(IdIssuingMethod idIssuingMethod=IdIssuingMethod::Dynamic)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#ae71780908fbff354481e50337274aadb">IdContainer</a>(const IdContainer&lt; T &gt; &amp;other)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a2ce6ebd42654adfef39dda3f4fcd24c9">IdContainer</a>(IdContainer&lt; T &gt; &amp;&amp;other)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a2af0c51418cf2ffa1d38406ecbe0b50e">operator=</a>(const IdContainer&lt; T &gt; &amp;other)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a3248876cdff5152f451f0bd68b70c9ff">operator=</a>(IdContainer&lt; T &gt; &amp;&amp;other)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#acc72d1f4c3345af5f9d554f891856501">IdContainer</a>(const IdContainer&lt; T &gt; &amp;other)=default</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a4c59b8d3174776ebae1d12531ada1d13">IdContainer</a>(IdContainer&lt; T &gt; &amp;&amp;other)=default</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#aea3b76437b2f4e78199bf8e54f700a44">operator=</a>(const IdContainer&lt; T &gt; &amp;other)=default</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#aa9180a8e578700f559bb1f2e23243f0b">operator=</a>(IdContainer&lt; T &gt; &amp;&amp;other)=default</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a5eed11bf8d371806c169b72d0d49fb26">setIdIssuingMethod</a>(IdIssuingMethod idIssuingMethod)</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a25dab2a3675023a7a74d8459996044ea">size</a>() const</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html#a434e4986660ff18330d7cd9dae5c5540">~IdContainer</a>()</td><td class="entry"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td><td class="entry"><span class="mlabel">virtual</span></td></tr>

@@ -26,6 +26,7 @@ var NAVTREE =
 [
   [ "ONF", "index.html", [
     [ "Ошибки", "bug.html", null ],
+    [ "Группы", "modules.html", "modules" ],
     [ "Пространства имен", "namespaces.html", [
       [ "Пространства имен", "namespaces.html", "namespaces_dup" ],
       [ "Члены пространств имен", "namespacemembers.html", [

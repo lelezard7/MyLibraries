@@ -19,7 +19,8 @@ namespace ONF
      * Эта функция является заменой [std::abs](https://en.cppreference.com/w/cpp/numeric/math/abs). <br>
      * Это необходимо для поддержки *unsigned* типов.
      *
-     * @param value - Число абсолютное значение которого надо найти.
+     * @param value - число абсолютное значение которого надо найти.
+     *
      * @return
      * Если **value** >= 0, возвращает **value**.
      * Если **value** < 0, возвращает **-value**.

@@ -9,8 +9,9 @@ var indexSectionsWithContent =
   6: "dlu",
   7: "bir",
   8: "dilnrsu",
-  9: "io",
-  10: "О"
+  9: "o",
+  10: "i",
+  11: "О"
 };
 
 var indexSectionNames =
@@ -25,7 +26,8 @@ var indexSectionNames =
   7: "enums",
   8: "enumvalues",
   9: "defines",
-  10: "pages"
+  10: "groups",
+  11: "pages"
 };
 
 var indexSectionLabels =
@@ -40,6 +42,7 @@ var indexSectionLabels =
   7: "Перечисления",
   8: "Элементы перечислений",
   9: "Макросы",
-  10: "Страницы"
+  10: "Группы",
+  11: "Страницы"
 };
 

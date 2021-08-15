@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -109,6 +116,7 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер с настраиваемым способом выдачи ID.  <a href="class_o_n_f_1_1_id_container.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Динамический диапазон стандартных ID.  <a href="class_o_n_f_1_1_id_range.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -130,10 +138,12 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">Static_Ascending</a>
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">Static_Descending</a>
  }</td></tr>
+<tr class="memdesc:a3815caa61c1318fa522bb73b6987b18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит методы выдачи ID для IdContainer и характер границ диапазона RangeIdManager.  <a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">Подробнее...</a><br /></td></tr>
 <tr class="separator:a3815caa61c1318fa522bb73b6987b18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab170d2fc466df2a25a59a23cd541dc54"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> { <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">UpperBorder</a>
 , <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">LowerBorder</a>
  }</td></tr>
+<tr class="memdesc:ab170d2fc466df2a25a59a23cd541dc54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит название границ диапазона создаваемого IdRange.  <a href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">Подробнее...</a><br /></td></tr>
 <tr class="separator:ab170d2fc466df2a25a59a23cd541dc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa379d56cc5b00030d3772d015b40f999"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">ReservationMethod</a> { <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">NotSet</a>
 , <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">Interpolate</a>
@@ -145,10 +155,12 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 Функции</h2></td></tr>
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">isStandardId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a0c80070a358a426c55424b0cefd3ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">Подробнее...</a><br /></td></tr>
 <tr class="separator:a0c80070a358a426c55424b0cefd3ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1627bf59cd726be3a313423b753381b1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a1627bf59cd726be3a313423b753381b1"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a1627bf59cd726be3a313423b753381b1">moveFromId</a> (T start, T step, <a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a> n)</td></tr>
-<tr class="separator:a1627bf59cd726be3a313423b753381b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">moveFromId</a> (T start, T step, <a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a> n)</td></tr>
+<tr class="memdesc:a053b3525f6354bec193786e4d37d475f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">Подробнее...</a><br /></td></tr>
+<tr class="separator:a053b3525f6354bec193786e4d37d475f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">abs</a> (T value)</td></tr>
 <tr class="memdesc:a0808d8e7521d234bcfef5e47a4ecad03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает абсолютное значение числа.  <a href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">Подробнее...</a><br /></td></tr>
@@ -223,9 +235,13 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Содержит название границ диапазона создаваемого <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280"></a>UpperBorder&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b"></a>LowerBorder&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280"></a>UpperBorder&#160;</td><td class="fielddoc"><p>Верхняя граница диапазона. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b"></a>LowerBorder&#160;</td><td class="fielddoc"><p>Нижняя граница диапазона. </p>
+</td></tr>
 </table>
 
 </div>
@@ -249,10 +265,12 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Содержит методы выдачи ID для <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> и характер границ диапазона <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>. </p>
 <p>Это перечисление отвечает за задание метода выдачи ID в классе <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> и <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>. <br  />
- В <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> оно так же отвечает за поведение границ которые создаются в нем классом <a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a>.</p>
+ В <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> оно так же отвечает за поведение границ которые создаются в нем классом <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
 <dl class="section warning"><dt>Предупреждения</dt><dd>IdIssuingMethod имеет пару НО. Подробнее о каждом перечислителе см. <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> и <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>.</dd></dl>
-<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> </dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c"></a>Dynamic&#160;</td><td class="fielddoc"><p>ID выдаются в порядке их добавления. <br  />
  В классе <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> границы имеют плавающий характер. </p>
@@ -318,7 +336,7 @@ template&lt;class T &gt; </div>
  Это необходимо для поддержки <em>unsigned</em> типов.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramname">value</td><td>- Число абсолютное значение которого надо найти. </td></tr>
+    <tr><td class="paramname">value</td><td>- число абсолютное значение которого надо найти.</td></tr>
   </table>
   </dd>
 </dl>
@@ -360,10 +378,33 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Проверяет, является ID стандартным или же нет. </p>
+<p>Стандартный ID это число, которое является \( n \)-м членом арифметической прогрессии. <br  />
+ \( n \)-й член арифметической прогрессии вычисляется по формуле:</p>
+<p>\( a_n = a_1 + (n - 1)d \)</p>
+<p>Отсюда можно вывести формулу:</p>
+<p>\( n = \frac{a_n - a_1}{d} + 1 \)</p>
+<p>Где \( d \neq 0 \)</p>
+<p>Обозначение: <br  />
+ \( a_n \) - ID которое мы должны проверить на то, стандартное ли оно или нет. <br  />
+ \( a_1 \) - начальный ID. <br  />
+ \( d \) - размер шага. <br  />
+ \( n \) - позиция ID в арифметической прогрессии.</p>
+<p>Если в результате вычислений, \( n \) окажется целым числом, то проверяемый ID ( \( a_n \)) можно считать стандартным. Если \( n \) окажется дробным, то проверяемый ID будет нестандартным.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>- ID которое нужно проверить. </td></tr>
+    <tr><td class="paramname">start</td><td>- начальный ID. </td></tr>
+    <tr><td class="paramname">step</td><td>- размер шага. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если <b>target</b> окажется стандартным ID, вернется <em>ture</em>, иначе <em>false</em>. </dd></dl>
+
 </div>
 </div>
-<a id="a1627bf59cd726be3a313423b753381b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1627bf59cd726be3a313423b753381b1">&#9670;&nbsp;</a></span>moveFromId()</h2>
+<a id="a053b3525f6354bec193786e4d37d475f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a053b3525f6354bec193786e4d37d475f">&#9670;&nbsp;</a></span>moveFromId()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +426,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a>&#160;</td>
           <td class="paramname"><em>n</em>&#160;</td>
         </tr>
         <tr>
@@ -395,6 +436,19 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Вычисляет ID находящееся на определенном расстоянии от известного ID. </p>
+<p>Искомый ID вычисляется по простой формуле: <br  />
+ \( ID = start + (n * step) \)</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>- начальный ID. </td></tr>
+    <tr><td class="paramname">step</td><td>- размер шага. </td></tr>
+    <tr><td class="paramname">n</td><td>- количество шагов. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает найденный ID. </dd></dl>
 
 </div>
 </div>

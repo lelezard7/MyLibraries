@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -119,8 +126,10 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер с настраиваемым способом выдачи ID.  <a href="class_o_n_f_1_1_id_container.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Динамический диапазон стандартных ID.  <a href="class_o_n_f_1_1_id_range.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">ONF::IdRange&lt; T &gt;::IdInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для предоставления информации об ID, возвращаемая <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html">ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -132,24 +141,33 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Макросы</h2></td></tr>
-<tr class="memitem:a370d3a52c71f72a321b8e3b3ea343c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#a370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>&#160;&#160;&#160;0x00000</td></tr>
-<tr class="separator:a370d3a52c71f72a321b8e3b3ea343c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13f39cd05b01544e050250bc7818ca31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#a13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>&#160;&#160;&#160;0x00001</td></tr>
-<tr class="separator:a13f39cd05b01544e050250bc7818ca31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abea4da1fb9f520c9f765eb2934589f2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#abea4da1fb9f520c9f765eb2934589f2d">IDRF_ID_OUT_RANGE</a>&#160;&#160;&#160;0x00002</td></tr>
-<tr class="separator:abea4da1fb9f520c9f765eb2934589f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0cca866c8c57ddf03c5c04775118e03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#ac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a>&#160;&#160;&#160;0x00004</td></tr>
-<tr class="separator:ac0cca866c8c57ddf03c5c04775118e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6bc3cb5b42fe1bfb26c5880bd6ea3d05"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#a6bc3cb5b42fe1bfb26c5880bd6ea3d05">IDRF_ID_AT_START</a>&#160;&#160;&#160;0x00008</td></tr>
-<tr class="separator:a6bc3cb5b42fe1bfb26c5880bd6ea3d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a167555ad5959c372dce744ab4d26b33c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#a167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>&#160;&#160;&#160;-1</td></tr>
-<tr class="separator:a167555ad5959c372dce744ab4d26b33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b5e8bca37798861fa54874d9a5c7e8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#a6b5e8bca37798861fa54874d9a5c7e8f">IDRP_IN_RANGE</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a6b5e8bca37798861fa54874d9a5c7e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa926d88d1a9fb97f5b7f847e237cbfb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#aa926d88d1a9fb97f5b7f847e237cbfb3">IDRP_ON_BORDER</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:aa926d88d1a9fb97f5b7f847e237cbfb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa84157c048f7611e4c727d3d2bc273fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_management_8h.html#aa84157c048f7611e4c727d3d2bc273fa">IDRP_OUT_RANGE</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:aa84157c048f7611e4c727d3d2bc273fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="memdesc:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг не задан.  <a href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13f39cd05b01544e050250bc7818ca31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="memdesc:ga13f39cd05b01544e050250bc7818ca31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задача успешно выполнена.  <a href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga13f39cd05b01544e050250bc7818ca31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabea4da1fb9f520c9f765eb2934589f2d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___flag.html#gabea4da1fb9f520c9f765eb2934589f2d">IDRF_ID_OUT_RANGE</a>&#160;&#160;&#160;0x0002</td></tr>
+<tr class="memdesc:gabea4da1fb9f520c9f765eb2934589f2d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Граница попыталась выйты за пределы своего Лимита.  <a href="group___id_range___flag.html#gabea4da1fb9f520c9f765eb2934589f2d">Подробнее...</a><br /></td></tr>
+<tr class="separator:gabea4da1fb9f520c9f765eb2934589f2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0cca866c8c57ddf03c5c04775118e03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a>&#160;&#160;&#160;0x0004</td></tr>
+<tr class="memdesc:gac0cca866c8c57ddf03c5c04775118e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Одна граница попыталась пересечь другую границу.  <a href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">Подробнее...</a><br /></td></tr>
+<tr class="separator:gac0cca866c8c57ddf03c5c04775118e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga167555ad5959c372dce744ab4d26b33c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="memdesc:ga167555ad5959c372dce744ab4d26b33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Позиция не задана.  <a href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga167555ad5959c372dce744ab4d26b33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6b5e8bca37798861fa54874d9a5c7e8f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___position.html#ga6b5e8bca37798861fa54874d9a5c7e8f">IDRP_IN_RANGE</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="memdesc:ga6b5e8bca37798861fa54874d9a5c7e8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится в диапазоне.  <a href="group___id_range___position.html#ga6b5e8bca37798861fa54874d9a5c7e8f">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga6b5e8bca37798861fa54874d9a5c7e8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa926d88d1a9fb97f5b7f847e237cbfb3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___position.html#gaa926d88d1a9fb97f5b7f847e237cbfb3">IDRP_ON_BORDER</a>&#160;&#160;&#160;0x0002</td></tr>
+<tr class="memdesc:gaa926d88d1a9fb97f5b7f847e237cbfb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится на границе.  <a href="group___id_range___position.html#gaa926d88d1a9fb97f5b7f847e237cbfb3">Подробнее...</a><br /></td></tr>
+<tr class="separator:gaa926d88d1a9fb97f5b7f847e237cbfb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa84157c048f7611e4c727d3d2bc273fa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___position.html#gaa84157c048f7611e4c727d3d2bc273fa">IDRP_OUT_RANGE</a>&#160;&#160;&#160;0x0004</td></tr>
+<tr class="memdesc:gaa84157c048f7611e4c727d3d2bc273fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится вне диапазона.  <a href="group___id_range___position.html#gaa84157c048f7611e4c727d3d2bc273fa">Подробнее...</a><br /></td></tr>
+<tr class="separator:gaa84157c048f7611e4c727d3d2bc273fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae922cd49fbaaa8675f02129177840cc5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___position.html#gae922cd49fbaaa8675f02129177840cc5">IDRP_ID_AT_START</a>&#160;&#160;&#160;0x0008</td></tr>
+<tr class="memdesc:gae922cd49fbaaa8675f02129177840cc5"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится на Стартовой позиции.  <a href="group___id_range___position.html#gae922cd49fbaaa8675f02129177840cc5">Подробнее...</a><br /></td></tr>
+<tr class="separator:gae922cd49fbaaa8675f02129177840cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Перечисления</h2></td></tr>
@@ -157,10 +175,12 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">ONF::Static_Ascending</a>
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">ONF::Static_Descending</a>
  }</td></tr>
+<tr class="memdesc:a3815caa61c1318fa522bb73b6987b18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит методы выдачи ID для IdContainer и характер границ диапазона RangeIdManager.  <a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">Подробнее...</a><br /></td></tr>
 <tr class="separator:a3815caa61c1318fa522bb73b6987b18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab170d2fc466df2a25a59a23cd541dc54"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">ONF::BorderRange</a> { <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">ONF::UpperBorder</a>
 , <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">ONF::LowerBorder</a>
  }</td></tr>
+<tr class="memdesc:ab170d2fc466df2a25a59a23cd541dc54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит название границ диапазона создаваемого IdRange.  <a href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">Подробнее...</a><br /></td></tr>
 <tr class="separator:ab170d2fc466df2a25a59a23cd541dc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa379d56cc5b00030d3772d015b40f999"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">ONF::ReservationMethod</a> { <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ONF::NotSet</a>
 , <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ONF::Interpolate</a>
@@ -172,10 +192,12 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 Функции</h2></td></tr>
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">ONF::isStandardId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a0c80070a358a426c55424b0cefd3ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">Подробнее...</a><br /></td></tr>
 <tr class="separator:a0c80070a358a426c55424b0cefd3ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1627bf59cd726be3a313423b753381b1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a1627bf59cd726be3a313423b753381b1"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a1627bf59cd726be3a313423b753381b1">ONF::moveFromId</a> (T start, T step, dlong n)</td></tr>
-<tr class="separator:a1627bf59cd726be3a313423b753381b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">ONF::moveFromId</a> (T start, T step, udlong n)</td></tr>
+<tr class="memdesc:a053b3525f6354bec193786e4d37d475f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">Подробнее...</a><br /></td></tr>
+<tr class="separator:a053b3525f6354bec193786e4d37d475f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Переменные</h2></td></tr>
@@ -183,133 +205,6 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <tr class="memitem:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">ONF::is_forbidden_types_combination</a></td></tr>
 <tr class="separator:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Макросы</h2>
-<a id="a6bc3cb5b42fe1bfb26c5880bd6ea3d05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6bc3cb5b42fe1bfb26c5880bd6ea3d05">&#9670;&nbsp;</a></span>IDRF_ID_AT_START</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRF_ID_AT_START&#160;&#160;&#160;0x00008</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abea4da1fb9f520c9f765eb2934589f2d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abea4da1fb9f520c9f765eb2934589f2d">&#9670;&nbsp;</a></span>IDRF_ID_OUT_RANGE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRF_ID_OUT_RANGE&#160;&#160;&#160;0x00002</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a370d3a52c71f72a321b8e3b3ea343c31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a370d3a52c71f72a321b8e3b3ea343c31">&#9670;&nbsp;</a></span>IDRF_NOT_SET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRF_NOT_SET&#160;&#160;&#160;0x00000</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac0cca866c8c57ddf03c5c04775118e03"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac0cca866c8c57ddf03c5c04775118e03">&#9670;&nbsp;</a></span>IDRF_RANGE_ARE_BENT</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRF_RANGE_ARE_BENT&#160;&#160;&#160;0x00004</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a13f39cd05b01544e050250bc7818ca31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a13f39cd05b01544e050250bc7818ca31">&#9670;&nbsp;</a></span>IDRF_SUCCESSFULLY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRF_SUCCESSFULLY&#160;&#160;&#160;0x00001</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6b5e8bca37798861fa54874d9a5c7e8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b5e8bca37798861fa54874d9a5c7e8f">&#9670;&nbsp;</a></span>IDRP_IN_RANGE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRP_IN_RANGE&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a167555ad5959c372dce744ab4d26b33c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a167555ad5959c372dce744ab4d26b33c">&#9670;&nbsp;</a></span>IDRP_NOT_SET</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRP_NOT_SET&#160;&#160;&#160;-1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa926d88d1a9fb97f5b7f847e237cbfb3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa926d88d1a9fb97f5b7f847e237cbfb3">&#9670;&nbsp;</a></span>IDRP_ON_BORDER</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRP_ON_BORDER&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa84157c048f7611e4c727d3d2bc273fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa84157c048f7611e4c727d3d2bc273fa">&#9670;&nbsp;</a></span>IDRP_OUT_RANGE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define IDRP_OUT_RANGE&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

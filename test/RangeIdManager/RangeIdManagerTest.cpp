@@ -659,43 +659,43 @@ TEST_F(OpenRangeIdManagerTests, GetFreeId)
 
 
         if (i == 1) {
-            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
         }
 
         if (i == 2) {
-            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
         }
 
 
@@ -2820,41 +2820,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Ascending)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -3226,41 +3226,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Descending)
     EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -3514,41 +3514,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Dynamic_to_Descending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
@@ -3649,41 +3649,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -3937,41 +3937,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Descending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
@@ -4072,41 +4072,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-54.0));
     EXPECT_TRUE(OpenRangeIdManager_float_Start_2p0_Step_n2p0.free(-56.0));
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
 
     optional_id_int = OpenRangeIdManager_int.getFreeId();
@@ -4360,41 +4360,41 @@ TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Ascending)
 
 TEST_F(OpenRangeIdManagerTests, IdIssuingMethod_Descending_to_Dynamic)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_1p5_Step_1p5.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_Start_2_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n1p5_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_int_Start_10_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_n2_Step_4.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_int_Start_n2p0_Step_2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
-    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_n2.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float_Start_2p0_Step_n2p0.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
     for (int i = 0; i < 30; ++i) {
         OpenRangeIdManager_int.getFreeId();
@@ -5514,23 +5514,23 @@ TEST_F(OpenRangeIdManagerTests, Reserve_DynamicAndAscending_ReserveId)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeAll();
 
 
-        OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
     }
 }
 
@@ -6274,23 +6274,23 @@ TEST_F(OpenRangeIdManagerTests, Reserve_DynamicAndAscending_ReserveRange)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeAll();
 
 
-        OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-        OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-        OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+        OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+        OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
     }
 }
 
@@ -7024,23 +7024,23 @@ TEST_F(OpenRangeIdManagerTests, Reserve_Dynamic_Interpolate)
 
 TEST_F(OpenRangeIdManagerTests, Reserve_Ascending_Interpolate)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
 
     EXPECT_TRUE (OpenRangeIdManager_int.reserve( 2, ReservationMethod::Interpolate));
@@ -7940,43 +7940,43 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_1)
         OpenRangeIdManager_float_Start_2p0_Step_n2p0.freeAll();
 
         if (i == 1) {
-            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
-            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Ascending);
-            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Ascending);
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
         }
 
         if (i == 2) {
-            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_Start_1p5_Step_1p5.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned_Start_2_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_n2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_int_Start_n1p5_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_unsigned_int_Start_10_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_n2_Step_4.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_int_Start_n2p0_Step_2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
-            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Descending);
-            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Descending);
+            OpenRangeIdManager_int_Start_2_Step_n2.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+            OpenRangeIdManager_float_Start_2p0_Step_n2p0.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
         }
     }
 }
@@ -8166,7 +8166,7 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_4)
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
 
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
     EXPECT_TRUE(OpenRangeIdManager_float.reserve( 4.0));
     EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
@@ -8403,8 +8403,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_6_2)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
 {
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
@@ -8465,8 +8465,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_7_1)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_7_2)
 {
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     OpenRangeIdManager_float.setHardStep(false);
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
@@ -8588,8 +8588,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_1)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
     EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
     EXPECT_TRUE(OpenRangeIdManager_int.reserve( 2));
@@ -8617,8 +8617,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_8_2)
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
 
 
-    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Descending);
-    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    OpenRangeIdManager_float.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(OpenRangeIdManager_float.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
     EXPECT_TRUE(OpenRangeIdManager_float.reserve( 2.0));
     EXPECT_TRUE(OpenRangeIdManager_float.reserve( 1.0));
@@ -8723,8 +8723,8 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_10)
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_11)
 {
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
     EXPECT_TRUE(OpenRangeIdManager_int.reserve( 0));
     EXPECT_TRUE(OpenRangeIdManager_int.reserve( 1));
@@ -8833,18 +8833,18 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_14)
     EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
 
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Ascending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Ascending);
 
     EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Ascending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
 
 
-    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Descending);
+    OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Static_Descending);
 
     EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_FALSE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
-    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Descending);
+    EXPECT_EQ(OpenRangeIdManager_int.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
 
 
     OpenRangeIdManager_int.setIdIssuingMethod(IdIssuingMethod::Dynamic);

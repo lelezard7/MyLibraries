@@ -21,6 +21,13 @@
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -101,33 +108,58 @@ $(document).ready(function(){initNavTree('struct_o_n_f_1_1_id_range_1_1_id_info.
 </div><!--header-->
 <div class="contents">
 
+<p>Структура для предоставления информации об ID, возвращаемая <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.  
+ <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#details">Подробнее...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_id_management_8h_source.html">IdManagement.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:a5584c2e0d451bb5a1529a04713557bfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a5584c2e0d451bb5a1529a04713557bfe">IdInfo</a> ()</td></tr>
 <tr class="separator:a5584c2e0d451bb5a1529a04713557bfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3689f5ba623c3e3d61cc4ce88d981cc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a3689f5ba623c3e3d61cc4ce88d981cc8">~IdInfo</a> ()</td></tr>
-<tr class="separator:a3689f5ba623c3e3d61cc4ce88d981cc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab65306a9fa764fffb72cae50d96a7951"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ab65306a9fa764fffb72cae50d96a7951">IdInfo</a> (const <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &amp;other)=default</td></tr>
+<tr class="separator:ab65306a9fa764fffb72cae50d96a7951"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab47d80e0d5168e2b77502d9cf0277874"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ab47d80e0d5168e2b77502d9cf0277874">~IdInfo</a> ()</td></tr>
+<tr class="separator:ab47d80e0d5168e2b77502d9cf0277874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefac1d16cc5dcc886dd3c96a3f689aca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#aefac1d16cc5dcc886dd3c96a3f689aca">operator=</a> (const <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &amp;other)=default</td></tr>
+<tr class="separator:aefac1d16cc5dcc886dd3c96a3f689aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Открытые атрибуты</h2></td></tr>
 <tr class="memitem:ac41d3fd2b30cd32b323078d6878446ee"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ac41d3fd2b30cd32b323078d6878446ee">flags</a></td></tr>
+<tr class="memdesc:ac41d3fd2b30cd32b323078d6878446ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаги. <br  />
+ Значение по умолчанию <a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ac41d3fd2b30cd32b323078d6878446ee">Подробнее...</a><br /></td></tr>
 <tr class="separator:ac41d3fd2b30cd32b323078d6878446ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7dfc172e451ca1e2a6934fb46ac936e8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a7dfc172e451ca1e2a6934fb46ac936e8">position</a></td></tr>
-<tr class="separator:a7dfc172e451ca1e2a6934fb46ac936e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55521f36d04998e94f004738936a3ab4"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a55521f36d04998e94f004738936a3ab4">position</a></td></tr>
+<tr class="memdesc:a55521f36d04998e94f004738936a3ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Позиция ID относительно границ диапазона. <br  />
+ Значение по умолчанию <a class="el" href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a55521f36d04998e94f004738936a3ab4">Подробнее...</a><br /></td></tr>
+<tr class="separator:a55521f36d04998e94f004738936a3ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fb0bd189a78298e6ad43992ae0cae80"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a4fb0bd189a78298e6ad43992ae0cae80">border</a></td></tr>
+<tr class="memdesc:a4fb0bd189a78298e6ad43992ae0cae80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Граница диапазона, на территории которой находится полученный ID. <br  />
+ Значение по умолчанию <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a4fb0bd189a78298e6ad43992ae0cae80">Подробнее...</a><br /></td></tr>
 <tr class="separator:a4fb0bd189a78298e6ad43992ae0cae80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac066c149216bc8d4a732334b8af3b612"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ac066c149216bc8d4a732334b8af3b612">state</a></td></tr>
+<tr class="memdesc:ac066c149216bc8d4a732334b8af3b612"><td class="mdescLeft">&#160;</td><td class="mdescRight">Состояние границы, на территории которой находится полученный ID. <br  />
+ Значение по умолчанию <em>false</em>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ac066c149216bc8d4a732334b8af3b612">Подробнее...</a><br /></td></tr>
 <tr class="separator:ac066c149216bc8d4a732334b8af3b612"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e8189af408c6384fda58a30806fe0fb"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb">value</a></td></tr>
+<tr class="memdesc:a1e8189af408c6384fda58a30806fe0fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Последняя ID на которую успешно смогла переместиться граница. <br  />
+ Значение по умолчанию 0.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb">Подробнее...</a><br /></td></tr>
 <tr class="separator:a1e8189af408c6384fda58a30806fe0fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83cddfe92a39049218e480829fc10e12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a83cddfe92a39049218e480829fc10e12">stepCount</a></td></tr>
+<tr class="memdesc:a83cddfe92a39049218e480829fc10e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Количество успешно сделанных шагов. <br  />
+ Значение по умолчанию 0.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a83cddfe92a39049218e480829fc10e12">Подробнее...</a><br /></td></tr>
 <tr class="separator:a83cddfe92a39049218e480829fc10e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Конструктор(ы)</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><h3>template&lt;class T&gt;<br />
+struct ONF::IdRange&lt; T &gt;::IdInfo</h3>
+
+<p>Структура для предоставления информации об ID, возвращаемая <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>. </p>
+<dl class="section pre"><dt>Предусловие</dt><dd>Прежде стоит ознакомиться с <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>. </dd></dl>
+</div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a5584c2e0d451bb5a1529a04713557bfe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5584c2e0d451bb5a1529a04713557bfe">&#9670;&nbsp;</a></span>IdInfo()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5584c2e0d451bb5a1529a04713557bfe">&#9670;&nbsp;</a></span>IdInfo() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -145,22 +177,99 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a3689f5ba623c3e3d61cc4ce88d981cc8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3689f5ba623c3e3d61cc4ce88d981cc8">&#9670;&nbsp;</a></span>~IdInfo()</h2>
+<a id="ab65306a9fa764fffb72cae50d96a7951"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab65306a9fa764fffb72cae50d96a7951">&#9670;&nbsp;</a></span>IdInfo() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::~IdInfo </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::IdInfo </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- копируемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab47d80e0d5168e2b77502d9cf0277874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab47d80e0d5168e2b77502d9cf0277874">&#9670;&nbsp;</a></span>~IdInfo()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::~IdInfo </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="aefac1d16cc5dcc886dd3c96a3f689aca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefac1d16cc5dcc886dd3c96a3f689aca">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a>&amp; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- копируемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -179,6 +288,55 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Граница диапазона, на территории которой находится полученный ID. <br  />
+ Значение по умолчанию <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>. </p>
+<p>Полученный ID хранится в <b>value</b>.</p>
+<p><b>border</b> хранит информацию о том на чьей территории располагается полученный ID. Полученный ID хранится в <b>value</b>. <br  />
+ Все ID больше Стартового ID находятся на территории <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>, он и будет записан в <b>border</b>. <br  />
+ Все ID меньше Стартового ID находятся на территории <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a>, он и будет записан в <b>border</b>. <br  />
+ Стартовый ID является нейтральным. Если полученный ID совпадает со Стартовым ID, в <b>border</b> записывается то значение <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> которое мы указали в <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder(BorderRange, dlong)</a> или <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo(BorderRange, dlong) const </a>в первом параметре.</p>
+<p>Например: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">...</div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, -4); <span class="comment">//idInfo.border == BorderRange::UpperBorder</span></div>
+<div class="line"> </div>
+<div class="line">                   |&lt;-.&lt;-.&lt;-.&lt;-ub</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">BorderRange::LowerBorder</a>, -4); <span class="comment">//idInfo.border == BorderRange::LowerBorder</span></div>
+<div class="line"> </div>
+<div class="line">                               ub</div>
+<div class="line">       lb&gt;.-&gt;.-&gt;.-&gt;|</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="ttc" id="anamespace_o_n_f_html_ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280"><div class="ttname"><a href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">ONF::BorderRange::UpperBorder</a></div><div class="ttdeci">@ UpperBorder</div><div class="ttdoc">Верхняя граница диапазона.</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b"><div class="ttname"><a href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">ONF::BorderRange::LowerBorder</a></div><div class="ttdeci">@ LowerBorder</div><div class="ttdoc">Нижняя граница диапазона.</div></div>
+</div><!-- fragment --><p><a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> вернет <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> где в первом варианте <b>border</b> равен <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>, а во втором <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> и это несмотря на то что мы запросили один и тот же ID. <br  />
+</p>
+<p>А вот в остальных случаях <b>border</b> будет корректно указывать на то к какой территории принадлежит ID: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">...</div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, -3); <span class="comment">//idInfo.border == BorderRange::UpperBorder</span></div>
+<div class="line"> </div>
+<div class="line">                      |&lt;-.&lt;-.&lt;-ub</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">BorderRange::LowerBorder</a>, -5); <span class="comment">//idInfo.border == BorderRange::UpperBorder</span></div>
+<div class="line"> </div>
+<div class="line">                               ub</div>
+<div class="line">       lb&gt;.-&gt;.-&gt;.-&gt;.-&gt;|</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+</div><!-- fragment --><dl class="section see"><dt>См. также</dt><dd><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ac066c149216bc8d4a732334b8af3b612" title="Состояние границы, на территории которой находится полученный ID.   Значение по умолчанию false.">state</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> <br  />
+ <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb" title="Последняя ID на которую успешно смогла переместиться граница.   Значение по умолчанию 0.">value</a> </dd></dl>
+
 </div>
 </div>
 <a id="ac41d3fd2b30cd32b323078d6878446ee"></a>
@@ -195,10 +353,24 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Флаги. <br  />
+ Значение по умолчанию <a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>. </p>
+<p><b>flags</b> может хранить достаточно разные флаги. <br  />
+ На данный момент доступны следующие флаги: <a class="el" href="group___id_range___flag.html">IdRange_Flag</a>.</p>
+<p>По умолчанию <b>flags</b> имеет значение <a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a> (не путать с <a class="el" href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>). <br  />
+ Флаги <a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>, <a class="el" href="group___id_range___flag.html#gabea4da1fb9f520c9f765eb2934589f2d">IDRF_ID_OUT_RANGE</a>, <a class="el" href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a> показывают, успешно ли выполнена задача перемещения или получения информации об ID классом <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>. <br  />
+ Если в процессе выполнения одна из границ диапазона попытается выйти за пределы своего Лимита, в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#gabea4da1fb9f520c9f765eb2934589f2d">IDRF_ID_OUT_RANGE</a>. <br  />
+ Если в процессе выполнения одна из границ диапазона попытается пересечь другую границу диапазона, в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a>. <br  />
+ Если задача была выполнена успешно и граница не пытались пересечь ни Лимит ни другую границу в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>. <br  />
+ Подробнее о пересечении Лимита или противоположной границы: <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo</a> <br  />
+ <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb" title="Последняя ID на которую успешно смогла переместиться граница.   Значение по умолчанию 0.">value</a> </dd></dl>
+
 </div>
 </div>
-<a id="a7dfc172e451ca1e2a6934fb46ac936e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7dfc172e451ca1e2a6934fb46ac936e8">&#9670;&nbsp;</a></span>position</h2>
+<a id="a55521f36d04998e94f004738936a3ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55521f36d04998e94f004738936a3ab4">&#9670;&nbsp;</a></span>position</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -206,10 +378,25 @@ template&lt;class T &gt; </div>
 template&lt;class T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">int <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::position</td>
+          <td class="memname">unsigned <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::IdInfo::position</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Позиция ID относительно границ диапазона. <br  />
+ Значение по умолчанию <a class="el" href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>. </p>
+<p><b>position</b> хранит информацию о том где располагается полученный ID относительно указанной границы диапазона. Полученный ID хранится в <b>value</b>. <br  />
+ На данный момент доступны следующие флаги: <a class="el" href="group___id_range___position.html">IdRange_Position</a>.</p>
+<p>По умолчанию <b>position</b> имеет значение <a class="el" href="group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a> (не путать с <a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>). <br  />
+ Если полученный ID находится на границе диапазона, в <b>position</b> будет записан <a class="el" href="group___id_range___position.html#gaa926d88d1a9fb97f5b7f847e237cbfb3">IDRP_ON_BORDER</a>. <br  />
+ Если полученный ID находится вне границ диапазона, в <b>position</b> будет записан <a class="el" href="group___id_range___position.html#gaa84157c048f7611e4c727d3d2bc273fa">IDRP_OUT_RANGE</a>. <br  />
+ Если полученный ID находится в границах диапазона, в <b>position</b> будет записан <a class="el" href="group___id_range___position.html#ga6b5e8bca37798861fa54874d9a5c7e8f">IDRP_IN_RANGE</a>. <br  />
+ Если полученный ID совпадает со Стартовым ID, в <b>position</b> будет записан <a class="el" href="group___id_range___position.html#gae922cd49fbaaa8675f02129177840cc5">IDRP_ID_AT_START</a>. <br  />
+ <a class="el" href="group___id_range___position.html#gae922cd49fbaaa8675f02129177840cc5">IDRP_ID_AT_START</a> может быть записан вместе с <a class="el" href="group___id_range___position.html#gaa926d88d1a9fb97f5b7f847e237cbfb3">IDRP_ON_BORDER</a> и <a class="el" href="group___id_range___position.html#ga6b5e8bca37798861fa54874d9a5c7e8f">IDRP_IN_RANGE</a>. <br  />
+ Подробнее о Стартовом ID: <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo</a> <br  />
+ <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb" title="Последняя ID на которую успешно смогла переместиться граница.   Значение по умолчанию 0.">value</a> </dd></dl>
 
 </div>
 </div>
@@ -227,6 +414,15 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Состояние границы, на территории которой находится полученный ID. <br  />
+ Значение по умолчанию <em>false</em>. </p>
+<p>Полученный ID хранится в <b>value</b>.</p>
+<p><b>state</b> хранит состояние границы диапазона указанной в <b>border</b>. <br  />
+ Если граница выключена, в <b>state</b> записывается <em>false</em>. <br  />
+ Если граница включена, в <b>state</b> записывается <em>true</em>.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a4fb0bd189a78298e6ad43992ae0cae80" title="Граница диапазона, на территории которой находится полученный ID.   Значение по умолчанию BorderRange...">border</a> <br  />
+ <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb" title="Последняя ID на которую успешно смогла переместиться граница.   Значение по умолчанию 0.">value</a> </dd></dl>
+
 </div>
 </div>
 <a id="a83cddfe92a39049218e480829fc10e12"></a>
@@ -243,6 +439,31 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Количество успешно сделанных шагов. <br  />
+ Значение по умолчанию 0. </p>
+<p><b>stepCount</b> повязан с <b>value</b>. <b>stepCount</b> указывает, какое количество шагов нужно сделать границе до ID записанного в <b>value</b>. <br  />
+ Если вернуться к примеру из описания <b>value</b>: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">...</div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, 4); <span class="comment">//idInfo.value == 3, idInfo.stepCount == 2</span></div>
+<div class="line"> </div>
+<div class="line">                      ub&gt;.-&gt;.xxxxxx&gt;.x&gt;|</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  3,5  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  ::   .  .  .</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, 4); <span class="comment">//idInfo.value == 5, idInfo.stepCount == 4</span></div>
+<div class="line"> </div>
+<div class="line">                      ub&gt;.-&gt;.-&gt;.-&gt;|</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+</div><!-- fragment --><p>В первом случае <b>stepCount</b> будет равен 2, так как между 1 и 3 всего 2 шага. <br  />
+ Во втором случае <b>stepCount</b> будет равен 4, как и ожидалось (во втором аргументе мы просим получить информацию об ID на расстоянии 4 шагов). Между 1 и 5, всего 4 шага, потому <b>stepCount</b> равен 4.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a1e8189af408c6384fda58a30806fe0fb" title="Последняя ID на которую успешно смогла переместиться граница.   Значение по умолчанию 0.">value</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo</a> </dd></dl>
+
 </div>
 </div>
 <a id="a1e8189af408c6384fda58a30806fe0fb"></a>
@@ -258,6 +479,35 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Последняя ID на которую успешно смогла переместиться граница. <br  />
+ Значение по умолчанию 0. </p>
+<p>Если граница диапазона <em><b>может</b></em> успешно переместиться и ей ничего не помешает, то <b>value</b> примет ожидаемое значение. <br  />
+ Если граница диапазона не <em><b>может</b></em> успешно переместиться, в <b>value</b> будет записан не ожидаемый ID, а ближайший возможный.</p>
+<p>Я подчеркнул слово "может" из-за того что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> не двигает границу, но работает почти так же как и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder</a> который в свою очередь уже двигает границу. <br  />
+ Подробнее о правилах перемещения границы: <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
+<p>Пример: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">...</div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, 4); <span class="comment">//idInfo.value == 3</span></div>
+<div class="line"> </div>
+<div class="line">                      ub&gt;.-&gt;.xxxxxx&gt;.x&gt;|</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  3,5  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  ::   .  .  .</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">auto idInfo = idRange.getIdInfo(<a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, 4); <span class="comment">//idInfo.value == 5</span></div>
+<div class="line"> </div>
+<div class="line">                      ub&gt;.-&gt;.-&gt;.-&gt;|</div>
+<div class="line">       lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+</div><!-- fragment --><p>В первом примере Лимит установленный для <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> на 3,5 мешает границе получить информацию о 5. <br  />
+ Ближайшее ID к 5, информацию о котором мы можем получить это 3. Значит в <b>value</b> будет записана 3. <br  />
+ Во втором случае нам ничего не мешает получить информацию о 5. Значит в <b>value</b> будет записана 5.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a83cddfe92a39049218e480829fc10e12" title="Количество успешно сделанных шагов.   Значение по умолчанию 0.">stepCount</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">IdRange::moveBorder</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">IdRange::getIdInfo</a> </dd></dl>
 
 </div>
 </div>

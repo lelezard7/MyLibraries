@@ -1380,38 +1380,53 @@ TEST_F(IdContainerTests, Test6)
     idContainer_char_descending.setIdIssuingMethod(IdIssuingMethod::Dynamic);
 
 
+    EXPECT_EQ(idContainer_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_int.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_int_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_int_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_int_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_float.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_float_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_ascending.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_float_descending.getUnorderedIdsSize(), 16);
     EXPECT_EQ(idContainer_float_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_unsigned.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_unsigned_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_unsigned_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_unsigned_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_bool.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_bool.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_bool_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_ascending.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_bool_descending.getUnorderedIdsSize(), 2);
     EXPECT_EQ(idContainer_bool_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_char.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_char.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_char_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_char_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_char_descending.getOrderedIdsSize(), 0);
 
@@ -1436,75 +1451,105 @@ TEST_F(IdContainerTests, Test6)
     OpenIdContainer<char> idContainer_char_ascending_cc(idContainer_char_ascending);
     OpenIdContainer<char> idContainer_char_descending_cc(idContainer_char_descending);
 
-    EXPECT_EQ(idContainer_int_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_ascending_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_ascending_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_cc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_cc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_float_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_cc.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_ascending_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_ascending_cc.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_cc.getUnorderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_cc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_unsigned_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_ascending_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_ascending_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_cc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_cc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_bool_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_cc.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_ascending_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_ascending_cc.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_cc.getUnorderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_cc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_char_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_ascending_cc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_ascending_cc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_cc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_cc.getOrderedIdsSize(), 0);
-
+    EXPECT_EQ(idContainer_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_int.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_int_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_int_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_int_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_float.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_float_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_ascending.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_float_descending.getUnorderedIdsSize(), 16);
     EXPECT_EQ(idContainer_float_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_unsigned.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_unsigned_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_unsigned_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_unsigned_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_bool.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_bool.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_bool_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_ascending.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_bool_descending.getUnorderedIdsSize(), 2);
     EXPECT_EQ(idContainer_bool_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_char.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_char.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_char_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_ascending.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_char_descending.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_char_descending.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_int_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_int_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_int_ascending_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_int_descending_cc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_cc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_float_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_float_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_cc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_float_ascending_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending_cc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_float_descending_cc.getUnorderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_cc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_unsigned_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_unsigned_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_unsigned_ascending_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_unsigned_descending_cc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_cc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_bool_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_bool_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_cc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_bool_ascending_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending_cc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_bool_descending_cc.getUnorderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_cc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_char_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_char_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_char_ascending_cc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_char_descending_cc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_cc.getOrderedIdsSize(), 0);
 
 
     OpenIdContainer<int> idContainer_int_cm(std::move(idContainer_int));
@@ -1527,75 +1572,105 @@ TEST_F(IdContainerTests, Test6)
     OpenIdContainer<char> idContainer_char_ascending_cm(std::move(idContainer_char_ascending));
     OpenIdContainer<char> idContainer_char_descending_cm(std::move(idContainer_char_descending));
 
-    EXPECT_EQ(idContainer_int_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_ascending_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_ascending_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_cm.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_cm.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_float_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_cm.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_ascending_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_ascending_cm.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_cm.getUnorderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_cm.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_unsigned_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_ascending_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_ascending_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_cm.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_cm.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_bool_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_cm.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_ascending_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_ascending_cm.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_cm.getUnorderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_cm.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_char_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_ascending_cm.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_ascending_cm.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_cm.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_cm.getOrderedIdsSize(), 0);
-
+    EXPECT_EQ(idContainer_int.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_int.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_int_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_ascending.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_int_descending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_float.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_float.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_float_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_ascending.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_float_descending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_unsigned.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_unsigned.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_unsigned_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_ascending.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_unsigned_descending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_bool.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_bool.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_bool_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_ascending.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_bool_descending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_descending.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_char.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_char.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_char_ascending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_ascending.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_descending.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_char_descending.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_descending.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_int_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_int_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_int_ascending_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_int_descending_cm.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_cm.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_float_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_float_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_cm.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_float_ascending_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending_cm.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_float_descending_cm.getUnorderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_cm.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_unsigned_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_unsigned_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_unsigned_ascending_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_unsigned_descending_cm.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_cm.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_bool_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_bool_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_cm.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_bool_ascending_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending_cm.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_bool_descending_cm.getUnorderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_cm.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_char_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_char_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_char_ascending_cm.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending_cm.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_char_descending_cm.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_cm.getOrderedIdsSize(), 0);
 
 
     OpenIdContainer<int> idContainer_int_oc;
@@ -1638,75 +1713,105 @@ TEST_F(IdContainerTests, Test6)
     idContainer_char_ascending_oc = idContainer_char_ascending_cc;
     idContainer_char_descending_oc = idContainer_char_descending_cc;
 
-    EXPECT_EQ(idContainer_int_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_ascending_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_ascending_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_oc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_oc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_float_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_oc.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_ascending_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_ascending_oc.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_oc.getUnorderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_oc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_unsigned_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_ascending_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_ascending_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_oc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_oc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_bool_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_oc.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_ascending_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_ascending_oc.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_oc.getUnorderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_oc.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_char_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_ascending_oc.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_ascending_oc.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_oc.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_oc.getOrderedIdsSize(), 0);
-
+    EXPECT_EQ(idContainer_int_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_int_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_int_ascending_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_int_descending_cc.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_int_descending_cc.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_float_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_float_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_cc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_float_ascending_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_ascending_cc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_float_descending_cc.getUnorderedIdsSize(), 16);
     EXPECT_EQ(idContainer_float_descending_cc.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_unsigned_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_unsigned_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_unsigned_ascending_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_unsigned_descending_cc.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_unsigned_descending_cc.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_bool_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_bool_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_cc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_bool_ascending_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_ascending_cc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_bool_descending_cc.getUnorderedIdsSize(), 2);
     EXPECT_EQ(idContainer_bool_descending_cc.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_char_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_char_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending_cc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_char_ascending_cc.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_ascending_cc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_cc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_char_descending_cc.getUnorderedIdsSize(), 7);
     EXPECT_EQ(idContainer_char_descending_cc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_int_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_int_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_int_ascending_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_oc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_int_descending_oc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_oc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_float_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_float_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_oc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_float_ascending_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending_oc.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_oc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_float_descending_oc.getUnorderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_oc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_unsigned_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_unsigned_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_unsigned_ascending_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_oc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_unsigned_descending_oc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_oc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_bool_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_bool_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_oc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_bool_ascending_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending_oc.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_oc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_bool_descending_oc.getUnorderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_oc.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_char_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_char_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending_oc.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_char_ascending_oc.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending_oc.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_oc.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_char_descending_oc.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_oc.getOrderedIdsSize(), 0);
 
 
     OpenIdContainer<int> idContainer_int_om;
@@ -1749,75 +1854,105 @@ TEST_F(IdContainerTests, Test6)
     idContainer_char_ascending_om = std::move(idContainer_char_ascending_cm);
     idContainer_char_descending_om = std::move(idContainer_char_descending_cm);
 
-    EXPECT_EQ(idContainer_int_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_ascending_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_int_ascending_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_om.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_int_descending_om.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_float_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_om.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_ascending_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_float_ascending_om.getOrderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_om.getUnorderedIdsSize(), 16);
-    EXPECT_EQ(idContainer_float_descending_om.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_unsigned_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_ascending_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_unsigned_ascending_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_om.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_unsigned_descending_om.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_bool_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_om.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_ascending_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_bool_ascending_om.getOrderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_om.getUnorderedIdsSize(), 2);
-    EXPECT_EQ(idContainer_bool_descending_om.getOrderedIdsSize(), 0);
-
-    EXPECT_EQ(idContainer_char_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_ascending_om.getUnorderedIdsSize(), 0);
-    EXPECT_EQ(idContainer_char_ascending_om.getOrderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_om.getUnorderedIdsSize(), 7);
-    EXPECT_EQ(idContainer_char_descending_om.getOrderedIdsSize(), 0);
-
+    EXPECT_EQ(idContainer_int_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_int_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_int_ascending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_ascending_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_int_descending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_int_descending_cm.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_float_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_float_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_float_ascending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_ascending_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_float_descending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_float_descending_cm.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_unsigned_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_unsigned_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_unsigned_ascending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_ascending_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_unsigned_descending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_unsigned_descending_cm.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_bool_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_bool_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_bool_ascending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_ascending_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_bool_descending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_bool_descending_cm.getOrderedIdsSize(), 0);
 
+    EXPECT_EQ(idContainer_char_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
     EXPECT_EQ(idContainer_char_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending_cm.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
     EXPECT_EQ(idContainer_char_ascending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_ascending_cm.getOrderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_descending_cm.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
     EXPECT_EQ(idContainer_char_descending_cm.getUnorderedIdsSize(), 0);
     EXPECT_EQ(idContainer_char_descending_cm.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_int_om.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_int_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_ascending_om.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_int_ascending_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_int_ascending_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_om.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_int_descending_om.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_int_descending_om.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_float_om.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_float_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_om.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_ascending_om.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_float_ascending_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_float_ascending_om.getOrderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_om.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_float_descending_om.getUnorderedIdsSize(), 16);
+    EXPECT_EQ(idContainer_float_descending_om.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_unsigned_om.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_unsigned_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_ascending_om.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_unsigned_ascending_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_unsigned_ascending_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_om.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_unsigned_descending_om.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_unsigned_descending_om.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_bool_om.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_bool_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_om.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_ascending_om.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_bool_ascending_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_bool_ascending_om.getOrderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_om.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_bool_descending_om.getUnorderedIdsSize(), 2);
+    EXPECT_EQ(idContainer_bool_descending_om.getOrderedIdsSize(), 0);
+
+    EXPECT_EQ(idContainer_char_om.getIdIssuingMethod(), IdIssuingMethod::Static_Ascending);
+    EXPECT_EQ(idContainer_char_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_ascending_om.getIdIssuingMethod(), IdIssuingMethod::Static_Descending);
+    EXPECT_EQ(idContainer_char_ascending_om.getUnorderedIdsSize(), 0);
+    EXPECT_EQ(idContainer_char_ascending_om.getOrderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_om.getIdIssuingMethod(), IdIssuingMethod::Dynamic);
+    EXPECT_EQ(idContainer_char_descending_om.getUnorderedIdsSize(), 7);
+    EXPECT_EQ(idContainer_char_descending_om.getOrderedIdsSize(), 0);
 
 
     idContainer_int_om.clear();

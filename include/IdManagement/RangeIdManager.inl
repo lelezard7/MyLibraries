@@ -91,7 +91,7 @@ getFreeId()
 
         if (freeIds_.size()) {
             ++size_;
-            return *freeIds_.getNext();
+            return *freeIds_.getNextId();
         }
 
         return getNextId();
@@ -108,7 +108,7 @@ getFreeId()
 
         if (freeIds_.size()) {
             ++size_;
-            return *freeIds_.getNext();
+            return *freeIds_.getNextId();
         }
 
         if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
@@ -132,7 +132,7 @@ getFreeId()
 
     if (freeIds_.size()) {
         ++size_;
-        return *freeIds_.getNext();
+        return *freeIds_.getNextId();
     }
 
     if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
