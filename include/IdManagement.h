@@ -215,27 +215,29 @@ namespace ONF
 
 #include "IdManagement/IdContainer.inl"
 
-///@defgroup IdRange_Flag
+/// @defgroup IdRange_Flag
+/// @brief Флаги структуры @ref ONF::IdRange::IdInfo.
 ///@{
-#define IDRF_NOT_SET                    0x0000   ///<Флаг не задан.
-#define IDRF_SUCCESSFULLY               0x0001   ///<Задача успешно выполнена.
-#define IDRF_ID_OUT_RANGE               0x0002   ///<Граница попыталась выйты за пределы своего Лимита.
-#define IDRF_RANGE_ARE_BENT             0x0004   ///<Одна граница попыталась пересечь другую границу.
+#define IDRF_NOT_SET            0x0000   ///<Флаг не задан.
+#define IDRF_SUCCESSFULLY       0x0001   ///<Задача успешно выполнена.
+#define IDRF_ID_OUT_OF_LIMIT    0x0002   ///<Граница попыталась выйты за пределы своего Лимита.
+#define IDRF_RANGE_ARE_BENT     0x0004   ///<Одна граница попыталась пересечь другую границу.
 ///@}
 
-///@defgroup IdRange_Position
+/// @defgroup IdRange_Position
+/// @brief Флаги позиции ID структуры @ref ONF::IdRange::IdInfo.
 ///@{
-#define IDRP_NOT_SET                    0x0000   ///<Позиция не задана.
-#define IDRP_IN_RANGE                   0x0001   ///<ID находится в диапазоне.
-#define IDRP_ON_BORDER                  0x0002   ///<ID находится на границе.
-#define IDRP_OUT_RANGE                  0x0004   ///<ID находится вне диапазона.
-#define IDRP_ID_AT_START                0x0008   ///<ID находится на Стартовой позиции.
+#define IDRP_NOT_SET            0x0000   ///<Позиция не задана.
+#define IDRP_WITHIN_RANGE       0x0001   ///<ID находится в пределах диапазона.
+#define IDRP_AT_BORDER          0x0002   ///<ID находится на границе диапазона.
+#define IDRP_OUT_OF_RANGE       0x0004   ///<ID находится вне диапазона.
+#define IDRP_AT_START           0x0008   ///<ID находится на Стартовой позиции.
 ///@}
 
 namespace ONF
 {
     /**
-     * @brief Содержит название границ диапазона создаваемого IdRange.
+     * @brief Содержит название границ диапазона создаваемых IdRange.
      */
     enum class BorderRange
     {
@@ -359,7 +361,7 @@ namespace ONF
      * ### Получение информации об ID.
      *
      * moveBorder(BorderRange, dlong) после перемещения границы возвращает структуру IdRange::IdInfo,
-     * которая содержит информацию об ID на которую была перемещена граница. <br>
+     * которая содержит информацию об ID на который была перемещена граница. <br>
      * Если нужно получить информацию об ID, но не двигать границу, можно использовать
      * getIdInfo(BorderRange, dlong) const. <br>
      * По сути moveBorder(BorderRange, dlong) и getIdInfo(BorderRange, dlong) const это
@@ -417,6 +419,12 @@ namespace ONF
         struct IdInfo;
 
     private:
+        /**
+         * @see
+         * fillInfoAboutMoveUp <br>
+         * fillInfoAboutMoveDown <br>
+         * getFilledIdInfo
+         */
         enum class Action
         {
             Move,
@@ -459,9 +467,88 @@ namespace ONF
 
         virtual ~IdRange();
 
+        /**
+         * @brief Передвигает указанную границу диапазона.
+         *
+         * **n** показывает на какое количество шагов нужно переместить границу диапазона указанную в
+         * **borderRange**, а знак числа указывает направление движения. <br>
+         * Если **n** имеет знак "+", граница будет идти в сторону расширения диапазона. <br>
+         * Если **n** имеет знак "-", граница будет идти в сторону уменьшения диапазона.
+         *
+         * Более подробно о работе этого метода: <br>
+         * Описание IdRange <br>
+         * IdInfo
+         *
+         * @param borderRange - граница диапазона, которую нужно передвинуть.
+         *
+         * @param
+         * n - количество шагов, на которое нужно передвинуть указанную границу диапазона,
+         * и направление движения.
+         *
+         * @return
+         * Возвращает структуру IdInfo с информацией о последнем ID на который смогла успешно
+         * переместиться граница диапазона.
+         */
         IdInfo moveBorder(BorderRange borderRange, dlong n);
 
+        /**
+         * @brief Возвращает информацию об ID.
+         *
+         * Данный метод работает так же как и moveBorder(BorderRange, dlong), но
+         * в конце своей работы не передвигает границу.
+         *
+         * @param borderRange - граница диапазона, от которой будет вестись отсчет шагов.
+         *
+         * @param
+         * n - количество шагов, которое нужно сделать от границы диапазона указанной в **borderRange**
+         * что бы найти ID, информацию о котором нужно получить.
+         *
+         * @return
+         * Возвращает структуру IdInfo с информацией о последнем ID на который ***может***
+         * переместиться граница диапазона.
+         *
+         * @see Описание IdRange
+         */
         IdInfo getIdInfo(BorderRange borderRange, dlong n) const;
+
+        /**
+         * @brief Возвращает информацию об ID.
+         *
+         * Данный метод работает так же как getIdInfo(BorderRange, dlong) const, но здесь добавляется
+         * параметр **id**. <br>
+         * В getIdInfo(BorderRange, dlong) const параметр **id** скрыт от взгляда. Он равен
+         * текущему значению границы диапазона преданному в первый аргумент. <br>
+         * Т.е. данная запись:
+         * @code
+         * IdRange<int> idRange;
+         * idRange.getIdInfo(BorderRange::UpperBorder, 3);
+         * @endcode
+         *
+         * Равна:
+         * @code
+         * IdRange<int> idRange;
+         * idRange.getIdInfo(BorderRange::UpperBorder, idRange.getBorderValue(BorderRange::UpperBorder), 3);
+         * @endcode
+         *
+         * В **id** может быть передан только стандартный ID. <br>
+         * ID переданный в **id** не должен вызывать пересечение границ диапазона. <br>
+         * ID переданный в **id** не должен находиться за пределами Лимита. <br>
+         * Если хотя бы одно из этих требований не выполняется, метод вернет
+         * [std::nullopt](https://en.cppreference.com/w/cpp/utility/optional/nullopt). <br>
+         * Если данные требования выполняются, метод вернет структуру IdInfo.
+         *
+         * @param borderRange - граница диапазона, от которой будет вестись отсчет шагов.
+         * @param id - временное значение для границы диапазона указанной в **borderRange**.
+         *
+         * @param
+         * n - количество шагов, которое нужно сделать от границы диапазона указанной в **borderRange**
+         * что бы найти ID, информацию о котором нужно получить.
+         *
+         * @return
+         * Если в **id** было передано некорректное значение, вернет
+         * [std::nullopt](https://en.cppreference.com/w/cpp/utility/optional/nullopt),
+         * иначе структуру IdInfo.
+         */
         std::optional<IdInfo> getIdInfo(BorderRange borderRange, T id, dlong n) const;
 
         /**
@@ -550,14 +637,116 @@ namespace ONF
         IdRange& operator=(const IdRange& other) = default;
 
     private:
-        //TODO: Написать в документации почему я поставил возращаемый тип int, а не bool.
-        int fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Action action) const;
+        /**
+         * @brief Создает структуру IdInfo и заполняет ее в соответствии с данными которые мы в нее передали.
+         *
+         * Данный метод не проверяет корректность переданных в него данных. В будущих версиях это будет
+         * исправлено, а сам метод будет вынесен в protected.
+         *
+         * В методах getIdInfo(BorderRange, dlong) const и moveBorder(BorderRange, dlong) в аргумент
+         * **borderRange** метода getFilledIdInfo идет их первый аргумент, а в аргумент **borderValue**
+         * идет текущее значение границы диапазона переданной в первый аргумент. <br>
+         * Но вот в методе getIdInfo(BorderRange, T, dlong) const в аргумент **borderValue** метода
+         * getFilledIdInfo идет "фальшивое текущее значение", что позволяет нам достать до ID
+         * которую не может достать getIdInfo(BorderRange, dlong) const. <br>
+         * О различии перегрузок getIdInfo подробнее в описании IdRange. <br>
+         * В **n** мы передаем количество шагов которое нужно сделать от границы диапазона
+         * и направление движения. <br>
+         * В **action** мы передаем одно из 2-х значений: Action::Move или Action::GetInfo. <br>
+         * Action::Move несмотря на название не двигает границу. Action::Move и Action::GetInfo
+         * нужены лишь для того что бы правильно заполнить структуру IdInfo.
+         *
+         * @param borderRange - граница диапазона от которой производятся вычисления.
+         * @param borderValue - значение указанной в **borderRange** границы диапазона.
+         * @param n - количество шагов.
+         * @param action - действие выполняемое над границей диапазона.
+         * @return Возвращает заполненную IdInfo, содержащую данные об ID
+         * которые были вычислены исходя из данных что мы передали.
+         */
+        IdInfo getFilledIdInfo(BorderRange borderRange, T borderValue, ldouble n, Action action) const;
 
-        bool fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const;
-        bool fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const;
+        /**
+         * Проверяет, возможно ли передвиниуть границу на то количество шагов что мы указали в **n**. <br>
+         * Если это невозможно, проверяет, возможно ли передвиниуть границу хоть на какое то количество
+         * шагов. <br>
+         * Если передвинуть границу вообще невозможно, возвращает *false*, иначе заполняет
+         * структуру IdInfo и возвращает *true*. <br>
+         *
+         * В **action** мы уточняем, что мы собираемся делать со структурой IdInfo после ее получения
+         * из @ref getFilledIdInfo. <br>
+         * Если мы собираемся передвинуть границу, то в **action** стоит передать
+         * Action::Move. Если нам нужно просто получить информацию об ID,
+         * надо передавать Action::GetInfo. <br>
+         * Если мы собираемся передвинуть границу, но в **action**
+         * передадим Action::GetInfo, данные записанные в IdInfo будут не совпадать
+         * с действительностью. <br>
+         * Как минимум IdInfo::position будет иметь занчения IDRP_OUT_OF_RANGE или IDRP_WITHIN_RANGE,
+         * тогда как надо что бы было IDRP_AT_BORDER (так как граница диапазона переместиться на этот ID).
+         *
+         * fillInfoAboutMoveUp передвигает любую из границ вверх. <br>
+         * Это значит что если мы передадим в данный метод BorderRange::UpperBorder он будет передвигаться
+         * в сторону расширения диапазона. <br>
+         * Если же мы передадим в данный метод BorderRange::LowerBorder он будет передвигаться в сторону
+         * уменьшения диапазона.
+         * @code
+         *                          ub>.->.->.->.->...
+         *           lb>.->.->.->.->.->.->.->.->.->...
+         * -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6
+         *  .  .  .  .  .  .  @  .  .  .  .  .  .
+         * @endcode
+         *
+         * @param idInfo - структура для заполнения в случае если передвинуть границу диапазона возможно.
+         * @param borderRange - граница диапазона от которой ведется отсчет.
+         * @param borderValue - временное значение для границы диапазона указанной в **borderRange**.
+         *
+         * @param
+         * borderLimit - ограничение для проверки. Это может быть как Лимит, так и другая граница диапазона.
+         *
+         * @param n - количество шагов которое нужно сделать.
+         * @param action - уточнение о том что будет сделано с полученной информацией.
+         */
+        bool fillInfoAboutMoveUp(IdInfo& idInfo, BorderRange borderRange, T borderValue, T borderLimit, ldouble n, Action action) const;
 
+        /**
+         * fillInfoAboutMoveDown тоже самое что и fillInfoAboutMoveUp, но данный метод передвигает
+         * границы диапазона вниз.
+         * Это значит что если мы передадим в данный метод BorderRange::UpperBorder он будет передвигаться
+         * в сторону уменьшения диапазона. <br>
+         * Если же мы передадим в данный метод BorderRange::LowerBorder он будет передвигаться в сторону
+         * расширения диапазона.
+         * @code
+         * ...<-.<-.<-.<-.<-.<-.<-.<-.<-ub
+         * ...<-.<-.<-.<-lb
+         *     -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6
+         *      .  .  .  .  .  .  @  .  .  .  .  .  .
+         * @endcode
+         */
+        bool fillInfoAboutMoveDown(IdInfo& idInfo, BorderRange borderRange, T borderValue, T borderLimit, ldouble n, Action action) const;
+
+        /**
+         * @brief Заполняет информацию о том на чьей территории находитcя найденный ID.
+         *
+         * fillInfoAboutTerritory заполняет поля **border** и **state** структуры IdInfo. <br>
+         * Подробнее о территориях: IdRange.
+         *
+         * @param idInfo - структура для заполнения.
+         * @param borderRange - граница от которой ведется отсчет.
+         * @param borderValue - полученный ID.
+         */
         void fillInfoAboutTerritory(IdInfo& idInfo, BorderRange borderRange, T borderValue) const;
-        void fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const;
+
+        /**
+         * @brief Заполняет информацию о позиции найденного ID.
+         *
+         * fillInfoAboutPos заполняет поля **position** структуры IdInfo. <br>
+         * Подробнее о позициях найденного ID: IdRange.
+         *
+         * @param idInfo - структура для заполнения.
+         * @param borderValue - полученный ID.
+         * @param n - количество шагов которое нужно сделать.
+         * @param action - уточнение о том что будет сделано с полученной информацией.
+         */
+        void fillInfoAboutPos(IdInfo& idInfo, T borderValue, ldouble n, Action action) const;
 
     };
 
@@ -586,12 +775,12 @@ namespace ONF
                                 ///
                                 /// По умолчанию **flags** имеет значение @ref IDRF_NOT_SET
                                 /// (не путать с @ref IDRP_NOT_SET). <br>
-                                /// Флаги @ref IDRF_SUCCESSFULLY, @ref IDRF_ID_OUT_RANGE,
+                                /// Флаги @ref IDRF_SUCCESSFULLY, @ref IDRF_ID_OUT_OF_LIMIT,
                                 /// @ref IDRF_RANGE_ARE_BENT показывают, успешно ли выполнена
                                 /// задача перемещения или получения информации об ID классом IdRange. <br>
                                 /// Если в процессе выполнения одна из границ диапазона попытается выйти
                                 /// за пределы своего Лимита, в **flags** будет записан
-                                /// @ref IDRF_ID_OUT_RANGE. <br>
+                                /// @ref IDRF_ID_OUT_OF_LIMIT. <br>
                                 /// Если в процессе выполнения одна из границ диапазона попытается
                                 /// пересечь другую границу диапазона, в **flags** будет записан
                                 /// @ref IDRF_RANGE_ARE_BENT. <br>
@@ -616,15 +805,15 @@ namespace ONF
                                 /// По умолчанию **position** имеет значение @ref IDRP_NOT_SET
                                 /// (не путать с @ref IDRF_NOT_SET). <br>
                                 /// Если полученный ID находится на границе диапазона, в **position** будет
-                                /// записан @ref IDRP_ON_BORDER. <br>
+                                /// записан @ref IDRP_AT_BORDER. <br>
                                 /// Если полученный ID находится вне границ диапазона, в **position** будет
-                                /// записан @ref IDRP_OUT_RANGE. <br>
+                                /// записан @ref IDRP_OUT_OF_RANGE. <br>
                                 /// Если полученный ID находится в границах диапазона, в **position** будет
-                                /// записан @ref IDRP_IN_RANGE. <br>
+                                /// записан @ref IDRP_WITHIN_RANGE. <br>
                                 /// Если полученный ID совпадает со Стартовым ID, в **position** будет
-                                /// записан @ref IDRP_ID_AT_START. <br>
-                                /// @ref IDRP_ID_AT_START может быть записан вместе с @ref IDRP_ON_BORDER
-                                /// и @ref IDRP_IN_RANGE. <br>
+                                /// записан @ref IDRP_AT_START. <br>
+                                /// @ref IDRP_AT_START может быть записан вместе с @ref IDRP_AT_BORDER
+                                /// и @ref IDRP_WITHIN_RANGE. <br>
                                 /// Подробнее о Стартовом ID: IdRange.
                                 ///
                                 /// @see

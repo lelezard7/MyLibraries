@@ -71,7 +71,7 @@ getFreeId()
         if (idRange_.getBorderValue(BorderRange::LowerBorder) > idRange_.getStart()) {
             auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
 
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+            if (!(result.flags & IDRF_ID_OUT_OF_LIMIT)) {
                 ++size_;
                 expandRangeIfPossible(BorderRange::LowerBorder);
                 return result.value;
@@ -81,7 +81,7 @@ getFreeId()
         if (idRange_.getBorderValue(BorderRange::UpperBorder) < idRange_.getStart()) {
             auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
 
-            if (!(result.flags & IDRF_ID_OUT_RANGE)) {
+            if (!(result.flags & IDRF_ID_OUT_OF_LIMIT)) {
                 ++size_;
                 expandRangeIfPossible(BorderRange::UpperBorder);
                 return result.value;
@@ -190,7 +190,7 @@ reserve(T id, ReservationMethod reservationMethod)
             !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
             auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
-            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
                 if (!jumpOver(idInfo.value, BorderRange::UpperBorder))
                     return false;
 
@@ -200,7 +200,7 @@ reserve(T id, ReservationMethod reservationMethod)
 
             idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
-            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
                 if (!jumpOver(idInfo.value, BorderRange::LowerBorder))
                     return false;
 
@@ -220,7 +220,7 @@ reserve(T id, ReservationMethod reservationMethod)
 
         auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
-        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
             idRange_.moveBorder(BorderRange::UpperBorder, 1);
             ++size_;
 
@@ -230,7 +230,7 @@ reserve(T id, ReservationMethod reservationMethod)
 
         idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
-        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
             idRange_.moveBorder(BorderRange::LowerBorder, 1);
             ++size_;
 
@@ -291,7 +291,7 @@ reserve(T id, ReservationMethod reservationMethod)
 
     auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
-    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
         if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
             idRange_.setBorderState(BorderRange::UpperBorder, true);
 
@@ -308,7 +308,7 @@ reserve(T id, ReservationMethod reservationMethod)
 
     idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
 
-    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_RANGE)) {
+    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
         if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
             idRange_.setBorderState(BorderRange::LowerBorder, true);
 
@@ -666,7 +666,7 @@ findClosestStdId(T id) const
     while (true) {
         idInfo = idRange.getIdInfo(borderRange, i);
 
-        if (idInfo.flags & IDRF_ID_OUT_RANGE)
+        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
             return idInfo.value;
 
         if ((id < idInfo.value && borderRange == BorderRange::UpperBorder) ||
@@ -769,7 +769,7 @@ getNextId()
     if (step_ > 0) {
         auto result = idRange_.moveBorder(BorderRange::UpperBorder, 1);
 
-        if (result.flags & IDRF_ID_OUT_RANGE)
+        if (result.flags & IDRF_ID_OUT_OF_LIMIT)
             return std::nullopt;
 
         ++size_;
@@ -780,7 +780,7 @@ getNextId()
     if (step_ < 0) {
         auto result = idRange_.moveBorder(BorderRange::LowerBorder, 1);
 
-        if (result.flags & IDRF_ID_OUT_RANGE)
+        if (result.flags & IDRF_ID_OUT_OF_LIMIT)
             return std::nullopt;
 
         ++size_;
@@ -815,7 +815,7 @@ expandRangeIfPossible(BorderRange border)
     while (true) {
         idInfo = idRange_.getIdInfo(border, 1);
 
-        if (idInfo.flags & IDRF_ID_OUT_RANGE)
+        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
             return idInfo;
 
         if (reservedIds_.find(idInfo.value)) {
@@ -944,7 +944,7 @@ normalizeBorderRange(BorderRange borderRange)
     while (true) {
         idInfo = idRange_.getIdInfo(borderRange, 1);
 
-        if (idInfo.flags & IDRF_ID_OUT_RANGE)
+        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
             return idInfo.flags;
 
         if ((idInfo.value > idRange_.getStart() && borderRange == BorderRange::UpperBorder) ||
@@ -1146,7 +1146,7 @@ interpolateIds(T id)
         while (true) {
             idInfo = idRange_.getIdInfo(borderRange, 1);
 
-            if (idInfo.flags & IDRF_ID_OUT_RANGE)
+            if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
                 break;
 
             if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
@@ -1251,7 +1251,7 @@ interpolateIds(T id)
     while (true) {
         idInfo = idRange_.getIdInfo(borderRange, 1);
 
-        if (idInfo.flags & IDRF_ID_OUT_RANGE)
+        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
             break;
 
         if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
@@ -1347,7 +1347,7 @@ reserveIds(T id)
         while (true) {
             idInfo = idRange_.getIdInfo(borderRange, 1);
 
-            if (idInfo.flags & IDRF_ID_OUT_RANGE)
+            if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
                 break;
 
             if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
@@ -1427,7 +1427,7 @@ reserveIds(T id)
     while (true) {
         idInfo = idRange_.getIdInfo(borderRange, 1);
 
-        if (idInfo.flags & IDRF_ID_OUT_RANGE)
+        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
             break;
 
         if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||

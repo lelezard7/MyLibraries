@@ -1,8 +1,8 @@
 var group___id_range___position =
 [
-    [ "IDRP_ID_AT_START", "group___id_range___position.html#gae922cd49fbaaa8675f02129177840cc5", null ],
-    [ "IDRP_IN_RANGE", "group___id_range___position.html#ga6b5e8bca37798861fa54874d9a5c7e8f", null ],
+    [ "IDRP_AT_BORDER", "group___id_range___position.html#ga260b1617d03d6c4bb5fcdc8e4d1ddfd0", null ],
+    [ "IDRP_AT_START", "group___id_range___position.html#ga8bb14bf01d0ec4cff4aad969b73d295d", null ],
     [ "IDRP_NOT_SET", "group___id_range___position.html#ga167555ad5959c372dce744ab4d26b33c", null ],
-    [ "IDRP_ON_BORDER", "group___id_range___position.html#gaa926d88d1a9fb97f5b7f847e237cbfb3", null ],
-    [ "IDRP_OUT_RANGE", "group___id_range___position.html#gaa84157c048f7611e4c727d3d2bc273fa", null ]
+    [ "IDRP_OUT_OF_RANGE", "group___id_range___position.html#ga21d3d2a0393179199e505b33602f841e", null ],
+    [ "IDRP_WITHIN_RANGE", "group___id_range___position.html#ga7e64bc8c0ae71d1f814b8b4debe64342", null ]
 ];

@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ONF: Файл Z:/Project/ONF/ONF/test/IdRange/IdRangeTest.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ONF
+   </div>
+   <div id="projectbrief">Небольшая, разнородная библиотека</div>
+  </td>
+   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('_id_range_test_8cpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Классы</a> &#124;
+<a href="#func-members">Функции</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл IdRangeTest.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="_id_management_8h_source.html">IdManagement.h</a>&quot;</code><br />
+<code>#include &lt;gtest/gtest.h&gt;</code><br />
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
+<tr class="separator:a3c04138a5bfe5d72780bb7e82a18e627"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdb2392f054dae8746743924e5390793"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#acdb2392f054dae8746743924e5390793">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, getStart)</td></tr>
+<tr class="separator:acdb2392f054dae8746743924e5390793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4be3f131b0bddd5dfb00d1bc4566263"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#af4be3f131b0bddd5dfb00d1bc4566263">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, getStep)</td></tr>
+<tr class="separator:af4be3f131b0bddd5dfb00d1bc4566263"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ad431e2ed07e612417ef1eecffb85db"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#a6ad431e2ed07e612417ef1eecffb85db">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, BorderState)</td></tr>
+<tr class="separator:a6ad431e2ed07e612417ef1eecffb85db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeff1204b9f79d3376e1f23c882a0bb49"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#aeff1204b9f79d3376e1f23c882a0bb49">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, BorderLimit)</td></tr>
+<tr class="separator:aeff1204b9f79d3376e1f23c882a0bb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae08a77abe23e53ebe9bbedeae58841ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#ae08a77abe23e53ebe9bbedeae58841ce">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, BorderValue)</td></tr>
+<tr class="separator:ae08a77abe23e53ebe9bbedeae58841ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac196c3d2ce66be0cad1638c43ff749b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#ac196c3d2ce66be0cad1638c43ff749b0">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, moveBorder)</td></tr>
+<tr class="separator:ac196c3d2ce66be0cad1638c43ff749b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aada456d06768bd73cc3b899c93938551"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#aada456d06768bd73cc3b899c93938551">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, reset)</td></tr>
+<tr class="separator:aada456d06768bd73cc3b899c93938551"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d7bea20b17d3caeef1499e9c3998d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#a91d7bea20b17d3caeef1499e9c3998d1">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, getIdInfo_1)</td></tr>
+<tr class="separator:a91d7bea20b17d3caeef1499e9c3998d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc02d19cb93d166dd41a940f4983687"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#acbc02d19cb93d166dd41a940f4983687">TEST_F</a> (<a class="el" href="struct_id_range_tests.html">IdRangeTests</a>, getIdInfo_2)</td></tr>
+<tr class="separator:acbc02d19cb93d166dd41a940f4983687"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8daa26161bfa34189ea596895507cf0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#ac8daa26161bfa34189ea596895507cf0">TEST</a> (SingleTests, Test_1)</td></tr>
+<tr class="separator:ac8daa26161bfa34189ea596895507cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ddeb7671cdd97be7d6abf747732710a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#a1ddeb7671cdd97be7d6abf747732710a">TEST</a> (SingleTests, Test_2)</td></tr>
+<tr class="separator:a1ddeb7671cdd97be7d6abf747732710a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a089bd41d91194f1d2ea371630b48ee8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_id_range_test_8cpp.html#a089bd41d91194f1d2ea371630b48ee8e">TEST</a> (SingleTests, Test_3)</td></tr>
+<tr class="separator:a089bd41d91194f1d2ea371630b48ee8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Функции</h2>
+<a id="a3c04138a5bfe5d72780bb7e82a18e627"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c04138a5bfe5d72780bb7e82a18e627">&#9670;&nbsp;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char **&#160;</td>
+          <td class="paramname"><em>argv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac8daa26161bfa34189ea596895507cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8daa26161bfa34189ea596895507cf0">&#9670;&nbsp;</a></span>TEST() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">SingleTests&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Test_1&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ddeb7671cdd97be7d6abf747732710a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ddeb7671cdd97be7d6abf747732710a">&#9670;&nbsp;</a></span>TEST() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">SingleTests&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Test_2&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a089bd41d91194f1d2ea371630b48ee8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a089bd41d91194f1d2ea371630b48ee8e">&#9670;&nbsp;</a></span>TEST() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST </td>
+          <td>(</td>
+          <td class="paramtype">SingleTests&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Test_3&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aeff1204b9f79d3376e1f23c882a0bb49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeff1204b9f79d3376e1f23c882a0bb49">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[1/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">BorderLimit&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6ad431e2ed07e612417ef1eecffb85db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ad431e2ed07e612417ef1eecffb85db">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[2/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">BorderState&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Состояние объектов класса: Только созданные. Что проверяем: Метод getBorderState(BorderRange) const и setBorderState(BorderRange, bool). Доп. проверки: -</p>
+<p>Проверяемая ситуация: Меняем состояние границ с помощью setBorderState и проверяем, корректно ли сменился режим с помощью getBorderState. Заодно проверим работу getBorderState.</p>
+<p>Сценарий: 1) Вызываем getBorderState чтобы проверить корректность начального состояния. </p>
+
+</div>
+</div>
+<a id="ae08a77abe23e53ebe9bbedeae58841ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae08a77abe23e53ebe9bbedeae58841ce">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[3/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">BorderValue&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a91d7bea20b17d3caeef1499e9c3998d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d7bea20b17d3caeef1499e9c3998d1">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[4/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getIdInfo_1&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acbc02d19cb93d166dd41a940f4983687"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbc02d19cb93d166dd41a940f4983687">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[5/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getIdInfo_2&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acdb2392f054dae8746743924e5390793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdb2392f054dae8746743924e5390793">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[6/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getStart&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Состояние объектов класса: Только созданные. Что проверяем: Метод getStart(). Доп. проверки: - Проверяемая ситуация: Проверить работу метода у только созданных объектов класса. Сценарий: Просто вызвать getStart() у всех объектов класса. </p>
+
+</div>
+</div>
+<a id="af4be3f131b0bddd5dfb00d1bc4566263"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4be3f131b0bddd5dfb00d1bc4566263">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[7/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">getStep&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Состояние объектов класса: Только созданные. Что проверяем: Метод getStep(). Доп. проверки: - Проверяемая ситуация: Проверить работу метода у только созданных объектов класса. Сценарий: Просто вызвать getStep() у всех объектов класса. </p>
+
+</div>
+</div>
+<a id="ac196c3d2ce66be0cad1638c43ff749b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac196c3d2ce66be0cad1638c43ff749b0">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[8/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">moveBorder&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aada456d06768bd73cc3b899c93938551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aada456d06768bd73cc3b899c93938551">&#9670;&nbsp;</a></span>TEST_F() <span class="overload">[9/9]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">TEST_F </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_id_range_tests.html">IdRangeTests</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">reset&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_13e138d54eb8818da29c3992edef070a.html">test</a></li><li class="navelem"><a class="el" href="dir_2bd2000c0ec742a32699bd219f9ffbe0.html">IdRange</a></li><li class="navelem"><a class="el" href="_id_range_test_8cpp.html">IdRangeTest.cpp</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>
