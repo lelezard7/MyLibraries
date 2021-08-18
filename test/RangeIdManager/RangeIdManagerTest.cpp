@@ -8920,6 +8920,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int.isHardStep());
 
@@ -8929,6 +8931,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
@@ -8938,6 +8942,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned.isHardStep());
 
@@ -8952,6 +8958,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int.isHardStep());
 
@@ -8961,6 +8969,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
@@ -8970,6 +8980,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned.isHardStep());
 
@@ -8980,6 +8992,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_cc.isHardStep());
 
@@ -8989,6 +9003,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float_cc.isHardStep());
 
@@ -8998,6 +9014,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_cc.isHardStep());
 
@@ -9012,6 +9030,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int.isHardStep());
 
@@ -9021,8 +9041,10 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float.getBorderValue(BorderRange::LowerBorder), 0.0);
 
-    EXPECT_TRUE(OpenRangeIdManager_float.isHardStep());
+    EXPECT_FALSE(OpenRangeIdManager_float.isHardStep());
 
     EXPECT_EQ(OpenRangeIdManager_float.getFreeIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float.getReservedIdsSize(), 0);
@@ -9030,6 +9052,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned.isHardStep());
 
@@ -9040,6 +9064,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_cm.isHardStep());
 
@@ -9049,6 +9075,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float_cm.isHardStep());
 
@@ -9058,6 +9086,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_cm.isHardStep());
 
@@ -9075,6 +9105,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_oc.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_oc.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_oc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int_oc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_oc.isHardStep());
 
@@ -9084,6 +9116,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_oc.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_oc.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_oc.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_oc.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float_oc.isHardStep());
 
@@ -9093,6 +9127,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_oc.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_oc.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_oc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_oc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_oc.isHardStep());
 
@@ -9103,6 +9139,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int_cc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_cc.isHardStep());
 
@@ -9112,6 +9150,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cc.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float_cc.isHardStep());
 
@@ -9121,6 +9161,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cc.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_cc.isHardStep());
 
@@ -9138,6 +9180,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_int_cm.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_cm.isHardStep());
 
@@ -9147,8 +9191,10 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderValue(BorderRange::UpperBorder), 0.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_cm.getBorderValue(BorderRange::LowerBorder), 0.0);
 
-    EXPECT_TRUE(OpenRangeIdManager_float_cm.isHardStep());
+    EXPECT_FALSE(OpenRangeIdManager_float_cm.isHardStep());
 
     EXPECT_EQ(OpenRangeIdManager_float_cm.getFreeIdsSize(), 0);
     EXPECT_EQ(OpenRangeIdManager_float_cm.getReservedIdsSize(), 0);
@@ -9156,6 +9202,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderValue(BorderRange::UpperBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_cm.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_cm.isHardStep());
 
@@ -9166,6 +9214,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_int_om.getBorderLimit(BorderRange::UpperBorder),  50);
     EXPECT_EQ(OpenRangeIdManager_int_om.getBorderLimit(BorderRange::LowerBorder), -50);
+    EXPECT_EQ(OpenRangeIdManager_int_om.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_int_om.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_int_om.isHardStep());
 
@@ -9175,6 +9225,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_om.getBorderLimit(BorderRange::UpperBorder),  50.5);
     EXPECT_FLOAT_EQ(OpenRangeIdManager_float_om.getBorderLimit(BorderRange::LowerBorder), -50.5);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_om.getBorderValue(BorderRange::UpperBorder), 2.0);
+    EXPECT_FLOAT_EQ(OpenRangeIdManager_float_om.getBorderValue(BorderRange::LowerBorder), 0.0);
 
     EXPECT_FALSE(OpenRangeIdManager_float_om.isHardStep());
 
@@ -9184,6 +9236,8 @@ TEST(SingleTests, CopyAndMoveTest)
 
     EXPECT_EQ(OpenRangeIdManager_unsigned_om.getBorderLimit(BorderRange::UpperBorder), 50);
     EXPECT_EQ(OpenRangeIdManager_unsigned_om.getBorderLimit(BorderRange::LowerBorder), 0);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_om.getBorderValue(BorderRange::UpperBorder), 2);
+    EXPECT_EQ(OpenRangeIdManager_unsigned_om.getBorderValue(BorderRange::LowerBorder), 0);
 
     EXPECT_TRUE(OpenRangeIdManager_unsigned_om.isHardStep());
 

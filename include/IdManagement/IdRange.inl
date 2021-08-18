@@ -15,6 +15,24 @@ IdRange(T start, T step)
 
 template<class T>
 ONF::IdRange<T>::
+IdRange(IdRange&& other)
+    : upperBorderState_(std::move(other.upperBorderState_)),
+      upperBorder_     (std::move(other.upperBorder_)),
+      upperLimit_      (std::move(other.upperLimit_)),
+      lowerBorderState_(std::move(other.lowerBorderState_)),
+      lowerBorder_     (std::move(other.lowerBorder_)),
+      lowerLimit_      (std::move(other.lowerLimit_)),
+      start_           (std::move(other.start_)),
+      step_            (std::move(other.step_))
+{
+   other.upperBorderState_ = false;
+   other.lowerBorderState_ = false;
+   other.upperBorder_ = other.start_;
+   other.lowerBorder_ = other.start_;
+}
+
+template<class T>
+ONF::IdRange<T>::
 ~IdRange() {}
 
 template<class T>
@@ -181,6 +199,28 @@ ONF::IdRange<T>::
 getStep() const
 {
     return step_;
+}
+
+template<class T>
+ONF::IdRange<T>&
+ONF::IdRange<T>::
+operator=(IdRange&& other)
+{
+    upperBorderState_ = std::move(other.upperBorderState_);
+    upperBorder_      = std::move(other.upperBorder_);
+    upperLimit_       = std::move(other.upperLimit_);
+    lowerBorderState_ = std::move(other.lowerBorderState_);
+    lowerBorder_      = std::move(other.lowerBorder_);
+    lowerLimit_       = std::move(other.lowerLimit_);
+    start_            = std::move(other.start_);
+    step_             = std::move(other.step_);
+
+    other.upperBorderState_ = false;
+    other.lowerBorderState_ = false;
+    other.upperBorder_ = other.start_;
+    other.lowerBorder_ = other.start_;
+
+    return *this;
 }
 
 template<class T>

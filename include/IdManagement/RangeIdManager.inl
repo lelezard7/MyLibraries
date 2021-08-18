@@ -1,12 +1,4 @@
 ﻿#include "../IdManagement.h"
-#include <cmath>
-#include <cstdlib>
-#include <type_traits>
-#include <algorithm>
-#include <limits>
-#include <exception>
-#include <string>
-#include <utility>
 
 #include <vector>
 
@@ -16,8 +8,7 @@ using ONF::is_forbidden_types_combination;
 template<class T, class T_Step>
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 RangeIdManager(T start, T_Step step)
-    : freeIds_        (IdIssuingMethod::Dynamic),
-      idRange_        (start, ONF::abs(step)),
+    : idRange_        (start, ONF::abs(step)),
       step_           (step == 0 ? 1 : step),
       size_           (0),
       isHardStep_     (true),
@@ -45,12 +36,7 @@ RangeIdManager(RangeIdManager<T, T_Step>&& other)
       isHardStep_     (std::move(other.isHardStep_)),
       idIssuingMethod_(std::move(other.idIssuingMethod_))
 {
-    other.freeIds_.clear();
-    other.reservedIds_.clear();
-    other.idRange_.reset();
     other.size_ = 0;
-    other.isHardStep_ = true;
-    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
 }
 
 template<class T, class T_Step>
@@ -415,7 +401,7 @@ free(T id)
 }
 
 template<class T, class T_Step>
-inline void
+void
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 freeAll()
 {
@@ -502,7 +488,7 @@ setBorderLimit(BorderRange borderRange, T value)
 }
 
 template<class T, class T_Step>
-inline T
+T
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getBorderLimit(BorderRange borderRange) const
 {
@@ -538,7 +524,7 @@ setHardStep(bool value)
 }
 
 template<class T, class T_Step>
-inline bool
+bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 isHardStep() const
 {
@@ -587,7 +573,7 @@ setIdIssuingMethod(IdIssuingMethod idIssuingMethod)
 }
 
 template<class T, class T_Step>
-inline ONF::IdIssuingMethod
+ONF::IdIssuingMethod
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getIdIssuingMethod() const
 {
@@ -595,7 +581,7 @@ getIdIssuingMethod() const
 }
 
 template<class T, class T_Step>
-inline size_t
+size_t
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 size() const
 {
@@ -603,7 +589,7 @@ size() const
 }
 
 template<class T, class T_Step>
-inline bool
+bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 isStandardId(T id) const
 {
@@ -611,7 +597,7 @@ isStandardId(T id) const
 }
 
 template<class T, class T_Step>
-inline T
+T
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getStart() const
 {
@@ -619,7 +605,7 @@ getStart() const
 }
 
 template<class T, class T_Step>
-inline T_Step
+T_Step
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getStep() const
 {
@@ -627,7 +613,7 @@ getStep() const
 }
 
 template<class T, class T_Step>
-inline T
+T
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getBorderValue(BorderRange borderRange) const
 {
@@ -635,7 +621,7 @@ getBorderValue(BorderRange borderRange) const
 }
 
 template<class T, class T_Step>
-inline bool
+bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getBorderState(BorderRange borderRange) const
 {
@@ -733,19 +719,14 @@ operator=(RangeIdManager<T, T_Step>&& other)
     isHardStep_      = std::move(other.isHardStep_);
     idIssuingMethod_ = std::move(other.idIssuingMethod_);
 
-    other.freeIds_.clear();
-    other.reservedIds_.clear();
-    other.idRange_.reset();
     other.size_ = 0;
-    other.isHardStep_ = true;
-    other.idIssuingMethod_ = IdIssuingMethod::Dynamic;
 
     return *this;
 }
 
 
 template<class T, class T_Step>
-inline size_t
+size_t
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getFreeIdsSize() const
 {
@@ -753,7 +734,7 @@ getFreeIdsSize() const
 }
 
 template<class T, class T_Step>
-inline size_t
+size_t
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 getReservedIdsSize() const
 {
@@ -854,7 +835,7 @@ reduceRangeIfPossible(BorderRange border)
 }
 
 template<class T, class T_Step>
-inline T
+T
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 activateBothBorders()
 {
@@ -867,7 +848,7 @@ activateBothBorders()
 }
 
 template<class T, class T_Step>
-inline T
+T
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 activateBothBordersWithExpending()
 {
@@ -994,7 +975,7 @@ reserveIdInRange(T id)
 }
 
 template<class T, class T_Step>
-inline bool
+bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 reserveBorderRange(BorderRange borderRange)
 {
