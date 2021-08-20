@@ -158,6 +158,10 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">isStandardId</a> (T target, T start, T step)</td></tr>
 <tr class="memdesc:a0c80070a358a426c55424b0cefd3ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">Подробнее...</a><br /></td></tr>
 <tr class="separator:a0c80070a358a426c55424b0cefd3ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">findNearestStdId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a7dec9a0389045ddedc70aa0f59687d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ближайший к переданному ID, стандартный ID.  <a href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7dec9a0389045ddedc70aa0f59687d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">moveFromId</a> (T start, T step, <a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a> n)</td></tr>
 <tr class="memdesc:a053b3525f6354bec193786e4d37d475f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">Подробнее...</a><br /></td></tr>
@@ -342,6 +346,66 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>Если <b>value</b> &gt;= 0, возвращает <b>value</b>. Если <b>value</b> &lt; 0, возвращает <b>-value</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a7dec9a0389045ddedc70aa0f59687d40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dec9a0389045ddedc70aa0f59687d40">&#9670;&nbsp;</a></span>findNearestStdId()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T ONF::findNearestStdId </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>step</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Возвращает ближайший к переданному ID, стандартный ID. </p>
+<p>Под ближайшим стандартным ID подразумевается тот, который находится ближе всего к переданному ID и при этом находится между <b>target</b> и <b>start</b>. <br  />
+ Знак числа шага переданного в <b>step</b> не имеет значения.</p>
+<p>В следующем примере для ID равного -4,3, ближайшим стандартным является -4, но не -5. <br  />
+ Для ID равного 5,5, ближайшим стандартным является 5, но не 6. </p><div class="fragment"><div class="line"><a class="code" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">findNearestStdId</a>(5.5, 0, 1);   <span class="comment">//result: 5</span></div>
+<div class="line"><a class="code" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">findNearestStdId</a>(-4.3, 0, 1);  <span class="comment">//result: -4</span></div>
+<div class="line"> </div>
+<div class="line">                              ub</div>
+<div class="line">               lb</div>
+<div class="line">-6 -5 -4,3 -4 -3 -2 -1  0  1  2  3  4  5  5,5  6</div>
+<div class="line"> .  .   .   .  .  .  .  @  .  .  .  .  .   .   .</div>
+<div class="ttc" id="anamespace_o_n_f_html_a7dec9a0389045ddedc70aa0f59687d40"><div class="ttname"><a href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">ONF::findNearestStdId</a></div><div class="ttdeci">T findNearestStdId(T target, T start, T step)</div><div class="ttdoc">Возвращает ближайший к переданному ID, стандартный ID.</div><div class="ttdef"><b>Definition:</b> IdManagement.h:321</div></div>
+</div><!-- fragment --><dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">target</td><td>- ID, ближайший стандартный ID к которому нужно найти. </td></tr>
+    <tr><td class="paramname">start</td><td>- известный стандартный ID. </td></tr>
+    <tr><td class="paramname">step</td><td>- размер шага.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если в <b>target</b> передан стандартный ID, возвращает его же. <br  />
+ Если в <b>target</b> передан нестандартный ID, возвращает ближайший к нему стандартный ID.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34" title="Проверяет, является ID стандартным или же нет.">isStandardId(T, T, T)</a> </dd></dl>
 
 </div>
 </div>

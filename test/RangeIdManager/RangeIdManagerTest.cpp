@@ -17,7 +17,7 @@ public:
 
     using RangeIdManager<T, T_Step>::getFreeIdsSize;
     using RangeIdManager<T, T_Step>::getReservedIdsSize;
-    using RangeIdManager<T, T_Step>::findClosestStdId;
+    using RangeIdManager<T, T_Step>::findNearestStdId;
 
     OpenRangeIdManager<T, T_Step>& operator=(const OpenRangeIdManager<T, T_Step>& other) = default;
     OpenRangeIdManager<T, T_Step>& operator=(OpenRangeIdManager<T, T_Step>&& other) = default;
@@ -64,6 +64,7 @@ struct OpenRangeIdManagerTests : public ::testing::Test
 
 };
 
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);
@@ -71,32 +72,32 @@ int main(int argc, char** argv)
 }
 
 
-TEST_F(OpenRangeIdManagerTests, findClosestStdId_outRange)
+TEST_F(OpenRangeIdManagerTests, findNearestStdId_1)
 {
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(21);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 20);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -20);
+    EXPECT_EQ( 20, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 21, BorderRange::UpperBorder));
+    EXPECT_EQ(-20, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-21, BorderRange::UpperBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(22);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 22);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -22);
+    EXPECT_EQ( 20, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 21, BorderRange::LowerBorder));
+    EXPECT_EQ(-20, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-21, BorderRange::LowerBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
+    EXPECT_EQ( 22, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 22, BorderRange::UpperBorder));
+    EXPECT_EQ(-22, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-22, BorderRange::UpperBorder));
+
+    EXPECT_EQ( 22, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 22, BorderRange::LowerBorder));
+    EXPECT_EQ(-22, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-22, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(3, BorderRange::UpperBorder));
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(1, BorderRange::UpperBorder));
+
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(3, BorderRange::LowerBorder));
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(1, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(2, BorderRange::UpperBorder));
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(2, BorderRange::LowerBorder));
+
 
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 0));
@@ -104,142 +105,105 @@ TEST_F(OpenRangeIdManagerTests, findClosestStdId_outRange)
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-2));
     EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(37);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 36);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -36);
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(32);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 32);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -32);
+    EXPECT_EQ( 36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 37, BorderRange::UpperBorder));
+    EXPECT_EQ(-36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-37, BorderRange::UpperBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(7);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 6);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -2);
+    EXPECT_EQ( 36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 37, BorderRange::LowerBorder));
+    EXPECT_EQ(-36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-37, BorderRange::LowerBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 6);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -2);
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0).has_value());
+    EXPECT_EQ( 32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 32, BorderRange::UpperBorder));
+    EXPECT_EQ(-32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-32, BorderRange::UpperBorder));
+
+    EXPECT_EQ( 32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 32, BorderRange::LowerBorder));
+    EXPECT_EQ(-32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-32, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ( 6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 7, BorderRange::UpperBorder));
+    EXPECT_EQ(-2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-3, BorderRange::UpperBorder));
+
+    EXPECT_EQ( 6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 7, BorderRange::LowerBorder));
+    EXPECT_EQ(-2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-3, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(2, BorderRange::UpperBorder));
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(2, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(4, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(3, BorderRange::UpperBorder));
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(3, BorderRange::LowerBorder));
+
+    EXPECT_EQ(2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(1, BorderRange::UpperBorder));
+    EXPECT_EQ(0, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(1, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(4, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(4, BorderRange::UpperBorder));
+    EXPECT_EQ(4, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(4, BorderRange::LowerBorder));
+
+    EXPECT_EQ(0, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(0, BorderRange::UpperBorder));
+    EXPECT_EQ(0, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(0, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(5, BorderRange::UpperBorder));
+    EXPECT_EQ(4, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(5, BorderRange::LowerBorder));
+
+    EXPECT_EQ(0,  OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-1, BorderRange::UpperBorder));
+    EXPECT_EQ(-2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-1, BorderRange::LowerBorder));
+
+
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(6, BorderRange::UpperBorder));
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(6, BorderRange::LowerBorder));
+
+    EXPECT_EQ(-2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-2, BorderRange::UpperBorder));
+    EXPECT_EQ(-2, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-2, BorderRange::LowerBorder));
 }
 
-TEST_F(OpenRangeIdManagerTests, findClosestStdId_inRange)
+TEST_F(OpenRangeIdManagerTests, findNearestStdId_2)
 {
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 21, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 22, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 3,  BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 1,  BorderRange::UpperBorder).has_value());
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(4));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(6));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(8));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(10));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(12));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(14));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 21, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-21, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 22, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-22, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 3,  BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 1,  BorderRange::LowerBorder).has_value());
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(2));
+    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.free(4));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::UpperBorder), 14);
+    EXPECT_EQ(OpenRangeIdManager_int_Start_2_Step_2.getBorderValue(BorderRange::LowerBorder), 6);
 
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 0));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 4));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve(-2));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.reserve( 6));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 37, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 32, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32, BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 7,  BorderRange::UpperBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3,  BorderRange::UpperBorder).has_value());
+    EXPECT_EQ( 36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 37, BorderRange::UpperBorder));
+    EXPECT_EQ(-36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-37, BorderRange::UpperBorder));
 
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 37, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-37, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 32, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-32, BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId( 7,  BorderRange::LowerBorder).has_value());
-    EXPECT_FALSE(OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-3,  BorderRange::LowerBorder).has_value());
+    EXPECT_EQ( 36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 37, BorderRange::LowerBorder));
+    EXPECT_EQ(-36, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-37, BorderRange::LowerBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(2, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 4);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(3, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(1, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 0);
+    EXPECT_EQ( 32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 32, BorderRange::UpperBorder));
+    EXPECT_EQ(-32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-32, BorderRange::UpperBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 4);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(4, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 4);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 0);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(0, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 0);
+    EXPECT_EQ( 32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId( 32, BorderRange::LowerBorder));
+    EXPECT_EQ(-32, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(-32, BorderRange::LowerBorder));
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(5, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 6);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(5, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 4);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-1, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 0);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-1, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -2);
 
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 6);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(6, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 6);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2, BorderRange::UpperBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -2);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-2, BorderRange::LowerBorder);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -2);
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(6, BorderRange::UpperBorder));
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(6, BorderRange::LowerBorder));
+
+    EXPECT_EQ(14, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(14, BorderRange::UpperBorder));
+    EXPECT_EQ(14, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(14, BorderRange::LowerBorder));
+
+    EXPECT_EQ(10, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(9, BorderRange::UpperBorder));
+    EXPECT_EQ(8,  OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(9, BorderRange::LowerBorder));
+
+    EXPECT_EQ(14, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(13, BorderRange::UpperBorder));
+    EXPECT_EQ(12, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(13, BorderRange::LowerBorder));
+
+    EXPECT_EQ(8, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(7, BorderRange::UpperBorder));
+    EXPECT_EQ(6, OpenRangeIdManager_int_Start_2_Step_2.findNearestStdId(7, BorderRange::LowerBorder));
 }
 
 TEST_F(OpenRangeIdManagerTests, getStart)
@@ -8797,33 +8761,6 @@ TEST_F(OpenRangeIdManagerTests, SituationalTest_12)
     EXPECT_EQ(OpenRangeIdManager_int.getBorderValue(BorderRange::LowerBorder), -1);
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::UpperBorder));
     EXPECT_TRUE(OpenRangeIdManager_int.getBorderState(BorderRange::LowerBorder));
-}
-
-TEST_F(OpenRangeIdManagerTests, SituationalTest_13)
-{
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::UpperBorder,  50));
-    EXPECT_TRUE(OpenRangeIdManager_int_Start_2_Step_2.setBorderLimit(BorderRange::LowerBorder, -50));
-
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(50);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 50);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-50);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -50);
-
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(61);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 60);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-61);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -60);
-
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(62);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, 62);
-    optional_id_int = OpenRangeIdManager_int_Start_2_Step_2.findClosestStdId(-62);
-    ASSERT_TRUE(optional_id_int.has_value());
-    EXPECT_EQ(*optional_id_int, -62);
 }
 
 TEST_F(OpenRangeIdManagerTests, SituationalTest_14)
