@@ -131,104 +131,9 @@ reserve(T id, ReservationMethod reservationMethod)
     if (id > idRange_.getBorderLimit(BorderRange::UpperBorder) || id < idRange_.getBorderLimit(BorderRange::LowerBorder))
         return false;
 
-    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
-        if (!isStandardId(id)) {
-            if (isHardStep_)
-                return false;
-
-            if (reservationMethod == ReservationMethod::Interpolate)
-                return interpolateIds(id);
-
-            if (reservationMethod == ReservationMethod::ReserveRange)
-                return reserveIds(id);
-
-            if (reservedIds_.find(id))
-                return false;
-
-            reservedIds_.add(id);
-            ++size_;
-            return true;
-        }
-
-        if (reservationMethod == ReservationMethod::Interpolate)
-            return interpolateIds(id);
-
-        if (reservationMethod == ReservationMethod::ReserveRange)
-            return reserveIds(id);
-
-        if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
-            if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
-                return false;
-
-            activateBothBorders();
-            return true;
-        }
-
-        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
-            !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
-            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
-
-            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-                if (!jumpOver(idInfo.value))
-                    return false;
-
-                activateBothBordersWithExpending();
-                return true;
-            }
-
-            idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
-
-            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-                if (!jumpOver(idInfo.value))
-                    return false;
-
-                activateBothBordersWithExpending();
-                return true;
-            }
-        }
-
-        if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
-            return false;
-
-        if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
-            return reserveIdInRange(id);
-
-        if (reservedIds_.find(id))
-            return false;
-
-        auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
-
-        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-            idRange_.moveBorder(BorderRange::UpperBorder, 1);
-            ++size_;
-
-            expandRangeIfPossible(BorderRange::UpperBorder);
-            return true;
-        }
-
-        idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
-
-        if (idInfo.value == id && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-            idRange_.moveBorder(BorderRange::LowerBorder, 1);
-            ++size_;
-
-            expandRangeIfPossible(BorderRange::LowerBorder);
-            return true;
-        }
-
-        reservedIds_.add(id);
-        ++size_;
-        return true;
-    }
-
-    // -------------------------------------
-
     if (!isStandardId(id)) {
         if (isHardStep_)
             return false;
-
-        if (reservationMethod == ReservationMethod::Interpolate)
-            return interpolateIds(id);
 
         if (reservationMethod == ReservationMethod::ReserveRange)
             return reserveIds(id);
@@ -255,11 +160,40 @@ reserve(T id, ReservationMethod reservationMethod)
         return true;
     }
 
-    if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
-        return reserveBorderRange(BorderRange::UpperBorder);
+    if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
+            !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+            auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
 
-    if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
-        return reserveBorderRange(BorderRange::LowerBorder);
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
+                if (!jumpOver(idInfo.value))
+                    return false;
+
+                activateBothBordersWithExpending();
+                return true;
+            }
+
+            idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
+
+            if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
+                if (!jumpOver(idInfo.value))
+                    return false;
+
+                activateBothBordersWithExpending();
+                return true;
+            }
+        }
+
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
+            return false;
+    }
+    else {
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
+            return reserveBorderRange(BorderRange::UpperBorder);
+
+        if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
+            return reserveBorderRange(BorderRange::LowerBorder);
+    }
 
     if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
         return reserveIdInRange(id);
@@ -267,39 +201,11 @@ reserve(T id, ReservationMethod reservationMethod)
     if (reservedIds_.find(id))
         return false;
 
-    auto idInfo = idRange_.getIdInfo(BorderRange::UpperBorder, 1);
-
-    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-        if (!idRange_.getBorderState(BorderRange::UpperBorder)) {
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-
-            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
-                freeIds_.add(idRange_.getBorderValue(BorderRange::UpperBorder));
-        }
-
-        idRange_.moveBorder(BorderRange::UpperBorder, 1);
-        ++size_;
-
-        expandRangeIfPossible(BorderRange::UpperBorder);
+    if (moveBorder(BorderRange::UpperBorder, id))
         return true;
-    }
 
-    idInfo = idRange_.getIdInfo(BorderRange::LowerBorder, 1);
-
-    if (id == idInfo.value && !(idInfo.flags & IDRF_ID_OUT_OF_LIMIT)) {
-        if (!idRange_.getBorderState(BorderRange::LowerBorder)) {
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
-                freeIds_.add(idRange_.getBorderValue(BorderRange::LowerBorder));
-        }
-
-        idRange_.moveBorder(BorderRange::LowerBorder, 1);
-        ++size_;
-
-        expandRangeIfPossible(BorderRange::LowerBorder);
+    if (moveBorder(BorderRange::LowerBorder, id))
         return true;
-    }
 
     reservedIds_.add(id);
     ++size_;
@@ -802,15 +708,6 @@ bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 jumpOver(T id)
 {
-    if (!isStandardId(id))
-        return false;
-
-    if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
-        return false;
-
-    if (id > idRange_.getBorderLimit(BorderRange::UpperBorder) || id < idRange_.getBorderLimit(BorderRange::LowerBorder))
-        return false;
-
     if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
         return true;
 
@@ -901,9 +798,6 @@ bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 reserveIdInRange(T id)
 {
-    if (id >= idRange_.getBorderValue(BorderRange::UpperBorder) || id <= idRange_.getBorderValue(BorderRange::LowerBorder))
-        return false;
-
     if (isStandardId(id)) {
         if (!freeIds_.find(id))
             return false;
@@ -931,7 +825,6 @@ reserveBorderRange(BorderRange borderRange)
 
     idRange_.setBorderState(borderRange, true);
     ++size_;
-
     return true;
 }
 
@@ -946,185 +839,78 @@ getExpandableBorderRange(T id) const
 template<class T, class T_Step>
 bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
-interpolateIds(T id)
+moveBorder(BorderRange borderRange, T id)
 {
-    if (id > idRange_.getBorderLimit(BorderRange::UpperBorder) || id < idRange_.getBorderLimit(BorderRange::LowerBorder))
+    auto idInfo = idRange_.getIdInfo(borderRange, 1);
+
+    if (idInfo.value != id || (idInfo.flags & IDRF_ID_OUT_OF_LIMIT))
         return false;
 
+    if (idIssuingMethod_ != IdIssuingMethod::Dynamic) {
+        /*
+         * Так как мы передвигаем границу на зарезервированный ID надо озаботится тем
+         * чтобы в статическом режиме граница была включена когда мы ее передвиним
+         * на этот ID.
+         */
+        if (!idRange_.getBorderState(borderRange)) {
+            idRange_.setBorderState(borderRange, true);
+
+            /*
+             * Если UpperBorder == LowerBorder и мы, например, передвигаем UpperBorder,
+             * то LowerBorder останется на прежнем месте и ID на котором она стоит
+             * находится под ее ответственностью. Это значит что такой ID не должен
+             * быть во freeIds_. А если UpperBorder != LowerBorder то после перемещения
+             * UpperBorder, ID на котором она до сих пор стояла останется не занесенной
+             * в список freeIds_. Такой ID будет считаться зарезервированым, что неверно,
+             * так как мы проверили это выше.
+             * Потому данная проверка необходима.
+             */
+            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
+                freeIds_.add(idRange_.getBorderValue(borderRange));
+        }
+    }
+
+    idRange_.moveBorder(borderRange, 1);
+    expandRangeIfPossible(borderRange);
+    ++size_;
+    return true;
+}
+
+template<class T, class T_Step>
+bool
+ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
+interpolateIds(T id)
+{
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder) &&
             !idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
 
-            if (isStandardId(id)) {
-                if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {  // UpperBorder == LowerBorder
-                    activateBothBorders();
-                    return true;
-                }
-
-                if (!jumpOver(id))
-                    return false;
-
-                idRange_.setBorderState(BorderRange::UpperBorder, true);
-                idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-                expandRangeIfPossible(BorderRange::UpperBorder);
-                expandRangeIfPossible(BorderRange::LowerBorder);
-
-                if (reservedIds_.find(id)) {
-                    reservedIds_.erase(id);
-                }
-                else {
-                    ++size_;
-                }
-
+            //UpperBorder value == LowerBorder value
+            if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
+                activateBothBorders();
                 return true;
             }
-
 
             if (reservedIds_.find(id))
                 return false;
 
-            T standardId = findNearestStdId(id, BorderRange::UpperBorder);
-
-            if (standardId == idRange_.getBorderValue(BorderRange::UpperBorder) ||
-                standardId == idRange_.getBorderValue(BorderRange::LowerBorder)) {
-
-                reservedIds_.add(id);
-                ++size_;
-
-                activateBothBordersWithExpending();
-                return true;
-            }
-
-            if (!jumpOver(standardId))
+            if (!jumpOver(id))
                 return false;
 
             activateBothBordersWithExpending();
-            reservedIds_.add(id);
-
-            if (reservedIds_.find(standardId)) {
-                reservedIds_.erase(standardId);
-            }
-            else {
-                ++size_;
-            }
-
             return true;
         }
-
-
-        if (reservedIds_.find(id))
-            return 0;
 
         if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
             return reserveIdInRange(id);
 
-        if (isStandardId(id)) {
-            if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
-                return false;
-
-            BorderRange borderRange = getExpandableBorderRange(id);
-            typename IdRange<T>::IdInfo idInfo;
-
-            while (true) {
-                idInfo = idRange_.moveBorder(borderRange, 1);
-
-                if (idInfo.value == id)
-                    break;
-
-                if (reservedIds_.find(idInfo.value)) {
-                    reservedIds_.erase(idInfo.value);
-                }
-                else {
-                    freeIds_.add(idInfo.value);
-                }
-            }
-
-            ++size_;
-            expandRangeIfPossible(borderRange);
-            return true;
-        }
-
-
-        BorderRange borderRange = getExpandableBorderRange(id);
-
-        if (idRange_.getIdInfo(borderRange, 1).flags & IDRF_SUCCESSFULLY) {
-            if ((id > idRange_.getBorderValue(BorderRange::UpperBorder) && id < idRange_.getIdInfo(BorderRange::UpperBorder, 1).value) ||
-                (id < idRange_.getBorderValue(BorderRange::LowerBorder) && id > idRange_.getIdInfo(BorderRange::LowerBorder, 1).value)) {
-
-                reservedIds_.add(id);
-                ++size_;
-                return true;
-            }
-        }
-
-        typename IdRange<T>::IdInfo idInfo;
-        std::optional<T> lastId;
-
-        while (true) {
-            idInfo = idRange_.getIdInfo(borderRange, 1);
-
-            if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
-                break;
-
-            if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
-                (idInfo.value < id && borderRange == BorderRange::LowerBorder))
-                break;
-
-            if (lastId.has_value()) {
-                freeIds_.add(*lastId);
-            }
-
-            idRange_.moveBorder(borderRange, 1);
-
-            if (reservedIds_.find(idInfo.value)) {
-                reservedIds_.erase(idInfo.value); //TODO: test
-            }
-            else {
-                lastId = idInfo.value;
-            }
-        }
-
-        reservedIds_.add(id);
-        size_ += 2;
-
-        expandRangeIfPossible(borderRange);
-        return true;
-    }
-
-
-    // ----------------------------------
-
-    if (reservedIds_.find(id))
-        return false;
-
-    if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
-        if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
             return false;
 
-        activateBothBorders();
-        return true;
-    }
-
-    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
-        return reserveIdInRange(id);
-
-    if (isStandardId(id)) {
-        if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
-            return reserveBorderRange(BorderRange::UpperBorder);
-
-        if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
-            return reserveBorderRange(BorderRange::LowerBorder);
+        if (reservedIds_.find(id))
+            return false;
 
         BorderRange borderRange = getExpandableBorderRange(id);
-
-        if (!idRange_.getBorderState(borderRange)) {
-            idRange_.setBorderState(borderRange, true);
-
-            if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
-                freeIds_.add(idRange_.getBorderValue(borderRange));
-        }
-
         typename IdRange<T>::IdInfo idInfo;
 
         while (true) {
@@ -1146,55 +932,52 @@ interpolateIds(T id)
         return true;
     }
 
-    BorderRange borderRange = getExpandableBorderRange(id);
+    if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
+        return reserveIdInRange(id);
 
-    if (idRange_.getIdInfo(borderRange, 1).flags & IDRF_SUCCESSFULLY) {
-        if ((id > idRange_.getBorderValue(BorderRange::UpperBorder) && id < idRange_.getIdInfo(BorderRange::UpperBorder, 1).value) ||
-            (id < idRange_.getBorderValue(BorderRange::LowerBorder) && id > idRange_.getIdInfo(BorderRange::LowerBorder, 1).value)) {
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+        if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
+            return false;
 
-            reservedIds_.add(id);
-            ++size_;
-            return true;
-        }
+        activateBothBorders();
+        return true;
     }
 
+    if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
+        return reserveBorderRange(BorderRange::UpperBorder);
+
+    if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
+        return reserveBorderRange(BorderRange::LowerBorder);
+
+    if (reservedIds_.find(id))
+        return false;
+
+    BorderRange borderRange = getExpandableBorderRange(id);
+
     if (!idRange_.getBorderState(borderRange)) {
+        idRange_.setBorderState(borderRange, true);
+
         if (idRange_.getBorderValue(BorderRange::UpperBorder) != idRange_.getBorderValue(BorderRange::LowerBorder))
-            freeIds_.add(idRange_.getBorderValue(borderRange)); //TODO: test
+            freeIds_.add(idRange_.getBorderValue(borderRange));
     }
 
     typename IdRange<T>::IdInfo idInfo;
-    std::optional<T> lastId;
 
     while (true) {
-        idInfo = idRange_.getIdInfo(borderRange, 1);
+        idInfo = idRange_.moveBorder(borderRange, 1);
 
-        if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
+        if (idInfo.value == id)
             break;
-
-        if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
-            (idInfo.value < id && borderRange == BorderRange::LowerBorder))
-            break;
-
-        if (lastId.has_value()) {
-            freeIds_.add(*lastId);
-        }
 
         if (reservedIds_.find(idInfo.value)) {
             reservedIds_.erase(idInfo.value);
-            idRange_.setBorderState(borderRange, true);
         }
         else {
-            lastId = idInfo.value;
-            idRange_.setBorderState(borderRange, false);
+            freeIds_.add(idInfo.value);
         }
-
-        idRange_.moveBorder(borderRange, 1);
     }
 
-    reservedIds_.add(id);
     ++size_;
-
     expandRangeIfPossible(borderRange);
     return true;
 }
@@ -1204,12 +987,6 @@ bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 reserveIds(T id)
 {
-    if (id > idRange_.getBorderLimit(BorderRange::UpperBorder) || id < idRange_.getBorderLimit(BorderRange::LowerBorder))
-        return false;
-
-    if (reservedIds_.find(id))
-        return false;
-
     if (id == idRange_.getBorderValue(BorderRange::UpperBorder) && id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
         if (idRange_.getBorderState(BorderRange::UpperBorder) && idRange_.getBorderState(BorderRange::LowerBorder))
             return false;
@@ -1221,126 +998,36 @@ reserveIds(T id)
     if (id < idRange_.getBorderValue(BorderRange::UpperBorder) && id > idRange_.getBorderValue(BorderRange::LowerBorder))
         return reserveIdInRange(id);
 
+    if (reservedIds_.find(id))
+        return false;
+
     BorderRange borderRange = getExpandableBorderRange(id);
 
     if (idIssuingMethod_ == IdIssuingMethod::Dynamic) {
         if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
             return false;
 
-        typename IdRange<T>::IdInfo idInfo;
-
-        if (isStandardId(id)) {
-            if (!idRange_.getBorderState(borderRange)) {
-                idInfo = idRange_.getIdInfo(borderRange, 0);
-
-                if (reservedIds_.find(idInfo.value)) {
-                    reservedIds_.erase(idInfo.value);
-                }
-                else {
-                    ++size_;
-                }
-            }
-
-            do {
-                idInfo = idRange_.moveBorder(borderRange, 1);
-
-                if (reservedIds_.find(idInfo.value)) {
-                    reservedIds_.erase(idInfo.value);
-                }
-                else {
-                    ++size_;
-                }
-
-            } while (idInfo.value != id);
-
-            idRange_.setBorderState(BorderRange::UpperBorder, true);
-            idRange_.setBorderState(BorderRange::LowerBorder, true);
-
-            expandRangeIfPossible(BorderRange::UpperBorder);
-            expandRangeIfPossible(BorderRange::LowerBorder);
-
-            return true;
-        }
-
-        while (true) {
-            idInfo = idRange_.getIdInfo(borderRange, 1);
-
-            if (idInfo.flags & IDRF_ID_OUT_OF_LIMIT)
-                break;
-
-            if ((idInfo.value > id && borderRange == BorderRange::UpperBorder) ||
-                (idInfo.value < id && borderRange == BorderRange::LowerBorder))
-                break;
-
-            if (reservedIds_.find(idInfo.value)) {
-                reservedIds_.erase(idInfo.value);
-            }
-            else {
-                ++size_;
-            }
-
-            idRange_.moveBorder(borderRange, 1);
-        }
-
-        //      ub---->\
-        // .....lb.....@...
-        //ub и lb могут быть на старте и при перемещении одной из границ обе активируются,
-        //а потому expandRangeIfPossible делаем с обоими границами.
-        activateBothBordersWithExpending();
-
-        reservedIds_.add(id);
-        return true;
-    }
-
-
-    if (id == idRange_.getBorderValue(BorderRange::UpperBorder)) {
-        if (idRange_.getBorderState(BorderRange::UpperBorder))
-            return false;
-
-        idRange_.setBorderState(BorderRange::UpperBorder, true);
-        ++size_;
-        return true;
-    }
-
-    if (id == idRange_.getBorderValue(BorderRange::LowerBorder)) {
-        if (idRange_.getBorderState(BorderRange::LowerBorder))
-            return false;
-
-        idRange_.setBorderState(BorderRange::LowerBorder, true);
-        ++size_;
-        return true;
-    }
-
-    if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
-        if (!idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder)) {
+        if (!idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder))
             activateBothBorders();
-        }
     }
     else {
-        if (!idRange_.getBorderState(borderRange)) {
-            idRange_.setBorderState(borderRange, true);
-            ++size_;
+        if (id == idRange_.getBorderValue(BorderRange::UpperBorder))
+            return reserveBorderRange(BorderRange::UpperBorder);
+
+        if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
+            return reserveBorderRange(BorderRange::LowerBorder);
+
+        if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
+            if (!idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder))
+                activateBothBorders();
+        }
+        else {
+            if (!idRange_.getBorderState(borderRange))
+                reserveBorderRange(borderRange);
         }
     }
 
     typename IdRange<T>::IdInfo idInfo;
-
-    if (isStandardId(id)) {
-        do {
-            idInfo = idRange_.moveBorder(borderRange, 1);
-
-            if (reservedIds_.find(idInfo.value)) {
-                reservedIds_.erase(idInfo.value);
-            }
-            else {
-                ++size_;
-            }
-
-        } while (idInfo.value != id);
-
-        expandRangeIfPossible(borderRange);
-        return true;
-    }
 
     while (true) {
         idInfo = idRange_.getIdInfo(borderRange, 1);
@@ -1360,11 +1047,17 @@ reserveIds(T id)
         }
 
         idRange_.moveBorder(borderRange, 1);
+
+        if (idInfo.value == id)
+            break;
     }
 
-    reservedIds_.add(id);
-    ++size_;
-
     expandRangeIfPossible(borderRange);
+
+    if (!isStandardId(id)) {
+        reservedIds_.add(id);
+        ++size_;
+    }
+
     return true;
 }

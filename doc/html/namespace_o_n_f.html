@@ -150,6 +150,7 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 , <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">Interpolate</a>
 , <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReserveRange</a>
  }</td></tr>
+<tr class="memdesc:aa379d56cc5b00030d3772d015b40f999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отвечает за способ резервации ID методом RangeIdManager::reserve(T, ReservationMethod).  <a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">Подробнее...</a><br /></td></tr>
 <tr class="separator:aa379d56cc5b00030d3772d015b40f999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -175,6 +176,7 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 Переменные</h2></td></tr>
 <tr class="memitem:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memTemplParams" colspan="2">template&lt;class T , class T_Step &gt; </td></tr>
 <tr class="memitem:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a> = !std::is_floating_point_v&lt;T&gt; &amp;&amp; std::is_floating_point_v&lt;T_Step&gt;</td></tr>
+<tr class="memdesc:af3975f8bd8ff35c63edb13ea4d475e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, не запрещена ли данная комбинация типов.  <a href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">Подробнее...</a><br /></td></tr>
 <tr class="separator:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Типы</h2>
@@ -309,10 +311,19 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Отвечает за способ резервации ID методом RangeIdManager::reserve(T, ReservationMethod). </p>
+<p>Каждый перечислитель несмотря на описание в придачу подчиняется всем правилам <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>. <br  />
+ Это правила резервации ID, поведения границ диапазона и т.д. <br  />
+ Т.е. если где-то нужно передвинуть границу после резервации ID или перепрыгнуть на резервируемый ID, это произойдет.</p>
+<p>Подробнее о том как каждый из перечислителей влияет на RangeIdManager::reserve(T, ReservationMethod) читайте в описании данного метода. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff"></a>NotSet&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f"></a>Interpolate&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298"></a>ReserveRange&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff"></a>NotSet&#160;</td><td class="fielddoc"><p>Говорит что нужно просто зарезервировать указанный ID. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f"></a>Interpolate&#160;</td><td class="fielddoc"><p>Говорит что нужно зарезервировать указанный ID и интерполировать все ID от границы диапазона (включительно) до указанного ID. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298"></a>ReserveRange&#160;</td><td class="fielddoc"><p>Говорит что нужно зарезервировать все ID от границы диапазона (включительно) до указанного ID (включительно). </p>
+</td></tr>
 </table>
 
 </div>
@@ -539,6 +550,11 @@ template&lt;class T , class T_Step &gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Проверяет, не запрещена ли данная комбинация типов. </p>
+<p>Данная переменная используется в <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>. <br  />
+ Она принимает <em>true</em>, что означает что комбинация запрещена, если первый аргумент шаблона не равен <em>float</em>, а второй равен. Иначе принимает <em>false</em>.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </dd></dl>
 
 </div>
 </div>

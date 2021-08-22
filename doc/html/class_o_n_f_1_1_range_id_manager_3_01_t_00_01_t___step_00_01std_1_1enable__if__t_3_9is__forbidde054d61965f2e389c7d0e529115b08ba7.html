@@ -1174,40 +1174,245 @@ template&lt;class T , class T_Step &gt; </div>
 <p>Резервирует ID разными способами. </p>
 <p>Данный метод имеет 2 параметра: <br  />
 </p><ul>
-<li><b>id</b> - ID который нужно зарезервировать если это возможно и одновременно цель, от границы диапазона к которой образуется абстрактная область. <br  />
+<li><b>id</b> - ID который нужно зарезервировать если это возможно и одновременно цель, от границы диапазона (включительно) к которой образуется абстрактная область. <br  />
  Данная обласить может быть как зарезервирована, так и интерполирована.</li>
 <li><b>reservationMethod</b> - Метод резервации ID.</li>
 </ul>
 <p>За метод резервации ID отвечает перечисление <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">ReservationMethod</a>. <br  />
  О том как влияют его перечислители на процесс резервации ID можно вкрадце прочесть здесь: <br  />
 </p><ul>
-<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ReservationMethod::NotSet</a></li>
+<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a></li>
 <li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a></li>
 <li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a></li>
 </ul>
 <p>А теперь более подробно об их работе. Далее поочередно в подробностях будет описан каждый перечислитель. <br  />
  Перед использованием метода <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> стоит ознакомится с каждым перечислителем что бы понимать все правила данного метода. <br  />
- Так же стоит помнить что данный метод по сравнению с тем же <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa0ea6611f98fd070cdcaf2757460860e" title="Возвращает свободный ID в соответствии с режимом выдачи ID заданным для данного объекта класса.">getFreeId()</a> является очень медленным.</p>
-<p>Начнем с <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ReservationMethod::NotSet</a>. <br  />
+ Так же стоит помнить что данный метод по сравнению с тем же <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa0ea6611f98fd070cdcaf2757460860e" title="Возвращает свободный ID в соответствии с режимом выдачи ID заданным для данного объекта класса.">getFreeId()</a> является очень медленным и к тому же чрезмерное резервирование ID вне диапазона замедляет скорость выдачи ID методом <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa0ea6611f98fd070cdcaf2757460860e" title="Возвращает свободный ID в соответствии с режимом выдачи ID заданным для данного объекта класса.">getFreeId()</a>.</p>
+<p>Начнем с <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a>. <br  />
  Данный перечислитель будучи переданный в метод <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> говорит ему о том что мы просто хотим зарезервировать указанный ID если это возможно.</p>
 <p>На метод <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> расспространяются те же правила и обязанности что и на любой другой метод класса <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>. <br  />
  В эти обязанности входит в том числе и обязанность передвинуть границу диапазона в случае если <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> резервирует ID являющийся следующим за данной границей ID. <br  />
- Подробнее об этом правиле в описании данного класса. <br  />
  Так же, если в динамическом режиме границы диапазона находятся в одной точке будучи выключены, а мы попробуем зарезервировать следующий за одной из границ ID, произойдет перепрыгивание на данный ID. <br  />
- В остальном данный перечислитель говорит просто зарезервировать указанный ID.</p>
+ Подробнее обо всем этом в описании данного класса. <br  />
+ В остальном данный перечислитель говорит просто зарезервировать указанный ID, будь он в пределах диапазона, за его пределами или на его границах. <br  />
+ ID переданный в <b>id</b> должен быть свободен.</p>
 <p>Далее идет <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>. <br  />
  Данный перечислитель говорит методу <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> зарезервировать все ID от текущей границы до указанного ID. <br  />
- При этом если при резервации промежуточных ID, если будет встречен уже зарезервированный ID, он просто пропускается. А вот все свободные ID резервируются. <br  />
+ При этом если при резервации промежуточных ID будет встречен уже зарезервированный ID, он просто пропускается. А вот все свободные ID резервируются. <br  />
  Несмотря на то что среди промежуточных ID могут быть уже зарезервированные, ID переданный в <b>id</b> должен быть свободен.</p>
-<p>Написать про то что отключенные границы так же резервируются и прочее.</p>
+<p>Если указать в <b>id</b> свободный ID находящийся в пределах диапазона или на его границах, данный метод просто зарезервирует данный ID и если этот ID находится на границе диапазона, включит ее. <br  />
+ Если указать в <b>id</b> свободный ID находящийся за пределами диапазона, все стандартные ID от гарницы диапазона (включительно) до указанного ID (включительно) резервируются. <br  />
+ Т.е. если граница от которой начинается резервация выключена, она включается, тем самым резервируя свой ID. <br  />
+ Если границы находятся в точке в выключенном состоянии, при резервации какого либо ID они обе включаются резервируя свой ID. </p><div class="fragment"><div class="line">Ситуация 1.</div>
+<div class="line"> </div>
+<div class="line">                   0</div>
+<div class="line">                   ub</div>
+<div class="line">                   lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(3, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>);</div>
+<div class="line"> </div>
+<div class="line">                   0                                             1        1</div>
+<div class="line">                   ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">                   lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  1  0  0  0         0  0  0  0  0  0  1  1  1  1  0  0  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Ситуация 2.</div>
+<div class="line"> </div>
+<div class="line">                   0</div>
+<div class="line">                   ub</div>
+<div class="line">                   lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  3,5  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .   .   .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  0   0   0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(3.5, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>);</div>
+<div class="line"> </div>
+<div class="line">                   0                                                  1        1</div>
+<div class="line">                   ub&gt;.-&gt;.-&gt;|                                                  ub</div>
+<div class="line">                   lb                                                 lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  3,5  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  3,5  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .   .   .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .   .   .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  0   1   0  0  0         0  0  0  0  0  0  1  1  1  1   1   0  0  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">В данных примерах обе границы вначале выключены, но теже результаты будут если они будут</div>
+<div class="line">включены.</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Ситуация 3.</div>
+<div class="line"> </div>
+<div class="line">          1              1</div>
+<div class="line">                         ub</div>
+<div class="line">          lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(5, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>);</div>
+<div class="line"> </div>
+<div class="line">          1              1                              1                       1</div>
+<div class="line">                         ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">          lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  1  0         0  0  0  1  1  1  1  1  1  1  1  1  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Ситуация 4.</div>
+<div class="line"> </div>
+<div class="line">          1              1</div>
+<div class="line">                         ub</div>
+<div class="line">          lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  5,5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .   .   .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  0   0   0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(5.5, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>);</div>
+<div class="line"> </div>
+<div class="line">          1              1                                   1                       1</div>
+<div class="line">                         ub&gt;.-&gt;.-&gt;|                                                  ub</div>
+<div class="line">          lb                                                 lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  5,5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  5,5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .   .   .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .   .   .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  0   1   0         0  0  0  1  1  1  1  1  1  1  1  1   1   0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">В данных примерах обе границы вначале включены, но теже результаты будут если они будут</div>
+<div class="line">выключены.</div>
+<div class="ttc" id="anamespace_o_n_f_html_aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298"><div class="ttname"><a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ONF::ReservationMethod::ReserveRange</a></div><div class="ttdeci">@ ReserveRange</div></div>
+</div><!-- fragment --><p>И наконец <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>. <br  />
+ Сразу отмечу что в этом случае если в <b>id</b> указать нестандартный ID, то просто произойдет резервация указанного ID по всем тем правилам как если бы мы передали не <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>, а <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a>.</p>
+<p>Если границы диапазона не находятся на одном и том же ID в выключенном состоянии и мы резервируем ID вне диапазона, данный перечислитель говорит методу <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> зарезервировать указанный ID и передвинуть на него границу. </p><div class="fragment"><div class="line">Ситуация 1.</div>
+<div class="line"> </div>
+<div class="line">                   1</div>
+<div class="line">                   ub</div>
+<div class="line">                   lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  1  0  0  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(3, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>);</div>
+<div class="line"> </div>
+<div class="line">                   1                                             1        1</div>
+<div class="line">                   ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">                   lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  1  0  0  1  0  0  0         0  0  0  0  0  0  1  0  0  1  0  0  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Обратите внимание что 1 и 2 небыли зарезервированны.</div>
+<div class="line">Так же обратите внимание на то что обе границы здесь был изначально в одной точке и</div>
+<div class="line">включены. О случае когда он изначально в точке, но выключены, поговорим позже,</div>
+<div class="line">так как границы в таком случае ведут себя по разному в динамическом и статическом</div>
+<div class="line">режиме.</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Ситуация 2.</div>
+<div class="line"> </div>
+<div class="line">          1              1</div>
+<div class="line">                         ub</div>
+<div class="line">          lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(5, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>);</div>
+<div class="line"> </div>
+<div class="line">          1              1                              1                       1</div>
+<div class="line">                         ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">          lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  1  0  0  1  0         0  0  0  1  1  1  1  1  1  0  0  1  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Обратите внимание что 3 и 4 небыли зарезервированны, но были интерполированны.</div>
+<div class="line">О том что это значит позже.</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">Следующая ситуация возможна только при статическом режиме, так как здесь состояние</div>
+<div class="line">обеих границ может различаться друг от друга.</div>
+<div class="line"> </div>
+<div class="line">           1              0</div>
+<div class="line">                         ub</div>
+<div class="line">          lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  0  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(5, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>);</div>
+<div class="line"> </div>
+<div class="line">          1              0                              1                       1</div>
+<div class="line">                         ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">          lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  1  1  1  1  1  0  0  0  1  0         0  0  0  1  1  1  1  1  0  0  0  1  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">2, 3 и 4 остались свободными.</div>
+<div class="line">Как можно заметить, в этом примере все работает так же как и в других примерах выше,</div>
+<div class="line">разница лишь в том что изначально <a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a> быль отключен, а</div>
+<div class="line"><a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">BorderRange::LowerBorder</a> включен. Данная ситуация невозможна в динамическом режиме.</div>
+</div><!-- fragment --><p>Если указать в <b>id</b> свободный ID находящийся в пределах диапазона или на его границах, данный метод просто зарезервирует данный ID и если этот ID находится на границе диапазона, включит ее.</p>
+<p>Теперь о ситуации когда обе границы находятся в точке в выключенном состоянии. <br  />
+ Если установлен статический режим то все будет так же как и в примерах приведенных выше. </p><div class="fragment"><div class="line">                   0</div>
+<div class="line">                   ub</div>
+<div class="line">                   lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(3, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>);</div>
+<div class="line"> </div>
+<div class="line">                   0                                             0        1</div>
+<div class="line">                   ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">                   lb                                            lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  1  0  0  0         0  0  0  0  0  0  0  0  0  1  0  0  0</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">0, 1 и 2 остались свободны.</div>
+<div class="line">Граница <a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">BorderRange::LowerBorder</a> осталась выключенной, а <a class="code" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a></div>
+<div class="line">включилась.</div>
+</div><!-- fragment --><p>В динамическом режиме произойдет перепрыгивание на указанный ID. </p><div class="fragment"><div class="line">                   0</div>
+<div class="line">                   ub</div>
+<div class="line">                   lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  0  0  0  0</div>
+<div class="line"> </div>
+<div class="line">rangeIdManager.reserve(3, <a class="code" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>);</div>
+<div class="line"> </div>
+<div class="line">                   0                                                      1</div>
+<div class="line">                   ub&gt;.-&gt;.-&gt;|                                             ub</div>
+<div class="line">                   lb&gt;.-&gt;.-&gt;|                                             lb</div>
+<div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
+<div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
+<div class="line"> 0  0  0  0  0  0  0  0  0  1  0  0  0         0  0  0  0  0  0  0  0  0  1  0  0  0</div>
+</div><!-- fragment --><p>А теперь вкратце про то, что происходит под капотом. <br  />
+ Данный перечислитель не просто так получил название "Interpolate". <br  />
+ Под капотом данный метод находит все стандартные промежуточные ID плюс ID на котором находилась граница диапазона перед началом интерполяции и делает следующее:</p><ul>
+<li>Если ID зарезервирован, оставляет его таковым.</li>
+<li>Если ID свободен, он переходит под ответственность диапазона. Визуально это означает лишь то, что данные ID можно будет получить методом <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa0ea6611f98fd070cdcaf2757460860e" title="Возвращает свободный ID в соответствии с режимом выдачи ID заданным для данного объекта класса.">getFreeId()</a>.</li>
+</ul>
+<p>ID переданный в <b>id</b> всегда должен быть свободен.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td></td></tr>
-    <tr><td class="paramname">reservationMethod</td><td></td></tr>
+    <tr><td class="paramname">id</td><td>- ID который нужно зарезервировать. </td></tr>
+    <tr><td class="paramname">reservationMethod</td><td>- метод резервации ID указанного в <b>id</b>. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Возвращает</dt><dd></dd></dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если удалось зарезервировать указанный ID, возвращает <em>true</em>, иначе <em>false</em>. </dd></dl>
 
 </div>
 </div>
