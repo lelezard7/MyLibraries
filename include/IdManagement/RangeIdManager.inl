@@ -201,10 +201,10 @@ reserve(T id, ReservationMethod reservationMethod)
     if (reservedIds_.find(id))
         return false;
 
-    if (moveBorder(BorderRange::UpperBorder, id))
+    if (moveBorderToNextId(BorderRange::UpperBorder, id))
         return true;
 
-    if (moveBorder(BorderRange::LowerBorder, id))
+    if (moveBorderToNextId(BorderRange::LowerBorder, id))
         return true;
 
     reservedIds_.add(id);
@@ -773,6 +773,11 @@ normalizeBorderRange(BorderRange borderRange)
             (idInfo.value < idRange_.getStart() && borderRange == BorderRange::LowerBorder))
             return idInfo.flags;
 
+        /*
+         * Это нужно так как на последний ID будет перемещена граница и она будет отвечать
+         * за тот ID на котором она находится. Потому, если последний ID будет свободен, он
+         * не должен быть записан во freeIds_.
+         */
         if (lastId.has_value()) {
             freeIds_.add(*lastId);
             lastId.reset();
@@ -839,7 +844,7 @@ getExpandableBorderRange(T id) const
 template<class T, class T_Step>
 bool
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
-moveBorder(BorderRange borderRange, T id)
+moveBorderToNextId(BorderRange borderRange, T id)
 {
     auto idInfo = idRange_.getIdInfo(borderRange, 1);
 
@@ -849,7 +854,7 @@ moveBorder(BorderRange borderRange, T id)
     if (idIssuingMethod_ != IdIssuingMethod::Dynamic) {
         /*
          * Так как мы передвигаем границу на зарезервированный ID надо озаботится тем
-         * чтобы в статическом режиме граница была включена когда мы ее передвиним
+         * чтобы в статическом режиме граница была включена когда мы ее передвинем
          * на этот ID.
          */
         if (!idRange_.getBorderState(borderRange)) {
@@ -857,11 +862,11 @@ moveBorder(BorderRange borderRange, T id)
 
             /*
              * Если UpperBorder == LowerBorder и мы, например, передвигаем UpperBorder,
-             * то LowerBorder останется на прежнем месте и ID на котором она стоит
+             * то LowerBorder останется на прежнем месте и ID на котором она стоит,
              * находится под ее ответственностью. Это значит что такой ID не должен
              * быть во freeIds_. А если UpperBorder != LowerBorder то после перемещения
              * UpperBorder, ID на котором она до сих пор стояла останется не занесенной
-             * в список freeIds_. Такой ID будет считаться зарезервированым, что неверно,
+             * в список freeIds_. Такой ID будет считаться зарезервированным, что неверно,
              * так как мы проверили это выше.
              * Потому данная проверка необходима.
              */
@@ -913,6 +918,11 @@ interpolateIds(T id)
         BorderRange borderRange = getExpandableBorderRange(id);
         typename IdRange<T>::IdInfo idInfo;
 
+        /*
+         * Перед выходом из цикла мы не проверяем последний полученный ID потому
+         * что выше мы проверили данный ID. Он свободен, а добавлять последний ID
+         * во freeIds_ нельзя, так как на нем будет граница диапазона.
+         */
         while (true) {
             idInfo = idRange_.moveBorder(borderRange, 1);
 
@@ -954,6 +964,7 @@ interpolateIds(T id)
 
     BorderRange borderRange = getExpandableBorderRange(id);
 
+    //Зачем это нужно описано в private методе moveBorderToNextId данного класса.
     if (!idRange_.getBorderState(borderRange)) {
         idRange_.setBorderState(borderRange, true);
 
@@ -1007,6 +1018,12 @@ reserveIds(T id)
         if (id == idRange_.getBorderValue(BorderRange::UpperBorder) || id == idRange_.getBorderValue(BorderRange::LowerBorder))
             return false;
 
+        /*
+         * Читать ниже в else. Идея та же.
+         *
+         * В динамическом режиме обе границы в выключенном состоянии могут быть только
+         * если они находятся в точке.
+         */
         if (!idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder))
             activateBothBorders();
     }
@@ -1017,6 +1034,13 @@ reserveIds(T id)
         if (id == idRange_.getBorderValue(BorderRange::LowerBorder))
             return reserveBorderRange(BorderRange::LowerBorder);
 
+        /*
+         * Здесь мы проверяем, выключена ли граница. Если выключена нам нужно только ее включить,
+         * а с самим ID можно ничего не делать. Нам не важно, был ли данный ID зарезервирован
+         * или свободен так как нам сейчас его все равно надо зарезервировать. Если он был
+         * зарезервирован, то нам с ним делать нечего, а если свободен, нам достаточно включить
+         * границу которая за него отвечает, так как сам ID больше нигде не хранится.
+         */
         if (idRange_.getBorderValue(BorderRange::UpperBorder) == idRange_.getBorderValue(BorderRange::LowerBorder)) {
             if (!idRange_.getBorderState(BorderRange::UpperBorder) && !idRange_.getBorderState(BorderRange::LowerBorder))
                 activateBothBorders();
