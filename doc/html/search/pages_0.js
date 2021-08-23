@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mainpage_167',['MainPage',['../md__main_page.html',1,'']]]
+  ['ошибки_0',['Ошибки',['../bug.html',1,'']]]
 ];

@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.9.1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ONF: Файл Z:/Project/ONF/ONF/include/ONF.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -17,20 +18,24 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
@@ -41,7 +46,8 @@
    </div>
    <div id="projectbrief">Небольшая, разнородная библиотека</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
           <img id="MSearchSelect" src="search/mag_sel.svg"
                onmouseover="return searchBox.OnSearchSelectShow()"
@@ -55,20 +61,18 @@
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
           </span>
         </div>
-</td>
- </tr>
+</td></tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.9.1 -->
+<!-- Создано системой Doxygen 1.9.2 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Поиск','.html');
 /* @license-end */
 </script>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -79,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -104,8 +108,7 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 <a href="#define-members">Макросы</a> &#124;
 <a href="#typedef-members">Определения типов</a> &#124;
 <a href="#func-members">Функции</a>  </div>
-  <div class="headertitle">
-<div class="title">Файл ONF.h</div>  </div>
+  <div class="headertitle"><div class="title">Файл ONF.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_version_names_8h_source.html">VersionNames.h</a>&quot;</code><br />
@@ -117,19 +120,19 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 </div>
 <p><a href="_o_n_f_8h_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
-<tr class="memitem:namespace_o_n_f"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html">ONF</a></td></tr>
+<tr class="memitem:namespace_o_n_f"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html">ONF</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Макросы</h2></td></tr>
 <tr class="memitem:a2b5d59e39fd2777331b24a90e4d8294f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_o_n_f_8h.html#a2b5d59e39fd2777331b24a90e4d8294f">ONF_VER</a>&#160;&#160;&#160;<a class="el" href="_version_names_8h.html#a2fe040e9ba37f45b7b609b20e7fd78a2">ONF_VER_0_0</a></td></tr>
 <tr class="separator:a2b5d59e39fd2777331b24a90e4d8294f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd0e17dacb31d13d02f523fc3e4e9c6e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_o_n_f_8h.html#abd0e17dacb31d13d02f523fc3e4e9c6e">ONF_VER_PATCH</a>&#160;&#160;&#160;0x0000</td></tr>
 <tr class="separator:abd0e17dacb31d13d02f523fc3e4e9c6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Определения типов</h2></td></tr>
 <tr class="memitem:a549f568cb9f0f7092f0750728ce94e75"><td class="memItemLeft" align="right" valign="top">typedef unsigned long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">ONF::udlong</a></td></tr>
 <tr class="separator:a549f568cb9f0f7092f0750728ce94e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,7 +141,7 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 <tr class="memitem:a860dc2f9df653251617a17fb27a13b47"><td class="memItemLeft" align="right" valign="top">typedef long double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">ONF::ldouble</a></td></tr>
 <tr class="separator:a860dc2f9df653251617a17fb27a13b47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
 <tr class="memitem:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">ONF::abs</a> (T value)</td></tr>
@@ -146,7 +149,7 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 <tr class="separator:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Макросы</h2>
-<a id="a2b5d59e39fd2777331b24a90e4d8294f"></a>
+<a id="a2b5d59e39fd2777331b24a90e4d8294f" name="a2b5d59e39fd2777331b24a90e4d8294f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2b5d59e39fd2777331b24a90e4d8294f">&#9670;&nbsp;</a></span>ONF_VER</h2>
 
 <div class="memitem">
@@ -160,7 +163,7 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 
 </div>
 </div>
-<a id="abd0e17dacb31d13d02f523fc3e4e9c6e"></a>
+<a id="abd0e17dacb31d13d02f523fc3e4e9c6e" name="abd0e17dacb31d13d02f523fc3e4e9c6e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abd0e17dacb31d13d02f523fc3e4e9c6e">&#9670;&nbsp;</a></span>ONF_VER_PATCH</h2>
 
 <div class="memitem">
@@ -180,7 +183,7 @@ $(document).ready(function(){initNavTree('_o_n_f_8h.html',''); initResizable(); 
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="_o_n_f_8h.html">ONF.h</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

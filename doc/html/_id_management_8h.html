@@ -2,11 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.9.1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ONF: Файл Z:/Project/ONF/ONF/include/IdManagement.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -17,20 +18,24 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
@@ -41,7 +46,8 @@
    </div>
    <div id="projectbrief">Небольшая, разнородная библиотека</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
           <img id="MSearchSelect" src="search/mag_sel.svg"
                onmouseover="return searchBox.OnSearchSelectShow()"
@@ -55,20 +61,18 @@
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
           </span>
         </div>
-</td>
- </tr>
+</td></tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.9.1 -->
+<!-- Создано системой Doxygen 1.9.2 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Поиск','.html');
 /* @license-end */
 </script>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -79,7 +83,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -106,8 +110,7 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <a href="#enum-members">Перечисления</a> &#124;
 <a href="#func-members">Функции</a> &#124;
 <a href="#var-members">Переменные</a>  </div>
-  <div class="headertitle">
-<div class="title">Файл IdManagement.h</div>  </div>
+  <div class="headertitle"><div class="title">Файл IdManagement.h</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="_o_n_f_8h_source.html">ONF.h</a>&quot;</code><br />
@@ -121,7 +124,7 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 </div>
 <p><a href="_id_management_8h_source.html">См. исходные тексты.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Классы</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html">ONF::IdContainer&lt; T &gt;</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер с настраиваемым способом выдачи ID.  <a href="class_o_n_f_1_1_id_container.html#details">Подробнее...</a><br /></td></tr>
@@ -136,12 +139,12 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Диапазонный IdManager на основе <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.  <a href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Пространства имен</h2></td></tr>
-<tr class="memitem:namespace_o_n_f"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html">ONF</a></td></tr>
+<tr class="memitem:namespace_o_n_f"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html">ONF</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Макросы</h2></td></tr>
 <tr class="memitem:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>&#160;&#160;&#160;0x0000</td></tr>
 <tr class="memdesc:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг не задан.  <a href="group___id_range___flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">Подробнее...</a><br /></td></tr>
@@ -171,7 +174,7 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <tr class="memdesc:ga8bb14bf01d0ec4cff4aad969b73d295d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится на Стартовой позиции.  <a href="group___id_range___position.html#ga8bb14bf01d0ec4cff4aad969b73d295d">Подробнее...</a><br /></td></tr>
 <tr class="separator:ga8bb14bf01d0ec4cff4aad969b73d295d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Перечисления</h2></td></tr>
 <tr class="memitem:a3815caa61c1318fa522bb73b6987b18b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">ONF::IdIssuingMethod</a> { <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">ONF::Dynamic</a>
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">ONF::Static_Ascending</a>
@@ -191,27 +194,27 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <tr class="memdesc:aa379d56cc5b00030d3772d015b40f999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отвечает за способ резервации ID методом RangeIdManager::reserve(T, ReservationMethod).  <a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999">Подробнее...</a><br /></td></tr>
 <tr class="separator:aa379d56cc5b00030d3772d015b40f999"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
-<tr class="memitem:a52d779248f367704eccd4128076e0b9d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a52d779248f367704eccd4128076e0b9d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a52d779248f367704eccd4128076e0b9d">ONF::isStandardId</a> (T target, T start, T step)</td></tr>
-<tr class="memdesc:a52d779248f367704eccd4128076e0b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespace_o_n_f.html#a52d779248f367704eccd4128076e0b9d">Подробнее...</a><br /></td></tr>
-<tr class="separator:a52d779248f367704eccd4128076e0b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#aa021bc8d13b43108e1eb0cbac418ace1">ONF::findNearestStdId</a> (T target, T start, T step)</td></tr>
-<tr class="memdesc:aa021bc8d13b43108e1eb0cbac418ace1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ближайший к переданному ID, стандартный ID.  <a href="namespace_o_n_f.html#aa021bc8d13b43108e1eb0cbac418ace1">Подробнее...</a><br /></td></tr>
-<tr class="separator:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7419e8b0181f9a84fc4814cc16601c27"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a7419e8b0181f9a84fc4814cc16601c27"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a7419e8b0181f9a84fc4814cc16601c27">ONF::moveFromId</a> (T start, T step, udlong n)</td></tr>
-<tr class="memdesc:a7419e8b0181f9a84fc4814cc16601c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a7419e8b0181f9a84fc4814cc16601c27">Подробнее...</a><br /></td></tr>
-<tr class="separator:a7419e8b0181f9a84fc4814cc16601c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">ONF::isStandardId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a0c80070a358a426c55424b0cefd3ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">Подробнее...</a><br /></td></tr>
+<tr class="separator:a0c80070a358a426c55424b0cefd3ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">ONF::findNearestStdId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a7dec9a0389045ddedc70aa0f59687d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ближайший к переданному ID, стандартный ID.  <a href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7dec9a0389045ddedc70aa0f59687d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">ONF::moveFromId</a> (T start, T step, udlong n)</td></tr>
+<tr class="memdesc:a053b3525f6354bec193786e4d37d475f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">Подробнее...</a><br /></td></tr>
+<tr class="separator:a053b3525f6354bec193786e4d37d475f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Переменные</h2></td></tr>
-<tr class="memitem:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memTemplParams" colspan="2">template&lt;class T , class T_Step &gt; </td></tr>
-<tr class="memitem:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">ONF::is_forbidden_types_combination</a> = !std::is_floating_point_v&lt;T&gt; &amp;&amp; std::is_floating_point_v&lt;T_Step&gt;</td></tr>
-<tr class="memdesc:a296c2ff0e43c78fd9f4f36589e266a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, не запрещена ли данная комбинация типов.  <a href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">Подробнее...</a><br /></td></tr>
-<tr class="separator:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memTemplParams" colspan="2">template&lt;class T , class T_Step &gt; </td></tr>
+<tr class="memitem:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">ONF::is_forbidden_types_combination</a> = !std::is_floating_point_v&lt;T&gt; &amp;&amp; std::is_floating_point_v&lt;T_Step&gt;</td></tr>
+<tr class="memdesc:af3975f8bd8ff35c63edb13ea4d475e71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, не запрещена ли данная комбинация типов.  <a href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">Подробнее...</a><br /></td></tr>
+<tr class="separator:af3975f8bd8ff35c63edb13ea4d475e71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -219,7 +222,7 @@ $(document).ready(function(){initNavTree('_id_management_8h.html',''); initResiz
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="_id_management_8h.html">IdManagement.h</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
