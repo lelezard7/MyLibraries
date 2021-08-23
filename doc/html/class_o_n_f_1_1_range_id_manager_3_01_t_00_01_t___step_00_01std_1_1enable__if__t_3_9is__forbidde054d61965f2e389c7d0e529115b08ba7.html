@@ -409,11 +409,11 @@ class ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
 <div class="line"> 0  0  0  0  0  0  0  0  0  0  0  1  0         0  0  0  0  0  0  0  0  0  0  0  1  0</div>
-<div class="ttc" id="anamespace_o_n_f_html_aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f"><div class="ttname"><a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ONF::ReservationMethod::Interpolate</a></div><div class="ttdeci">@ Interpolate</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f"><div class="ttname"><a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ONF::ReservationMethod::Interpolate</a></div><div class="ttdeci">@ Interpolate</div><div class="ttdoc">Говорит что нужно зарезервировать указанный ID и интерполировать все ID от границы диапазона (включит...</div></div>
 </div><!-- fragment --><p>Про интерполяцию читайте: <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a>.</p>
 <p>Так же хочется отметить еще одну особенность динамического режима. <br  />
  При динамическом режиме границы стремятся находиться на своей территории. <br  />
- О территориях можно узнать из описания <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#a4fb0bd189a78298e6ad43992ae0cae80" title="Граница диапазона, на территории которой находится полученный ID.   Значение по умолчанию BorderRange...">IdRange::IdInfo::border</a>. <br  />
+ О территориях можно узнать из описания <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html#ab8883fec06b95d744a021348c244f259" title="Граница диапазона, на территории которой находится полученный ID.   Значение по умолчанию BorderRange...">IdRange::IdInfo::border</a>. <br  />
  При динамическом режиме возможна ситуация когда обе границы будут по одну сторону от стартового ID, что невозможно при статическом режиме. <br  />
  Когда это произойдет, та граница которая оказалась не на своей территории начнет постепенно возвращаться на свою территорию. Это называется восстановление диапазона. <br  />
  Граница будет считать что на своей территории когда окажется на стартовом ID. <br  />
@@ -483,7 +483,7 @@ class ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">Диапазон восстановлен.</div>
-</div><!-- fragment --><p>Что бы установить динамический режим (установлен по умолчанию) нужно в метод <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa079b0a8e3c18c514c1cc367cb6add79" title="Меняет метод выдачи ID и режим границ.">setIdIssuingMethod(IdIssuingMethod)</a> передать <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>. <br  />
+</div><!-- fragment --><p>Что бы установить динамический режим (установлен по умолчанию) нужно в метод <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aa079b0a8e3c18c514c1cc367cb6add79" title="Меняет метод выдачи ID и режим границ.">setIdIssuingMethod(IdIssuingMethod)</a> передать <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a>. <br  />
  Остальные два перечислителя <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> отвечают за статический режим. </p>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
 <a id="a4ceba726feeaeef39fc1abaa880623d2"></a>
@@ -495,7 +495,7 @@ class ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>start</em> = <code>0</code>, </td>
@@ -516,7 +516,7 @@ template&lt;class T , class T_Step &gt; </div>
 <p>По умолчанию обе границы выключены, находятся на ID равном 0 и с размером шага 1. <br  />
  Лимит <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> по умолчанию равен <a href="https://en.cppreference.com/w/cpp/types/numeric_limits/max">std::numeric_limits::max()</a>. <br  />
  Лимит <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> по умолчанию равен <a href="https://en.cppreference.com/w/cpp/types/numeric_limits/lowest">std::numeric_limits::lowest()</a>. <br  />
- Метод выдачи ID по умолчанию равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">IdIssuingMethod::Dynamic</a>. <br  />
+ Метод выдачи ID по умолчанию равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a>. <br  />
  Так же по умолчанию установлен жесткий шаг.</p>
 <p>Шаг не может быть равен 0. Если вы передадите в <b>step</b> 0, он автоматически станет равен 1. <br  />
  Знак числа шага, передаваемого в <b>step</b>, не имеет значения, минус автоматически отбрасывается.</p>
@@ -539,7 +539,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -565,7 +565,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -596,7 +596,7 @@ template&lt;class T , class T_Step &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::~<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
+          <td class="memname">virtual <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::~<a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -621,7 +621,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::find </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::find </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -650,7 +650,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::findNearestStdId </td>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::findNearestStdId </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>id</em>, </td>
@@ -673,7 +673,7 @@ template&lt;class T , class T_Step &gt; </div>
 <p>Лимит не распространяется на данный метод. <br  />
  В <b>id</b> надо передать тот ID, ближайший стандартный ID к которому нужно найти, а в <b>borderRange</b> надо передать ту границу от которой будет вестись отсчет. <br  />
  Т.е. искомый ID будет находиться между <b>id</b> и границей переданной в <b>borderRange</b>. <br  />
- Данный метод основан на функции <a class="el" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40" title="Возвращает ближайший к переданному ID, стандартный ID.">ONF::findNearestStdId(T, T, T)</a>. <br  />
+ Данный метод основан на функции <a class="el" href="namespace_o_n_f.html#aa021bc8d13b43108e1eb0cbac418ace1" title="Возвращает ближайший к переданному ID, стандартный ID.">ONF::findNearestStdId(T, T, T)</a>. <br  />
  Параметр <b>target</b> данной функции это параметр <b>id</b> данного метода, а параметр <b>start</b> это <b>borderRange</b>.</p>
 <p>Параметр <b>borderRange</b> необходим из-за особенности динамического режима, а именно из-за того что обе границы могут оказаться по одну сторону от стартового ID. <br  />
  Подробнее о данной особенности можно прочитать в описании данного класса. <br  />
@@ -734,7 +734,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::free </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::free </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -763,7 +763,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::freeAll </td>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::freeAll </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -784,7 +784,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderLimit </td>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderLimit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
           <td class="paramname"><em>borderRange</em></td><td>)</td>
@@ -813,7 +813,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderState </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderState </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
           <td class="paramname"><em>borderRange</em></td><td>)</td>
@@ -842,7 +842,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderValue </td>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getBorderValue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
           <td class="paramname"><em>borderRange</em></td><td>)</td>
@@ -871,7 +871,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt;T&gt; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeId </td>
+          <td class="memname">std::optional&lt;T&gt; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeId </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -894,13 +894,13 @@ template&lt;class T , class T_Step &gt; </div>
 <li>Если в пределах диапазона есть свободный ID, возвращает его, иначе переходит к пункту 4.</li>
 <li>Если возможно передвинуть границу в соответствии с размером и направлением шага, возвращает ID на который была передвинута граница, иначе возвращает <a href="https://en.cppreference.com/w/cpp/utility/optional/nullopt">std::nullopt</a>.</li>
 </ol>
-<p>При статическом режиме выдачи ID равном <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">IdIssuingMethod::Static_Ascending</a> порядок действий данного метода:</p><ol type="1">
+<p>При статическом режиме выдачи ID равном <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a> порядок действий данного метода:</p><ol type="1">
 <li>Проверяет, включена ли нижняя граница. Если нет, включит ее и вернет ее ID. Если включена, переходит к пункту 2.</li>
 <li>Если в пределах диапазона есть свободный ID, возвращает его, иначе переходит к пункту 3.</li>
 <li>Проверяет, включена ли верхняя граница. Если нет, включит ее и вернет ее ID. Если включена, переходит к пункту 4.</li>
 <li>Если возможно передвинуть границу в соответствии с размером и направлением шага, возвращает ID на который была передвинута граница, иначе возвращает <a href="https://en.cppreference.com/w/cpp/utility/optional/nullopt">std::nullopt</a>.</li>
 </ol>
-<p>При статическом режиме выдачи ID равном <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">IdIssuingMethod::Static_Descending</a> порядок действий данного метода:</p><ol type="1">
+<p>При статическом режиме выдачи ID равном <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a> порядок действий данного метода:</p><ol type="1">
 <li>Проверяет, включена ли верхняя граница. Если нет, включит ее и вернет ее ID. Если включена, переходит к пункту 2.</li>
 <li>Если в пределах диапазона есть свободный ID, возвращает его, иначе переходит к пункту 3.</li>
 <li>Проверяет, включена ли нижняя граница. Если нет, включит ее и вернет ее ID. Если включена, переходит к пункту 4.</li>
@@ -922,7 +922,7 @@ template&lt;class T , class T_Step &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeIdsSize </td>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getFreeIdsSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -949,7 +949,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getIdIssuingMethod </td>
+          <td class="memname"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getIdIssuingMethod </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -974,7 +974,7 @@ template&lt;class T , class T_Step &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getReservedIdsSize </td>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getReservedIdsSize </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1001,7 +1001,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStart </td>
+          <td class="memname">T <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStart </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1023,7 +1023,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">T_Step <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStep </td>
+          <td class="memname">T_Step <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::getStep </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1045,7 +1045,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isHardStep </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isHardStep </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -1068,7 +1068,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isStandardId </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::isStandardId </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>id</em></td><td>)</td>
@@ -1078,7 +1078,7 @@ template&lt;class T , class T_Step &gt; </div>
 </div><div class="memdoc">
 
 <p>Проверяет, является ли указанный ID стандартным для данного объекта класса. </p>
-<p>Подробнее об этом методе: <a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34" title="Проверяет, является ID стандартным или же нет.">isStandardId(T, T, T)</a>.</p>
+<p>Подробнее об этом методе: <a class="el" href="namespace_o_n_f.html#a52d779248f367704eccd4128076e0b9d" title="Проверяет, является ID стандартным или же нет.">isStandardId(T, T, T)</a>.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">id</td><td>- ID который нужно проверить на стандартность. </td></tr>
@@ -1098,7 +1098,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -1124,7 +1124,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&amp; <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a>&lt; T, T_Step &gt; &amp;&amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -1152,7 +1152,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::reserve </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::reserve </td>
           <td>(</td>
           <td class="paramtype">T&#160;</td>
           <td class="paramname"><em>id</em>, </td>
@@ -1182,8 +1182,8 @@ template&lt;class T , class T_Step &gt; </div>
  О том как влияют его перечислители на процесс резервации ID можно вкратце прочесть здесь: <br  />
 </p><ul>
 <li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a></li>
-<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a></li>
-<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a></li>
+<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f" title="Говорит что нужно зарезервировать указанный ID и интерполировать все ID от границы диапазона (включит...">ReservationMethod::Interpolate</a></li>
+<li><a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298" title="Говорит что нужно зарезервировать все ID от границы диапазона (включительно) до указанного ID (включи...">ReservationMethod::ReserveRange</a></li>
 </ul>
 <p>А теперь более подробно об их работе. Далее поочередно в подробностях будет описан каждый перечислитель. <br  />
  Перед использованием метода <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> стоит ознакомиться с каждым перечислителем что бы понимать все правила данного метода. <br  />
@@ -1196,7 +1196,7 @@ template&lt;class T , class T_Step &gt; </div>
  Подробнее обо всем этом в описании данного класса. <br  />
  В остальном данный перечислитель говорит просто зарезервировать указанный ID, будь он в пределах диапазона, за его пределами или на его границах. <br  />
  ID переданный в <b>id</b> должен быть свободен.</p>
-<p>Далее идет <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ReservationMethod::ReserveRange</a>. <br  />
+<p>Далее идет <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298" title="Говорит что нужно зарезервировать все ID от границы диапазона (включительно) до указанного ID (включи...">ReservationMethod::ReserveRange</a>. <br  />
  Данный перечислитель говорит методу <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> зарезервировать все ID от текущей границы до указанного ID. <br  />
  При этом если при резервации промежуточных ID будет встречен уже зарезервированный ID, он просто пропускается. А вот все свободные ID резервируются. <br  />
  Несмотря на то что среди промежуточных ID могут быть уже зарезервированные, ID переданный в <b>id</b> должен быть свободен.</p>
@@ -1285,9 +1285,9 @@ template&lt;class T , class T_Step &gt; </div>
 <div class="line"> </div>
 <div class="line">В данных примерах обе границы вначале включены, но те же результаты будут, если они будут</div>
 <div class="line">выключены.</div>
-<div class="ttc" id="anamespace_o_n_f_html_aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298"><div class="ttname"><a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ONF::ReservationMethod::ReserveRange</a></div><div class="ttdeci">@ ReserveRange</div></div>
-</div><!-- fragment --><p>И наконец <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>. <br  />
- Сразу отмечу что в этом случае если в <b>id</b> указать нестандартный ID, то просто произойдет резервация указанного ID по всем тем правилам как если бы мы передали не <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ReservationMethod::Interpolate</a>, а <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a>.</p>
+<div class="ttc" id="anamespace_o_n_f_html_aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298"><div class="ttname"><a href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ONF::ReservationMethod::ReserveRange</a></div><div class="ttdeci">@ ReserveRange</div><div class="ttdoc">Говорит что нужно зарезервировать все ID от границы диапазона (включительно) до указанного ID (включи...</div></div>
+</div><!-- fragment --><p>И наконец <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f" title="Говорит что нужно зарезервировать указанный ID и интерполировать все ID от границы диапазона (включит...">ReservationMethod::Interpolate</a>. <br  />
+ Сразу отмечу что в этом случае если в <b>id</b> указать нестандартный ID, то просто произойдет резервация указанного ID по всем тем правилам как если бы мы передали не <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f" title="Говорит что нужно зарезервировать указанный ID и интерполировать все ID от границы диапазона (включит...">ReservationMethod::Interpolate</a>, а <a class="el" href="namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff" title="Говорит что нужно просто зарезервировать указанный ID.">ReservationMethod::NotSet</a>.</p>
 <p>Если границы диапазона не находятся на одном и том же ID в выключенном состоянии и мы резервируем ID вне диапазона, данный перечислитель говорит методу <a class="el" href="class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da" title="Резервирует ID разными способами.">reserve(T, ReservationMethod)</a> зарезервировать указанный ID и передвинуть на него границу. </p><div class="fragment"><div class="line">Ситуация 1.</div>
 <div class="line"> </div>
 <div class="line">                   1</div>
@@ -1425,7 +1425,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setBorderLimit </td>
+          <td class="memname">bool <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setBorderLimit </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
           <td class="paramname"><em>borderRange</em>, </td>
@@ -1468,7 +1468,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setHardStep </td>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setHardStep </td>
           <td>(</td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -1498,7 +1498,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setIdIssuingMethod </td>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::setIdIssuingMethod </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a>&#160;</td>
           <td class="paramname"><em>idIssuingMethod</em></td><td>)</td>
@@ -1528,8 +1528,8 @@ template&lt;class T , class T_Step &gt; </div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6        -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .   =&gt;    .  .  .  .  .  .  @  .  .  .  .  .  .</div>
 <div class="line"> 0  1  0  1  0  0  1  1  1  0  0  0  1         0  1  0  1  0  0  1  1  1  0  0  0  1</div>
-<div class="ttc" id="anamespace_o_n_f_html_a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700"><div class="ttname"><a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">ONF::IdIssuingMethod::Static_Ascending</a></div><div class="ttdeci">@ Static_Ascending</div></div>
-<div class="ttc" id="anamespace_o_n_f_html_a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c"><div class="ttname"><a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">ONF::IdIssuingMethod::Dynamic</a></div><div class="ttdeci">@ Dynamic</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700"><div class="ttname"><a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">ONF::IdIssuingMethod::Static_Ascending</a></div><div class="ttdeci">@ Static_Ascending</div><div class="ttdoc">ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c"><div class="ttname"><a href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">ONF::IdIssuingMethod::Dynamic</a></div><div class="ttdeci">@ Dynamic</div><div class="ttdoc">ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.</div></div>
 </div><!-- fragment --><p> В данном примере можно увидеть что несмотря на то что свободные ID были позади как у <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> так и <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>, передвинулась только <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>. <br  />
  Это из-за того что <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> был на свободном ID, а <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> был на зарезервированном ID.</p>
 <p>При смене режима границ с динамического на статический, данный метод сперва восстановит диапазон если это необходимо. <br  />
@@ -1553,7 +1553,7 @@ template&lt;class T , class T_Step &gt; </div>
 template&lt;class T , class T_Step &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::size </td>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_range_id_manager.html">ONF::RangeIdManager</a>&lt; T, T_Step, std::enable_if_t&lt;!<a class="el" href="namespace_o_n_f.html#a296c2ff0e43c78fd9f4f36589e266a32">is_forbidden_types_combination</a>&lt; T, T_Step &gt; &gt; &gt;::size </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>

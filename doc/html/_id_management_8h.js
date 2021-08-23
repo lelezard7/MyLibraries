@@ -27,8 +27,8 @@ var _id_management_8h =
       [ "Interpolate", "_id_management_8h.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f", null ],
       [ "ReserveRange", "_id_management_8h.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298", null ]
     ] ],
-    [ "findNearestStdId", "_id_management_8h.html#a7dec9a0389045ddedc70aa0f59687d40", null ],
-    [ "isStandardId", "_id_management_8h.html#a0c80070a358a426c55424b0cefd3ec34", null ],
-    [ "moveFromId", "_id_management_8h.html#a053b3525f6354bec193786e4d37d475f", null ],
-    [ "is_forbidden_types_combination", "_id_management_8h.html#af3975f8bd8ff35c63edb13ea4d475e71", null ]
+    [ "findNearestStdId", "_id_management_8h.html#aa021bc8d13b43108e1eb0cbac418ace1", null ],
+    [ "isStandardId", "_id_management_8h.html#a52d779248f367704eccd4128076e0b9d", null ],
+    [ "moveFromId", "_id_management_8h.html#a7419e8b0181f9a84fc4814cc16601c27", null ],
+    [ "is_forbidden_types_combination", "_id_management_8h.html#a296c2ff0e43c78fd9f4f36589e266a32", null ]
 ];

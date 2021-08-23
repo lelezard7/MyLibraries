@@ -25,6 +25,7 @@
 var NAVTREE =
 [
   [ "ONF", "index.html", [
+    [ "MainPage", "md__main_page.html", null ],
     [ "Ошибки", "bug.html", null ],
     [ "Группы", "modules.html", "modules" ],
     [ "Пространства имен", "namespaces.html", [

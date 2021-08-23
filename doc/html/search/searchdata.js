@@ -3,7 +3,7 @@ var indexSectionsWithContent =
   0: "abcdefgilmnoprsuv~О",
   1: "ir",
   2: "o",
-  3: "ciov",
+  3: "cimov",
   4: "acefgimors~",
   5: "bfipsv",
   6: "dlu",
@@ -11,7 +11,7 @@ var indexSectionsWithContent =
   8: "dilnrsu",
   9: "o",
   10: "i",
-  11: "О"
+  11: "mО"
 };
 
 var indexSectionNames =

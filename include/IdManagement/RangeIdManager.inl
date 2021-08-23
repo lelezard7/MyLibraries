@@ -1,14 +1,12 @@
 ﻿#include "../IdManagement.h"
 
-#include <vector>
-
 using ONF::is_forbidden_types_combination;
 
 
 template<class T, class T_Step>
 ONF::RangeIdManager<T, T_Step, std::enable_if_t<!is_forbidden_types_combination<T, T_Step>>>::
 RangeIdManager(T start, T_Step step)
-    : idRange_        (start, ONF::abs(step)), //TODO: Если T будет char, а T_Step будет long long то long long ужмется до char.
+    : idRange_        (start, ONF::abs(step)), //TODO: Если T будет char, а T_Step будет long long, то long long ужмется до char.
       step_           (step == 0 ? 1 : step),
       size_           (0),
       isHardStep_     (true),
