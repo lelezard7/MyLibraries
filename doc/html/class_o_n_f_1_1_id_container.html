@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.9.2-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,7 +33,7 @@ window.MathJax = {
 };
 </script>
 <script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
@@ -161,16 +162,16 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_container.html','')
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Защищенные члены</h2></td></tr>
 <tr class="memitem:a485fea92380d8839b89719b9276194ef"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">getUnorderedIdsSize</a> () const</td></tr>
-<tr class="memdesc:a485fea92380d8839b89719b9276194ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID хранимых в <b>unorderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">Подробнее...</a><br /></td></tr>
+<tr class="memdesc:a485fea92380d8839b89719b9276194ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID, хранимых в <b>unorderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#a485fea92380d8839b89719b9276194ef">Подробнее...</a><br /></td></tr>
 <tr class="separator:a485fea92380d8839b89719b9276194ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3d305cf61c8776de45265b4298309bc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">getOrderedIdsSize</a> () const</td></tr>
-<tr class="memdesc:aa3d305cf61c8776de45265b4298309bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID хранимых в <b>orderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">Подробнее...</a><br /></td></tr>
+<tr class="memdesc:aa3d305cf61c8776de45265b4298309bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает количество ID, хранимых в <b>orderedIds_</b>.  <a href="class_o_n_f_1_1_id_container.html#aa3d305cf61c8776de45265b4298309bc">Подробнее...</a><br /></td></tr>
 <tr class="separator:aa3d305cf61c8776de45265b4298309bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class T&gt;<br />
 class ONF::IdContainer&lt; T &gt;</div><p >Контейнер с настраиваемым способом выдачи ID. </p>
-<p >По сути <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> это объединение <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> и <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a>. <br  />
+<p >По сути <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> - это объединение <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> и <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a>. <br  />
  <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> хранит все записанные в него уникальные ID и выдает их в порядке возрастания, убывания или добавления. <br  />
  Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a>, то ID выдаются в порядке возрастания. <br  />
  Если метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a>, то ID выдаются в порядке убывания. <br  />
@@ -180,7 +181,7 @@ class ONF::IdContainer&lt; T &gt;</div><p >Контейнер с настраи�
 <p >Когда метод выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a>, все ID хранятся в <b>unorderedIds_</b>, а при <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a> и <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a> в <b>orderedIds_</b>: </p><div class="fragment"><div class="line">std::list&lt;T&gt; unorderedIds_;</div>
 <div class="line">std::set&lt;T&gt; orderedIds_;</div>
 </div><!-- fragment --><dl class="section warning"><dt>Предупреждения</dt><dd><a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> не хранит порядок добавления ID, он просто перекидывает все хранимые ID в <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> в случае если способ выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a> и в <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> если способ выдачи ID равен <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a> или <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a>. <br  />
- Отсюда вытекает проблема при которой после смены режима выдачи с <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a> на <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a> или <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a>, а затем обратно на <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a>, <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> уже не будет выдавать ранее добавленные ID в том порядке в котором мы их добавляли в него. Но вновь добавленные ID будут выдаваться в порядке добавления. <br  />
+ Отсюда вытекает проблема, при которой после смены режима выдачи с <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a> на <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700" title="ID выдаются в порядке возрастания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Ascending</a> или <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94" title="ID выдаются в порядке убывания.   В классе RangeIdManager границы имеют фиксированный характер.">IdIssuingMethod::Static_Descending</a>, а затем обратно на <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c" title="ID выдаются в порядке их добавления.   В классе RangeIdManager границы имеют плавающий характер.">IdIssuingMethod::Dynamic</a>, <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> уже не будет выдавать ранее добавленные ID в том порядке в котором мы их добавляли в него. Но вновь добавленные ID будут выдаваться в порядке добавления. <br  />
  Сейчас это скорее баг нежели фича. В будущих версиях этот момент будет доработан (будет обратно совместим).</dd></dl>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_container.html#a3a950a7194450e9127336fc44d33aaa8">IdContainer(IdIssuingMethod idIssuingMethod)</a> <br  />
  <a class="el" href="class_o_n_f_1_1_id_container.html#a5eed11bf8d371806c169b72d0d49fb26" title="Задает метод выдачи ID для IdContainer.">setIdIssuingMethod(IdIssuingMethod)</a> <br  />
@@ -522,8 +523,8 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Возвращает количество ID хранимых в <b>orderedIds_</b>. </p>
-<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в <b>orderedIds_</b>. </dd></dl>
+<p>Возвращает количество ID, хранимых в <b>orderedIds_</b>. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID, хранимых в <b>orderedIds_</b>. </dd></dl>
 
 </div>
 </div>
@@ -552,8 +553,8 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Возвращает количество ID хранимых в <b>unorderedIds_</b>. </p>
-<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID хранимых в <b>unorderedIds_</b>. </dd></dl>
+<p>Возвращает количество ID, хранимых в <b>unorderedIds_</b>. </p>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество ID, хранимых в <b>unorderedIds_</b>. </dd></dl>
 
 </div>
 </div>
@@ -646,7 +647,7 @@ template&lt;class T &gt; </div>
 
 <p>Задает метод выдачи ID для <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a>. </p>
 <dl class="bug"><dt><b><a class="el" href="bug.html#_bug000001">Ошибка:</a></b></dt><dd>На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени. <br  />
- Это связанно с тем что <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> переписывает все ID из <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> в <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> или обратно.</dd></dl>
+ Это связанно с тем, что <a class="el" href="class_o_n_f_1_1_id_container.html" title="Контейнер с настраиваемым способом выдачи ID.">IdContainer</a> переписывает все ID из <a href="https://en.cppreference.com/w/cpp/container/list">std::list</a> в <a href="https://en.cppreference.com/w/cpp/container/set">std::set</a> или обратно.</dd></dl>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
     <tr><td class="paramname">idIssuingMethod</td><td>- метод выдачи ID который нужно установить. </td></tr>
@@ -684,11 +685,11 @@ template&lt;class T &gt; </div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.2-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

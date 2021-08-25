@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.9.2-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,7 +33,7 @@ window.MathJax = {
 };
 </script>
 <script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
@@ -295,7 +296,7 @@ template&lt;class T &gt; </div>
 <p ><b>border</b> хранит информацию о том на чьей территории располагается полученный ID. Полученный ID хранится в <b>value</b>. <br  />
  Все ID больше Стартового ID находятся на территории <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a>, он и будет записан в <b>border</b>. <br  />
  Все ID меньше Стартового ID находятся на территории <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a>, он и будет записан в <b>border</b>. <br  />
- Стартовый ID является нейтральным. Если полученный ID совпадает со Стартовым ID, в <b>border</b> записывается то значение <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> которое мы указали в <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">IdRange::moveBorder(BorderRange, dlong)</a> или <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">IdRange::getIdInfo(BorderRange, dlong) const</a> в первом параметре.</p>
+ Стартовый ID является нейтральным. Если полученный ID совпадает со Стартовым ID, в <b>border</b> записывается то значение <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>, которое мы указали в <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">IdRange::moveBorder(BorderRange, dlong)</a> или <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">IdRange::getIdInfo(BorderRange, dlong) const</a> в первом параметре.</p>
 <p >Например: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
 <div class="line">...</div>
 <div class="line">auto idInfo = idRange.getIdInfo(<a class="code hl_enumvalue" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, -4); <span class="comment">//idInfo.border == BorderRange::UpperBorder</span></div>
@@ -362,7 +363,7 @@ template&lt;class T &gt; </div>
  Флаги <a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>, <a class="el" href="group___id_range___flag.html#ga2d356f7caaff6bcc6d51538f740dbf23">IDRF_ID_OUT_OF_LIMIT</a>, <a class="el" href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a> показывают, успешно ли выполнена задача перемещения или получения информации об ID классом <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>. <br  />
  Если в процессе выполнения одна из границ диапазона попытается выйти за пределы своего Лимита, в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#ga2d356f7caaff6bcc6d51538f740dbf23">IDRF_ID_OUT_OF_LIMIT</a>. <br  />
  Если в процессе выполнения одна из границ диапазона попытается пересечь другую границу диапазона, в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a>. <br  />
- Если задача была выполнена успешно и граница не пытались пересечь ни Лимит ни другую границу в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>. <br  />
+ Если задача была выполнена успешно и граница не пытались пересечь ни Лимит, ни другую границу, в <b>flags</b> будет записан <a class="el" href="group___id_range___flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>. <br  />
  Подробнее о пересечении Лимита или противоположной границы: <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">IdRange::moveBorder</a> <br  />
  <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">IdRange::getIdInfo</a> <br  />
@@ -485,7 +486,7 @@ template&lt;class T &gt; </div>
  Значение по умолчанию 0. </p>
 <p >Если граница диапазона <em><b>может</b></em> успешно переместиться и ей ничего не помешает, то <b>value</b> примет ожидаемое значение. <br  />
  Если граница диапазона не <em><b>может</b></em> успешно переместиться, в <b>value</b> будет записан не ожидаемый ID, а ближайший возможный.</p>
-<p >Я подчеркнул слово "может" из-за того что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> не двигает границу, но работает почти так же как и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder</a> который в свою очередь уже двигает границу. <br  />
+<p >Я подчеркнул слово "может" из-за того, что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> не двигает границу, но работает почти так же как и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder</a>, который в свою очередь уже двигает границу. <br  />
  Подробнее о правилах перемещения границы: <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.</p>
 <p >Пример: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
 <div class="line">...</div>
@@ -517,11 +518,11 @@ template&lt;class T &gt; </div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.2-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a></li><li class="navelem"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>

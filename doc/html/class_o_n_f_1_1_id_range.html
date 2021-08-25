@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.9.2-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -32,7 +33,7 @@ window.MathJax = {
 };
 </script>
 <script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
@@ -192,16 +193,16 @@ class ONF::IdRange&lt; T &gt;</div><p >Динамический диапазон
 <div class="line">          lb&gt;.-&gt;.-&gt;.-&gt;|                                             lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .         .  .  .  .  .  .  @  .  .  .  .  .  .</div>
-</div><!-- fragment --><p >Несмотря на то что границы могут идти навстречу друг другу и могут даже встретиться в одной точке, они никогда не могут пересечь друг друга. <br  />
+</div><!-- fragment --><p >Несмотря на то, что границы могут идти навстречу друг другу и могут даже встретиться в одной точке, они никогда не могут пересечь друг друга. <br  />
  Граница, которая попытается пересечь другую границу, остановится там где, находится другая граница: </p><div class="fragment"><div class="line">             |&lt;x.&lt;x.&lt;-.&lt;-.&lt;-.&lt;-ub                                ub</div>
 <div class="line">                   lb                                            lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .         .  .  .  .  .  .  @  .  .  .  .  .  .</div>
 </div><!-- fragment --><p >Так же для каждой границы можно установить Лимит ( :: ). <br  />
- Лимит можно установить как вне диапазона, так и на границе диапазона, но не внутри диапазона. <br  />
+ Лимит можно установить как вне диапазона, так и на границе диапазона (но не внутри диапазона). <br  />
  Граница диапазона не может пересечь установленный для нее Лимит. <br  />
  В случае если граница диапазона попробует это сделать и Лимит установлен на стандартном ID, граница диапазона остановится там где установлен Лимит. <br  />
- Если граница диапазона попробует пересечь Лимит который установлен на нестандартном ID, она остановится на ближайшем к Лимиту стандартном ID. <br  />
+ Если граница диапазона попробует пересечь Лимит, который установлен на нестандартном ID, она остановится на ближайшем к Лимиту стандартном ID. <br  />
  </p><div class="fragment"><div class="line">                   ub&gt;.-&gt;.-&gt;.-&gt;.xxxxxx&gt;.x&gt;|                                       ub</div>
 <div class="line"> |&lt;x.&lt;x.&lt;-.&lt;-.&lt;-.&lt;-lb                                     lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  4,3  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  4,3  5  6</div>
@@ -213,12 +214,12 @@ class ONF::IdRange&lt; T &gt;</div><p >Динамический диапазон
 <p ><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> после перемещения границы возвращает структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdRange::IdInfo</a>, которая содержит информацию об ID на который была перемещена граница. <br  />
  Если нужно получить информацию об ID, но не двигать границу, можно использовать <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>. <br  />
  По сути <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> и <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>это почти одна и та же функция. <br  />
- Разница в том что в самом конце <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> все же передвигает границу, тогда как <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>этого не делает. <br  />
- Отсюда вытекает особенность получения информации об ID, а именно то, что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>подчиняется тем же правилам что и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>. <br  />
+ Разница в том, что в самом конце <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> все же передвигает границу, тогда как <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>этого не делает. <br  />
+ Отсюда вытекает особенность получения информации об ID, а именно то, что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>подчиняется тем же правилам, что и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>. <br  />
  Если мы не можем передвинуть границу на какой-то ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>, значит мы не можем и получить информацию об этом ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>. <br  />
 </p>
-<p ><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> перемещает границу указанную в первом параметре на количество шагов указанных во втором параметре. <br  />
- Если число во втором параметре положительное, диапазон расширяется, если отрицательное, сужается. <br  />
+<p ><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> перемещает границу указанную в первом параметре на количество шагов, указанных во втором параметре. <br  />
+ Если число во втором параметре положительное - диапазон расширяется, если отрицательное - сужается. <br  />
  Рассмотрим первый случай. <br  />
 </p>
 <p >Пример: <br  />
@@ -229,11 +230,11 @@ class ONF::IdRange&lt; T &gt;</div><p >Динамический диапазон
 </p>
 <p >Теперь рассмотрим такую же ситуацию с <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>: <br  />
  При тех же условиях, в первом случае мы получим информацию об ID равном 16, во втором случае так же о 16, в третьем, четвертом и т.д. тоже о 16. <br  />
- Это из-за того что граница не передвигается и нам придется увеличивать второй параметр <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>что бы получить информацию о более больших ID или все же двигать границу. <br  />
+ Это из-за того, что граница не передвигается и нам придется увеличивать второй параметр <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>чтобы получить информацию о более больших ID или все же двигать границу. <br  />
 </p>
-<p >Если продолжить эту логическую цепочку, можно прийти к выводу о том что если мы не хотим двигать границу, а хотим только получать информацию об ID, то максимальное ID, информацию о котором мы можем получить, ограниченно типом данных второго параметра, если опустить все прочее. <br  />
+<p >Если продолжить эту логическую цепочку, можно прийти к выводу о том, что если мы не хотим двигать границу, а хотим только получать информацию об ID, то максимальное ID, информацию о котором мы можем получить, ограниченно типом данных второго параметра, если опустить все прочее. <br  />
  Для решения этой проблемы была добавлена перегрузка для <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> - <a class="el" href="class_o_n_f_1_1_id_range.html#a1f5162d90397df40a28cba3afd499249" title="Возвращает информацию об ID.">getIdInfo(BorderRange, T, dlong) const</a>. <br  />
- Она работает так же как и обычная <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>, но здесь во втором параметре мы указываем временное значение границы указанной в первом параметре. <br  />
+ Она работает так же, как и обычная <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>, но здесь во втором параметре мы указываем временное значение границы, указанной в первом параметре. <br  />
  Это поможет нам почти беспрепятственно перемещаться по числовой оси.</p>
 <p >Подробнее об этих функциях: <br  />
  <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> <br  />
@@ -853,8 +854,8 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p>Задает значение для указанной границы диапазона. </p>
-<p >Невозможно задать значение границы которое будет за пределами Лимита границы. <br  />
- Невозможно задать значение границы которое создаст пересечение границ. <br  />
+<p >Невозможно задать значение границы, которое будет за пределами Лимита границы. <br  />
+ Невозможно задать значение границы, которое создаст пересечение границ. <br  />
  В качестве значения границы может быть указан только стандартный ID.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -872,11 +873,11 @@ template&lt;class T &gt; </div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.2-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.2 </li>
   </ul>
 </div>
 </body>
