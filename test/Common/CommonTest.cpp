@@ -118,3 +118,33 @@ TEST(IdManagerTest, isStandardId)
     EXPECT_TRUE (isStandardId(-7.5,  -1.5, -1.5));
     EXPECT_FALSE(isStandardId(-13.1, -1.5, -1.5));
 }
+
+TEST(IdManagerTest, findNearestStdId)
+{
+    EXPECT_EQ(findNearestStdId(31, 10,  2), 30);
+    EXPECT_EQ(findNearestStdId(31, 10, -2), 30);
+
+    EXPECT_EQ(findNearestStdId(11, 10,  2), 10);
+    EXPECT_EQ(findNearestStdId(11, 10, -2), 10);
+
+    EXPECT_EQ(findNearestStdId(-1, 10,  2), 0);
+    EXPECT_EQ(findNearestStdId(-1, 10, -2), 0);
+
+    EXPECT_EQ(findNearestStdId( 9, 10,  2), 10);
+    EXPECT_EQ(findNearestStdId( 9, 10, -2), 10);
+
+    EXPECT_EQ(findNearestStdId(10, 10,  2), 10);
+    EXPECT_EQ(findNearestStdId(10, 10, -2), 10);
+
+    EXPECT_EQ(findNearestStdId(30, 10,  2), 30);
+    EXPECT_EQ(findNearestStdId(30, 10, -2), 30);
+
+    EXPECT_EQ(findNearestStdId(12, 10,  2), 12);
+    EXPECT_EQ(findNearestStdId(12, 10, -2), 12);
+
+    EXPECT_EQ(findNearestStdId(0, 10,  2), 0);
+    EXPECT_EQ(findNearestStdId(0, 10, -2), 0);
+
+    EXPECT_EQ(findNearestStdId(8, 10,  2), 8);
+    EXPECT_EQ(findNearestStdId(8, 10, -2), 8);
+}

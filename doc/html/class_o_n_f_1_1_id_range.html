@@ -1,12 +1,14 @@
+<!-- HTML header for doxygen 1.9.2-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.9.1"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.2"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>ONF: Шаблон класса ONF::IdRange&lt; T &gt;</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
 <link href="navtree.css" rel="stylesheet" type="text/css"/>
@@ -17,20 +19,24 @@
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
   $(document).ready(function() { init_search(); });
 /* @license-end */
 </script>
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    extensions: ["tex2jax.js"],
-    jax: ["input/TeX","output/HTML-CSS"],
-});
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
 </script>
-<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
@@ -41,7 +47,8 @@
    </div>
    <div id="projectbrief">Небольшая, разнородная библиотека</div>
   </td>
-   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
           <img id="MSearchSelect" src="search/mag_sel.svg"
                onmouseover="return searchBox.OnSearchSelectShow()"
@@ -55,20 +62,18 @@
             <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
           </span>
         </div>
-</td>
- </tr>
+</td></tr>
  </tbody>
 </table>
 </div>
 <!-- end header part -->
-<!-- Создано системой Doxygen 1.9.1 -->
+<!-- Создано системой Doxygen 1.9.2 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Поиск','.html');
 /* @license-end */
 </script>
 </div><!-- top -->
-<div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
     <div id="nav-tree-contents">
       <div id="nav-sync" class="sync"></div>
@@ -79,7 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
   </div>
 </div>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_range.html',''); initResizable(); });
 /* @license-end */
 </script>
@@ -103,8 +108,7 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_range.html',''); in
 <a href="#nested-classes">Классы</a> &#124;
 <a href="#pub-methods">Открытые члены</a> &#124;
 <a href="class_o_n_f_1_1_id_range-members.html">Полный список членов класса</a>  </div>
-  <div class="headertitle">
-<div class="title">Шаблон класса ONF::IdRange&lt; T &gt;</div>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса ONF::IdRange&lt; T &gt;</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -113,35 +117,45 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_range.html',''); in
 
 <p><code>#include &lt;<a class="el" href="_id_management_8h_source.html">IdManagement.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Классы</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для предоставления информации об ID, возвращаемая <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>.  <a href="struct_o_n_f_1_1_id_range_1_1_id_info.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Открытые члены</h2></td></tr>
 <tr class="memitem:aa4785268121d2500065ab753b4ba0306"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#aa4785268121d2500065ab753b4ba0306">IdRange</a> (T start=0, T step=1)</td></tr>
 <tr class="separator:aa4785268121d2500065ab753b4ba0306"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a74b7bbf1f741ceb7431a742adea3ea61"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a74b7bbf1f741ceb7431a742adea3ea61">IdRange</a> (const <a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;other)=default</td></tr>
 <tr class="separator:a74b7bbf1f741ceb7431a742adea3ea61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2865ad755055ca153bed29f9052eb70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#ad2865ad755055ca153bed29f9052eb70">IdRange</a> (<a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;&amp;other)</td></tr>
+<tr class="separator:ad2865ad755055ca153bed29f9052eb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab93b9fbc60469057ee3deedbaff8410"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#aab93b9fbc60469057ee3deedbaff8410">~IdRange</a> ()</td></tr>
 <tr class="separator:aab93b9fbc60469057ee3deedbaff8410"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeda9e32c471c0478c8566870c1f74bfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, <a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a> n)</td></tr>
+<tr class="memdesc:aeda9e32c471c0478c8566870c1f74bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Передвигает указанную границу диапазона.  <a href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">Подробнее...</a><br /></td></tr>
 <tr class="separator:aeda9e32c471c0478c8566870c1f74bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d1e787cf178374cf83c00a620edb75b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, <a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a> n) const</td></tr>
+<tr class="memdesc:a5d1e787cf178374cf83c00a620edb75b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает информацию об ID.  <a href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">Подробнее...</a><br /></td></tr>
 <tr class="separator:a5d1e787cf178374cf83c00a620edb75b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b5b5b4e6eecba47d579cc592ad36fce"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a6b5b5b4e6eecba47d579cc592ad36fce">getIdInfo</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, T id, <a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a> n) const</td></tr>
-<tr class="separator:a6b5b5b4e6eecba47d579cc592ad36fce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f5162d90397df40a28cba3afd499249"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a1f5162d90397df40a28cba3afd499249">getIdInfo</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, T id, <a class="el" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a> n) const</td></tr>
+<tr class="memdesc:a1f5162d90397df40a28cba3afd499249"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает информацию об ID.  <a href="class_o_n_f_1_1_id_range.html#a1f5162d90397df40a28cba3afd499249">Подробнее...</a><br /></td></tr>
+<tr class="separator:a1f5162d90397df40a28cba3afd499249"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a433373cc323c5b0b0eea7519d957f445"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a433373cc323c5b0b0eea7519d957f445">reset</a> ()</td></tr>
+<tr class="memdesc:a433373cc323c5b0b0eea7519d957f445"><td class="mdescLeft">&#160;</td><td class="mdescRight">Сбрасывает значение и состояние границ диапазона.  <a href="class_o_n_f_1_1_id_range.html#a433373cc323c5b0b0eea7519d957f445">Подробнее...</a><br /></td></tr>
 <tr class="separator:a433373cc323c5b0b0eea7519d957f445"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a07cde1bfb54439d148bca3547d313a58"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a07cde1bfb54439d148bca3547d313a58">setBorderValue</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, T value)</td></tr>
+<tr class="memdesc:a07cde1bfb54439d148bca3547d313a58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задает значение для указанной границы диапазона.  <a href="class_o_n_f_1_1_id_range.html#a07cde1bfb54439d148bca3547d313a58">Подробнее...</a><br /></td></tr>
 <tr class="separator:a07cde1bfb54439d148bca3547d313a58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6b64484ee5ba51bd1ecb6c474144da1c"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a6b64484ee5ba51bd1ecb6c474144da1c">getBorderValue</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="memdesc:a6b64484ee5ba51bd1ecb6c474144da1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает текущее значение указанной границы диапазона.  <a href="class_o_n_f_1_1_id_range.html#a6b64484ee5ba51bd1ecb6c474144da1c">Подробнее...</a><br /></td></tr>
 <tr class="separator:a6b64484ee5ba51bd1ecb6c474144da1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeeef89f149c310a2f6765cd7a24b9c82"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#aeeef89f149c310a2f6765cd7a24b9c82">setBorderState</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, bool state)</td></tr>
+<tr class="memdesc:aeeef89f149c310a2f6765cd7a24b9c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Включает или отключает указанную границу диапазона.  <a href="class_o_n_f_1_1_id_range.html#aeeef89f149c310a2f6765cd7a24b9c82">Подробнее...</a><br /></td></tr>
 <tr class="separator:aeeef89f149c310a2f6765cd7a24b9c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4eb3e75a18413eab5c9d74f0fe56daa1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a4eb3e75a18413eab5c9d74f0fe56daa1">getBorderState</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange) const</td></tr>
+<tr class="memdesc:a4eb3e75a18413eab5c9d74f0fe56daa1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает состояние указанной границы диапазона.  <a href="class_o_n_f_1_1_id_range.html#a4eb3e75a18413eab5c9d74f0fe56daa1">Подробнее...</a><br /></td></tr>
 <tr class="separator:a4eb3e75a18413eab5c9d74f0fe56daa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2d011c6547b54e625ec8d8bc0327fa24"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a2d011c6547b54e625ec8d8bc0327fa24">setBorderLimit</a> (<a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a> borderRange, T value)</td></tr>
 <tr class="memdesc:a2d011c6547b54e625ec8d8bc0327fa24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задает Лимит для указанной границы диапазона.  <a href="class_o_n_f_1_1_id_range.html#a2d011c6547b54e625ec8d8bc0327fa24">Подробнее...</a><br /></td></tr>
@@ -155,82 +169,82 @@ $(document).ready(function(){initNavTree('class_o_n_f_1_1_id_range.html',''); in
 <tr class="memitem:a842e16165eb888c3da07660ebdffb969"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a842e16165eb888c3da07660ebdffb969">getStep</a> () const</td></tr>
 <tr class="memdesc:a842e16165eb888c3da07660ebdffb969"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает размер шага.  <a href="class_o_n_f_1_1_id_range.html#a842e16165eb888c3da07660ebdffb969">Подробнее...</a><br /></td></tr>
 <tr class="separator:a842e16165eb888c3da07660ebdffb969"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c33d58f191098a366473f9c8a631228"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a3c33d58f191098a366473f9c8a631228">operator=</a> (const <a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;other)=default</td></tr>
-<tr class="separator:a3c33d58f191098a366473f9c8a631228"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3909f68ee80a9aa44ad9c1abb839d73"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#ad3909f68ee80a9aa44ad9c1abb839d73">operator=</a> (const <a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;other)=default</td></tr>
+<tr class="separator:ad3909f68ee80a9aa44ad9c1abb839d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05dfd2de4342a8a55a2d502d8369f014"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html#a05dfd2de4342a8a55a2d502d8369f014">operator=</a> (<a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp;&amp;other)</td></tr>
+<tr class="separator:a05dfd2de4342a8a55a2d502d8369f014"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
-<div class="textblock"><h3>template&lt;class T&gt;<br />
-class ONF::IdRange&lt; T &gt;</h3>
-
-<p>Динамический диапазон стандартных ID. </p>
-<p><a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> это два числа, которые образуют между собой диапазон. <br  />
+<div class="textblock"><div class="compoundTemplParams">template&lt;class T&gt;<br />
+class ONF::IdRange&lt; T &gt;</div><p >Динамический диапазон стандартных ID. </p>
+<p ><a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> это два числа, которые образуют между собой диапазон. <br  />
  Границы диапазона обозначаются:</p><ul>
 <li><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> - верхняя граница диапазона ( <em>ub</em> ).</li>
 <li><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> - нижняя граница диапазона ( <em>lb</em> ).</li>
 </ul>
-<p>Так же, каждую границу диапазона можно как включить ( <em>1</em> ), так и выключить ( <em>0</em> ). При создании <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> обе границы находятся в одной точке, она задается при создании и называется "Стартовая ID" или просто "Старт" ( @ ). <br  />
+<p >Так же, каждую границу диапазона можно как включить ( <em>1</em> ), так и выключить ( <em>0</em> ). При создании <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> обе границы находятся в одной точке, она задается при создании и называется "Стартовая ID" или просто "Старт" ( @ ). <br  />
  Помимо Старта при создании <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> мы так же задаем и "Шаг" ( <em>-&gt;</em> ). <br  />
  Старт и Шаг задаются при создании <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> и потом не подлежат изменению.</p>
-<p>После того как мы создали <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>, мы можем двигать границы как друг от друга: </p><div class="fragment"><div class="line">                   ub&gt;.-&gt;.-&gt;.-&gt;|                                             ub</div>
+<p >После того как мы создали <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a>, мы можем двигать границы как друг от друга: </p><div class="fragment"><div class="line">                   ub&gt;.-&gt;.-&gt;.-&gt;|                                             ub</div>
 <div class="line"> |&lt;-.&lt;-.&lt;-.&lt;-.&lt;-.&lt;-lb                          lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .         .  .  .  .  .  .  @  .  .  .  .  .  .</div>
-</div><!-- fragment --><p>Так и друг к другу: </p><div class="fragment"><div class="line">                         |&lt;-.&lt;-.&lt;-ub                                   ub</div>
+</div><!-- fragment --><p >Так и друг к другу: </p><div class="fragment"><div class="line">                         |&lt;-.&lt;-.&lt;-ub                                   ub</div>
 <div class="line">          lb&gt;.-&gt;.-&gt;.-&gt;|                                             lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .         .  .  .  .  .  .  @  .  .  .  .  .  .</div>
-</div><!-- fragment --><p>Несмотря на то что границы могут идти навстречу друг другу и могут даже встретиться в одной точке, они никогда не могут пересечь друг друга. <br  />
+</div><!-- fragment --><p >Несмотря на то, что границы могут идти навстречу друг другу и могут даже встретиться в одной точке, они никогда не могут пересечь друг друга. <br  />
  Граница, которая попытается пересечь другую границу, остановится там где, находится другая граница: </p><div class="fragment"><div class="line">             |&lt;x.&lt;x.&lt;-.&lt;-.&lt;-.&lt;-ub                                ub</div>
 <div class="line">                   lb                                            lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  5  6</div>
 <div class="line"> .  .  .  .  .  .  @  .  .  .  .  .  .         .  .  .  .  .  .  @  .  .  .  .  .  .</div>
-</div><!-- fragment --><p>Так же для каждой границы можно установить Лимит ( :: ). <br  />
- Лимит можно установить как вне диапазона, так и на границе диапазона, но не внутри диапазона. <br  />
+</div><!-- fragment --><p >Так же для каждой границы можно установить Лимит ( :: ). <br  />
+ Лимит можно установить как вне диапазона, так и на границе диапазона (но не внутри диапазона). <br  />
  Граница диапазона не может пересечь установленный для нее Лимит. <br  />
  В случае если граница диапазона попробует это сделать и Лимит установлен на стандартном ID, граница диапазона остановится там где установлен Лимит. <br  />
- Если граница диапазона попробует пересечь Лимит который установлен на нестандартном ID, она остановится на ближайшем к Лимиту стандартном ID. <br  />
+ Если граница диапазона попробует пересечь Лимит, который установлен на нестандартном ID, она остановится на ближайшем к Лимиту стандартном ID. <br  />
  </p><div class="fragment"><div class="line">                   ub&gt;.-&gt;.-&gt;.-&gt;.xxxxxx&gt;.x&gt;|                                       ub</div>
 <div class="line"> |&lt;x.&lt;x.&lt;-.&lt;-.&lt;-.&lt;-lb                                     lb</div>
 <div class="line">-6 -5 -4 -3 -2 -1  0  1  2  3  4  4,3  5  6   =&gt;   -6 -5 -4 -3 -2 -1  0  1  2  3  4  4,3  5  6</div>
 <div class="line"> .  . ::  .  .  .  @  .  .  .  .  ::   .  .         .  . ::  .  .  .  @  .  .  .  .  ::   .  .</div>
-</div><!-- fragment --><p>Иными словами границы диапазона могут перемещаться только по стандартным для них ID.</p>
+</div><!-- fragment --><p >Иными словами границы диапазона могут перемещаться только по стандартным для них ID.</p>
 <hr  />
  <h3><a class="anchor" id="autotoc_md1"></a>
 Получение информации об ID.</h3>
-<p><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a> после перемещения границы возвращает структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdRange::IdInfo</a>, которая содержит информацию об ID на которую была перемещена граница. <br  />
- Если нужно получить информацию об ID, но не двигать границу, можно использовать <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const</a>. <br  />
- По сути <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a> и <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const </a>это почти одна и та же функция. <br  />
- Разница в том что в самом конце <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a> все же передвигает границу, тогда как <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const </a>этого не делает. <br  />
- Отсюда вытекает особенность получения информации об ID, а именно то, что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const </a>подчиняется тем же правилам что и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a>. <br  />
- Если мы не можем передвинуть границу на какой-то ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a>, значит мы не можем и получить информацию об этом ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const</a>. <br  />
+<p ><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> после перемещения границы возвращает структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdRange::IdInfo</a>, которая содержит информацию об ID на который была перемещена граница. <br  />
+ Если нужно получить информацию об ID, но не двигать границу, можно использовать <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>. <br  />
+ По сути <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> и <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>это почти одна и та же функция. <br  />
+ Разница в том, что в самом конце <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> все же передвигает границу, тогда как <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>этого не делает. <br  />
+ Отсюда вытекает особенность получения информации об ID, а именно то, что <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>подчиняется тем же правилам, что и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>. <br  />
+ Если мы не можем передвинуть границу на какой-то ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>, значит мы не можем и получить информацию об этом ID с помощью <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>. <br  />
 </p>
-<p><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a> перемещает границу указанную в первом параметре на количество шагов указанных во втором параметре. <br  />
- Если число во втором параметре положительное, диапазон расширяется, если отрицательное, сужается. <br  />
+<p ><a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> перемещает границу указанную в первом параметре на количество шагов, указанных во втором параметре. <br  />
+ Если число во втором параметре положительное - диапазон расширяется, если отрицательное - сужается. <br  />
  Рассмотрим первый случай. <br  />
 </p>
-<p>Пример: <br  />
+<p >Пример: <br  />
  Мы хотим расширить диапазон и передвинуть <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> на +3 шага. <br  />
  Сейчас <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> находится на ID равном 10. Шаг равен 2. <br  />
  В итоге <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> передвинется на ID равное 16. <br  />
  Если мы попросим передвинуться ее еще на +3 шага, то <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> будет уже равна 22. Таким образом, не меняя параметров мы можем двигать границу. <br  />
 </p>
-<p>Теперь рассмотрим такую же ситуацию с <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const</a>: <br  />
+<p >Теперь рассмотрим такую же ситуацию с <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>: <br  />
  При тех же условиях, в первом случае мы получим информацию об ID равном 16, во втором случае так же о 16, в третьем, четвертом и т.д. тоже о 16. <br  />
- Это из-за того что граница не передвигается и нам придется увеличивать второй параметр <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const </a>что бы получить информацию о более больших ID или все же двигать границу. <br  />
+ Это из-за того, что граница не передвигается и нам придется увеличивать второй параметр <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>чтобы получить информацию о более больших ID или все же двигать границу. <br  />
 </p>
-<p>Если продолжить эту логическую цепочку, можно прийти к выводу о том что если мы не хотим двигать границу, а хотим только получать информацию об ID, то максимальное ID, информацию о котором мы можем получить, ограниченно типом данных второго параметра, если опустить все прочее. <br  />
- Для решения этой проблемы была добавлена перегрузка для <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> - <a class="el" href="class_o_n_f_1_1_id_range.html#a6b5b5b4e6eecba47d579cc592ad36fce">getIdInfo(BorderRange, T, dlong) const</a>. <br  />
- Она работает так же как и обычная <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const</a>, но здесь во втором параметре мы указываем временное значение границы указанной в первом параметре. <br  />
+<p >Если продолжить эту логическую цепочку, можно прийти к выводу о том, что если мы не хотим двигать границу, а хотим только получать информацию об ID, то максимальное ID, информацию о котором мы можем получить, ограниченно типом данных второго параметра, если опустить все прочее. <br  />
+ Для решения этой проблемы была добавлена перегрузка для <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo</a> - <a class="el" href="class_o_n_f_1_1_id_range.html#a1f5162d90397df40a28cba3afd499249" title="Возвращает информацию об ID.">getIdInfo(BorderRange, T, dlong) const</a>. <br  />
+ Она работает так же, как и обычная <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>, но здесь во втором параметре мы указываем временное значение границы, указанной в первом параметре. <br  />
  Это поможет нам почти беспрепятственно перемещаться по числовой оси.</p>
-<p>Подробнее об этих функциях: <br  />
- <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb">moveBorder(BorderRange, dlong)</a> <br  />
- <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b">getIdInfo(BorderRange, dlong) const </a><br  />
- <a class="el" href="class_o_n_f_1_1_id_range.html#a6b5b5b4e6eecba47d579cc592ad36fce">getIdInfo(BorderRange, T, dlong) const</a></p>
+<p >Подробнее об этих функциях: <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a> <br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a><br  />
+ <a class="el" href="class_o_n_f_1_1_id_range.html#a1f5162d90397df40a28cba3afd499249" title="Возвращает информацию об ID.">getIdInfo(BorderRange, T, dlong) const</a></p>
 <dl class="section see"><dt>См. также</dt><dd><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdRange::IdInfo</a> <br  />
- <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54" title="Содержит название границ диапазона создаваемого IdRange.">BorderRange</a> </dd></dl>
+ <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54" title="Содержит название границ диапазона создаваемых IdRange.">BorderRange</a> </dd></dl>
 </div><h2 class="groupheader">Конструктор(ы)</h2>
-<a id="aa4785268121d2500065ab753b4ba0306"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa4785268121d2500065ab753b4ba0306">&#9670;&nbsp;</a></span>IdRange() <span class="overload">[1/2]</span></h2>
+<a id="aa4785268121d2500065ab753b4ba0306" name="aa4785268121d2500065ab753b4ba0306"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4785268121d2500065ab753b4ba0306">&#9670;&nbsp;</a></span>IdRange() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -256,11 +270,11 @@ template&lt;class T &gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>По умолчанию обе границы выключены, находятся на ID равном 0 и с размером шага 1. <br  />
+<p >По умолчанию обе границы выключены, находятся на ID равном 0 и с размером шага 1. <br  />
  Лимит <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> по умолчанию равен <a href="https://en.cppreference.com/w/cpp/types/numeric_limits/max">std::numeric_limits::max()</a>. <br  />
  Лимит <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> по умолчанию равен <a href="https://en.cppreference.com/w/cpp/types/numeric_limits/lowest">std::numeric_limits::lowest()</a>. <br  />
 </p>
-<p>Шаг не может быть равен 0. Если вы передадите в <b>step</b> 0, он автоматически станет равен 1. <br  />
+<p >Шаг не может быть равен 0. Если вы передадите в <b>step</b> 0, он автоматически станет равен 1. <br  />
  Знак числа шага, передаваемого в <b>step</b>, не имеет значения, минус автоматически отбрасывается.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -272,8 +286,8 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a74b7bbf1f741ceb7431a742adea3ea61"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74b7bbf1f741ceb7431a742adea3ea61">&#9670;&nbsp;</a></span>IdRange() <span class="overload">[2/2]</span></h2>
+<a id="a74b7bbf1f741ceb7431a742adea3ea61" name="a74b7bbf1f741ceb7431a742adea3ea61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74b7bbf1f741ceb7431a742adea3ea61">&#9670;&nbsp;</a></span>IdRange() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,7 +320,35 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="aab93b9fbc60469057ee3deedbaff8410"></a>
+<a id="ad2865ad755055ca153bed29f9052eb70" name="ad2865ad755055ca153bed29f9052eb70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2865ad755055ca153bed29f9052eb70">&#9670;&nbsp;</a></span>IdRange() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::<a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a>&lt; T &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >После перемещения <b>other</b> сохраняет установленные Лимиты, а вот границы сбрасываются до начального состояния. <br  />
+ Т.е. <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> и <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> будут равны стартовому ID, а состояние границ будет сброшено до <em>false</em>.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- перемещаемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aab93b9fbc60469057ee3deedbaff8410" name="aab93b9fbc60469057ee3deedbaff8410"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aab93b9fbc60469057ee3deedbaff8410">&#9670;&nbsp;</a></span>~IdRange()</h2>
 
 <div class="memitem">
@@ -334,7 +376,7 @@ template&lt;class T &gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Методы</h2>
-<a id="a3230b93f5a0ccaa9ce48b6536b6fa083"></a>
+<a id="a3230b93f5a0ccaa9ce48b6536b6fa083" name="a3230b93f5a0ccaa9ce48b6536b6fa083"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3230b93f5a0ccaa9ce48b6536b6fa083">&#9670;&nbsp;</a></span>getBorderLimit()</h2>
 
 <div class="memitem">
@@ -363,7 +405,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a4eb3e75a18413eab5c9d74f0fe56daa1"></a>
+<a id="a4eb3e75a18413eab5c9d74f0fe56daa1" name="a4eb3e75a18413eab5c9d74f0fe56daa1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4eb3e75a18413eab5c9d74f0fe56daa1">&#9670;&nbsp;</a></span>getBorderState()</h2>
 
 <div class="memitem">
@@ -381,9 +423,18 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает состояние указанной границы диапазона. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, состояние которой нужно получить. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если граница диапазона включена, возвращает <em>true</em>, иначе <em>false</em>. </dd></dl>
+
 </div>
 </div>
-<a id="a6b64484ee5ba51bd1ecb6c474144da1c"></a>
+<a id="a6b64484ee5ba51bd1ecb6c474144da1c" name="a6b64484ee5ba51bd1ecb6c474144da1c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6b64484ee5ba51bd1ecb6c474144da1c">&#9670;&nbsp;</a></span>getBorderValue()</h2>
 
 <div class="memitem">
@@ -401,9 +452,18 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает текущее значение указанной границы диапазона. </p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, текущее значение которой нужно получить. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает текущее значение указанной границы диапазона. </dd></dl>
+
 </div>
 </div>
-<a id="a5d1e787cf178374cf83c00a620edb75b"></a>
+<a id="a5d1e787cf178374cf83c00a620edb75b" name="a5d1e787cf178374cf83c00a620edb75b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5d1e787cf178374cf83c00a620edb75b">&#9670;&nbsp;</a></span>getIdInfo() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
@@ -431,10 +491,22 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает информацию об ID. </p>
+<p >Данный метод работает так же как и <a class="el" href="class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb" title="Передвигает указанную границу диапазона.">moveBorder(BorderRange, dlong)</a>, но в конце своей работы не передвигает границу.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, от которой будет вестись отсчет шагов.</td></tr>
+    <tr><td class="paramname">n</td><td>- количество шагов, которое нужно сделать от границы диапазона указанной в <b>borderRange</b> что бы найти ID, информацию о котором нужно получить.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdInfo</a> с информацией о последнем ID на который <em><b>может</b></em> переместиться граница диапазона.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd>Описание <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> </dd></dl>
+
 </div>
 </div>
-<a id="a6b5b5b4e6eecba47d579cc592ad36fce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6b5b5b4e6eecba47d579cc592ad36fce">&#9670;&nbsp;</a></span>getIdInfo() <span class="overload">[2/2]</span></h2>
+<a id="a1f5162d90397df40a28cba3afd499249" name="a1f5162d90397df40a28cba3afd499249"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f5162d90397df40a28cba3afd499249">&#9670;&nbsp;</a></span>getIdInfo() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,7 +514,7 @@ template&lt;class T &gt; </div>
 template&lt;class T &gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt;<a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a>&gt; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::getIdInfo </td>
+          <td class="memname">std::optional&lt; <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html">IdInfo</a> &gt; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::getIdInfo </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54">BorderRange</a>&#160;</td>
           <td class="paramname"><em>borderRange</em>, </td>
@@ -467,9 +539,32 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Возвращает информацию об ID. </p>
+<p >Данный метод работает так же как <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const</a>, но здесь добавляется параметр <b>id</b>. <br  />
+ В <a class="el" href="class_o_n_f_1_1_id_range.html#a5d1e787cf178374cf83c00a620edb75b" title="Возвращает информацию об ID.">getIdInfo(BorderRange, dlong) const </a>параметр <b>id</b> скрыт от взгляда. Он равен текущему значению границы диапазона преданному в первый аргумент. <br  />
+ Т.е. данная запись: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">idRange.getIdInfo(<a class="code hl_enumvalue" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, 3);</div>
+<div class="ttc" id="anamespace_o_n_f_html_ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280"><div class="ttname"><a href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">ONF::BorderRange::UpperBorder</a></div><div class="ttdeci">@ UpperBorder</div><div class="ttdoc">Верхняя граница диапазона.</div></div>
+</div><!-- fragment --><p >Равна: </p><div class="fragment"><div class="line">IdRange&lt;int&gt; idRange;</div>
+<div class="line">idRange.getIdInfo(<a class="code hl_enumvalue" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>, idRange.getBorderValue(<a class="code hl_enumvalue" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">BorderRange::UpperBorder</a>), 3);</div>
+</div><!-- fragment --><p >В <b>id</b> может быть передан только стандартный ID. <br  />
+ ID переданный в <b>id</b> не должен вызывать пересечение границ диапазона. <br  />
+ ID переданный в <b>id</b> не должен находиться за пределами Лимита. <br  />
+ Если хотя бы одно из этих требований не выполняется, метод вернет <a href="https://en.cppreference.com/w/cpp/utility/optional/nullopt">std::nullopt</a>. <br  />
+ Если данные требования выполняются, метод вернет структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdInfo</a>.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, от которой будет вестись отсчет шагов. </td></tr>
+    <tr><td class="paramname">id</td><td>- временное значение для границы диапазона указанной в <b>borderRange</b>.</td></tr>
+    <tr><td class="paramname">n</td><td>- количество шагов, которое нужно сделать от границы диапазона указанной в <b>borderRange</b> что бы найти ID, информацию о котором нужно получить.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если в <b>id</b> было передано некорректное значение, вернет <a href="https://en.cppreference.com/w/cpp/utility/optional/nullopt">std::nullopt</a>, иначе структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdInfo</a>. </dd></dl>
+
 </div>
 </div>
-<a id="aa88d380aae31731ce8be356c3cc964d5"></a>
+<a id="aa88d380aae31731ce8be356c3cc964d5" name="aa88d380aae31731ce8be356c3cc964d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa88d380aae31731ce8be356c3cc964d5">&#9670;&nbsp;</a></span>getStart()</h2>
 
 <div class="memitem">
@@ -491,7 +586,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a842e16165eb888c3da07660ebdffb969"></a>
+<a id="a842e16165eb888c3da07660ebdffb969" name="a842e16165eb888c3da07660ebdffb969"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a842e16165eb888c3da07660ebdffb969">&#9670;&nbsp;</a></span>getStep()</h2>
 
 <div class="memitem">
@@ -513,7 +608,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="aeda9e32c471c0478c8566870c1f74bfb"></a>
+<a id="aeda9e32c471c0478c8566870c1f74bfb" name="aeda9e32c471c0478c8566870c1f74bfb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeda9e32c471c0478c8566870c1f74bfb">&#9670;&nbsp;</a></span>moveBorder()</h2>
 
 <div class="memitem">
@@ -541,10 +636,29 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Передвигает указанную границу диапазона. </p>
+<p ><b>n</b> показывает на какое количество шагов нужно переместить границу диапазона указанную в <b>borderRange</b>, а знак числа указывает направление движения. <br  />
+ Если <b>n</b> имеет знак "+", граница будет идти в сторону расширения диапазона. <br  />
+ Если <b>n</b> имеет знак "-", граница будет идти в сторону уменьшения диапазона.</p>
+<p >Более подробно о работе этого метода: <br  />
+</p><ul>
+<li>Описание <a class="el" href="class_o_n_f_1_1_id_range.html" title="Динамический диапазон стандартных ID.">IdRange</a> <br  />
+</li>
+<li><a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdInfo</a></li>
+</ul>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, которую нужно передвинуть.</td></tr>
+    <tr><td class="paramname">n</td><td>- количество шагов, на которое нужно передвинуть указанную границу диапазона, и направление движения.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает структуру <a class="el" href="struct_o_n_f_1_1_id_range_1_1_id_info.html" title="Структура для предоставления информации об ID, возвращаемая IdRange.">IdInfo</a> с информацией о последнем ID на который смогла успешно переместиться граница диапазона. </dd></dl>
+
 </div>
 </div>
-<a id="a3c33d58f191098a366473f9c8a631228"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c33d58f191098a366473f9c8a631228">&#9670;&nbsp;</a></span>operator=()</h2>
+<a id="ad3909f68ee80a9aa44ad9c1abb839d73" name="ad3909f68ee80a9aa44ad9c1abb839d73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3909f68ee80a9aa44ad9c1abb839d73">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -555,7 +669,7 @@ template&lt;class T &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a>&amp; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::operator= </td>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a>&lt; T &gt; &amp;&#160;</td>
           <td class="paramname"><em>other</em></td><td>)</td>
@@ -577,7 +691,35 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="a433373cc323c5b0b0eea7519d957f445"></a>
+<a id="a05dfd2de4342a8a55a2d502d8369f014" name="a05dfd2de4342a8a55a2d502d8369f014"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a05dfd2de4342a8a55a2d502d8369f014">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a> &amp; <a class="el" href="class_o_n_f_1_1_id_range.html">ONF::IdRange</a>&lt; T &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a>&lt; T &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >После перемещения <b>other</b> сохраняет установленные Лимиты, а вот границы сбрасываются до начального состояния. <br  />
+ Т.е. <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280" title="Верхняя граница диапазона.">BorderRange::UpperBorder</a> и <a class="el" href="namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b" title="Нижняя граница диапазона.">BorderRange::LowerBorder</a> будут равны стартовому ID, а состояние границ будет сброшено до <em>false</em>.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">other</td><td>- перемещаемый объект класса. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a433373cc323c5b0b0eea7519d957f445" name="a433373cc323c5b0b0eea7519d957f445"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a433373cc323c5b0b0eea7519d957f445">&#9670;&nbsp;</a></span>reset()</h2>
 
 <div class="memitem">
@@ -594,9 +736,13 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Сбрасывает значение и состояние границ диапазона. </p>
+<p ><b>reset</b> сбрасывает только значение и состояние границ диапазона, но лимит установленный для границ диапазона не сбрасывается.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="class_o_n_f_1_1_id_range.html#a2d011c6547b54e625ec8d8bc0327fa24" title="Задает Лимит для указанной границы диапазона.">setBorderLimit(BorderRange, T)</a> </dd></dl>
+
 </div>
 </div>
-<a id="a2d011c6547b54e625ec8d8bc0327fa24"></a>
+<a id="a2d011c6547b54e625ec8d8bc0327fa24" name="a2d011c6547b54e625ec8d8bc0327fa24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2d011c6547b54e625ec8d8bc0327fa24">&#9670;&nbsp;</a></span>setBorderLimit()</h2>
 
 <div class="memitem">
@@ -625,7 +771,7 @@ template&lt;class T &gt; </div>
 </div><div class="memdoc">
 
 <p>Задает Лимит для указанной границы диапазона. </p>
-<p>Лимит можно установить только вне диапазона или на границах диапазона. <br  />
+<p >Лимит можно установить только вне диапазона или на границах диапазона. <br  />
  Если Лимит необходимо установить где-то в пределах диапазона, сперва надо передвинуть границу диапазона так, что бы нужное нам значение Лимита в итоге оказалось вне диапазона.</p>
 <dl class="params"><dt>Аргументы</dt><dd>
   <table class="params">
@@ -638,7 +784,7 @@ template&lt;class T &gt; </div>
 
 </div>
 </div>
-<a id="aeeef89f149c310a2f6765cd7a24b9c82"></a>
+<a id="aeeef89f149c310a2f6765cd7a24b9c82" name="aeeef89f149c310a2f6765cd7a24b9c82"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aeeef89f149c310a2f6765cd7a24b9c82">&#9670;&nbsp;</a></span>setBorderState()</h2>
 
 <div class="memitem">
@@ -666,9 +812,20 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Включает или отключает указанную границу диапазона. </p>
+<p >Если <b>state</b> равен <em>true</em>, граница диапазона указанная в <b>borderRange</b> включается. <br  />
+ Если <b>state</b> равен <em>false</em>, граница диапазона указанная в <b>borderRange</b> выключается.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, которую нужно включить или отключить. </td></tr>
+    <tr><td class="paramname">state</td><td>- состояние, которое нужно задать указанной границе диапазона. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
-<a id="a07cde1bfb54439d148bca3547d313a58"></a>
+<a id="a07cde1bfb54439d148bca3547d313a58" name="a07cde1bfb54439d148bca3547d313a58"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a07cde1bfb54439d148bca3547d313a58">&#9670;&nbsp;</a></span>setBorderValue()</h2>
 
 <div class="memitem">
@@ -696,6 +853,19 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Задает значение для указанной границы диапазона. </p>
+<p >Невозможно задать значение границы, которое будет за пределами Лимита границы. <br  />
+ Невозможно задать значение границы, которое создаст пересечение границ. <br  />
+ В качестве значения границы может быть указан только стандартный ID.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">borderRange</td><td>- граница диапазона, значение для которой нужно задать. </td></tr>
+    <tr><td class="paramname">value</td><td>- значение, которое нужно задать указанной границе диапазона. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Если значение границы было задано успешно возвращает <em>true</em>, иначе <em>false</em>. </dd></dl>
+
 </div>
 </div>
 <hr/>Объявления и описания членов класса находятся в файле:<ul>
@@ -703,11 +873,11 @@ template&lt;class T &gt; </div>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.2-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a></li>
-    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
   </ul>
 </div>
 </body>

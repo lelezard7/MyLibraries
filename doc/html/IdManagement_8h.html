@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ONF: Файл Z:/Project/ONF/ONF/include/IdManagement.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+});
+</script>
+<script type="text/javascript" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ONF
+   </div>
+   <div id="projectbrief">Небольшая, разнородная библиотека</div>
+  </td>
+   <td>        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.1 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Поиск','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('IdManagement_8h.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Классы</a> &#124;
+<a href="#namespaces">Пространства имен</a> &#124;
+<a href="#define-members">Макросы</a> &#124;
+<a href="#enum-members">Перечисления</a> &#124;
+<a href="#func-members">Функции</a> &#124;
+<a href="#var-members">Переменные</a>  </div>
+  <div class="headertitle">
+<div class="title">Файл IdManagement.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="ONF_8h_source.html">ONF.h</a>&quot;</code><br />
+<code>#include &lt;optional&gt;</code><br />
+<code>#include &lt;list&gt;</code><br />
+<code>#include &lt;set&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &quot;IdManagement/IdContainer.inl&quot;</code><br />
+<code>#include &quot;IdManagement/IdRange.inl&quot;</code><br />
+<code>#include &quot;IdManagement/RangeIdManager.inl&quot;</code><br />
+</div>
+<p><a href="IdManagement_8h_source.html">См. исходные тексты.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classONF_1_1IdContainer.html">ONF::IdContainer&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер с настраиваемым способом выдачи ID.  <a href="classONF_1_1IdContainer.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classONF_1_1IdRange.html">ONF::IdRange&lt; T &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Динамический диапазон стандартных ID.  <a href="classONF_1_1IdRange.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structONF_1_1IdRange_1_1IdInfo.html">ONF::IdRange&lt; T &gt;::IdInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Структура для предоставления информации об ID, возвращаемая <a class="el" href="classONF_1_1IdRange.html" title="Динамический диапазон стандартных ID.">IdRange</a>.  <a href="structONF_1_1IdRange_1_1IdInfo.html#details">Подробнее...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classONF_1_1RangeIdManager_3_01T_00_01T__Step_00_01std_1_1enable__if__t_3_9is__forbidden__types_c2510b4cf97ecd69fa64a3e2faaf7dc3.html">ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Пространства имен</h2></td></tr>
+<tr class="memitem:namespaceONF"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceONF.html">ONF</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Макросы</h2></td></tr>
+<tr class="memitem:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">IDRF_NOT_SET</a>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="memdesc:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Флаг не задан.  <a href="group__IdRange__Flag.html#ga370d3a52c71f72a321b8e3b3ea343c31">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga370d3a52c71f72a321b8e3b3ea343c31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13f39cd05b01544e050250bc7818ca31"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Flag.html#ga13f39cd05b01544e050250bc7818ca31">IDRF_SUCCESSFULLY</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="memdesc:ga13f39cd05b01544e050250bc7818ca31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Задача успешно выполнена.  <a href="group__IdRange__Flag.html#ga13f39cd05b01544e050250bc7818ca31">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga13f39cd05b01544e050250bc7818ca31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2d356f7caaff6bcc6d51538f740dbf23"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Flag.html#ga2d356f7caaff6bcc6d51538f740dbf23">IDRF_ID_OUT_OF_LIMIT</a>&#160;&#160;&#160;0x0002</td></tr>
+<tr class="memdesc:ga2d356f7caaff6bcc6d51538f740dbf23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Граница попыталась выйты за пределы своего Лимита.  <a href="group__IdRange__Flag.html#ga2d356f7caaff6bcc6d51538f740dbf23">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga2d356f7caaff6bcc6d51538f740dbf23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac0cca866c8c57ddf03c5c04775118e03"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Flag.html#gac0cca866c8c57ddf03c5c04775118e03">IDRF_RANGE_ARE_BENT</a>&#160;&#160;&#160;0x0004</td></tr>
+<tr class="memdesc:gac0cca866c8c57ddf03c5c04775118e03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Одна граница попыталась пересечь другую границу.  <a href="group__IdRange__Flag.html#gac0cca866c8c57ddf03c5c04775118e03">Подробнее...</a><br /></td></tr>
+<tr class="separator:gac0cca866c8c57ddf03c5c04775118e03"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga167555ad5959c372dce744ab4d26b33c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Position.html#ga167555ad5959c372dce744ab4d26b33c">IDRP_NOT_SET</a>&#160;&#160;&#160;0x0000</td></tr>
+<tr class="memdesc:ga167555ad5959c372dce744ab4d26b33c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Позиция не задана.  <a href="group__IdRange__Position.html#ga167555ad5959c372dce744ab4d26b33c">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga167555ad5959c372dce744ab4d26b33c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7e64bc8c0ae71d1f814b8b4debe64342"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Position.html#ga7e64bc8c0ae71d1f814b8b4debe64342">IDRP_WITHIN_RANGE</a>&#160;&#160;&#160;0x0001</td></tr>
+<tr class="memdesc:ga7e64bc8c0ae71d1f814b8b4debe64342"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится в пределах диапазона.  <a href="group__IdRange__Position.html#ga7e64bc8c0ae71d1f814b8b4debe64342">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga7e64bc8c0ae71d1f814b8b4debe64342"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga260b1617d03d6c4bb5fcdc8e4d1ddfd0"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Position.html#ga260b1617d03d6c4bb5fcdc8e4d1ddfd0">IDRP_AT_BORDER</a>&#160;&#160;&#160;0x0002</td></tr>
+<tr class="memdesc:ga260b1617d03d6c4bb5fcdc8e4d1ddfd0"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится на границе диапазона.  <a href="group__IdRange__Position.html#ga260b1617d03d6c4bb5fcdc8e4d1ddfd0">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga260b1617d03d6c4bb5fcdc8e4d1ddfd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga21d3d2a0393179199e505b33602f841e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Position.html#ga21d3d2a0393179199e505b33602f841e">IDRP_OUT_OF_RANGE</a>&#160;&#160;&#160;0x0004</td></tr>
+<tr class="memdesc:ga21d3d2a0393179199e505b33602f841e"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится вне диапазона.  <a href="group__IdRange__Position.html#ga21d3d2a0393179199e505b33602f841e">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga21d3d2a0393179199e505b33602f841e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8bb14bf01d0ec4cff4aad969b73d295d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IdRange__Position.html#ga8bb14bf01d0ec4cff4aad969b73d295d">IDRP_AT_START</a>&#160;&#160;&#160;0x0008</td></tr>
+<tr class="memdesc:ga8bb14bf01d0ec4cff4aad969b73d295d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ID находится на Стартовой позиции.  <a href="group__IdRange__Position.html#ga8bb14bf01d0ec4cff4aad969b73d295d">Подробнее...</a><br /></td></tr>
+<tr class="separator:ga8bb14bf01d0ec4cff4aad969b73d295d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Перечисления</h2></td></tr>
+<tr class="memitem:a3815caa61c1318fa522bb73b6987b18b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceONF.html#a3815caa61c1318fa522bb73b6987b18b">ONF::IdIssuingMethod</a> { <a class="el" href="namespaceONF.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">ONF::Dynamic</a>
+, <a class="el" href="namespaceONF.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">ONF::Static_Ascending</a>
+, <a class="el" href="namespaceONF.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">ONF::Static_Descending</a>
+ }</td></tr>
+<tr class="memdesc:a3815caa61c1318fa522bb73b6987b18b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит методы выдачи ID для IdContainer и характер границ диапазона RangeIdManager.  <a href="namespaceONF.html#a3815caa61c1318fa522bb73b6987b18b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a3815caa61c1318fa522bb73b6987b18b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab170d2fc466df2a25a59a23cd541dc54"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceONF.html#ab170d2fc466df2a25a59a23cd541dc54">ONF::BorderRange</a> { <a class="el" href="namespaceONF.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280">ONF::UpperBorder</a>
+, <a class="el" href="namespaceONF.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b">ONF::LowerBorder</a>
+ }</td></tr>
+<tr class="memdesc:ab170d2fc466df2a25a59a23cd541dc54"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит название границ диапазона создаваемых IdRange.  <a href="namespaceONF.html#ab170d2fc466df2a25a59a23cd541dc54">Подробнее...</a><br /></td></tr>
+<tr class="separator:ab170d2fc466df2a25a59a23cd541dc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa379d56cc5b00030d3772d015b40f999"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceONF.html#aa379d56cc5b00030d3772d015b40f999">ONF::ReservationMethod</a> { <a class="el" href="namespaceONF.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff">ONF::NotSet</a>
+, <a class="el" href="namespaceONF.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f">ONF::Interpolate</a>
+, <a class="el" href="namespaceONF.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298">ONF::ReserveRange</a>
+ }</td></tr>
+<tr class="memdesc:aa379d56cc5b00030d3772d015b40f999"><td class="mdescLeft">&#160;</td><td class="mdescRight">Отвечает за способ резервации ID методом RangeIdManager::reserve(T, ReservationMethod).  <a href="namespaceONF.html#aa379d56cc5b00030d3772d015b40f999">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa379d56cc5b00030d3772d015b40f999"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Функции</h2></td></tr>
+<tr class="memitem:a52d779248f367704eccd4128076e0b9d"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a52d779248f367704eccd4128076e0b9d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceONF.html#a52d779248f367704eccd4128076e0b9d">ONF::isStandardId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:a52d779248f367704eccd4128076e0b9d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или же нет.  <a href="namespaceONF.html#a52d779248f367704eccd4128076e0b9d">Подробнее...</a><br /></td></tr>
+<tr class="separator:a52d779248f367704eccd4128076e0b9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceONF.html#aa021bc8d13b43108e1eb0cbac418ace1">ONF::findNearestStdId</a> (T target, T start, T step)</td></tr>
+<tr class="memdesc:aa021bc8d13b43108e1eb0cbac418ace1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ближайший к переданному ID, стандартный ID.  <a href="namespaceONF.html#aa021bc8d13b43108e1eb0cbac418ace1">Подробнее...</a><br /></td></tr>
+<tr class="separator:aa021bc8d13b43108e1eb0cbac418ace1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7419e8b0181f9a84fc4814cc16601c27"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a7419e8b0181f9a84fc4814cc16601c27"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceONF.html#a7419e8b0181f9a84fc4814cc16601c27">ONF::moveFromId</a> (T start, T step, udlong n)</td></tr>
+<tr class="memdesc:a7419e8b0181f9a84fc4814cc16601c27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID находящееся на определенном расстоянии от известного ID.  <a href="namespaceONF.html#a7419e8b0181f9a84fc4814cc16601c27">Подробнее...</a><br /></td></tr>
+<tr class="separator:a7419e8b0181f9a84fc4814cc16601c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Переменные</h2></td></tr>
+<tr class="memitem:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memTemplParams" colspan="2">template&lt;class T , class T_Step &gt; </td></tr>
+<tr class="memitem:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memTemplItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceONF.html#a296c2ff0e43c78fd9f4f36589e266a32">ONF::is_forbidden_types_combination</a> = !std::is_floating_point_v&lt;T&gt; &amp;&amp; std::is_floating_point_v&lt;T_Step&gt;</td></tr>
+<tr class="memdesc:a296c2ff0e43c78fd9f4f36589e266a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, не запрещена ли данная комбинация типов.  <a href="namespaceONF.html#a296c2ff0e43c78fd9f4f36589e266a32">Подробнее...</a><br /></td></tr>
+<tr class="separator:a296c2ff0e43c78fd9f4f36589e266a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="IdManagement_8h.html">IdManagement.h</a></li>
+    <li class="footer">Создано системой <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1 </li>
+  </ul>
+</div>
+</body>
+</html>

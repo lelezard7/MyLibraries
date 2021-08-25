@@ -15,6 +15,24 @@ IdRange(T start, T step)
 
 template<class T>
 ONF::IdRange<T>::
+IdRange(IdRange&& other)
+    : upperBorderState_(std::move(other.upperBorderState_)),
+      upperBorder_     (std::move(other.upperBorder_)),
+      upperLimit_      (std::move(other.upperLimit_)),
+      lowerBorderState_(std::move(other.lowerBorderState_)),
+      lowerBorder_     (std::move(other.lowerBorder_)),
+      lowerLimit_      (std::move(other.lowerLimit_)),
+      start_           (std::move(other.start_)),
+      step_            (std::move(other.step_))
+{
+   other.upperBorderState_ = false;
+   other.lowerBorderState_ = false;
+   other.upperBorder_ = other.start_;
+   other.lowerBorder_ = other.start_;
+}
+
+template<class T>
+ONF::IdRange<T>::
 ~IdRange() {}
 
 template<class T>
@@ -22,18 +40,14 @@ typename ONF::IdRange<T>::IdInfo
 ONF::IdRange<T>::
 moveBorder(BorderRange borderRange, dlong n)
 {
-    IdInfo idInfo;
-
     if (borderRange == BorderRange::UpperBorder) {
-        if (fillIdInfo(idInfo, borderRange, upperBorder_, static_cast<ldouble>(n), Action::Move))
-            upperBorder_ = idInfo.value;
-
+        IdInfo idInfo = getFilledIdInfo(borderRange, upperBorder_, static_cast<ldouble>(n), Action::Move);
+        upperBorder_ = idInfo.value;
         return idInfo;
     }
 
-    if (fillIdInfo(idInfo, borderRange, lowerBorder_, static_cast<ldouble>(n), Action::Move))
-        lowerBorder_ = idInfo.value;
-
+    IdInfo idInfo = getFilledIdInfo(borderRange, lowerBorder_, static_cast<ldouble>(n), Action::Move);
+    lowerBorder_ = idInfo.value;
     return idInfo;
 }
 
@@ -42,15 +56,10 @@ typename ONF::IdRange<T>::IdInfo
 ONF::IdRange<T>::
 getIdInfo(BorderRange borderRange, dlong n) const
 {
-    IdInfo idInfo;
+    if (borderRange == BorderRange::UpperBorder)
+        return getFilledIdInfo(borderRange, upperBorder_, static_cast<ldouble>(n), Action::GetInfo);
 
-    if (borderRange == BorderRange::UpperBorder) {
-        fillIdInfo(idInfo, borderRange, upperBorder_, static_cast<ldouble>(n), Action::GetInfo);
-        return idInfo;
-    }
-
-    fillIdInfo(idInfo, borderRange, lowerBorder_, static_cast<ldouble>(n), Action::GetInfo);
-    return idInfo;
+    return getFilledIdInfo(borderRange, lowerBorder_, static_cast<ldouble>(n), Action::GetInfo);
 }
 
 template<class T>
@@ -70,9 +79,7 @@ getIdInfo(BorderRange borderRange, T id, dlong n) const
             return std::nullopt;
     }
 
-    IdInfo idInfo;
-    fillIdInfo(idInfo, borderRange, id, static_cast<ldouble>(n), Action::GetInfo);
-    return idInfo;
+    return getFilledIdInfo(borderRange, id, static_cast<ldouble>(n), Action::GetInfo);
 }
 
 template<class T>
@@ -195,46 +202,74 @@ getStep() const
 }
 
 template<class T>
-int
+ONF::IdRange<T>&
 ONF::IdRange<T>::
-fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Action action) const
+operator=(IdRange&& other)
 {
+    upperBorderState_ = std::move(other.upperBorderState_);
+    upperBorder_      = std::move(other.upperBorder_);
+    upperLimit_       = std::move(other.upperLimit_);
+    lowerBorderState_ = std::move(other.lowerBorderState_);
+    lowerBorder_      = std::move(other.lowerBorder_);
+    lowerLimit_       = std::move(other.lowerLimit_);
+    start_            = std::move(other.start_);
+    step_             = std::move(other.step_);
+
+    other.upperBorderState_ = false;
+    other.lowerBorderState_ = false;
+    other.upperBorder_ = other.start_;
+    other.lowerBorder_ = other.start_;
+
+    return *this;
+}
+
+template<class T>
+typename ONF::IdRange<T>::IdInfo
+ONF::IdRange<T>::
+getFilledIdInfo(BorderRange borderRange, T borderValue, ldouble n, Action action) const
+{
+    IdInfo idInfo;
+
     if (borderRange == BorderRange::UpperBorder) {
         if (n > 0) {
-            if (fillInfoAboutMoveUp(idInfo, borderValue, upperLimit_, n)) {
-                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
-                fillInfoAboutPos(idInfo, n, action);
-                return 1;
+            if (fillInfoAboutMoveUp(idInfo, borderRange, borderValue, upperLimit_, n, action)) {
+                return idInfo;
             }
         }
 
         if (n < 0) {
-            if (fillInfoAboutMovemDown(idInfo, borderValue, lowerBorder_, n)) {
-                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
-                fillInfoAboutPos(idInfo, n, action);
-                return 1;
+            if (fillInfoAboutMoveDown(idInfo, borderRange, borderValue, lowerBorder_, n, action)) {
+                return idInfo;
             }
         }
     }
     else {
         if (n > 0) {
-            if (fillInfoAboutMovemDown(idInfo, borderValue, lowerLimit_, n)) {
-                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
-                fillInfoAboutPos(idInfo, n, action);
-                return 1;
+            if (fillInfoAboutMoveDown(idInfo, borderRange, borderValue, lowerLimit_, n, action)) {
+                return idInfo;
             }
         }
 
         if (n < 0) {
-            if (fillInfoAboutMoveUp(idInfo, borderValue, upperBorder_, n)) {
-                fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
-                fillInfoAboutPos(idInfo, n, action);
-                return 1;
+            if (fillInfoAboutMoveUp(idInfo, borderRange, borderValue, upperBorder_, n, action)) {
+                return idInfo;
             }
         }
     }
 
-    idInfo.position += IDRP_ON_BORDER;
+    /*
+     * Сюда мы попадаем если n == 0 или если fillInfoAboutMoveUp или fillInfoAboutMoveDown вернет false.
+     * В первом случае все понятно.
+     * Во втором случае мы попадем сюда потому что fillInfoAboutMoveUp или fillInfoAboutMoveDown вернет false,
+     * что значит что мы ХОТЕЛИ передвинуть границу, но у нас не получилось сдвинуть ее ни на один шаг.
+     * Отсюда и операции вроде этой:
+     * idInfo.flags += (n > 0 ? IDRF_ID_OUT_OF_LIMIT : IDRF_RANGE_ARE_BENT);
+     */
+
+    idInfo.position += IDRP_AT_BORDER;
+
+    if (borderValue == start_)
+        idInfo.position += IDRP_AT_START;
 
     idInfo.value = borderValue;
     idInfo.stepCount = 0;
@@ -242,30 +277,41 @@ fillIdInfo(IdInfo& idInfo, BorderRange borderRange, T borderValue, ldouble n, Ac
     if (n == 0)
         idInfo.flags += IDRF_SUCCESSFULLY;
     else
-        idInfo.flags += (n > 0 ? IDRF_ID_OUT_RANGE : IDRF_RANGE_ARE_BENT);
+        idInfo.flags += (n > 0 ? IDRF_ID_OUT_OF_LIMIT : IDRF_RANGE_ARE_BENT);
 
     fillInfoAboutTerritory(idInfo, borderRange, borderValue);
-    return 0;
+    return idInfo;
 }
 
 template<class T>
 bool
 ONF::IdRange<T>::
-fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
+fillInfoAboutMoveUp(IdInfo& idInfo, BorderRange borderRange, T borderValue, T borderLimit, ldouble n, Action action) const
 {
-    if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(ONF::abs(n) * step_) <= static_cast<ldouble>(borderLimit)) {
-        idInfo.flags += IDRF_SUCCESSFULLY;
+    if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(ONF::abs(n) * step_) <= static_cast<ldouble>(borderLimit)) { 
         idInfo.value = borderValue + (ONF::abs(n) * step_);
+        idInfo.flags += IDRF_SUCCESSFULLY;
         idInfo.stepCount = n;
+
+        fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+        fillInfoAboutPos(idInfo, idInfo.value, n, action);
         return true;
     }
 
+    /*
+     * Если мы попали сюда, значит нам не удалось успешно сделать столько шагов сколько мы хотели,
+     * потому в idInfo.flags мы записываем IDRF_ID_OUT_OF_LIMIT или IDRF_RANGE_ARE_BENT (зависит от ситуации),
+     * но не IDRF_SUCCESSFULLY.
+     */
     for(ldouble i = ONF::abs(n) - 1; i > 0; --i) {
         if (static_cast<ldouble>(borderValue) + static_cast<ldouble>(i * step_) <= static_cast<ldouble>(borderLimit)) {
             idInfo.value = borderValue + (i * step_);
 
+            fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+            fillInfoAboutPos(idInfo, idInfo.value, n, action);
+
             if (n > 0) {
-                idInfo.flags += IDRF_ID_OUT_RANGE;
+                idInfo.flags += IDRF_ID_OUT_OF_LIMIT;
                 idInfo.stepCount = i;
                 return true;
             }
@@ -282,21 +328,32 @@ fillInfoAboutMoveUp(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) con
 template<class T>
 bool
 ONF::IdRange<T>::
-fillInfoAboutMovemDown(IdInfo& idInfo, T borderValue, T borderLimit, ldouble n) const
+fillInfoAboutMoveDown(IdInfo& idInfo, BorderRange borderRange, T borderValue, T borderLimit, ldouble n, Action action) const
 {
     if (static_cast<ldouble>(borderValue) - static_cast<ldouble>(ONF::abs(n) * step_) >= static_cast<ldouble>(borderLimit)) {
-        idInfo.flags += IDRF_SUCCESSFULLY;
         idInfo.value = borderValue - (ONF::abs(n) * step_);
+        idInfo.flags += IDRF_SUCCESSFULLY;
         idInfo.stepCount = n;
+
+        fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+        fillInfoAboutPos(idInfo, idInfo.value, n, action);
         return true;
     }
 
+    /*
+     * Если мы попали сюда, значит нам не удалось успешно сделать столько шагов сколько мы хотели,
+     * потому в idInfo.flags мы записываем IDRF_ID_OUT_OF_LIMIT или IDRF_RANGE_ARE_BENT (зависит от ситуации),
+     * но не IDRF_SUCCESSFULLY.
+     */
     for(ldouble i = ONF::abs(n) - 1; i > 0; --i) {
         if (static_cast<ldouble>(borderValue) - static_cast<ldouble>(i * step_) >= static_cast<ldouble>(borderLimit)) {
             idInfo.value = borderValue - (i * step_);
 
+            fillInfoAboutTerritory(idInfo, borderRange, idInfo.value);
+            fillInfoAboutPos(idInfo, idInfo.value, n, action);
+
             if (n > 0) {
-                idInfo.flags += IDRF_ID_OUT_RANGE;
+                idInfo.flags += IDRF_ID_OUT_OF_LIMIT;
                 idInfo.stepCount = i;
                 return true;
             }
@@ -329,25 +386,27 @@ fillInfoAboutTerritory(IdInfo& idInfo, BorderRange borderRange, T borderValue) c
 
     idInfo.state = (borderRange == BorderRange::UpperBorder ? upperBorderState_ : lowerBorderState_);
     idInfo.border = borderRange;
-    idInfo.position += IDRP_ID_AT_START;
 }
 
 template<class T>
 void
 ONF::IdRange<T>::
-fillInfoAboutPos(IdInfo& idInfo, ldouble n, Action action) const
+fillInfoAboutPos(IdInfo& idInfo, T borderValue, ldouble n, Action action) const
 {
+    if (borderValue == start_)
+        idInfo.position += IDRP_AT_START;
+
     if (action == Action::Move) {
-        idInfo.position += IDRP_ON_BORDER;
+        idInfo.position += IDRP_AT_BORDER;
         return;
     }
 
     if (idInfo.value == upperBorder_ || idInfo.value == lowerBorder_) {
-        idInfo.position += IDRP_ON_BORDER;
+        idInfo.position += IDRP_AT_BORDER;
         return;
     }
 
-    idInfo.position += (n > 0 ? IDRP_OUT_RANGE : IDRP_IN_RANGE);
+    idInfo.position += (n > 0 ? IDRP_OUT_OF_RANGE : IDRP_WITHIN_RANGE);
 }
 
 
