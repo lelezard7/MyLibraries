@@ -1,2 +1,6 @@
 **/build
 *.txt.user
+
+/include/XmlParser.h
+/src/ParseNode.cpp
+/test/SaveParser/*

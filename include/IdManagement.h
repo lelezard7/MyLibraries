@@ -52,26 +52,13 @@ namespace ONF
      * Мы можем задать способ выдачи ID в конструкторе при создании и менять через метод
      * setIdIssuingMethod(IdIssuingMethod).
      *
-     * Когда метод выдачи ID равен IdIssuingMethod::Dynamic, все ID хранятся в **unorderedIds_**,
-     * а при IdIssuingMethod::Static_Ascending и IdIssuingMethod::Static_Descending в **orderedIds_**:
-     * @code
-     * std::list<T> unorderedIds_;
-     * std::set<T> orderedIds_;
-     * @endcode
-     *
      * @warning
-     * IdContainer не хранит порядок добавления ID, он просто перекидывает все хранимые ID в
-     * [std::list](https://en.cppreference.com/w/cpp/container/list)
-     * в случае если способ выдачи ID равен IdIssuingMethod::Dynamic и в
-     * [std::set](https://en.cppreference.com/w/cpp/container/set)
-     * если способ выдачи ID равен IdIssuingMethod::Static_Ascending или
-     * IdIssuingMethod::Static_Descending. <br>
+     * IdContainer не хранит порядок добавления ID, он просто сортирует их в нужном порядке. <br>
      * Отсюда вытекает проблема, при которой после смены режима выдачи с IdIssuingMethod::Dynamic на
      * IdIssuingMethod::Static_Ascending или IdIssuingMethod::Static_Descending, а затем обратно на
-     * IdIssuingMethod::Dynamic, IdContainer уже не будет выдавать ранее добавленные ID в том порядке в
-     * котором мы их добавляли в него. Но вновь добавленные ID будут выдаваться в порядке добавления. <br>
-     * Сейчас это скорее баг нежели фича. В будущих версиях этот момент будет доработан
-     * (будет обратно совместим).
+     * IdIssuingMethod::Dynamic, IdContainer уже не будет выдавать ранее добавленные ID в том порядке
+     * в котором мы их добавляли в него. Но вновь добавленные ID будут выдаваться в порядке добавления. <br>
+     * Эта проблема будет решена до релиза первой версии.
      *
      * @see
      * IdContainer(IdIssuingMethod idIssuingMethod) <br>
@@ -81,8 +68,7 @@ namespace ONF
     template<class T>
     class IdContainer
     {
-        std::list<T> unorderedIds_;
-        std::set<T> orderedIds_;
+        std::list<T> container_;
 
         IdIssuingMethod idIssuingMethod_;
 
@@ -127,8 +113,8 @@ namespace ONF
         /**
          * @brief Удаляет ID из IdContainer.
          *
-         * Если ID переданный для удаления найден, метод удалит его. Если же ID не был найден, метод
-         * проигнорирует его.
+         * Если ID переданный для удаления найден, метод удалит его. Если же ID не был найден,
+         * метод проигнорирует его.
          *
          * @param id - ID для удаления.
          * @see clear()
@@ -138,8 +124,8 @@ namespace ONF
         /**
          * @brief Очищает IdContainer.
          *
-         * Все ID при очистке будут удалены, но метод выдачи ID останется прежним и не сбросится до значения
-         * по умолчанию.
+         * Все ID при очистке будут удалены, но метод выдачи ID останется прежним и не сбросится
+         * до значения по умолчанию.
          *
          * @see erase(T)
          */
@@ -171,9 +157,8 @@ namespace ONF
          *
          * @bug
          * На момент версии 0.0.0 вызов этого метода может быть очень затратным по времени. <br>
-         * Это связанно с тем, что IdContainer переписывает все ID из
-         * [std::list](https://en.cppreference.com/w/cpp/container/list) в
-         * [std::set](https://en.cppreference.com/w/cpp/container/set) или обратно.
+         * Это связанно с тем, что IdContainer сортирует все ID в соответствии с указанным
+         * методом выдачи ID.
          *
          * @param idIssuingMethod - метод выдачи ID который нужно установить.
          * @see getIdIssuingMethod() const
@@ -204,19 +189,6 @@ namespace ONF
          * @param other - перемещаемый объект класса.
          */
         IdContainer<T>& operator=(IdContainer<T>&& other) = default;
-
-    protected:
-        /**
-         * @brief Возвращает количество ID, хранимых в **unorderedIds_**.
-         * @return Возвращает количество ID, хранимых в **unorderedIds_**.
-         */
-        size_t getUnorderedIdsSize() const;
-
-        /**
-         * @brief Возвращает количество ID, хранимых в **orderedIds_**.
-         * @return Возвращает количество ID, хранимых в **orderedIds_**.
-         */
-        size_t getOrderedIdsSize() const;
 
     };
 }
@@ -294,8 +266,8 @@ namespace ONF
     /**
      * @brief Возвращает ближайший к переданному ID, стандартный ID.
      *
-     * Под ближайшим стандартным ID подразумевается тот, который находится ближе всего к переданному ID
-     * и при этом находится между **target** и **start**. <br>
+     * Под ближайшим стандартным ID подразумевается тот, который находится ближе всего к переданному
+     * ID и при этом находится между **target** и **start**. <br>
      * Знак числа шага переданного в **step** не имеет значения.
      *
      * В следующем примере для ID равного -4,3, ближайшим стандартным является -4, но не -5. <br>
