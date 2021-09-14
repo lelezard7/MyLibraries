@@ -77,6 +77,10 @@ int main(int argc, char** argv)
 }
 
 
+//TODO: Добавить проверку Size там где она была удалена коммитом
+//      f40764e07ccc500e96d12c7dd3d76e54ca28622e (Внесен ряд исправлений в IdContainer...).
+
+
 TEST_F(IdContainerTests, Test1)
 {
     EXPECT_FALSE(idContainer_int.getNextId().has_value());
