@@ -1,30 +1,47 @@
+#   === Базовая настройка ===
 cmake_minimum_required(VERSION 3.5)
 project(ONF LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+#   === Установка и настройка опций ===
+option(ONF_ALL_OPTIONS "Выбрать все опции" OFF)
+option(ONF_BUILD_TP_LIB "Построить сторонние библиотеки" OFF)
+option(ONF_BUILD_TESTS "Построить тесты" OFF)
+
+if(ONF_ALL_OPTIONS)
+    set(ONF_BUILD_TP_LIB ON)
+    set(ONF_BUILD_TESTS ON)
+endif()
+
+#   === Добавление подкаталогов сторонних библиотек ===
+if(ONF_BUILD_TP_LIB)
+    #add_subdirectory("lib/PDCurses 3.9")
+
+
+endif()
+
+#   === Создание библиотеки ===
 set(BUILD_SHARED_LIBS ON)
 
 add_library(ONF SHARED
-                src/XmlSave/XmlFilter.cpp
-                src/XmlSave/TagStructure.cpp
-                src/XmlSave/SaveModule.cpp
+    src/ConsoleConstructor.cpp
 
-                src/ConsShell/Console_IO.cpp
-                src/ConsShell/Console_Input.cpp
-                src/ConsShell/Console_Editor.cpp
-                src/ConsShell/Console_Output.cpp
+    include/ONF.h
+    include/VersionNames.h
+    include/IdManagement.h
+    include/ConsoleConstructor.h
 
-                include/XmlSave/TagStructure.h
-                include/XmlSave/XmlFilter.h
-                include/XmlSave/SaveModule.h
+    include/IdManagement/IdRange.inl
+    include/IdManagement/IdContainer.inl
+    include/IdManagement/RangeIdManager.inl)
 
-                include/IdManagement/IdContainer.inl
-                include/IdManagement/IdRange.inl
-                include/IdManagement/RangeIdManager.inl
+#   === Построение тестов ===
+if(ONF_BUILD_TESTS)
+    add_subdirectory("test")
 
-                include/ONF.h
-                include/Console_IO.h
-                include/VersionNames.h
-                include/IdManagement.h)
+    enable_testing()
+
+    add_test(NAME CommonTest COMMAND Common_Test)
+endif()

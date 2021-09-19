@@ -1,8 +1,26 @@
+#   === Постоянные пункты ===
+
+#Каталоги
 **/build
+
+#Файлы
+**/CMakeLists.txt.autosave
+
+#Расширения и прочее
 *.txt.user
 
-/include/XmlParser.h
-/include/XmlSave/*
-/src/ParseNode.cpp
-/src/XmlSave/*
+
+#   === Временные пункты ===
+
+#Каталоги
 /test/SaveParser/*
+/include/XmlSave/*
+/src/ConsShell/*
+/src/XmlSave/*
+
+#Файлы
+/include/Console_IO.h
+/include/XmlParser.h
+/src/ParseNode.cpp
+
+#Расширения и прочее

@@ -31,9 +31,6 @@ namespace ONF
 
 
 #include "IdManagement.h"
-#include "Console_IO.h"
-#include "XmlSave/SaveModule.h"
-#include "XmlSave/TagStructure.h"
-#include "XmlSave/XmlFilter.h"
+#include "ConsoleConstructor.h"
 
 #endif
