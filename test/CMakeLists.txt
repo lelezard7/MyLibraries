@@ -7,7 +7,7 @@ if(ONF_BUILD_TP_LIB)
 endif()
 
 #   === Включение каталогов ===
-include_directories(../include/)
+
 include_directories("../lib/GoogleTest 1.11.0/googletest/include")
 
 #link_directories("${CMAKE_BINARY_DIR}/bin")

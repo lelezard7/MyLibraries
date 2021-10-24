@@ -24,9 +24,8 @@ namespace ONF
      * @return Если **value** >= 0, возвращает **value**. Если **value** < 0, возвращает **-value**.
      */
     template<class T>
-    T abs(T value) {
-        return value < 0 ? -value : value;
-    }
+    T abs(T value)
+    { return value < 0 ? -value : value; }
 }
 
 

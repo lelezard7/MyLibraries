@@ -15,12 +15,18 @@ if(ONF_ALL_OPTIONS)
     set(ONF_BUILD_TESTS ON)
 endif()
 
+include_directories(include)
+
+
 #   === Добавление подкаталогов сторонних библиотек ===
 if(ONF_BUILD_TP_LIB)
-    #add_subdirectory("lib/PDCurses 3.9")
-
-
+    add_subdirectory("lib/PDCurses 3.9 CMake")
 endif()
+
+link_directories("build/qt/debug/lib/PDCurses 3.9 CMake")
+
+link_libraries(PDc)
+include_directories("lib/PDCurses 3.9 CMake")
 
 #   === Создание библиотеки ===
 set(BUILD_SHARED_LIBS ON)
@@ -32,10 +38,15 @@ add_library(ONF SHARED
     include/VersionNames.h
     include/IdManagement.h
     include/ConsoleConstructor.h
+    include/EditingStrings.h
 
     include/IdManagement/IdRange.inl
     include/IdManagement/IdContainer.inl
     include/IdManagement/RangeIdManager.inl)
+
+#add_dependencies(ONF PDc)
+
+
 
 #   === Построение тестов ===
 if(ONF_BUILD_TESTS)

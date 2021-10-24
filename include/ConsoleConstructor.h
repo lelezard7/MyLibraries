@@ -10,6 +10,9 @@ namespace ONF
 {
     constexpr unsigned rgb_to_hex(short r, short g, short b);
 
+    class ConsoleTextEdit;
+    void addWindowToConsole(ConsoleTextEdit* window);
+
 
     class ConsoleWindow {};
 
@@ -47,7 +50,6 @@ namespace ONF
 
     };
 
-    void addWindowToConsole(ConsoleTextEdit* window);
 
 
     void start();
