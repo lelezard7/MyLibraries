@@ -2,9 +2,15 @@
 cmake_minimum_required(VERSION 3.5)
 project(ONF_Tests LANGUAGES C CXX)
 
-if(ONF_BUILD_TP_LIB)
+set(CMAKE_CXX_STANDARD 17)  #delete
+set(CMAKE_CXX_STANDARD_REQUIRED ON)  #delete
+
+include_directories(../include)  #delete
+#include_directories("../lib/PDCurses 3.9")  #delete
+
+#if(ONF_BUILD_TP_LIB)
     add_subdirectory("../lib/GoogleTest 1.11.0" "${CMAKE_BINARY_DIR}/lib/GoogleTest 1.11.0")
-endif()
+#endif()
 
 #   === Включение каталогов ===
 
@@ -26,4 +32,5 @@ add_executable(IdRange_Test IdManagement/IdRangeTest.cpp)
 add_executable(IdContainer_Test IdManagement/IdContainerTest.cpp)
 add_executable(RangeIdManager_Test IdManagement/RangeIdManagerTest.cpp)
 
-add_executable(ConsoleConstructor_Test ConsoleConstructor/ConsoleConstructorTest.cpp)
+#add_executable(ConsoleConstructor_Test ConsoleConstructor/ConsoleConstructorTest.cpp)  #reset
+add_executable(EditingStrings_Test EditingStrings/EditingStringsTest.cpp)

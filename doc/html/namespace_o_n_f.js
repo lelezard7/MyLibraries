@@ -1,8 +1,9 @@
 var namespace_o_n_f =
 [
+    [ "ConsoleTextEdit", "class_o_n_f_1_1_console_text_edit.html", "class_o_n_f_1_1_console_text_edit" ],
+    [ "ConsoleWindow", "class_o_n_f_1_1_console_window.html", null ],
     [ "IdContainer", "class_o_n_f_1_1_id_container.html", "class_o_n_f_1_1_id_container" ],
     [ "IdRange", "class_o_n_f_1_1_id_range.html", "class_o_n_f_1_1_id_range" ],
-    [ "ParseNode", "class_o_n_f_1_1_parse_node.html", "class_o_n_f_1_1_parse_node" ],
     [ "RangeIdManager", "class_o_n_f_1_1_range_id_manager.html", null ],
     [ "RangeIdManager< T, T_Step, std::enable_if_t<!is_forbidden_types_combination< T, T_Step > > >", "class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html", "class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7" ],
     [ "dlong", "namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273", null ],
@@ -22,9 +23,17 @@ var namespace_o_n_f =
       [ "Interpolate", "namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999ad53238014015da17926bca398282211f", null ],
       [ "ReserveRange", "namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999a880e22a367b40ff2c1b56da7ed695298", null ]
     ] ],
+    [ "TrimmingSide", "namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b", [
+      [ "TrimmingSide_Left", "namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765", null ],
+      [ "TrimmingSide_Right", "namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621", null ]
+    ] ],
     [ "abs", "namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03", null ],
+    [ "addWindowToConsole", "namespace_o_n_f.html#a74a2dd5fa03ba14ba920a43700746cb6", null ],
     [ "findNearestStdId", "namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40", null ],
     [ "isStandardId", "namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34", null ],
     [ "moveFromId", "namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f", null ],
+    [ "rgb_to_hex", "namespace_o_n_f.html#a020e7e46024f9aa06650ebdd0259af9f", null ],
+    [ "start", "namespace_o_n_f.html#ad2a00fa31982c3062cf72477f365560f", null ],
+    [ "trimString", "namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128", null ],
     [ "is_forbidden_types_combination", "namespace_o_n_f.html#af3975f8bd8ff35c63edb13ea4d475e71", null ]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['static_5fascending_164',['Static_Ascending',['../namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700',1,'ONF']]],
-  ['static_5fdescending_165',['Static_Descending',['../namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94',1,'ONF']]]
+  ['upperborder_0',['UpperBorder',['../namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280',1,'ONF']]]
 ];

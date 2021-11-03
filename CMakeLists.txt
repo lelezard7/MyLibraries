@@ -19,30 +19,32 @@ include_directories(include)
 
 
 #   === Добавление подкаталогов сторонних библиотек ===
-if(ONF_BUILD_TP_LIB)
-    add_subdirectory("lib/PDCurses 3.9 CMake")
-endif()
+#if(ONF_BUILD_TP_LIB)
+#    add_subdirectory("lib/PDCurses 3.9 CMake")
+#endif()
 
-link_directories("build/qt/debug/lib/PDCurses 3.9 CMake")
+#link_directories("build/qt/debug/lib/PDCurses 3.9 CMake")
 
-link_libraries(PDc)
-include_directories("lib/PDCurses 3.9 CMake")
+#link_libraries(PDc)
+#include_directories("lib/PDCurses 3.9 CMake")
 
 #   === Создание библиотеки ===
 set(BUILD_SHARED_LIBS ON)
 
 add_library(ONF SHARED
-    src/ConsoleConstructor.cpp
+#    src/ConsoleConstructor.cpp
 
     include/ONF.h
     include/VersionNames.h
     include/IdManagement.h
-    include/ConsoleConstructor.h
+#    include/ConsoleConstructor.h
     include/EditingStrings.h
 
     include/IdManagement/IdRange.inl
     include/IdManagement/IdContainer.inl
-    include/IdManagement/RangeIdManager.inl)
+    include/IdManagement/RangeIdManager.inl
+
+    include/EditingStrings/EditingStrings.inl)
 
 #add_dependencies(ONF PDc)
 

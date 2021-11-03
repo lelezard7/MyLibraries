@@ -30,6 +30,6 @@ namespace ONF
 
 
 #include "IdManagement.h"
-#include "ConsoleConstructor.h"
+//#include "ConsoleConstructor.h"
 
 #endif

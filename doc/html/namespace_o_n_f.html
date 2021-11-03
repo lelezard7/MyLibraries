@@ -116,13 +116,15 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Классы</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_console_text_edit.html">ConsoleTextEdit</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_console_window.html">ConsoleWindow</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_container.html">IdContainer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Контейнер с настраиваемым способом выдачи ID.  <a href="class_o_n_f_1_1_id_container.html#details">Подробнее...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_id_range.html">IdRange</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Динамический диапазон стандартных ID.  <a href="class_o_n_f_1_1_id_range.html#details">Подробнее...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_parse_node.html">ParseNode</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_range_id_manager.html">RangeIdManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,6 +143,11 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Перечисления</h2></td></tr>
+<tr class="memitem:a4d471295d3135a1f3e14f125c529833b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b">TrimmingSide</a> : unsigned { <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765">TrimmingSide_Left</a> = 0x0001
+, <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621">TrimmingSide_Right</a> = 0x0002
+ }</td></tr>
+<tr class="memdesc:a4d471295d3135a1f3e14f125c529833b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Содержит стороны для обрезки строк. Применяются функцией trimString.  <a href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b">Подробнее...</a><br /></td></tr>
+<tr class="separator:a4d471295d3135a1f3e14f125c529833b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3815caa61c1318fa522bb73b6987b18b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18b">IdIssuingMethod</a> { <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba971fd8cc345d8bd9f92e9f7d88fdf20c">Dynamic</a>
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18ba11ea6c05e2c11b1dea75bb86d52fd700">Static_Ascending</a>
 , <a class="el" href="namespace_o_n_f.html#a3815caa61c1318fa522bb73b6987b18baa2d9dd512f69b81422a513e59fac1f94">Static_Descending</a>
@@ -161,16 +168,26 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Функции</h2></td></tr>
+<tr class="memitem:a020e7e46024f9aa06650ebdd0259af9f"><td class="memItemLeft" align="right" valign="top">constexpr unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a020e7e46024f9aa06650ebdd0259af9f">rgb_to_hex</a> (short r, short g, short b)</td></tr>
+<tr class="separator:a020e7e46024f9aa06650ebdd0259af9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74a2dd5fa03ba14ba920a43700746cb6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a74a2dd5fa03ba14ba920a43700746cb6">addWindowToConsole</a> (<a class="el" href="class_o_n_f_1_1_console_text_edit.html">ConsoleTextEdit</a> *window)</td></tr>
+<tr class="separator:a74a2dd5fa03ba14ba920a43700746cb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2a00fa31982c3062cf72477f365560f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#ad2a00fa31982c3062cf72477f365560f">start</a> ()</td></tr>
+<tr class="separator:ad2a00fa31982c3062cf72477f365560f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91d58889512c859ccb1981218f70b128"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:a91d58889512c859ccb1981218f70b128"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128">trimString</a> (T &amp;str, const decltype(T())&amp;rule, unsigned trimmingSide)</td></tr>
+<tr class="memdesc:a91d58889512c859ccb1981218f70b128"><td class="mdescLeft">&#160;</td><td class="mdescRight">Удаляет заданные символы с указанной стороны до тех пор, пока не встретится иной символ.  <a href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128">Подробнее...</a><br /></td></tr>
+<tr class="separator:a91d58889512c859ccb1981218f70b128"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">isStandardId</a> (T target, T start, T step)</td></tr>
+<tr class="memitem:a0c80070a358a426c55424b0cefd3ec34"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">isStandardId</a> (T target, T <a class="el" href="namespace_o_n_f.html#ad2a00fa31982c3062cf72477f365560f">start</a>, T step)</td></tr>
 <tr class="memdesc:a0c80070a358a426c55424b0cefd3ec34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Проверяет, является ID стандартным или нет.  <a href="namespace_o_n_f.html#a0c80070a358a426c55424b0cefd3ec34">Подробнее...</a><br /></td></tr>
 <tr class="separator:a0c80070a358a426c55424b0cefd3ec34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">findNearestStdId</a> (T target, T start, T step)</td></tr>
+<tr class="memitem:a7dec9a0389045ddedc70aa0f59687d40"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">findNearestStdId</a> (T target, T <a class="el" href="namespace_o_n_f.html#ad2a00fa31982c3062cf72477f365560f">start</a>, T step)</td></tr>
 <tr class="memdesc:a7dec9a0389045ddedc70aa0f59687d40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Возвращает ближайший к переданному ID, стандартный ID.  <a href="namespace_o_n_f.html#a7dec9a0389045ddedc70aa0f59687d40">Подробнее...</a><br /></td></tr>
 <tr class="separator:a7dec9a0389045ddedc70aa0f59687d40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
-<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">moveFromId</a> (T start, T step, <a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a> n)</td></tr>
+<tr class="memitem:a053b3525f6354bec193786e4d37d475f"><td class="memTemplItemLeft" align="right" valign="top">T&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">moveFromId</a> (T <a class="el" href="namespace_o_n_f.html#ad2a00fa31982c3062cf72477f365560f">start</a>, T step, <a class="el" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a> n)</td></tr>
 <tr class="memdesc:a053b3525f6354bec193786e4d37d475f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Вычисляет ID, находящийся на определенном расстоянии от известного ID.  <a href="namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f">Подробнее...</a><br /></td></tr>
 <tr class="separator:a053b3525f6354bec193786e4d37d475f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0808d8e7521d234bcfef5e47a4ecad03"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
@@ -334,6 +351,30 @@ $(document).ready(function(){initNavTree('namespace_o_n_f.html',''); initResizab
 
 </div>
 </div>
+<a id="a4d471295d3135a1f3e14f125c529833b" name="a4d471295d3135a1f3e14f125c529833b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d471295d3135a1f3e14f125c529833b">&#9670;&nbsp;</a></span>TrimmingSide</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b">ONF::TrimmingSide</a> : unsigned</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Содержит стороны для обрезки строк. Применяются функцией <a class="el" href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128">trimString</a>. </p>
+<p >Данные перечислители могут комбинироваться.</p>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128" title="Удаляет заданные символы с указанной стороны до тех пор, пока не встретится иной символ.">trimString</a> </dd></dl>
+<table class="fieldtable">
+<tr><th colspan="2">Элементы перечислений</th></tr><tr><td class="fieldname"><a id="a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765" name="a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765"></a>TrimmingSide_Left&#160;</td><td class="fielddoc"><p >Говорит функции <a class="el" href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128">trimString</a> что нужно удалять символы слева. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621" name="a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621"></a>TrimmingSide_Right&#160;</td><td class="fielddoc"><p >Говорит функции <a class="el" href="namespace_o_n_f.html#a91d58889512c859ccb1981218f70b128">trimString</a> что нужно удалять символы справа. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Функции</h2>
 <a id="a0808d8e7521d234bcfef5e47a4ecad03" name="a0808d8e7521d234bcfef5e47a4ecad03"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0808d8e7521d234bcfef5e47a4ecad03">&#9670;&nbsp;</a></span>abs()</h2>
@@ -363,6 +404,24 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>Если <b>value</b> &gt;= 0, возвращает <b>value</b>. Если <b>value</b> &lt; 0, возвращает <b>-value</b>. </dd></dl>
+
+</div>
+</div>
+<a id="a74a2dd5fa03ba14ba920a43700746cb6" name="a74a2dd5fa03ba14ba920a43700746cb6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74a2dd5fa03ba14ba920a43700746cb6">&#9670;&nbsp;</a></span>addWindowToConsole()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ONF::addWindowToConsole </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_console_text_edit.html">ConsoleTextEdit</a> *&#160;</td>
+          <td class="paramname"><em>window</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -531,6 +590,120 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Возвращает</dt><dd>Возвращает найденный ID. </dd></dl>
+
+</div>
+</div>
+<a id="a020e7e46024f9aa06650ebdd0259af9f" name="a020e7e46024f9aa06650ebdd0259af9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a020e7e46024f9aa06650ebdd0259af9f">&#9670;&nbsp;</a></span>rgb_to_hex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr unsigned ONF::rgb_to_hex </td>
+          <td>(</td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">short&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2a00fa31982c3062cf72477f365560f" name="ad2a00fa31982c3062cf72477f365560f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2a00fa31982c3062cf72477f365560f">&#9670;&nbsp;</a></span>start()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ONF::start </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a91d58889512c859ccb1981218f70b128" name="a91d58889512c859ccb1981218f70b128"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91d58889512c859ccb1981218f70b128">&#9670;&nbsp;</a></span>trimString()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">int ONF::trimString </td>
+          <td>(</td>
+          <td class="paramtype">T &amp;&#160;</td>
+          <td class="paramname"><em>str</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const decltype(T())&amp;&#160;</td>
+          <td class="paramname"><em>rule</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned&#160;</td>
+          <td class="paramname"><em>trimmingSide</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Удаляет заданные символы с указанной стороны до тех пор, пока не встретится иной символ. </p>
+<p >В <b>str</b> передается строка которую нужно обработать и в которую будет записан результат обработки. <br  />
+ В <b>rule</b> передается строка с символами которые нужно удалить. <br  />
+ В <b>trimmingSide</b> передается перечислитель из перечисления <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b">TrimmingSide</a>, который говорит с какой стороны нужно удалять указанные в <b>rule</b> символы. <br  />
+ Если указать в <b>trimmingSide</b> перечислитель <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765">TrimmingSide_Left</a>, данная функция начнет перебирать все символы слева направо. Если символ равен одному из символов строки <b>rule</b>, он удаляется, если нет, то операция прерывается, и функция возвращает результаты. <br  />
+ Если указать в <b>trimmingSide</b> перечислитель <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621">TrimmingSide_Right</a>, будет происходить тоже что описано выше только символы перебираться будут справа налево. <br  />
+ Если <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765">TrimmingSide_Left</a> и <a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621">TrimmingSide_Right</a> указать вместе, то сперва функция удалит указанные в <b>rule</b> символы слева, а потом справа. Потом функция вернет результаты.</p>
+<dl class="params"><dt>Аргументы</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>- строка для обработки. Так же в нее будет записан конечный результат. </td></tr>
+    <tr><td class="paramname">rule</td><td>- символы которые нужно удалить. </td></tr>
+    <tr><td class="paramname">trimmingSide</td><td>- сторона с которой нужно удалить указанные символы. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Возвращает</dt><dd>Возвращает количество удаленных символов.</dd></dl>
+<dl class="section see"><dt>См. также</dt><dd><a class="el" href="namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833b" title="Содержит стороны для обрезки строк. Применяются функцией trimString.">TrimmingSide</a> <br  />
+ <a class="el" href="_editing_strings_8h.html#a304e3dbe47c79d02419ed20a0b8a237b" title="Вызывает ONF::trimString который удалит пробельные символы.">trimSpace</a> </dd></dl>
 
 </div>
 </div>

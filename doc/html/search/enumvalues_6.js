@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['upperborder_0',['UpperBorder',['../namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54a60c8833e166ff3c12bb61ef1d3e20280',1,'ONF']]]
+  ['trimmingside_5fleft_0',['TrimmingSide_Left',['../namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba76fa9f72724a2947d535b819e95c9765',1,'ONF']]],
+  ['trimmingside_5fright_1',['TrimmingSide_Right',['../namespace_o_n_f.html#a4d471295d3135a1f3e14f125c529833ba736a97ac8dae0d9e3439e0c4b4250621',1,'ONF']]]
 ];

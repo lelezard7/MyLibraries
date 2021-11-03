@@ -34,16 +34,19 @@ var NAVTREE =
         [ "Функции", "namespacemembers_func.html", null ],
         [ "Переменные", "namespacemembers_vars.html", null ],
         [ "Определения типов", "namespacemembers_type.html", null ],
-        [ "Перечисления", "namespacemembers_enum.html", null ]
+        [ "Перечисления", "namespacemembers_enum.html", null ],
+        [ "Элементы перечислений", "namespacemembers_eval.html", null ]
       ] ]
     ] ],
     [ "Классы", "annotated.html", [
       [ "Классы", "annotated.html", "annotated_dup" ],
       [ "Алфавитный указатель классов", "classes.html", null ],
+      [ "Иерархия классов", "hierarchy.html", "hierarchy" ],
       [ "Члены классов", "functions.html", [
         [ "Указатель", "functions.html", null ],
         [ "Функции", "functions_func.html", null ],
-        [ "Переменные", "functions_vars.html", null ]
+        [ "Переменные", "functions_vars.html", null ],
+        [ "Относящиеся к классу функции", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Файлы", "files.html", [
@@ -58,7 +61,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_console___i_o_8h.html"
+"_console___i_o_8h.html",
+"namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';
