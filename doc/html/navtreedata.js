@@ -46,6 +46,7 @@ var NAVTREE =
         [ "Указатель", "functions.html", null ],
         [ "Функции", "functions_func.html", null ],
         [ "Переменные", "functions_vars.html", null ],
+        [ "Определения типов", "functions_type.html", null ],
         [ "Относящиеся к классу функции", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -62,7 +63,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_console___i_o_8h.html",
-"namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b"
+"class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#aaeb358bc57c2dafd85df7df103b78c6f"
 ];
 
 var SYNCONMSG = 'нажмите на выключить для синхронизации панелей';

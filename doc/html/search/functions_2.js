@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['erase_0',['erase',['../class_o_n_f_1_1_id_container.html#a5b4197c5b56cae1445483f53b304f4a1',1,'ONF::IdContainer']]]
+  ['clear_0',['clear',['../class_o_n_f_1_1_id_container.html#a6db12690fa5cce039663276f8e51a30a',1,'ONF::IdContainer']]],
+  ['createspecialnamerules_1',['CreateSpecialNameRules',['../namespace_o_n_f.html#a35113e1d6dff387ba98d1398fc1f3720',1,'ONF']]]
 ];

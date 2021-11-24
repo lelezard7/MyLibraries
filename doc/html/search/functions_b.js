@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['_7eidcontainer_0',['~IdContainer',['../class_o_n_f_1_1_id_container.html#a434e4986660ff18330d7cd9dae5c5540',1,'ONF::IdContainer']]],
-  ['_7eidinfo_1',['~IdInfo',['../struct_o_n_f_1_1_id_range_1_1_id_info.html#ab47d80e0d5168e2b77502d9cf0277874',1,'ONF::IdRange::IdInfo']]],
-  ['_7eidrange_2',['~IdRange',['../class_o_n_f_1_1_id_range.html#aab93b9fbc60469057ee3deedbaff8410',1,'ONF::IdRange']]],
-  ['_7erangeidmanager_3',['~RangeIdManager',['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a8549d726973836682c84e922d7ab2971',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;']]]
+  ['rangeidmanager_0',['RangeIdManager',['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a4ceba726feeaeef39fc1abaa880623d2',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;::RangeIdManager(T start=0, T_Step step=1)'],['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ad82802a3f31998362120e19872092f65',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;::RangeIdManager(const RangeIdManager&lt; T, T_Step &gt; &amp;other)'],['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a226844fdd6a9a3f565d1dde550954b52',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;::RangeIdManager(RangeIdManager&lt; T, T_Step &gt; &amp;&amp;other)']]],
+  ['refresh_1',['refresh',['../class_o_n_f_1_1_console_text_edit.html#a250fd95b51dd68dc4422ba9b549b8f04',1,'ONF::ConsoleTextEdit']]],
+  ['reserve_2',['reserve',['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#ac1aa3a2ad9d85e300a5cdbd06d4f51da',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;']]],
+  ['reset_3',['reset',['../class_o_n_f_1_1_id_range.html#a433373cc323c5b0b0eea7519d957f445',1,'ONF::IdRange']]],
+  ['rgb_5fto_5fhex_4',['rgb_to_hex',['../namespace_o_n_f.html#a020e7e46024f9aa06650ebdd0259af9f',1,'ONF']]]
 ];

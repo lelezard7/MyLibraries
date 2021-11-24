@@ -9,6 +9,8 @@
 
 namespace ONF
 {
+    #include "UniversalDefinitions.h"
+
     typedef unsigned long long udlong;
     typedef long long dlong;
     typedef long double ldouble;
@@ -30,6 +32,9 @@ namespace ONF
 
 
 #include "IdManagement.h"
+#include "EditingStrings.h"
+#include "Stylesheet.h"
+#include "UniversalDefinitions.h"
 //#include "ConsoleConstructor.h"
 
 #endif

@@ -5,5 +5,8 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "EditingStrings.h", "_editing_strings_8h.html", "_editing_strings_8h" ],
     [ "IdManagement.h", "_id_management_8h.html", "_id_management_8h" ],
     [ "ONF.h", "_o_n_f_8h.html", "_o_n_f_8h" ],
+    [ "Stylesheet.h", "_stylesheet_8h.html", "_stylesheet_8h" ],
+    [ "TypePairs.inl", "_type_pairs_8inl.html", null ],
+    [ "UniversalDefinitions.h", "_universal_definitions_8h.html", "_universal_definitions_8h" ],
     [ "VersionNames.h", "_version_names_8h.html", "_version_names_8h" ]
 ];

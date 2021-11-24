@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['moveborder_0',['moveBorder',['../class_o_n_f_1_1_id_range.html#aeda9e32c471c0478c8566870c1f74bfb',1,'ONF::IdRange']]],
-  ['movefromid_1',['moveFromId',['../namespace_o_n_f.html#a053b3525f6354bec193786e4d37d475f',1,'ONF']]]
+  ['ldouble_0',['ldouble',['../namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47',1,'ONF']]],
+  ['lowerborder_1',['LowerBorder',['../namespace_o_n_f.html#ab170d2fc466df2a25a59a23cd541dc54af6fdbcd77c4f41abccc306dfe89ff90b',1,'ONF']]]
 ];

@@ -118,28 +118,36 @@ $(document).ready(function(){initNavTree('_o_n_f_8h_source.html',''); initResiza
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_o_n_f.html">ONF</a></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">   12</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a>;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">   13</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a>;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">   14</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">ldouble</a>;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">   27</a></span>    T <a class="code hl_function" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">abs</a>(T value)</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    { <span class="keywordflow">return</span> value &lt; 0 ? -value : value; }</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &quot;<a class="code" href="_id_management_8h.html">IdManagement.h</a>&quot;</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">//#include &quot;ConsoleConstructor.h&quot;</span></div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">    #include &quot;<a class="code" href="_universal_definitions_8h.html">UniversalDefinitions.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">   14</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">udlong</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">   15</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">dlong</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">   16</a></span>    <span class="keyword">typedef</span> <span class="keywordtype">long</span> <span class="keywordtype">double</span> <a class="code hl_typedef" href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">ldouble</a>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">   29</a></span>    T <a class="code hl_function" href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">abs</a>(T value)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    { <span class="keywordflow">return</span> value &lt; 0 ? -value : value; }</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &quot;<a class="code" href="_id_management_8h.html">IdManagement.h</a>&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &quot;<a class="code" href="_editing_strings_8h.html">EditingStrings.h</a>&quot;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &quot;<a class="code" href="_stylesheet_8h.html">Stylesheet.h</a>&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &quot;<a class="code" href="_universal_definitions_8h.html">UniversalDefinitions.h</a>&quot;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">//#include &quot;ConsoleConstructor.h&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="a_editing_strings_8h_html"><div class="ttname"><a href="_editing_strings_8h.html">EditingStrings.h</a></div></div>
 <div class="ttc" id="a_id_management_8h_html"><div class="ttname"><a href="_id_management_8h.html">IdManagement.h</a></div></div>
+<div class="ttc" id="a_stylesheet_8h_html"><div class="ttname"><a href="_stylesheet_8h.html">Stylesheet.h</a></div></div>
+<div class="ttc" id="a_universal_definitions_8h_html"><div class="ttname"><a href="_universal_definitions_8h.html">UniversalDefinitions.h</a></div></div>
 <div class="ttc" id="a_version_names_8h_html"><div class="ttname"><a href="_version_names_8h.html">VersionNames.h</a></div></div>
 <div class="ttc" id="anamespace_o_n_f_html"><div class="ttname"><a href="namespace_o_n_f.html">ONF</a></div><div class="ttdef"><b>Definition:</b> ConsoleConstructor.h:10</div></div>
-<div class="ttc" id="anamespace_o_n_f_html_a0808d8e7521d234bcfef5e47a4ecad03"><div class="ttname"><a href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">ONF::abs</a></div><div class="ttdeci">T abs(T value)</div><div class="ttdoc">Возвращает абсолютное значение числа.</div><div class="ttdef"><b>Definition:</b> ONF.h:27</div></div>
-<div class="ttc" id="anamespace_o_n_f_html_a1efd33279d594a0198ea67b1abe1e273"><div class="ttname"><a href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">ONF::dlong</a></div><div class="ttdeci">long long dlong</div><div class="ttdef"><b>Definition:</b> ONF.h:13</div></div>
-<div class="ttc" id="anamespace_o_n_f_html_a549f568cb9f0f7092f0750728ce94e75"><div class="ttname"><a href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">ONF::udlong</a></div><div class="ttdeci">unsigned long long udlong</div><div class="ttdef"><b>Definition:</b> ONF.h:12</div></div>
-<div class="ttc" id="anamespace_o_n_f_html_a860dc2f9df653251617a17fb27a13b47"><div class="ttname"><a href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">ONF::ldouble</a></div><div class="ttdeci">long double ldouble</div><div class="ttdef"><b>Definition:</b> ONF.h:14</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a0808d8e7521d234bcfef5e47a4ecad03"><div class="ttname"><a href="namespace_o_n_f.html#a0808d8e7521d234bcfef5e47a4ecad03">ONF::abs</a></div><div class="ttdeci">T abs(T value)</div><div class="ttdoc">Возвращает абсолютное значение числа.</div><div class="ttdef"><b>Definition:</b> ONF.h:29</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a1efd33279d594a0198ea67b1abe1e273"><div class="ttname"><a href="namespace_o_n_f.html#a1efd33279d594a0198ea67b1abe1e273">ONF::dlong</a></div><div class="ttdeci">long long dlong</div><div class="ttdef"><b>Definition:</b> ONF.h:15</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a549f568cb9f0f7092f0750728ce94e75"><div class="ttname"><a href="namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75">ONF::udlong</a></div><div class="ttdeci">unsigned long long udlong</div><div class="ttdef"><b>Definition:</b> ONF.h:14</div></div>
+<div class="ttc" id="anamespace_o_n_f_html_a860dc2f9df653251617a17fb27a13b47"><div class="ttname"><a href="namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47">ONF::ldouble</a></div><div class="ttdeci">long double ldouble</div><div class="ttdef"><b>Definition:</b> ONF.h:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.9.2-->

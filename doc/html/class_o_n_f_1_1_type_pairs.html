@@ -1,0 +1,595 @@
+<!-- HTML header for doxygen 1.9.2-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.2"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>ONF: Шаблон класса ONF::TypePairs&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+  $(document).ready(function() { init_search(); });
+/* @license-end */
+</script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">ONF
+   </div>
+   <div id="projectbrief">Небольшая, разнородная библиотека</div>
+  </td>
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.svg"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Поиск" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.svg" alt=""/></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.9.2 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Поиск','.html');
+/* @license-end */
+</script>
+</div><!-- top -->
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_o_n_f_1_1_type_pairs.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Открытые типы</a> &#124;
+<a href="#pub-methods">Открытые члены</a> &#124;
+<a href="class_o_n_f_1_1_type_pairs-members.html">Полный список членов класса</a>  </div>
+  <div class="headertitle"><div class="title">Шаблон класса ONF::TypePairs&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Данный класс предназначен для храниния типов в формате ключ-значение.  
+ <a href="class_o_n_f_1_1_type_pairs.html#details">Подробнее...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_universal_definitions_8h_source.html">UniversalDefinitions.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Открытые типы</h2></td></tr>
+<tr class="memitem:a149ba85fa7177267193af99b90035082"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a> = T_Key</td></tr>
+<tr class="separator:a149ba85fa7177267193af99b90035082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad525c373679a36a271efad44b482c598"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a> = T_Value</td></tr>
+<tr class="separator:ad525c373679a36a271efad44b482c598"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad35cbd2fcd958ba5281ab4db9f4b42c5"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad35cbd2fcd958ba5281ab4db9f4b42c5">NextPair</a> = <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt; TV_PairCount - 1, T_OtherPairs... &gt;</td></tr>
+<tr class="separator:ad35cbd2fcd958ba5281ab4db9f4b42c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Открытые члены</h2></td></tr>
+<tr class="memitem:a46ecec69dff1ffbedf2d0abde756a4f3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a46ecec69dff1ffbedf2d0abde756a4f3">TypePairs</a> (<a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a> key, <a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a> value, T_OtherPairs... otherPairs)</td></tr>
+<tr class="separator:a46ecec69dff1ffbedf2d0abde756a4f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afae590c07e4ad105d9e309e5ebb7eed4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#afae590c07e4ad105d9e309e5ebb7eed4">TypePairs</a> (const <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;other)=delete</td></tr>
+<tr class="separator:afae590c07e4ad105d9e309e5ebb7eed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e02781e199871afcb6eb6c18657c7c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a5e02781e199871afcb6eb6c18657c7c3">TypePairs</a> (<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;&amp;other)=delete</td></tr>
+<tr class="separator:a5e02781e199871afcb6eb6c18657c7c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f5465311ecbd2daaa8b1e3e884fc03c"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a7f5465311ecbd2daaa8b1e3e884fc03c">~TypePairs</a> ()</td></tr>
+<tr class="separator:a7f5465311ecbd2daaa8b1e3e884fc03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ba64d29b71eebd4ce4dcca6b8092add"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a5ba64d29b71eebd4ce4dcca6b8092add">setValue</a> (<a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a> value)</td></tr>
+<tr class="separator:a5ba64d29b71eebd4ce4dcca6b8092add"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758db337c7a144fa2bf8b8920960e724"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a758db337c7a144fa2bf8b8920960e724">getValue</a> () const</td></tr>
+<tr class="separator:a758db337c7a144fa2bf8b8920960e724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a175310cb6e2f7117f995af8645c727ff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a175310cb6e2f7117f995af8645c727ff">setKeyValue</a> (<a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a> value)</td></tr>
+<tr class="separator:a175310cb6e2f7117f995af8645c727ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b901c364b5a8c1e63179f32fc8e4509"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a4b901c364b5a8c1e63179f32fc8e4509">getKeyValue</a> () const</td></tr>
+<tr class="separator:a4b901c364b5a8c1e63179f32fc8e4509"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7402752d3a3fd431a134fec6d618bdc3"><td class="memTemplParams" colspan="2">template&lt;class T , class... T_Args&gt; </td></tr>
+<tr class="memitem:a7402752d3a3fd431a134fec6d618bdc3"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a7402752d3a3fd431a134fec6d618bdc3">getPairValueType</a> (T_Args... args) const</td></tr>
+<tr class="separator:a7402752d3a3fd431a134fec6d618bdc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afefc5b41a44ea3ae76a9ef537713ce17"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
+<tr class="memitem:afefc5b41a44ea3ae76a9ef537713ce17"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#afefc5b41a44ea3ae76a9ef537713ce17">getPair</a> () const</td></tr>
+<tr class="separator:afefc5b41a44ea3ae76a9ef537713ce17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca0adcfcf768572ea941df24484814c2"><td class="memTemplParams" colspan="2">template&lt;size_t TV_Index&gt; </td></tr>
+<tr class="memitem:aca0adcfcf768572ea941df24484814c2"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#aca0adcfcf768572ea941df24484814c2">getPairByIndex</a> () const</td></tr>
+<tr class="separator:aca0adcfcf768572ea941df24484814c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56bcf93db033797e13b86cd7b5533d92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad35cbd2fcd958ba5281ab4db9f4b42c5">NextPair</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a56bcf93db033797e13b86cd7b5533d92">getNextPair</a> () const</td></tr>
+<tr class="separator:a56bcf93db033797e13b86cd7b5533d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2d6c42e2d99ebe527b8b984dd4a5bdd"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad2d6c42e2d99ebe527b8b984dd4a5bdd">getPairCount</a> () const</td></tr>
+<tr class="separator:ad2d6c42e2d99ebe527b8b984dd4a5bdd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6af8b478b2a06c6e7426b2c95eb21d60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a6af8b478b2a06c6e7426b2c95eb21d60">operator=</a> (const <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;other)=delete</td></tr>
+<tr class="separator:a6af8b478b2a06c6e7426b2c95eb21d60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ae83b4959180664438f2b85b18de61"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a02ae83b4959180664438f2b85b18de61">operator=</a> (<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp;&amp;other)=delete</td></tr>
+<tr class="separator:a02ae83b4959180664438f2b85b18de61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Подробное описание</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;size_t TV_PairCount, class T_Key, class T_Value, class... T_OtherPairs&gt;<br />
+class ONF::TypePairs&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;</div><p >Данный класс предназначен для храниния типов в формате ключ-значение. </p>
+<p >Создавая объект данного класса мы указываем типы данных которые он будет хранить и если нужно значения по умолчанию для хранимых типов данных. <br  />
+ Данный класс хранит значения в виде цепочки таких же классов, но с другими параметрами шаблона. <br  />
+ Т.е. если мы создадим объект класса <a class="el" href="class_o_n_f_1_1_type_pairs.html" title="Данный класс предназначен для храниния типов в формате ключ-значение.">TypePairs</a> который должен хранить 3 пары типов данных, тот объект который мы создали будет хранить первую пару ключ-значение, а так же указатель на следующий объект класса <a class="el" href="class_o_n_f_1_1_type_pairs.html" title="Данный класс предназначен для храниния типов в формате ключ-значение.">TypePairs</a>. <br  />
+ Следующий объект класс будет содержать следующую пару ключ-значение и указатель на следующий <a class="el" href="class_o_n_f_1_1_type_pairs.html" title="Данный класс предназначен для храниния типов в формате ключ-значение.">TypePairs</a>. <br  />
+ Эта цепочка будет строится до тех пор пока все указанные типы данных не найдут для себя <a class="el" href="class_o_n_f_1_1_type_pairs.html" title="Данный класс предназначен для храниния типов в формате ключ-значение.">TypePairs</a>. <br  />
+ Для того что бы создать объект данного класса, в первый параметр шаблона нужно передать количество пар которые вы планируете создать, а затем поочередно указывать пары типов данных, где первый тип данных любой пары это ключ, а второй - значение. <br  />
+ Затем в параметры функции необходимо передать значения по умолчанию для указанных типов. <br  />
+ Указывать их нужно в том же порядке в котором были указаны хранимые тыпы данных. </p><div class="fragment"><div class="line">TypePairs&lt;3, int, bool, float, std::string, unsigned, wchar_t&gt; typePairs(<span class="keywordtype">int</span>(), <span class="keywordtype">bool</span>(<span class="keyword">true</span>), <span class="keywordtype">float</span>(), std::string(<span class="stringliteral">&quot;hello&quot;</span>), <span class="keywordtype">unsigned</span>(), <span class="keywordtype">wchar_t</span>(33));</div>
+</div><!-- fragment --><p> Как видно из вышепреведенного примера, получилась очень длинная запись. <br  />
+ Ее можно сократить используя функцию makeTypePairs. В ее параметры можно сразу передавать значения по умолчанию. </p><div class="fragment"><div class="line"><span class="keyword">auto</span> typePairs = <a class="code hl_function" href="namespace_o_n_f.html#a579f23a5f743e2f9335d01e8bef06b5e">makeTypePairs</a>(<span class="keywordtype">int</span>(), <span class="keywordtype">bool</span>(<span class="keyword">true</span>), <span class="keywordtype">float</span>(), std::string(<span class="stringliteral">&quot;hello&quot;</span>), <span class="keywordtype">unsigned</span>(), <span class="keywordtype">wchar_t</span>(33));</div>
+<div class="ttc" id="anamespace_o_n_f_html_a579f23a5f743e2f9335d01e8bef06b5e"><div class="ttname"><a href="namespace_o_n_f.html#a579f23a5f743e2f9335d01e8bef06b5e">ONF::makeTypePairs</a></div><div class="ttdeci">auto makeTypePairs(T_Pairs... pairs)</div><div class="ttdef"><b>Definition:</b> TypePairs.inl:173</div></div>
+</div><!-- fragment --><p> Настало время получить его значения. <br  />
+ Как было сказано выше, при создании объекта этого класса создается ряд связанных в цепочку пар ключ-значение. <br  />
+ Чтобы получть следующую пару надо вызвать getNextPair. У нее так же можно вызвать данный метод для получения следующей пары. <br  />
+ Метод getNextPair возвращает указатель на следующий объект класса <a class="el" href="class_o_n_f_1_1_type_pairs.html" title="Данный класс предназначен для храниния типов в формате ключ-значение.">TypePairs</a> всегда, кроме случая, когда он вызывается из последней пары цепочки. <br  />
+ В последней паре, метод getNextPair имеет тип возращаемого значения <em>void*</em> и всегда возвращает <em>nullptr</em>. </p><div class="fragment"><div class="line"><span class="keyword">auto</span> typePairs = <a class="code hl_function" href="namespace_o_n_f.html#a579f23a5f743e2f9335d01e8bef06b5e">makeTypePairs</a>(<span class="keywordtype">int</span>(), <span class="keywordtype">bool</span>(<span class="keyword">true</span>), <span class="keywordtype">float</span>(), std::string(<span class="stringliteral">&quot;hello&quot;</span>), <span class="keywordtype">unsigned</span>(), <span class="keywordtype">wchar_t</span>(33));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">//1 пара     2 пара         3 пара         void*</span></div>
+<div class="line">typePairs.getNextPair()-&gt;getNextPair()-&gt;getNextPair();</div>
+</div><!-- fragment --><p> Но иногда итерироваться таким образом может быть очень неудобно. В таком случае можно использовать getPair или getPairByIndex. <br  />
+ Метод getPair ищет пару с ключем указанного типа. Значение ключа никак не влияет на результаты поиска, только его тип данных. <br  />
+ Метод getPairByIndex возвращает пару находящуюся под указанным индексом. </p><div class="fragment"><div class="line"><span class="keyword">auto</span> typePairs = <a class="code hl_function" href="namespace_o_n_f.html#a579f23a5f743e2f9335d01e8bef06b5e">makeTypePairs</a>(<span class="keywordtype">int</span>(), <span class="keywordtype">bool</span>(<span class="keyword">true</span>), <span class="keywordtype">float</span>(), std::string(<span class="stringliteral">&quot;hello&quot;</span>), <span class="keywordtype">unsigned</span>(), <span class="keywordtype">wchar_t</span>(33));</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">//2 пара</span></div>
+<div class="line">typePairs.getPair&lt;<span class="keywordtype">float</span>&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">//3 пара</span></div>
+<div class="line">typePairs.getPairByIndex&lt;2&gt;();</div>
+</div><!-- fragment --> </div><h2 class="groupheader">Определения типов</h2>
+<a id="a149ba85fa7177267193af99b90035082" name="a149ba85fa7177267193af99b90035082"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a149ba85fa7177267193af99b90035082">&#9670;&nbsp;</a></span>Key</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a> =  T_Key</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad35cbd2fcd958ba5281ab4db9f4b42c5" name="ad35cbd2fcd958ba5281ab4db9f4b42c5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad35cbd2fcd958ba5281ab4db9f4b42c5">&#9670;&nbsp;</a></span>NextPair</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#ad35cbd2fcd958ba5281ab4db9f4b42c5">NextPair</a> =  <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt;TV_PairCount - 1, T_OtherPairs...&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad525c373679a36a271efad44b482c598" name="ad525c373679a36a271efad44b482c598"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad525c373679a36a271efad44b482c598">&#9670;&nbsp;</a></span>Value</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a> =  T_Value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Конструктор(ы)</h2>
+<a id="a46ecec69dff1ffbedf2d0abde756a4f3" name="a46ecec69dff1ffbedf2d0abde756a4f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46ecec69dff1ffbedf2d0abde756a4f3">&#9670;&nbsp;</a></span>TypePairs() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a>&#160;</td>
+          <td class="paramname"><em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T_OtherPairs...&#160;</td>
+          <td class="paramname"><em>otherPairs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afae590c07e4ad105d9e309e5ebb7eed4" name="afae590c07e4ad105d9e309e5ebb7eed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afae590c07e4ad105d9e309e5ebb7eed4">&#9670;&nbsp;</a></span>TypePairs() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5e02781e199871afcb6eb6c18657c7c3" name="a5e02781e199871afcb6eb6c18657c7c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e02781e199871afcb6eb6c18657c7c3">&#9670;&nbsp;</a></span>TypePairs() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7f5465311ecbd2daaa8b1e3e884fc03c" name="a7f5465311ecbd2daaa8b1e3e884fc03c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f5465311ecbd2daaa8b1e3e884fc03c">&#9670;&nbsp;</a></span>~TypePairs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::~<a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Методы</h2>
+<a id="a4b901c364b5a8c1e63179f32fc8e4509" name="a4b901c364b5a8c1e63179f32fc8e4509"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b901c364b5a8c1e63179f32fc8e4509">&#9670;&nbsp;</a></span>getKeyValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs... &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a> <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getKeyValue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a56bcf93db033797e13b86cd7b5533d92" name="a56bcf93db033797e13b86cd7b5533d92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56bcf93db033797e13b86cd7b5533d92">&#9670;&nbsp;</a></span>getNextPair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs... &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#ad35cbd2fcd958ba5281ab4db9f4b42c5">NextPair</a> * <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getNextPair</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afefc5b41a44ea3ae76a9ef537713ce17" name="afefc5b41a44ea3ae76a9ef537713ce17"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afefc5b41a44ea3ae76a9ef537713ce17">&#9670;&nbsp;</a></span>getPair()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<div class="memtemplate">
+template&lt;class T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getPair</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aca0adcfcf768572ea941df24484814c2" name="aca0adcfcf768572ea941df24484814c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca0adcfcf768572ea941df24484814c2">&#9670;&nbsp;</a></span>getPairByIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<div class="memtemplate">
+template&lt;size_t TV_Index&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getPairByIndex</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2d6c42e2d99ebe527b8b984dd4a5bdd" name="ad2d6c42e2d99ebe527b8b984dd4a5bdd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2d6c42e2d99ebe527b8b984dd4a5bdd">&#9670;&nbsp;</a></span>getPairCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getPairCount</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7402752d3a3fd431a134fec6d618bdc3" name="a7402752d3a3fd431a134fec6d618bdc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7402752d3a3fd431a134fec6d618bdc3">&#9670;&nbsp;</a></span>getPairValueType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<div class="memtemplate">
+template&lt;class T , class... T_Args&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getPairValueType </td>
+          <td>(</td>
+          <td class="paramtype">T_Args...&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a758db337c7a144fa2bf8b8920960e724" name="a758db337c7a144fa2bf8b8920960e724"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a758db337c7a144fa2bf8b8920960e724">&#9670;&nbsp;</a></span>getValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs... &gt;::<a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a> <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::getValue</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6af8b478b2a06c6e7426b2c95eb21d60" name="a6af8b478b2a06c6e7426b2c95eb21d60"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6af8b478b2a06c6e7426b2c95eb21d60">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp; <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt; &amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a02ae83b4959180664438f2b85b18de61" name="a02ae83b4959180664438f2b85b18de61"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ae83b4959180664438f2b85b18de61">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a> &amp; <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a175310cb6e2f7117f995af8645c727ff" name="a175310cb6e2f7117f995af8645c727ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a175310cb6e2f7117f995af8645c727ff">&#9670;&nbsp;</a></span>setKeyValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::setKeyValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html#a149ba85fa7177267193af99b90035082">Key</a>&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5ba64d29b71eebd4ce4dcca6b8092add" name="a5ba64d29b71eebd4ce4dcca6b8092add"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ba64d29b71eebd4ce4dcca6b8092add">&#9670;&nbsp;</a></span>setValue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t TV_PairCount, class T_Key , class T_Value , class... T_OtherPairs&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_o_n_f_1_1_type_pairs.html">ONF::TypePairs</a>&lt; TV_PairCount, T_Key, T_Value, T_OtherPairs &gt;::setValue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_o_n_f_1_1_type_pairs.html#ad525c373679a36a271efad44b482c598">Value</a>&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>Объявления и описания членов классов находятся в файлах:<ul>
+<li>Z:/Project/GitHub/ONF/ONF/include/<a class="el" href="_universal_definitions_8h_source.html">UniversalDefinitions.h</a></li>
+<li>Z:/Project/GitHub/ONF/ONF/include/<a class="el" href="_type_pairs_8inl.html">TypePairs.inl</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.9.2-->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_o_n_f.html">ONF</a></li><li class="navelem"><a class="el" href="class_o_n_f_1_1_type_pairs.html">TypePairs</a></li>
+  </ul>
+</div>
+</body>
+</html>

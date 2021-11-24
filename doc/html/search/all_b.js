@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['addwindowtoconsole_0',['addWindowToConsole',['../class_o_n_f_1_1_console_text_edit.html#a411db88f0707cca92d0aa9b1744f30ad',1,'ONF::ConsoleTextEdit']]],
-  ['onf_1',['ONF',['../namespace_o_n_f.html',1,'']]],
-  ['onf_2eh_2',['ONF.h',['../_o_n_f_8h.html',1,'']]],
-  ['onf_5fver_3',['ONF_VER',['../_o_n_f_8h.html#a2b5d59e39fd2777331b24a90e4d8294f',1,'ONF.h']]],
-  ['onf_5fver_5f0_5f0_4',['ONF_VER_0_0',['../_version_names_8h.html#a2fe040e9ba37f45b7b609b20e7fd78a2',1,'VersionNames.h']]],
-  ['onf_5fver_5fpatch_5',['ONF_VER_PATCH',['../_o_n_f_8h.html#abd0e17dacb31d13d02f523fc3e4e9c6e',1,'ONF.h']]],
-  ['operator_3d_6',['operator=',['../class_o_n_f_1_1_id_container.html#ae9d0793e4408644f80c4e1f806dadfda',1,'ONF::IdContainer::operator=(const IdContainer&lt; T &gt; &amp;other)=default'],['../class_o_n_f_1_1_id_container.html#afc7e05b71c4acd57b98ecc92fad0489e',1,'ONF::IdContainer::operator=(IdContainer&lt; T &gt; &amp;&amp;other)=default'],['../class_o_n_f_1_1_id_range.html#ad3909f68ee80a9aa44ad9c1abb839d73',1,'ONF::IdRange::operator=(const IdRange &amp;other)=default'],['../class_o_n_f_1_1_id_range.html#a05dfd2de4342a8a55a2d502d8369f014',1,'ONF::IdRange::operator=(IdRange &amp;&amp;other)'],['../struct_o_n_f_1_1_id_range_1_1_id_info.html#aaffbdf03e6fd87a1ef86f35b68332ae0',1,'ONF::IdRange::IdInfo::operator=()'],['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a68d00576ab77e1c89500d20074602516',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;::operator=(const RangeIdManager&lt; T, T_Step &gt; &amp;other)'],['../class_o_n_f_1_1_range_id_manager_3_01_t_00_01_t___step_00_01std_1_1enable__if__t_3_9is__forbidde054d61965f2e389c7d0e529115b08ba7.html#a7532f2bd4cba2e244b79952583638bd7',1,'ONF::RangeIdManager&lt; T, T_Step, std::enable_if_t&lt;!is_forbidden_types_combination&lt; T, T_Step &gt; &gt; &gt;::operator=(RangeIdManager&lt; T, T_Step &gt; &amp;&amp;other)']]]
+  ['namerules_0',['NameRules',['../class_o_n_f_1_1_name_rules.html#acfe8bef977b203a090f37d5338681adf',1,'ONF::NameRules::NameRules(const T &amp;selector, const T &amp;property, const T &amp;value)'],['../class_o_n_f_1_1_name_rules.html#aaa66d67f0cdd0a1534ba1f80f200ed08',1,'ONF::NameRules::NameRules()=default'],['../class_o_n_f_1_1_name_rules.html',1,'ONF::NameRules&lt; T &gt;']]],
+  ['nextpair_1',['NextPair',['../class_o_n_f_1_1_type_pairs.html#ad35cbd2fcd958ba5281ab4db9f4b42c5',1,'ONF::TypePairs']]],
+  ['notset_2',['NotSet',['../namespace_o_n_f.html#aa379d56cc5b00030d3772d015b40f999afaf396cbd83927b72a84d2616fac76ff',1,'ONF']]]
 ];

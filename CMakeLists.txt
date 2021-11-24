@@ -33,18 +33,22 @@ set(BUILD_SHARED_LIBS ON)
 
 add_library(ONF SHARED
 #    src/ConsoleConstructor.cpp
+    src/test.cpp
 
     include/ONF.h
     include/VersionNames.h
     include/IdManagement.h
 #    include/ConsoleConstructor.h
     include/EditingStrings.h
+    include/Stylesheet.h
+    include/UniversalDefinitions.h
 
     include/IdManagement/IdRange.inl
     include/IdManagement/IdContainer.inl
     include/IdManagement/RangeIdManager.inl
-
-    include/EditingStrings/EditingStrings.inl)
+    include/EditingStrings/EditingStrings.inl
+    include/Stylesheet/Stylesheet.inl
+    include/TypePairs.inl)
 
 #add_dependencies(ONF PDc)
 

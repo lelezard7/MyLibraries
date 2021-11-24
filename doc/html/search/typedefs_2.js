@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['udlong_0',['udlong',['../namespace_o_n_f.html#a549f568cb9f0f7092f0750728ce94e75',1,'ONF']]]
+  ['ldouble_0',['ldouble',['../namespace_o_n_f.html#a860dc2f9df653251617a17fb27a13b47',1,'ONF']]]
 ];
